@@ -94,6 +94,28 @@
   - [ ] Track completion history
   - [ ] Cannot be snoozed/ignored
 
+  ### Notification Strategy (Technical Notes)
+
+**Phase 3A - Quick Win (Implement First):**
+- [ ] SMS notifications via Twilio
+  - Most reliable across all phones
+  - Works even if app isn't open
+  - Cost: ~$0.01 per message
+  - Perfect for critical reminders (homework due, morning checklist)
+
+**Phase 3B - PWA Push Notifications:**
+- [ ] Web Push API for installed PWA
+  - Free
+  - Works when app installed on home screen
+  - Good for non-critical updates
+  - Fallback to SMS for critical alerts
+
+**Phase 3C - Native App (Future):**
+- [ ] Build React Native app for App Store
+  - Best notification experience
+  - Required for true background notifications
+  - Consider if productizing for other families
+
 ---
 
 ## Phase 4 - Activity-Specific Checklists
