@@ -5,13 +5,14 @@
 ✅ Weekly view  
 ✅ Test tracking  
 ✅ Manual homework entry  
-✅ Dad jokes  
+✅ Dad jokes & soccer trivia  
 ✅ Progress tracking  
 ✅ Personalized for Willy  
+✅ Refactored codebase (HTML/CSS/JS separated)
 
 ---
 
-## Phase 2 - Core Automations
+## Phase 2 - Core Automations (IN PROGRESS)
 
 ### Canvas Integration
 - [ ] Auto-pull homework assignments from Canvas API
@@ -20,61 +21,62 @@
 - [ ] Parse assignment descriptions for due dates
 - [ ] Flag missing/late assignments
 
-### Multi-Platform Education Portal Support
-- [ ] **Support for multiple LMS platforms** (Dad has 2 kids in different schools)
-  - [ ] Canvas (Willy's school)
-  - [ ] Google Classroom
-  - [ ] Schoology
-  - [ ] PowerSchool
-  - [ ] Infinite Campus
-  - [ ] Blackboard
-  - [ ] Brightspace
-  - [ ] ClassLink
-  - [ ] Seesaw (elementary)
-- [ ] **Multi-child, multi-school support**
-  - [ ] Each kid has their own profile
-  - [ ] Different schools = different LMS integrations
-  - [ ] Parent dashboard shows all kids
-  - [ ] Switch between kids' views
-- [ ] **Universal parser/adapter pattern**
-  - [ ] Build adapters for each LMS
-  - [ ] Normalize data into common format
-  - [ ] One interface, many sources
-- [ ] **Fallback options when API not available**
-  - [ ] Email parsing (many schools email daily digests)
-  - [ ] Manual entry
-  - [ ] Parent portal scraping (last resort)
-  - [ ] Photo of assignment sheet
+### Database Setup
+- [ ] Supabase PostgreSQL database
+- [ ] Store homework assignments
+- [ ] Track completion history
+- [ ] User profiles for multi-child support
 
-### Why This Matters
-- Most families have kids in multiple schools/grades
-- Every district uses different tools
-- Parents shouldn't need 5 different apps
-- Ned becomes the single source of truth across all schools
-- Critical for product-market fit if you productize this
-
-### Email Parsing
-- [ ] Monitor school email for teacher updates
-- [ ] Extract actionable items from teacher emails
-- [ ] Auto-add to task list
-- [ ] Prioritize urgent emails (tests, missing work)
-- [ ] **AI filtering of weekly school newsletters:**
-  - [ ] Parse long weekly emails from school
-  - [ ] Filter OUT: PTA meetings, volunteer requests, donation drives, parent-only events
-  - [ ] Filter IN: Schedule changes, field trips, picture day, early dismissal, forms needed, class events
-  - [ ] Translate school-speak into teen language
-  - [ ] Add relevant items to Willy's calendar automatically
-  - [ ] Flag items that need action (permission slips, money, etc.)
-
-### Multi-Source Aggregation
-- [ ] TeamSnap integration (sports schedules)
-- [ ] GameChanger integration (game times, locations)
-- [ ] Family Google Calendar sync
-- [ ] Consolidate everything into one timeline
+### Backend Infrastructure
+- [ ] Vercel serverless functions
+- [ ] Secure API key storage
+- [ ] Canvas sync scheduler
 
 ---
 
-## Phase 3 - Smart Notifications
+## Phase 3 - Soccer Features (High Engagement for Willy)
+
+### Why Move This Up?
+- Willy specifically requested this
+- Keeps him engaged with the app daily
+- Motivational tool for homework completion
+- Low technical complexity = quick win
+
+### FC Barcelona Game Schedule
+- [ ] Auto-pull Barca game schedules (La Liga, Champions League, Copa del Rey)
+- [ ] Game day reminders ("Barca plays Real Madrid tonight at 3pm!")
+- [ ] Add games to weekly calendar view
+- [ ] Countdown to next match
+- [ ] Post-game summaries
+
+### Player Stats Tracking
+- [ ] **Track favorite Barca players** (Willy requested: Messi, Raphinha, Lamine Yamal)
+- [ ] Display as "trading card" style with photos
+- [ ] Show key stats:
+  - [ ] Goals this season
+  - [ ] Assists
+  - [ ] Minutes played
+  - [ ] Recent form (last 5 games)
+- [ ] **Let Willy add/remove players himself**
+- [ ] Update stats automatically (daily or after each game)
+- [ ] News/highlights about his favorite players
+
+### Display Options for Stats
+- [ ] **Option 1: Player Cards** - Trading card style on Today tab
+- [ ] **Option 2: Stats Ticker** - Scrolling bar at top with live updates
+- [ ] **Option 3: "My Players" Tab** - Dedicated tab for player tracking
+- [ ] Let Willy choose which display he prefers
+
+### Gamification via Soccer
+- [ ] Complete tasks = unlock Barca highlights/stats
+- [ ] Streak rewards themed around soccer (7-day streak = "Hat trick!")
+- [ ] Points system tied to soccer achievements
+- [ ] "You've completed homework 5 days in a row - that's a clean sheet! ⚽"
+- [ ] Match predictions (earn points for correct predictions)
+
+---
+
+## Phase 4 - Smart Notifications
 
 ### Timing & Delivery
 - [ ] 7:30am - Morning checklist (what to pack)
@@ -94,31 +96,9 @@
   - [ ] Track completion history
   - [ ] Cannot be snoozed/ignored
 
-  ### Notification Strategy (Technical Notes)
-
-**Phase 3A - Quick Win (Implement First):**
-- [ ] SMS notifications via Twilio
-  - Most reliable across all phones
-  - Works even if app isn't open
-  - Cost: ~$0.01 per message
-  - Perfect for critical reminders (homework due, morning checklist)
-
-**Phase 3B - PWA Push Notifications:**
-- [ ] Web Push API for installed PWA
-  - Free
-  - Works when app installed on home screen
-  - Good for non-critical updates
-  - Fallback to SMS for critical alerts
-
-**Phase 3C - Native App (Future):**
-- [ ] Build React Native app for App Store
-  - Best notification experience
-  - Required for true background notifications
-  - Consider if productizing for other families
-
 ---
 
-## Phase 4 - Activity-Specific Checklists
+## Phase 5 - Activity-Specific Checklists
 
 ### Sports/Activities
 - [ ] Soccer practice checklist (cleats, water bottle, shin guards, uniform)
@@ -133,7 +113,29 @@
 
 ---
 
-## Phase 5 - AI Executive Function Coaching
+## Phase 6 - Multi-Source Aggregation
+
+### Email Parsing
+- [ ] Monitor school email for teacher updates
+- [ ] Extract actionable items from teacher emails
+- [ ] Auto-add to task list
+- [ ] Prioritize urgent emails (tests, missing work)
+- [ ] **AI filtering of weekly school newsletters:**
+  - [ ] Parse long weekly emails from school
+  - [ ] Filter OUT: PTA meetings, volunteer requests, donation drives
+  - [ ] Filter IN: Schedule changes, field trips, picture day, forms needed
+  - [ ] Translate school-speak into teen language
+  - [ ] Add relevant items to calendar automatically
+
+### Sports & Activities
+- [ ] TeamSnap integration (sports schedules)
+- [ ] GameChanger integration (game times, locations)
+- [ ] Family Google Calendar sync
+- [ ] Consolidate everything into one timeline
+
+---
+
+## Phase 7 - AI Executive Function Coaching
 
 ### Real-Time Coaching
 - [ ] Conversational AI using Claude API
@@ -154,7 +156,7 @@
 
 ---
 
-## Phase 6 - Learning Support
+## Phase 8 - Learning Support
 
 ### Homework Help
 - [ ] Detect struggling topics (takes long, marks incomplete)
@@ -171,7 +173,7 @@
 
 ---
 
-## Phase 7 - Parent Dashboard
+## Phase 9 - Parent Dashboard
 
 ### Monitoring & Insights
 - [ ] What Willy saw today
@@ -195,22 +197,13 @@
     - [ ] Transcribe automatically
     - [ ] Much lower friction than typing
     - [ ] Captures thoughts before he forgets
-    - [ ] Natural for someone who struggles with writing/typing
   - [ ] Photo of assignment sheet/whiteboard
   - [ ] Simple form: Subject, Assignment, Due Date (backup to voice)
-  - [ ] Tasks sync to parent view (so you can see what he added)
-  - [ ] Gives him ownership and agency
-  - [ ] Helps with situations where teacher assigns something verbally
-- [ ] **Voice notes throughout app**
-  - [ ] Post-homework reflections via voice
-  - [ ] Weekend activity suggestions
-  - [ ] Meal requests
-  - [ ] Questions for teachers
-  - [ ] All voice input gets transcribed and saved
+  - [ ] Tasks sync to parent view
 
 ---
 
-## Phase 8 - Personality & Engagement
+## Phase 10 - Personality & Engagement
 
 ### Tone Options
 - [ ] Straight-up helpful mode
@@ -220,10 +213,8 @@
   - [ ] British accent (in tone)
   - [ ] Condescending but motivating
   - [ ] Calls out procrastination brutally
-  - [ ] Celebrates wins with backhanded compliments
   - [ ] "Oh brilliant, you've forgotten your lunchbox AGAIN"
   - [ ] "Good God, man! Science quiz tomorrow and you STILL haven't studied?"
-  - [ ] Makes homework feel like a battle of wits
 - [ ] Let Willy customize personality
 - [ ] Different tones for different times (serious for tests, funny for routine)
 
@@ -233,54 +224,6 @@
 - [ ] Unlock achievements
 - [ ] Leaderboard (if multiple kids use it)
 - [ ] Rewards system
-
----
-
-## Phase 9 - Polish & UX
-
-### Mobile Optimization
-- [ ] Native iOS app (better notifications)
-- [ ] Install as PWA (Progressive Web App)
-- [ ] Offline mode
-- [ ] Widget for lock screen
-
-### Accessibility
-- [ ] Voice interface ("Hey Ned, what's my homework?")
-- [ ] Text-to-speech for reading assignments
-- [ ] Dark mode
-- [ ] Larger text options
-
----
-
-## Phase 12 - Soccer/Sports Features (Willy's Requests)
-
-### Player Stats Tracking
-- [ ] **Track favorite Barca players** (Willy requested: Messi, Raphinha, Lamine Yamal)
-- [ ] Display as "trading card" style with photos
-- [ ] Show key stats:
-  - [ ] Goals this season
-  - [ ] Assists
-  - [ ] Minutes played
-  - [ ] Average rating
-  - [ ] Recent form (last 5 games)
-- [ ] **Let Willy add/remove players himself**
-- [ ] Update stats automatically (daily or after each game)
-- [ ] Compare players side-by-side
-- [ ] Historical stats (last season vs this season)
-- [ ] News/highlights about his favorite players
-
-### Display Options for Stats
-- [ ] **Option 1: Player Cards** - Trading card style on Today tab
-- [ ] **Option 2: Stats Ticker** - Scrolling bar at top with live updates
-- [ ] **Option 3: "My Players" Tab** - Dedicated tab for player tracking
-- [ ] Let Willy choose which display he prefers
-
-### Additional Soccer Features
-- [ ] Player performance alerts ("Raphinha just scored!")
-- [ ] Milestone tracking ("Lamine is 2 goals away from 10 this season!")
-- [ ] Match day stats (how his players performed in last game)
-- [ ] Fantasy-style scoring for his tracked players
-- [ ] Integration with homework rewards ("Complete homework = unlock player highlights")
 
 ---
 
@@ -328,73 +271,77 @@ The vision: Ned helps you stay involved in your kids' lives even when they're at
   - [ ] Sports gear needed
 - [ ] Countdown to next visit ("3 days until you're at Dad's!")
 
-### Shared Wins
-- [ ] Celebrate achievements across both households
-- [ ] Streak tracking visible to both parents
-- [ ] "This week Willy completed homework 5 days in a row!"
-- [ ] Share success stories with both households
+---
 
-### Why This Matters
-This transforms Ned from a task manager into a **connection tool** that:
-- Keeps you involved in daily routines even when apart
-- Creates excitement and anticipation for time together
-- Gives kids a voice in planning your shared time
-- Reduces the feeling of disconnection during transitions
-- Makes your time together more intentional and aligned with what they want
+## Phase 12 - Multi-Platform LMS Support
+
+### Support for Multiple Platforms
+- [ ] Canvas (Willy's school) ✓
+- [ ] Google Classroom
+- [ ] Schoology
+- [ ] PowerSchool
+- [ ] Infinite Campus
+- [ ] Blackboard
+- [ ] Brightspace
+- [ ] ClassLink
+- [ ] Seesaw (elementary)
+
+### Multi-Child, Multi-School Support
+- [ ] Each kid has their own profile
+- [ ] Different schools = different LMS integrations
+- [ ] Parent dashboard shows all kids
+- [ ] Switch between kids' views
+
+### Universal Parser/Adapter Pattern
+- [ ] Build adapters for each LMS
+- [ ] Normalize data into common format
+- [ ] One interface, many sources
+
+### Fallback Options
+- [ ] Email parsing (many schools email daily digests)
+- [ ] Manual entry
+- [ ] Parent portal scraping (last resort)
+- [ ] Photo of assignment sheet
 
 ---
 
-## Phase 10 - Product Vision
+## Phase 13 - Polish & UX
+
+### Mobile Optimization
+- [ ] Native iOS app (better notifications)
+- [ ] PWA optimization
+- [ ] Offline mode
+- [ ] Lock screen widget
+
+### Accessibility
+- [ ] Voice interface ("Hey Ned, what's my homework?")
+- [ ] Text-to-speech for reading assignments
+- [ ] Dark mode
+- [ ] Larger text options
+
+---
+
+## Phase 14 - Product Vision
 
 ### Beyond Willy
-- [ ] Multi-user support (other kids in family)
+- [ ] Multi-user support (other families)
 - [ ] Share with other parents (productize)
 - [ ] School district partnerships
 - [ ] ADHD/ADD focused features
 - [ ] Integration with executive function counselors
 
-### Technical Debt
-- [ ] Proper backend/database (not just localStorage)
-- [ ] User authentication
+### Technical Infrastructure
+- [ ] Proper authentication system
 - [ ] Data backup/sync across devices
-- [ ] Security/privacy compliance
+- [ ] Security/privacy compliance (FERPA, COPPA)
 - [ ] Analytics (what features actually help)
-
----
-
-## Soccer/Sports Features (Willy-Specific)
-
-### FC Barcelona Integration
-- [ ] Auto-pull Barca game schedules (La Liga, Champions League, Copa del Rey)
-- [ ] Game day reminders ("Barca plays Real Madrid tonight at 3pm!")
-- [ ] Add games to weekly calendar view
-- [ ] Live score updates during games
-- [ ] Post-game summaries
-
-### Player Tracking
-- [ ] Follow favorite Barca players (stats, news, highlights)
-- [ ] Player birthday notifications
-- [ ] Transfer news alerts
-- [ ] Injury updates
-
-### Soccer Trivia & Engagement
-- [ ] Daily soccer trivia question (instead of/in addition to dad joke)
-- [ ] "Who do you think will win the Ballon d'Or?" discussion prompts
-- [ ] Match predictions (earn points for correct predictions)
-- [ ] Soccer facts as rewards for completing homework
-- [ ] "Finish your homework and I'll tell you Barca's starting XI for tomorrow"
-
-### Gamification via Soccer
-- [ ] Complete tasks = unlock Barca highlights/stats
-- [ ] Streak rewards themed around soccer (7-day streak = "Hat trick!")
-- [ ] Points system tied to soccer achievements
-- [ ] "You've completed homework 5 days in a row - that's a clean sheet! ⚽"
+- [ ] Rate limiting and API management
 
 ---
 
 ## Random Ideas (Unsorted)
 
-- [ ] "Forgot lunchbox" pattern detection (reminds him at lunch to grab it)
+- [ ] "Forgot lunchbox" pattern detection
 - [ ] Photo upload (take pic of whiteboard/assignment sheet)
 - [ ] Voice memo assignments ("Remind me to ask teacher about #5")
 - [ ] Friend coordination ("Does anyone know what the math homework is?")
@@ -409,7 +356,7 @@ This transforms Ned from a task manager into a **connection tool** that:
 
 ## Known Issues / Bug Fixes
 
-- [ ] None yet - MVP just created!
+- [x] Barcelona game info was outdated (removed - will add back dynamically in Phase 3)
 
 ---
 
@@ -425,4 +372,8 @@ This transforms Ned from a task manager into a **connection tool** that:
 ---
 
 **Last Updated:** November 24, 2024  
-**Current Phase:** Phase 1 - Setting up proper project structure
+**Current Phase:** Phase 2 - Canvas Integration (In Progress)  
+**Recent Changes:** 
+- Moved Soccer Features from Phase 12 → Phase 3 (high engagement for Willy)
+- Removed outdated Barcelona game from MVP (will add back dynamically)
+- Completed code refactoring (HTML/CSS/JS separation)
