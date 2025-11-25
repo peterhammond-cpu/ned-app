@@ -30,3 +30,8 @@ build/
 *.tmp
 *.swp
 *~
+
+# Environment variables - NEVER COMMIT THESE
+.env
+test-scripts/.env
+test-scripts/node_modules/
