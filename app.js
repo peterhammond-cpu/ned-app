@@ -1,3 +1,8 @@
+// app.js - Enhanced with Supabase integration
+// Keeps all existing functionality + adds live database connection
+
+// ============= EXISTING FEATURES (PRESERVED) =============
+
 // Soccer trivia array
 const soccerTrivia = [
     "Who do you think will win the Ballon d'Or this year?",
@@ -152,10 +157,208 @@ function loadProgress() {
     }
 }
 
+// ============= NEW: SUPABASE INTEGRATION =============
+
+// Check if Supabase is available
+function isSupabaseEnabled() {
+    return window.NedSupabase !== undefined;
+}
+
+// Load homework from Supabase
+async function loadHomeworkFromSupabase() {
+    if (!isSupabaseEnabled()) {
+        console.log('📝 Supabase not enabled, using hardcoded homework');
+        return;
+    }
+
+    try {
+        console.log('📚 Loading homework from Supabase...');
+        
+        // Fetch today's homework
+        const todaysHomework = await window.NedSupabase.fetchUpcomingHomework();
+        console.log(`✅ Loaded ${todaysHomework.length} items for today`);
+        
+        // If we have homework from database, replace hardcoded content
+        if (todaysHomework.length > 0) {
+            displaySupabaseHomework(todaysHomework);
+        }
+        
+    } catch (error) {
+        console.error('❌ Error loading from Supabase:', error);
+        console.log('📝 Falling back to hardcoded homework');
+    }
+}
+
+// Display homework from Supabase
+function displaySupabaseHomework(homework) {
+    const container = document.getElementById('tonight-homework');
+    if (!container) {
+        console.warn('⚠️ Homework container not found');
+        return;
+    }
+    
+    // Clear existing hardcoded homework
+    container.innerHTML = '';
+    
+    if (homework.length === 0) {
+        container.innerHTML = `
+            <div style="text-align: center; padding: 20px; color: #10b981;">
+                <div style="font-size: 48px;">🎉</div>
+                <p style="font-size: 18px; margin-top: 10px;">No homework due today!</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Group by subject
+    const grouped = {};
+    homework.forEach(item => {
+        const subject = item.subject || 'Other';
+        if (!grouped[subject]) grouped[subject] = [];
+        grouped[subject].push(item);
+    });
+    
+    // Render each subject's homework
+    Object.keys(grouped).sort().forEach(subject => {
+        grouped[subject].forEach((item, index) => {
+            const emoji = getSubjectEmoji(subject);
+            const urgency = getUrgencyBadge(item.date_due);
+            
+            const homeworkDiv = document.createElement('div');
+            homeworkDiv.className = 'checklist-item';
+            homeworkDiv.onclick = function() { toggleSupabaseItem(this, item.id); };
+            
+            // Check if already completed from localStorage or database
+            const isChecked = item.checked_off ? 'checked' : '';
+            const isCompleted = item.checked_off ? 'completed' : '';
+            
+            if (isCompleted) homeworkDiv.classList.add(isCompleted);
+            homeworkDiv.innerHTML = `
+                <input type="checkbox" id="hw-${item.id}" ${isChecked} data-homework-id="${item.id}">
+                <label for="hw-${item.id}">${emoji} ${subject}: ${item.title}</label>
+                ${urgency}
+            `;
+            
+            // Add description if exists
+            if (item.description) {
+                const desc = document.createElement('p');
+                desc.style.fontSize = '14px';
+                desc.style.color = '#666';
+                desc.style.marginTop = '5px';
+                desc.style.marginLeft = '39px';
+                desc.textContent = item.description;
+                homeworkDiv.appendChild(desc);
+            }
+            
+            // Add Canvas link if exists
+            if (item.link) {
+                const link = document.createElement('a');
+                link.href = item.link;
+                link.target = '_blank';
+                link.style.marginLeft = '39px';
+                link.style.fontSize = '13px';
+                link.style.color = '#667eea';
+                link.textContent = '📎 View in Canvas';
+                link.onclick = function(e) { e.stopPropagation(); };
+                homeworkDiv.appendChild(link);
+            }
+            
+            container.appendChild(homeworkDiv);
+        });
+    });
+}
+
+// Toggle Supabase homework item
+async function toggleSupabaseItem(element, homeworkId) {
+    const checkbox = element.querySelector('input[type="checkbox"]');
+    checkbox.checked = !checkbox.checked;
+    
+    if (checkbox.checked) {
+        element.classList.add('completed');
+    } else {
+        element.classList.remove('completed');
+    }
+    
+    // Save to Supabase if available
+    if (isSupabaseEnabled()) {
+        try {
+            if (checkbox.checked) {
+                await window.NedSupabase.checkOffHomework(homeworkId);
+                console.log(`✅ Marked homework #${homeworkId} as complete`);
+            } else {
+                await window.NedSupabase.uncheckHomework(homeworkId);
+                console.log(`↩️ Marked homework #${homeworkId} as incomplete`);
+            }
+        } catch (error) {
+            console.error('Error updating homework:', error);
+            // Revert checkbox state if save failed
+            checkbox.checked = !checkbox.checked;
+            element.classList.toggle('completed');
+        }
+    }
+    
+    updateStats();
+    saveProgress();
+}
+
+// Get emoji for subject
+function getSubjectEmoji(subject) {
+    const emojiMap = {
+        'Math': '📊',
+        'Science': '🔬',
+        'ELA': '✍️',
+        'English': '📚',
+        'Social Studies': '🌍',
+        'SS': '🌍',
+        'Spanish': '🇪🇸',
+        'History': '📜',
+        'Reading': '📖',
+        'Writing': '✏️'
+    };
+    return emojiMap[subject] || '📝';
+}
+
+// Get urgency badge
+function getUrgencyBadge(dueDate) {
+    const today = new Date().toISOString().split('T')[0];
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowStr = tomorrow.toISOString().split('T')[0];
+    
+    if (dueDate === today) {
+        return '<span class="time-badge urgent">DUE TODAY</span>';
+    } else if (dueDate === tomorrowStr) {
+        return '<span class="time-badge urgent">DUE TOMORROW</span>';
+    } else {
+        const due = new Date(dueDate);
+        const dayName = due.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
+        return `<span class="time-badge">DUE ${dayName}</span>`;
+    }
+}
+
+// ============= INITIALIZATION =============
+
 // Initialize on load
-window.onload = function() {
+window.onload = async function() {
+    console.log('🚀 Ned App starting...');
+    
+    // Original functionality
     setGreeting();
     setRandomJoke();
     loadProgress();
     updateStats();
+    
+    // Try to load from Supabase
+    await loadHomeworkFromSupabase();
+    
+    console.log('✅ Ned App initialized');
 };
+```
+
+5. **Save the file** (Cmd+S or Ctrl+S)
+
+---
+
+**Once you've replaced app.js and saved it, tell me:**
+```
+"app.js replaced and saved!"
