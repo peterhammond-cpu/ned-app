@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ned - Willy's Command Center</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0a1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+    <div class="stadium-glow"></div>
+    
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-top">
+                <div class="logo">
+                    <span class="logo-icon">⚽</span>
+                    <span class="logo-text">NED</span>
+                </div>
+                <div class="streak-badge">
+                    <span class="streak-fire">🔥</span>
+                    <span class="streak-count" id="streak-count">5</span>
+                    <span class="streak-label">day streak</span>
+                </div>
+            </div>
+            <h1 id="greeting">What's good, Willy!</h1>
+            <p class="subtitle" id="date-display"></p>
+        </header>
+
+        <!-- Voice Picker -->
+        <div class="voice-picker">
+            <button class="voice-btn active" data-voice="normal" onclick="setVoice('normal')">
+                <span class="voice-emoji">😊</span>
+                <span class="voice-name">Normal</span>
+            </button>
+            <button class="voice-btn" data-voice="stewie" onclick="setVoice('stewie')">
+                <span class="voice-emoji">🎩</span>
+                <span class="voice-name">Stewie</span>
+            </button>
+            <button class="voice-btn" data-voice="french" onclick="setVoice('french')">
+                <span class="voice-emoji">🥖</span>
+                <span class="voice-name">French</span>
+            </button>
+        </div>
+
+        <!-- Motivational Message -->
+        <div class="motivation-card" id="motivation-card">
+            <p id="motivation-text">Let's crush it today! Your homework missions await.</p>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('today')">
+                <span class="tab-icon">🎯</span>
+                <span class="tab-text">Today</span>
+            </button>
+            <button class="nav-tab" onclick="switchTab('players')">
+                <span class="tab-icon">⭐</span>
+                <span class="tab-text">Players</span>
+            </button>
+            <button class="nav-tab" onclick="switchTab('week')">
+                <span class="tab-icon">📅</span>
+                <span class="tab-text">Week</span>
+            </button>
+            <button class="nav-tab" onclick="switchTab('tests')">
+                <span class="tab-icon">📝</span>
+                <span class="tab-text">Tests</span>
+            </button>
+        </nav>
+
+        <!-- TODAY TAB -->
+        <div id="today-tab" class="tab-content active">
+            <!-- Saturday Shot Reminder (injected by JS when needed) -->
+            <div id="shot-reminder-container"></div>
+
+            <!-- Next Match Card -->
+            <div class="card match-card">
+                <div class="card-header">
+                    <span class="card-icon">⚽</span>
+                    <h2>Next Match</h2>
+                </div>
+                <div class="match-content">
+                    <div class="match-teams">
+                        <div class="team home">
+                            <div class="team-crest">🔵🔴</div>
+                            <span class="team-name">Barcelona</span>
+                        </div>
+                        <div class="match-info">
+                            <span class="match-vs">VS</span>
+                            <span class="match-competition" id="match-competition">La Liga</span>
+                        </div>
+                        <div class="team away">
+                            <div class="team-crest" id="opponent-crest">⚪</div>
+                            <span class="team-name" id="opponent-name">Real Madrid</span>
+                        </div>
+                    </div>
+                    <div class="match-datetime">
+                        <span class="match-date" id="match-date">Saturday, Dec 14</span>
+                        <span class="match-time" id="match-time">3:00 PM EST</span>
+                    </div>
+                    <div class="match-motivation">
+                        <span class="motivation-icon">💡</span>
+                        <span id="match-motivation-text">Finish your missions early to catch kickoff!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Fun Card -->
+            <div class="card fun-card">
+                <div class="card-header">
+                    <span class="card-icon">😂</span>
+                    <h2>Daily Fun</h2>
+                </div>
+                <div class="joke-box" id="joke">
+                    Why don't scientists trust atoms? Because they make up everything!
+                </div>
+                <div class="trivia-box" id="soccer-trivia">
+                    <span class="trivia-icon">⚽</span>
+                    <span class="trivia-text">Who do you think will win the Ballon d'Or this year?</span>
+                </div>
+            </div>
+
+            <!-- Alerts Card -->
+            <div class="card alerts-card">
+                <div class="card-header">
+                    <span class="card-icon">⚠️</span>
+                    <h2>Heads Up!</h2>
+                </div>
+                <div id="alerts-container">
+                    <!-- Alerts will be populated by JS -->
+                </div>
+            </div>
+
+            <!-- Tonight's Missions -->
+            <div class="card missions-card">
+                <div class="card-header">
+                    <span class="card-icon">🎯</span>
+                    <h2>Tonight's Missions</h2>
+                    <span class="mission-count" id="mission-count">0/0</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <span class="progress-text" id="progress-text">0% Complete</span>
+                </div>
+                <div id="tonight-homework" class="mission-list">
+                    <!-- Missions populated by JS -->
+                </div>
+            </div>
+
+            <!-- Morning Checklist -->
+            <div class="card checklist-card">
+                <div class="card-header">
+                    <span class="card-icon">🌅</span>
+                    <h2>Morning Checklist</h2>
+                </div>
+                <p class="card-subtitle">Before you leave for school:</p>
+                <div id="morning-checklist" class="mission-list">
+                    <!-- Checklist populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- PLAYERS TAB -->
+        <div id="players-tab" class="tab-content">
+            <div class="players-header">
+                <h2>⭐ My Favorite Players</h2>
+                <p>Track your Barça heroes</p>
+            </div>
+            <div class="player-cards" id="player-cards">
+                <!-- Player cards populated by JS -->
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📊</span>
+                    <h2>Season Stats</h2>
+                </div>
+                <div class="season-summary">
+                    <div class="season-stat">
+                        <span class="stat-value" id="total-goals">0</span>
+                        <span class="stat-label">Total Goals</span>
+                    </div>
+                    <div class="season-stat">
+                        <span class="stat-value" id="total-assists">0</span>
+                        <span class="stat-label">Total Assists</span>
+                    </div>
+                    <div class="season-stat">
+                        <span class="stat-value" id="avg-rating">0.0</span>
+                        <span class="stat-label">Avg Rating</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WEEK TAB -->
+        <div id="week-tab" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📅</span>
+                    <h2>This Week</h2>
+                </div>
+                <div class="week-view" id="week-view">
+                    <!-- Week view populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TESTS TAB -->
+        <div id="tests-tab" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📝</span>
+                    <h2>Upcoming Tests</h2>
+                </div>
+                <div id="tests-container">
+                    <!-- Tests populated by JS -->
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">💡</span>
+                    <h2>Study Tips</h2>
+                </div>
+                <div id="study-tips">
+                    <!-- Study tips populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
