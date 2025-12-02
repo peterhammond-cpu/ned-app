@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
 
-fasync function initializeApp() {
+async function initializeApp() {
     setDateDisplay();
     setGreeting();
     setMotivation();
