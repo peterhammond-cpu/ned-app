@@ -14,6 +14,9 @@ async function fetchHomeworkFromDB() {
     today.setHours(0, 0, 0, 0);
     const todayISO = today.toISOString();
     
+    console.log('🔍 Fetching homework from Supabase...');
+    console.log('📅 Looking for items due on or after:', todayISO);
+    
     const { data, error } = await supabase
         .from('homework_items')
         .select('*')
@@ -22,23 +25,26 @@ async function fetchHomeworkFromDB() {
         .order('date_due', { ascending: true });
     
     if (error) {
-        console.error('Error fetching homework:', error);
+        console.error('❌ Error fetching homework:', error);
         return null;
     }
     
-    console.log('Fetched homework:', data);
+    console.log('✅ Fetched homework items:', data?.length || 0);
+    console.log('📋 Data:', data);
     return data;
 }
 
-/// Convert database rows to mission format
+// Convert database rows to mission format
 function convertToMissions(homeworkItems) {
     if (!homeworkItems || homeworkItems.length === 0) {
-        return tonightMissions; // Fall back to hardcoded if no data
+        return []; // Return empty array, NOT hardcoded fallback
     }
+    
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     
     return homeworkItems.map((item, index) => {
         // Determine badge type based on due date
-        const dueDate = new Date(item.date_due);
+        const dueDate = new Date(item.date_due + 'T00:00:00'); // Ensure local timezone
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const daysUntilDue = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
@@ -50,11 +56,23 @@ function convertToMissions(homeworkItems) {
             badge = 'today';
             badgeType = 'urgent';
         } else if (daysUntilDue === 1) {
-            badge = 'tomorrow';
+            // Check if tomorrow is a school day
+            const tomorrowDay = new Date(today);
+            tomorrowDay.setDate(tomorrowDay.getDate() + 1);
+            const dayName = dayNames[tomorrowDay.getDay()];
+            badge = `due ${dayName}`;
             badgeType = 'urgent';
-        } else if (daysUntilDue <= 3) {
-            badge = `in ${daysUntilDue} days`;
-            badgeType = 'warning';
+        } else if (daysUntilDue <= 5) {
+            // Show day name for items due within the week
+            const dayName = dayNames[dueDate.getDay()];
+            badge = `due ${dayName}`;
+            badgeType = daysUntilDue <= 2 ? 'warning' : 'normal';
+        } else {
+            // For items more than 5 days out, show the date
+            const month = dueDate.getMonth() + 1;
+            const day = dueDate.getDate();
+            badge = `${month}/${day}`;
+            badgeType = 'normal';
         }
         
         return {
@@ -68,6 +86,13 @@ function convertToMissions(homeworkItems) {
         };
     });
 }
+
+// Check if today is a weekend
+function isWeekend() {
+    const day = new Date().getDay();
+    return day === 0 || day === 6; // Sunday or Saturday
+}
+
 // ==========================================
 // NED APP - PHASE 3 REDESIGN
 // Barcelona-themed Command Center
@@ -199,20 +224,6 @@ const alerts = [
 ];
 
 // ==========================================
-// DATA: Tonight's Homework (Missions)
-// ==========================================
-const tonightMissions = [
-    { id: "hw1", subject: "Science", text: "Read pages P1-P4 and answer questions", badge: "study", badgeType: "urgent" },
-    { id: "hw2", subject: "Science", text: "Study for Metabolism Quiz (tomorrow!)", badge: "urgent", badgeType: "urgent" },
-    { id: "hw3", subject: "Spanish", text: "Finish slideshow (due tomorrow)", badge: "urgent", badgeType: "urgent" },
-    { id: "hw4", subject: "Math", text: "p128 #1-8 in book", badge: "due mon", badgeType: "normal" },
-    { id: "hw5", subject: "Social Studies", text: "Calculate your grade on MasteryConnect", badge: "due mon", badgeType: "normal" },
-    { id: "hw6", subject: "ELA", text: "Find all evidence for essay", badge: "due mon", badgeType: "normal" },
-    { id: "hw7", subject: "ELA", text: "Study for G/L", badge: "due mon", badgeType: "normal" },
-    { id: "hw8", subject: "Math", text: "Practice on Khan Academy (teacher assigned)", badge: "test prep", badgeType: "warning" }
-];
-
-// ==========================================
 // DATA: Morning Checklist
 // ==========================================
 const morningChecklist = [
@@ -318,6 +329,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 async function initializeApp() {
+    console.log('🚀 Initializing Ned App...');
+    
     setDateDisplay();
     setGreeting();
     setMotivation();
@@ -326,14 +339,18 @@ async function initializeApp() {
     setRandomTrivia();
     renderMatchCard();
     renderAlerts();
+    setHomeworkSectionTitle(); // Set weekend-aware title
     
     // Fetch real homework from Supabase
     const homeworkData = await fetchHomeworkFromDB();
-    if (homeworkData && homeworkData.length > 0) {
-        const missions = convertToMissions(homeworkData);
-       renderMissionsFromDB(missions);
+    const missions = convertToMissions(homeworkData);
+    
+    if (missions.length > 0) {
+        console.log('✅ Rendering', missions.length, 'missions from database');
+        renderMissionsFromDB(missions);
     } else {
-        renderMissions(); // Fall back to hardcoded
+        console.log('⚠️ No homework found in database - showing empty state');
+        renderEmptyHomework();
     }
     
     renderMorningChecklist();
@@ -344,6 +361,31 @@ async function initializeApp() {
     loadProgress();
     updateStats();
     checkSaturdayReminder();
+    
+    console.log('✅ App initialization complete');
+}
+
+// Set homework section title based on day of week
+function setHomeworkSectionTitle() {
+    const titleEl = document.getElementById('homework-section-title');
+    if (!titleEl) return;
+    
+    const day = new Date().getDay();
+    const hour = new Date().getHours();
+    
+    if (day === 6) {
+        // Saturday
+        titleEl.textContent = "📚 Homework for Next Week";
+    } else if (day === 0) {
+        // Sunday
+        titleEl.textContent = "📚 Homework for This Week";
+    } else if (day === 5 && hour >= 15) {
+        // Friday afternoon
+        titleEl.textContent = "📚 Weekend Homework";
+    } else {
+        // Regular school day
+        titleEl.textContent = "📚 Tonight's Missions";
+    }
 }
 
 // ==========================================
@@ -446,18 +488,16 @@ function renderAlerts() {
 // ==========================================
 // MISSIONS (Homework)
 // ==========================================
-function renderMissions() {
+function renderEmptyHomework() {
     const container = document.getElementById('tonight-homework');
-    container.innerHTML = tonightMissions.map(mission => `
-        <div class="mission-item" data-id="${mission.id}" onclick="toggleMission(this)">
-            <div class="mission-checkbox"></div>
-            <div class="mission-content">
-                <div class="mission-text">${mission.text}</div>
-                <div class="mission-subject">${mission.subject}</div>
-            </div>
-            ${mission.badge ? `<span class="mission-badge ${mission.badgeType}">${mission.badge}</span>` : ''}
+    container.innerHTML = `
+        <div class="empty-state">
+            <div class="empty-icon">📭</div>
+            <div class="empty-text">No homework found!</div>
+            <div class="empty-subtext">Either you're all caught up, or we need to sync with Canvas.</div>
+            <div class="empty-hint">Check the console (F12) for debug info</div>
         </div>
-    `).join('');
+    `;
 }
 
 function renderMissionsFromDB(missions) {
