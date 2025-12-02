@@ -1,4 +1,67 @@
 // ==========================================
+// SUPABASE CONNECTION
+// ==========================================
+const SUPABASE_URL = 'https://jzmivepzevgqlmxirlmk.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6bWl2ZXB6ZXZncWxteGlybG1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwODQ2MTAsImV4cCI6MjA3OTY2MDYxMH0.RTfSV7jMgyc1bpcDCZFtVoX9MjBYo0KElC0S16O6_og';
+const WILLY_STUDENT_ID = '8021ff47-1a41-4341-a2e0-9c4fa53cc389';
+
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// Fetch homework from database
+async function fetchHomeworkFromDB() {
+    const { data, error } = await supabase
+        .from('homework_items')
+        .select('*')
+        .eq('student_id', WILLY_STUDENT_ID)
+        .order('date_due', { ascending: true });
+    
+    if (error) {
+        console.error('Error fetching homework:', error);
+        return null;
+    }
+    
+    console.log('Fetched homework:', data);
+    return data;
+}
+
+// Convert database rows to mission format
+function convertToMissions(homeworkItems) {
+    if (!homeworkItems || homeworkItems.length === 0) {
+        return tonightMissions; // Fall back to hardcoded if no data
+    }
+    
+    return homeworkItems.map((item, index) => {
+        // Determine badge type based on due date
+        const dueDate = new Date(item.date_due);
+        const today = new Date();
+        const daysUntilDue = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+        
+        let badge = 'due soon';
+        let badgeType = 'normal';
+        
+        if (daysUntilDue <= 0) {
+            badge = 'due today';
+            badgeType = 'urgent';
+        } else if (daysUntilDue === 1) {
+            badge = 'due tomorrow';
+            badgeType = 'urgent';
+        } else if (daysUntilDue <= 3) {
+            badge = `due in ${daysUntilDue} days`;
+            badgeType = 'warning';
+        }
+        
+        return {
+            id: `hw-${item.id}`,
+            subject: item.subject || 'Assignment',
+            text: item.title || item.description || 'No title',
+            badge: badge,
+            badgeType: badgeType,
+            link: item.link || null,
+            completed: item.checked_off || false
+        };
+    });
+}
+// ==========================================
 // NED APP - PHASE 3 REDESIGN
 // Barcelona-themed Command Center
 // ==========================================
@@ -252,7 +315,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
 
-function initializeApp() {
+fasync function initializeApp() {
     setDateDisplay();
     setGreeting();
     setMotivation();
@@ -261,7 +324,16 @@ function initializeApp() {
     setRandomTrivia();
     renderMatchCard();
     renderAlerts();
-    renderMissions();
+    
+    // Fetch real homework from Supabase
+    const homeworkData = await fetchHomeworkFromDB();
+    if (homeworkData && homeworkData.length > 0) {
+        const missions = convertToMissions(homeworkData);
+        renderMissionsFromDB(missions);
+    } else {
+        renderMissions(); // Fall back to hardcoded
+    }
+    
     renderMorningChecklist();
     renderPlayerCards();
     renderWeekView();
@@ -373,6 +445,19 @@ function renderAlerts() {
 // MISSIONS (Homework)
 // ==========================================
 function renderMissions() {
+    function renderMissionsFromDB(missions) {
+    const container = document.getElementById('tonight-homework');
+    container.innerHTML = missions.map(mission => `
+        <div class="mission-item ${mission.completed ? 'completed' : ''}" data-id="${mission.id}" onclick="toggleMission(this)">
+            <div class="mission-checkbox"></div>
+            <div class="mission-content">
+                <div class="mission-text">${mission.text}</div>
+                <div class="mission-subject">${mission.subject}</div>
+            </div>
+            ${mission.badge ? `<span class="mission-badge ${mission.badgeType}">${mission.badge}</span>` : ''}
+        </div>
+    `).join('');
+}
     const container = document.getElementById('tonight-homework');
     container.innerHTML = tonightMissions.map(mission => `
         <div class="mission-item" data-id="${mission.id}" onclick="toggleMission(this)">

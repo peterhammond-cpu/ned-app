@@ -3,267 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ned - Willy's Assistant</title>
+    <title>Ned - Willy's Command Center</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0a1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
+    <div class="stadium-glow"></div>
+    
     <div class="container">
-        <div class="header">
-            <h1>🎯 Ned</h1>
-            <p id="greeting">Hey Willy!</p>
+        <!-- Header -->
+        <header class="header">
+            <div class="header-top">
+                <div class="logo">
+                    <span class="logo-icon">⚽</span>
+                    <span class="logo-text">NED</span>
+                </div>
+                <div class="streak-badge">
+                    <span class="streak-fire">🔥</span>
+                    <span class="streak-count" id="streak-count">5</span>
+                    <span class="streak-label">day streak</span>
+                </div>
+            </div>
+            <h1 id="greeting">What's good, Willy!</h1>
+            <p class="subtitle" id="date-display"></p>
+        </header>
+
+        <!-- Voice Picker -->
+        <div class="voice-picker">
+            <button class="voice-btn active" data-voice="normal" onclick="setVoice('normal')">
+                <span class="voice-emoji">😊</span>
+                <span class="voice-name">Normal</span>
+            </button>
+            <button class="voice-btn" data-voice="stewie" onclick="setVoice('stewie')">
+                <span class="voice-emoji">🎩</span>
+                <span class="voice-name">Stewie</span>
+            </button>
+            <button class="voice-btn" data-voice="french" onclick="setVoice('french')">
+                <span class="voice-emoji">🥖</span>
+                <span class="voice-name">French</span>
+            </button>
         </div>
-        
-        <div class="nav-tabs">
-            <button class="nav-tab active" onclick="switchTab('today')">Today</button>
-            <button class="nav-tab" onclick="switchTab('week')">This Week</button>
-            <button class="nav-tab" onclick="switchTab('tests')">Tests</button>
+
+        <!-- Motivational Message -->
+        <div class="motivation-card" id="motivation-card">
+            <p id="motivation-text">Let's crush it today! Your homework missions await.</p>
         </div>
-        
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('today')">
+                <span class="tab-icon">🎯</span>
+                <span class="tab-text">Today</span>
+            </button>
+            <button class="nav-tab" onclick="switchTab('players')">
+                <span class="tab-icon">⭐</span>
+                <span class="tab-text">Players</span>
+            </button>
+            <button class="nav-tab" onclick="switchTab('week')">
+                <span class="tab-icon">📅</span>
+                <span class="tab-text">Week</span>
+            </button>
+            <button class="nav-tab" onclick="switchTab('tests')">
+                <span class="tab-icon">📝</span>
+                <span class="tab-text">Tests</span>
+            </button>
+        </nav>
+
         <!-- TODAY TAB -->
         <div id="today-tab" class="tab-content active">
-            <div class="card">
-                <h2>😂 Daily Fun</h2>
+            <!-- Saturday Shot Reminder (injected by JS when needed) -->
+            <div id="shot-reminder-container"></div>
+
+            <!-- Next Match Card -->
+            <div class="card match-card">
+                <div class="card-header">
+                    <span class="card-icon">⚽</span>
+                    <h2>Next Match</h2>
+                </div>
+                <div class="match-content">
+                    <div class="match-teams">
+                        <div class="team home">
+                            <div class="team-crest">🔵🔴</div>
+                            <span class="team-name">Barcelona</span>
+                        </div>
+                        <div class="match-info">
+                            <span class="match-vs">VS</span>
+                            <span class="match-competition" id="match-competition">La Liga</span>
+                        </div>
+                        <div class="team away">
+                            <div class="team-crest" id="opponent-crest">⚪</div>
+                            <span class="team-name" id="opponent-name">Real Madrid</span>
+                        </div>
+                    </div>
+                    <div class="match-datetime">
+                        <span class="match-date" id="match-date">Saturday, Dec 14</span>
+                        <span class="match-time" id="match-time">3:00 PM EST</span>
+                    </div>
+                    <div class="match-motivation">
+                        <span class="motivation-icon">💡</span>
+                        <span id="match-motivation-text">Finish your missions early to catch kickoff!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Fun Card -->
+            <div class="card fun-card">
+                <div class="card-header">
+                    <span class="card-icon">😂</span>
+                    <h2>Daily Fun</h2>
+                </div>
                 <div class="joke-box" id="joke">
                     Why don't scientists trust atoms? Because they make up everything!
                 </div>
-                <div class="joke-box" id="soccer-trivia" style="margin-top: 15px; border-left-color: #1e90ff; background: #e6f3ff;">
-                    <strong>⚽ Soccer Question:</strong> Who do you think will win the Ballon d'Or this year?
+                <div class="trivia-box" id="soccer-trivia">
+                    <span class="trivia-icon">⚽</span>
+                    <span class="trivia-text">Who do you think will win the Ballon d'Or this year?</span>
                 </div>
             </div>
-            
-            <div class="card">
-                <h2>⚽ FC Barcelona</h2>
-                <div style="background: #004d98; color: white; padding: 15px; border-radius: 10px; margin-bottom: 10px;">
-                    <strong>🏆 Next Match:</strong> Barcelona vs Atlético Madrid<br>
-                    <span style="opacity: 0.9;">📅 Wednesday, Nov 13 • 3:00pm EST</span>
+
+            <!-- Alerts Card -->
+            <div class="card alerts-card">
+                <div class="card-header">
+                    <span class="card-icon">⚠️</span>
+                    <h2>Heads Up!</h2>
                 </div>
-                <div style="background: #f8f9ff; padding: 12px; border-radius: 8px; font-size: 14px; color: #555;">
-                    💡 Finish tonight's homework early and you'll have time to watch the game!
-                </div>
-            </div>
-            
-            <div class="card">
-                <h2>⚠️ Heads Up!</h2>
-                <div class="alert-box urgent">
-                    <strong>🚨 TOMORROW (Monday):</strong> Science Chapter 3 Metabolism Quiz - did you study yet?
-                </div>
-                <div class="alert-box urgent">
-                    <strong>🚨 TOMORROW (Monday):</strong> Spanish slideshow due - is it done?
-                </div>
-                <div class="alert-box warning">
-                    <strong>⏰ This Week:</strong> Math test on Friday 11/14 (Unit 3)
-                </div>
-                <div class="alert-box">
-                    <strong>📚 Book Fair:</strong> Your class goes Wednesday - bring money/e-wallet if you want books
-                </div>
-                <div class="alert-box">
-                    <strong>🎉 Coming Up:</strong> No school Nov 24-29 (Thanksgiving break!)
+                <div id="alerts-container">
+                    <!-- Alerts will be populated by JS -->
                 </div>
             </div>
-            
-            <div class="card">
-                <h2>📚 Tonight's Homework</h2>
-                <p style="color: #666; margin-bottom: 15px;">Sunday night - Get ready for Monday!</p>
-                <div id="tonight-homework">
-                    <div class="checklist-item" onclick="toggleItem(this)">
-                        <input type="checkbox" id="hw1">
-                        <label for="hw1">🔬 Science: Read pages P1-P4 and answer questions</label>
-                        <span class="time-badge urgent">STUDY</span>
+
+            <!-- Tonight's Missions -->
+            <div class="card missions-card">
+                <div class="card-header">
+                    <span class="card-icon">🎯</span>
+                    <h2>Tonight's Missions</h2>
+                    <span class="mission-count" id="mission-count">0/0</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
                     </div>
-                    <div class="checklist-item" onclick="toggleItem(this)">
-                        <input type="checkbox" id="hw2">
-                        <label for="hw2">🔬 Study for Science Metabolism Quiz (tomorrow!)</label>
-                        <span class="time-badge urgent">URGENT</span>
-                    </div>
-                    <div class="checklist-item" onclick="toggleItem(this)">
-                        <input type="checkbox" id="hw3">
-                        <label for="hw3">🇪🇸 Finish Spanish slideshow (due tomorrow)</label>
-                        <span class="time-badge urgent">URGENT</span>
-                    </div>
-                    <div class="checklist-item" onclick="toggleItem(this)">
-                        <input type="checkbox" id="hw4">
-                        <label for="hw4">📊 Math: p128 #1-8 in book</label>
-                        <span class="time-badge">DUE MON</span>
-                    </div>
-                    <div class="checklist-item" onclick="toggleItem(this)">
-                        <input type="checkbox" id="hw5">
-                        <label for="hw5">📚 SS: Calculate your grade on MasteryConnect</label>
-                        <span class="time-badge">DUE MON</span>
-                    </div>
-                    <div class="checklist-item" onclick="toggleItem(this)">
-                        <input type="checkbox" id="hw6">
-                        <label for="hw6">✍️ ELA: Find all evidence for essay</label>
-                        <span class="time-badge">DUE MON</span>
-                    </div>
-                    <div class="checklist-item" onclick="toggleItem(this)">
-                        <input type="checkbox" id="hw7">
-                        <label for="hw7">📖 ELA: Study for G/L</label>
-                        <span class="time-badge">DUE MON</span>
-                    </div>
-                    <div class="checklist-item" onclick="toggleItem(this)">
-                        <input type="checkbox" id="hw8">
-                        <label for="hw8">📊 Practice math on Khan Academy (teacher assigned problems)</label>
-                        <span class="time-badge warning">TEST PREP</span>
-                    </div>
+                    <span class="progress-text" id="progress-text">0% Complete</span>
+                </div>
+                <div id="tonight-homework" class="mission-list">
+                    <!-- Missions populated by JS -->
                 </div>
             </div>
-            
-            <div class="card">
-                <h2>🌅 Monday Morning Checklist</h2>
-                <p style="color: #666; margin-bottom: 15px;">Before you leave for school:</p>
-                <div id="morning-checklist">
-                    <div class="checklist-item" onclick="toggleItem(this)">
-                        <input type="checkbox" id="mon1">
-                        <label for="mon1">📊 Math homework p128 #1-8 (completed?)</label>
-                        <span class="time-badge">DUE MON</span>
-                    </div>
-                    <div class="checklist-item" onclick="toggleItem(this)">
-                        <input type="checkbox" id="mon2">
-                        <label for="mon2">📊 Spanish slideshow (saved and ready to present)</label>
-                        <span class="time-badge">DUE MON</span>
-                    </div>
-                    <div class="checklist-item" onclick="toggleItem(this)">
-                        <input type="checkbox" id="mon3">
-                        <label for="mon3">📖 Bring "The Story of Us" sheet for SS</label>
-                        <span class="time-badge">DUE MON</span>
-                    </div>
-                    <div class="checklist-item" onclick="toggleItem(this)">
-                        <input type="checkbox" id="mon4">
-                        <label for="mon4">✍️ ELA essay evidence (in backpack?)</label>
-                        <span class="time-badge">DUE MON</span>
-                    </div>
-                    <div class="checklist-item" onclick="toggleItem(this)">
-                        <input type="checkbox" id="item1">
-                        <label for="item1">💻 Chromebook + charger</label>
-                    </div>
-                    <div class="checklist-item" onclick="toggleItem(this)">
-                        <input type="checkbox" id="item2">
-                        <label for="item2">🎒 Check desk - any loose papers?</label>
-                    </div>
-                    <div class="checklist-item" onclick="toggleItem(this)">
-                        <input type="checkbox" id="item3">
-                        <label for="item3">🍎 Lunchbox</label>
-                    </div>
-                    <div class="checklist-item" onclick="toggleItem(this)">
-                        <input type="checkbox" id="item4">
-                        <label for="item4">💧 Water bottle</label>
-                    </div>
+
+            <!-- Morning Checklist -->
+            <div class="card checklist-card">
+                <div class="card-header">
+                    <span class="card-icon">🌅</span>
+                    <h2>Morning Checklist</h2>
+                </div>
+                <p class="card-subtitle">Before you leave for school:</p>
+                <div id="morning-checklist" class="mission-list">
+                    <!-- Checklist populated by JS -->
                 </div>
             </div>
-            
+        </div>
+
+        <!-- PLAYERS TAB -->
+        <div id="players-tab" class="tab-content">
+            <div class="players-header">
+                <h2>⭐ My Favorite Players</h2>
+                <p>Track your Barça heroes</p>
+            </div>
+            <div class="player-cards" id="player-cards">
+                <!-- Player cards populated by JS -->
+            </div>
             <div class="card">
-                <h2>📊 Progress</h2>
-                <div class="stats">
-                    <div class="stat-card">
-                        <div class="stat-number" id="completed-count">0</div>
-                        <div class="stat-label">Checked Off</div>
+                <div class="card-header">
+                    <span class="card-icon">📊</span>
+                    <h2>Season Stats</h2>
+                </div>
+                <div class="season-summary">
+                    <div class="season-stat">
+                        <span class="stat-value" id="total-goals">0</span>
+                        <span class="stat-label">Total Goals</span>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">5</div>
-                        <div class="stat-label">Day Streak 🔥</div>
+                    <div class="season-stat">
+                        <span class="stat-value" id="total-assists">0</span>
+                        <span class="stat-label">Total Assists</span>
+                    </div>
+                    <div class="season-stat">
+                        <span class="stat-value" id="avg-rating">0.0</span>
+                        <span class="stat-label">Avg Rating</span>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <!-- WEEK TAB -->
         <div id="week-tab" class="tab-content">
             <div class="card">
-                <h2>📅 This Week (Nov 11-15)</h2>
-                <div class="week-view">
-                    <div class="day-card today">
-                        <h3>Monday, Nov 11 <span style="font-size: 14px; background: #ffc107; padding: 3px 8px; border-radius: 5px;">TODAY</span></h3>
-                        <ul>
-                            <li class="test-item">🔬 Science: Metabolism Quiz (Ch 3)</li>
-                            <li>🇪🇸 Spanish: Slideshow due</li>
-                            <li>📚 SS: Bring "Story of Us" sheet</li>
-                            <li>📊 SS: Calculate grade on MasteryConnect</li>
-                            <li>✍️ ELA: Find all evidence for essay</li>
-                            <li>📖 ELA: Study for G/L</li>
-                        </ul>
-                    </div>
-                    <div class="day-card">
-                        <h3>Tuesday, Nov 12</h3>
-                        <ul>
-                            <li>📚 Keep working on ongoing assignments</li>
-                            <li>📊 Start studying for Math test (Friday)</li>
-                        </ul>
-                    </div>
-                    <div class="day-card">
-                        <h3>Wednesday, Nov 13</h3>
-                        <ul>
-                            <li>📊 Study for Math test (2 days away!)</li>
-                            <li>📚 Book Fair with your class (7F) - bring money if you want books</li>
-                        </ul>
-                    </div>
-                    <div class="day-card">
-                        <h3>Thursday, Nov 14</h3>
-                        <ul>
-                            <li>📊 Final review for Math test tomorrow</li>
-                        </ul>
-                    </div>
-                    <div class="day-card">
-                        <h3>Friday, Nov 15</h3>
-                        <ul>
-                            <li class="test-item">📊 Math: Unit 3 Test</li>
-                            <li>🎉 End of Trimester 1 - you made it!</li>
-                        </ul>
-                    </div>
-                    <div class="day-card">
-                        <h3>Week of Nov 24</h3>
-                        <ul>
-                            <li>🦃 No School - Thanksgiving Break!</li>
-                        </ul>
-                    </div>
+                <div class="card-header">
+                    <span class="card-icon">📅</span>
+                    <h2>This Week</h2>
+                </div>
+                <div class="week-view" id="week-view">
+                    <!-- Week view populated by JS -->
                 </div>
             </div>
         </div>
-        
+
         <!-- TESTS TAB -->
         <div id="tests-tab" class="tab-content">
             <div class="card">
-                <h2>📝 Upcoming Tests</h2>
-                <div class="alert-box urgent">
-                    <strong>TOMORROW - Monday, Nov 11</strong><br>
-                    🔬 Science: Chapter 3 Metabolism Quiz<br>
-                    <small>Study pages P1-P4 and review questions</small>
+                <div class="card-header">
+                    <span class="card-icon">📝</span>
+                    <h2>Upcoming Tests</h2>
                 </div>
-                <div class="alert-box warning">
-                    <strong>Friday, Nov 15 (5 days away)</strong><br>
-                    📊 Math: Unit 3 Test<br>
-                    <small>Start reviewing a little each night!</small>
+                <div id="tests-container">
+                    <!-- Tests populated by JS -->
                 </div>
             </div>
-            
             <div class="card">
-                <h2>💡 Study Tips</h2>
-                <div style="background: #f8f9ff; padding: 15px; border-radius: 10px;">
-                    <p style="margin-bottom: 10px;"><strong>For Science Quiz tomorrow:</strong></p>
-                    <ul style="margin-left: 20px; color: #555;">
-                        <li>Re-read pages P1-P4</li>
-                        <li>Answer the follow-up questions</li>
-                        <li>Make flashcards for key terms</li>
-                        <li>Quiz yourself tonight</li>
-                    </ul>
-                    <p style="margin-top: 15px; margin-bottom: 10px;"><strong>For Math Test (Friday):</strong></p>
-                    <ul style="margin-left: 20px; color: #555;">
-                        <li>Practice on Khan Academy each night (teacher assigned problems)</li>
-                        <li>⚠️ Read the WHOLE question - are they asking for tip OR total bill?</li>
-                        <li>Your teacher is doing small group review in class - GO TO IT!</li>
-                        <li>Don't wait until Thursday night to cram!</li>
-                    </ul>
+                <div class="card-header">
+                    <span class="card-icon">💡</span>
+                    <h2>Study Tips</h2>
+                </div>
+                <div id="study-tips">
+                    <!-- Study tips populated by JS -->
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Load Supabase from CDN -->
    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-   
-   <!-- Load Supabase client -->
-   <script src="supabase-client.js"></script>
-   
-   <!-- Load main app -->
-   <script src="app.js"></script>
-   </body>  
+<script src="app.js"></script>
+    <script src="app.js"></script>
+</body>
 </html>
