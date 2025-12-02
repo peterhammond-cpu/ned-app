@@ -32,6 +32,11 @@
 - [ ] Secure API key storage
 - [ ] Canvas sync scheduler
 
+### Smart Due Date Parsing (Future Enhancement)
+- [ ] Parse actual due dates from homework descriptions
+- [ ] Detect patterns: "due tomorrow", "due Wed", "due Friday", "due 12/5"
+- [ ] Override assigned date with parsed due date when found
+- [ ] Handle edge cases: "Quiz Friday" vs "due Friday"
 ---
 
 ## Phase 3 - Soccer Features (High Engagement for Willy)
@@ -41,6 +46,13 @@
 - Keeps him engaged with the app daily
 - Motivational tool for homework completion
 - Low technical complexity = quick win
+
+### Week View & Tests Tab (Future Enhancement)
+- [ ] Connect Week tab to Supabase homework data
+- [ ] Add sports schedule integration (TeamSnap API)
+- [ ] Add family Google Calendar sync
+- [ ] Tests tab: Auto-detect quizzes/tests from homework descriptions
+- [ ] Parse "quiz tomorrow", "test Friday" from assignment text
 
 ### FC Barcelona Game Schedule
 - [ ] Auto-pull Barca game schedules (La Liga, Champions League, Copa del Rey)

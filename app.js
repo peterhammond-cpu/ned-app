@@ -193,11 +193,9 @@ let currentVoice = localStorage.getItem('nedVoice') || 'normal';
 // DATA: Alerts
 // ==========================================
 const alerts = [
-    { type: "urgent", title: "🚨 TOMORROW (Monday):", text: "Science Chapter 3 Metabolism Quiz - did you study yet?" },
-    { type: "urgent", title: "🚨 TOMORROW (Monday):", text: "Spanish slideshow due - is it done?" },
-    { type: "warning", title: "⏰ This Week:", text: "Math test on Friday (Unit 3)" },
-    { type: "info", title: "📚 Book Fair:", text: "Your class goes Wednesday - bring money if you want books" },
-    { type: "info", title: "🎉 Coming Up:", text: "Thanksgiving break Nov 24-29!" }
+    { type: "warning", title: "📋 Daily Reminder:", text: "Check Canvas for any new assignments" },
+    { type: "info", title: "💡 Pro Tip:", text: "Start with the hardest subject first" },
+    { type: "info", title: "🎯 Stay Focused:", text: "Phone away during homework time!" }
 ];
 
 // ==========================================
@@ -218,14 +216,11 @@ const tonightMissions = [
 // DATA: Morning Checklist
 // ==========================================
 const morningChecklist = [
-    { id: "mon1", subject: "Math", text: "Math homework p128 #1-8 (completed?)", badge: "due mon", badgeType: "normal" },
-    { id: "mon2", subject: "Spanish", text: "Slideshow saved and ready to present", badge: "due mon", badgeType: "normal" },
-    { id: "mon3", subject: "Social Studies", text: "Bring 'The Story of Us' sheet", badge: "due mon", badgeType: "normal" },
-    { id: "mon4", subject: "ELA", text: "Essay evidence (in backpack?)", badge: "due mon", badgeType: "normal" },
     { id: "item1", subject: "Gear", text: "Chromebook + charger", badge: "", badgeType: "" },
     { id: "item2", subject: "Gear", text: "Check desk - any loose papers?", badge: "", badgeType: "" },
-    { id: "item3", subject: "Gear", text: "Lunchbox", badge: "", badgeType: "" },
-    { id: "item4", subject: "Gear", text: "Water bottle", badge: "", badgeType: "" }
+    { id: "item3", subject: "Gear", text: "Homework in backpack?", badge: "", badgeType: "" },
+    { id: "item4", subject: "Gear", text: "Lunchbox", badge: "", badgeType: "" },
+    { id: "item5", subject: "Gear", text: "Water bottle", badge: "", badgeType: "" }
 ];
 
 // ==========================================
