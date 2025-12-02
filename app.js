@@ -30,7 +30,7 @@ async function fetchHomeworkFromDB() {
     return data;
 }
 
-// Convert database rows to mission format
+/// Convert database rows to mission format
 function convertToMissions(homeworkItems) {
     if (!homeworkItems || homeworkItems.length === 0) {
         return tonightMissions; // Fall back to hardcoded if no data
@@ -40,19 +40,20 @@ function convertToMissions(homeworkItems) {
         // Determine badge type based on due date
         const dueDate = new Date(item.date_due);
         const today = new Date();
+        today.setHours(0, 0, 0, 0);
         const daysUntilDue = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
         
-        let badge = 'due soon';
+        let badge = 'upcoming';
         let badgeType = 'normal';
         
         if (daysUntilDue <= 0) {
-            badge = 'due today';
+            badge = 'today';
             badgeType = 'urgent';
         } else if (daysUntilDue === 1) {
-            badge = 'due tomorrow';
+            badge = 'tomorrow';
             badgeType = 'urgent';
         } else if (daysUntilDue <= 3) {
-            badge = `due in ${daysUntilDue} days`;
+            badge = `in ${daysUntilDue} days`;
             badgeType = 'warning';
         }
         
