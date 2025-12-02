@@ -329,7 +329,7 @@ async function initializeApp() {
     const homeworkData = await fetchHomeworkFromDB();
     if (homeworkData && homeworkData.length > 0) {
         const missions = convertToMissions(homeworkData);
-        renderMissionsFromDB(missions);
+        FromDB(missions);
     } else {
         renderMissions(); // Fall back to hardcoded
     }
@@ -445,10 +445,9 @@ function renderAlerts() {
 // MISSIONS (Homework)
 // ==========================================
 function renderMissions() {
-    function renderMissionsFromDB(missions) {
     const container = document.getElementById('tonight-homework');
-    container.innerHTML = missions.map(mission => `
-        <div class="mission-item ${mission.completed ? 'completed' : ''}" data-id="${mission.id}" onclick="toggleMission(this)">
+    container.innerHTML = tonightMissions.map(mission => `
+        <div class="mission-item" data-id="${mission.id}" onclick="toggleMission(this)">
             <div class="mission-checkbox"></div>
             <div class="mission-content">
                 <div class="mission-text">${mission.text}</div>
@@ -458,9 +457,11 @@ function renderMissions() {
         </div>
     `).join('');
 }
+
+function renderMissionsFromDB(missions) {
     const container = document.getElementById('tonight-homework');
-    container.innerHTML = tonightMissions.map(mission => `
-        <div class="mission-item" data-id="${mission.id}" onclick="toggleMission(this)">
+    container.innerHTML = missions.map(mission => `
+        <div class="mission-item ${mission.completed ? 'completed' : ''}" data-id="${mission.id}" onclick="toggleMission(this)">
             <div class="mission-checkbox"></div>
             <div class="mission-content">
                 <div class="mission-text">${mission.text}</div>
