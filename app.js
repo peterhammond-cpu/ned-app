@@ -9,10 +9,16 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Fetch homework from database
 async function fetchHomeworkFromDB() {
+    // Get today's date at midnight for comparison
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayISO = today.toISOString();
+    
     const { data, error } = await supabase
         .from('homework_items')
         .select('*')
         .eq('student_id', WILLY_STUDENT_ID)
+        .gte('date_due', todayISO)  // Only items due today or later
         .order('date_due', { ascending: true });
     
     if (error) {
