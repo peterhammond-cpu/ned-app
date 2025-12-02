@@ -329,7 +329,7 @@ async function initializeApp() {
     const homeworkData = await fetchHomeworkFromDB();
     if (homeworkData && homeworkData.length > 0) {
         const missions = convertToMissions(homeworkData);
-        FromDB(missions);
+       renderMissionsFromDB(missions);
     } else {
         renderMissions(); // Fall back to hardcoded
     }
