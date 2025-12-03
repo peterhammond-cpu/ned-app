@@ -4,8 +4,8 @@ on:
   schedule:
     # 7:00 AM CST = 13:00 UTC (sync only)
     - cron: '0 13 * * 1-5'
-    # 3:00 PM CST = 21:00 UTC (sync + call)
-    - cron: '0 21 * * 1-5'
+   # 2:45 PM CST = 20:45 UTC (sync + call)
+    - cron: '45 20 * * 1-5'
   workflow_dispatch:
     inputs:
       make_call:
@@ -49,8 +49,8 @@ jobs:
           cd test-scripts
           node sync-football.js
       
-      - name: Make reminder call (3pm only)
-        if: github.event.schedule == '0 21 * * 1-5' || inputs.make_call == true
+      - name: Make reminder call (2:45pm only)
+         if: github.event.schedule == '45 20 * * 1-5' || inputs.make_call == true
         env:
           TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
           TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
