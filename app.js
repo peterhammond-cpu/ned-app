@@ -164,7 +164,6 @@ async function fetchMatchData() {
     console.log('✅ Match data:', data);
     return data;
 }
-};
 
 // ==========================================
 // DATA: Dad Jokes
