@@ -492,17 +492,34 @@ async function renderMatchCard() {
         document.getElementById('match-time').textContent = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
     }
     
-    // Last match result (add to UI)
-    if (match.last_result) {
-        const resultEmoji = match.last_result === 'WIN' ? '✅' : match.last_result === 'LOSS' ? '❌' : '➖';
-        const lastMatchText = `${resultEmoji} Last: Barça ${match.last_score_home}-${match.last_score_away} ${match.last_opponent}`;
+    // Last match result
+    if (match.last_result && match.last_opponent) {
+        const container = document.getElementById('last-result-container');
+        const textEl = document.getElementById('last-result-text');
         
-        // Update motivation text with last result
-        document.getElementById('match-motivation-text').textContent = 
-            match.last_result === 'WIN' 
-                ? `Barça won ${match.last_score_home}-${match.last_score_away}! Keep that winning energy for homework!`
-                : `Finish your missions early to catch the next match!`;
+        const isHome = match.last_home_or_away === 'HOME';
+        const barcaScore = isHome ? match.last_score_home : match.last_score_away;
+        const oppScore = isHome ? match.last_score_away : match.last_score_home;
+        
+        let emoji, resultClass;
+        if (match.last_result === 'WIN') {
+            emoji = '✅';
+            resultClass = 'win';
+        } else if (match.last_result === 'LOSS') {
+            emoji = '❌';
+            resultClass = 'loss';
+        } else {
+            emoji = '➖';
+            resultClass = 'draw';
+        }
+        
+        textEl.textContent = `${emoji} Last Match: Barça ${barcaScore} - ${oppScore} ${match.last_opponent}`;
+        container.classList.add(resultClass);
+        container.style.display = 'block';
     }
+    
+    // Update motivation
+    document.getElementById('match-motivation-text').textContent = 'Finish your missions early to catch kickoff!';
 }
 
 // ==========================================

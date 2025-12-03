@@ -96,36 +96,42 @@
             </div>
             
             <!-- Next Match -->
-            <div class="card match-card">
-                <div class="card-header">
-                    <span class="card-icon">⚽</span>
-                    <h2>FC Barcelona</h2>
-                </div>
-                <div class="match-content">
-                    <div class="match-teams">
-                        <div class="team">
-                            <div class="team-crest">🔵🔴</div>
-                            <span class="team-name">Barcelona</span>
-                        </div>
-                        <div class="match-info">
-                            <span class="match-vs">VS</span>
-                            <span class="match-competition" id="match-competition">La Liga</span>
-                        </div>
-                        <div class="team">
-                            <div class="team-crest" id="opponent-crest">🔴⚪</div>
-                            <span class="team-name" id="opponent-name">Loading...</span>
-                        </div>
-                    </div>
-                    <div class="match-datetime">
-                        <span class="match-date" id="match-date">Loading...</span>
-                        <span class="match-time" id="match-time">Loading...</span>
-                    </div>
-                    <div class="match-motivation">
-                        <span>💡</span>
-                        <span id="match-motivation-text">Finish your missions early to catch kickoff!</span>
-                    </div>
-                </div>
+<div class="card match-card">
+    <div class="card-header">
+        <span class="card-icon">⚽</span>
+        <h2>FC Barcelona</h2>
+    </div>
+    
+    <!-- Last Result -->
+    <div class="last-result" id="last-result-container" style="display: none;">
+        <span id="last-result-text">Loading...</span>
+    </div>
+    
+    <div class="match-content">
+        <div class="match-teams">
+            <div class="team">
+                <div class="team-crest">🔵🔴</div>
+                <span class="team-name">Barcelona</span>
             </div>
+            <div class="match-info">
+                <span class="match-vs">VS</span>
+                <span class="match-competition" id="match-competition">La Liga</span>
+            </div>
+            <div class="team">
+                <div class="team-crest" id="opponent-crest">🔴⚪</div>
+                <span class="team-name" id="opponent-name">Loading...</span>
+            </div>
+        </div>
+        <div class="match-datetime">
+            <span class="match-date" id="match-date">Loading...</span>
+            <span class="match-time" id="match-time">Loading...</span>
+        </div>
+        <div class="match-motivation">
+            <span>💡</span>
+            <span id="match-motivation-text">Finish your missions early to catch kickoff!</span>
+        </div>
+    </div>
+</div>
             
             <!-- Alerts -->
             <div class="card">
