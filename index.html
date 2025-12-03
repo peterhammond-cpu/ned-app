@@ -61,8 +61,8 @@
                 <span class="tab-text">Today</span>
             </button>
             <button class="nav-tab" onclick="switchTab('players')">
-                <span class="tab-icon">⭐</span>
-                <span class="tab-text">Players</span>
+                <span class="tab-icon">⚽</span>
+                <span class="tab-text">Barça</span>
             </button>
             <!-- Hidden until connected to real data
             <button class="nav-tab" onclick="switchTab('week')">
@@ -95,43 +95,8 @@
                 </div>
             </div>
             
-            <!-- Next Match -->
-<div class="card match-card">
-    <div class="card-header">
-        <span class="card-icon">⚽</span>
-        <h2>FC Barcelona</h2>
-    </div>
     
-    <!-- Last Result -->
-    <div class="last-result" id="last-result-container" style="display: none;">
-        <span id="last-result-text">Loading...</span>
-    </div>
     
-    <div class="match-content">
-        <div class="match-teams">
-            <div class="team">
-                <div class="team-crest">🔵🔴</div>
-                <span class="team-name">Barcelona</span>
-            </div>
-            <div class="match-info">
-                <span class="match-vs">VS</span>
-                <span class="match-competition" id="match-competition">La Liga</span>
-            </div>
-            <div class="team">
-                <div class="team-crest" id="opponent-crest">🔴⚪</div>
-                <span class="team-name" id="opponent-name">Loading...</span>
-            </div>
-        </div>
-        <div class="match-datetime">
-            <span class="match-date" id="match-date">Loading...</span>
-            <span class="match-time" id="match-time">Loading...</span>
-        </div>
-        <div class="match-motivation">
-            <span>💡</span>
-            <span id="match-motivation-text">Finish your missions early to catch kickoff!</span>
-        </div>
-    </div>
-</div>
             
             <!-- Alerts -->
             <div class="card">
@@ -174,11 +139,54 @@
         </div>
         
         <!-- PLAYERS TAB -->
-        <div id="players-tab" class="tab-content">
-            <div class="players-header">
-                <h2>⭐ Star Players</h2>
-                <p>Your favorite Barça players</p>
+
+        <!-- BARÇA TAB -->
+<div id="players-tab" class="tab-content">
+    <div class="players-header">
+        <h2>🔵🔴 FC Barcelona</h2>
+        <p>Força Barça!</p>
+    </div>
+    
+    <!-- Last Result -->
+    <div class="last-result" id="last-result-container" style="display: none;">
+        <span id="last-result-text">Loading...</span>
+    </div>
+    
+    <!-- Next Match -->
+    <div class="card match-card">   
+        <div class="card-header">
+            <span class="card-icon">📅</span>
+            <h2>Next Match</h2>
+        </div>
+        <div class="match-content">
+            <div class="match-teams">
+                <div class="team">
+                    <div class="team-crest">🔵🔴</div>
+                    <span class="team-name">Barcelona</span>
+                </div>
+                <div class="match-info">
+                    <span class="match-vs">VS</span>
+                    <span class="match-competition" id="match-competition">La Liga</span>
+                </div>
+                <div class="team">
+                    <div class="team-crest" id="opponent-crest">🔴⚪</div>
+                    <span class="team-name" id="opponent-name">Loading...</span>
+                </div>
             </div>
+            <div class="match-datetime">
+                <span class="match-date" id="match-date">Loading...</span>
+                <span class="match-time" id="match-time">Loading...</span>
+            </div>
+            <div class="match-motivation">
+                <span>💡</span>
+                <span id="match-motivation-text">Finish your missions early to catch kickoff!</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="players-header" style="margin-top: 20px;">
+        <h2>⭐ Star Players</h2>
+    </div>
             
             <div class="player-cards" id="player-cards">
                 <!-- Populated by JavaScript -->
