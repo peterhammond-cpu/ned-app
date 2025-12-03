@@ -222,27 +222,26 @@ function parseHomework(html) {
 // DATABASE SYNC
 // ==========================================
 
-// Clear old homework and save fresh data
+// Sync homework using UPSERT (preserves checkbox state)
 async function syncToDatabase(homeworkByDate) {
-    console.log('\n🗑️  Clearing old homework...');
+    console.log('\n💾 Syncing homework to database...\n');
     
-    // Delete all existing homework for Willy
-    const { error: deleteError } = await supabase
-        .from('homework_items')
-        .delete()
-        .eq('student_id', WILLY_STUDENT_ID);
-    
-    if (deleteError) {
-        throw new Error(`Delete error: ${deleteError.message}`);
-    }
-    
-    console.log('💾 Saving fresh homework...\n');
-    
-    let insertCount = 0;
+    let upsertCount = 0;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+
+    // Only sync items assigned within the last 7 days
+    const sevenDaysAgo = new Date(today);
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    
+    // Build array of all homework items
+    const allItems = [];
     
     for (const [dateStr, data] of Object.entries(homeworkByDate)) {
+        // Skip homework assigned more than 7 days ago
+        if (data.assignedDate < sevenDaysAgo) {
+            continue;
+        }
         const assignedDate = data.assignedDate;
         
         for (const item of data.items) {
@@ -250,37 +249,66 @@ async function syncToDatabase(homeworkByDate) {
             const dueDateStr = dueDate.toISOString().split('T')[0];
             const assignedDateStr = assignedDate.toISOString().split('T')[0];
             
+            // Create unique external_id from subject + assigned date + first 50 chars of description
+            const externalId = `${item.subject}-${assignedDateStr}-${item.description.substring(0, 50).replace(/[^a-zA-Z0-9]/g, '')}`;
+            
             // Determine status
             let status = 'pending';
             if (dueDate < today) {
                 status = 'past';
             }
             
-            console.log(`  💾 ${item.subject}: assigned ${assignedDateStr}, due ${dueDateStr}`);
+            console.log(`  📝 ${item.subject}: assigned ${assignedDateStr}, due ${dueDateStr}`);
             
-            const { error } = await supabase
-                .from('homework_items')
-                .insert({
-                    student_id: WILLY_STUDENT_ID,
-                    source_lms: 'canvas',
-                    date_assigned: assignedDateStr,
-                    date_due: dueDateStr,
-                    subject: item.subject,
-                    title: item.description.substring(0, 100),
-                    description: item.description,
-                    link: item.link,
-                    status: status
-                });
-            
-            if (!error) {
-                insertCount++;
-            } else {
-                console.error(`  ⚠️ Error inserting: ${error.message}`);
-            }
+            allItems.push({
+                student_id: WILLY_STUDENT_ID,
+                source_lms: 'canvas',
+                external_id: externalId,
+                date_assigned: assignedDateStr,
+                date_due: dueDateStr,
+                subject: item.subject,
+                title: item.description.substring(0, 100),
+                description: item.description,
+                link: item.link,
+                status: status
+            });
         }
     }
     
-    console.log(`\n✅ Saved ${insertCount} homework items!`);
+    // Upsert each item (update if exists, insert if new)
+    for (const item of allItems) {
+        const { error } = await supabase
+            .from('homework_items')
+            .upsert(item, { 
+                onConflict: 'student_id,external_id',
+                ignoreDuplicates: false 
+            });
+        
+        if (!error) {
+            upsertCount++;
+        } else {
+            console.error(`  ⚠️ Error upserting: ${error.message}`);
+        }
+    }
+    
+    // Clean up old items (due more than 7 days ago)
+    const weekAgo = new Date(today);
+    weekAgo.setDate(weekAgo.getDate() - 7);
+    const weekAgoStr = weekAgo.toISOString().split('T')[0];
+    
+    const { error: cleanupError } = await supabase
+        .from('homework_items')
+        .delete()
+        .eq('student_id', WILLY_STUDENT_ID)
+        .lt('date_due', weekAgoStr);
+    
+    if (cleanupError) {
+        console.error(`  ⚠️ Cleanup error: ${cleanupError.message}`);
+    } else {
+        console.log(`\n🧹 Cleaned up items due before ${weekAgoStr}`);
+    }
+    
+    console.log(`\n✅ Synced ${upsertCount} homework items!`);
 }
 
 // ==========================================
