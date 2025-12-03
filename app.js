@@ -144,15 +144,26 @@ const playerData = [
 ];
 
 // ==========================================
-// DATA: Next Match (Hardcoded - will connect to API later)
+// DATA: Next Match - Barcelona
 // ==========================================
-const nextMatch = {
-    opponent: "Atlético Madrid",
-    opponentCrest: "🔴⚪",
-    competition: "La Liga",
-    date: "Saturday, Dec 21",
-    time: "3:00 PM EST",
-    venue: "Spotify Camp Nou"
+// Fetch match data from Supabase
+async function fetchMatchData() {
+    console.log('⚽ Fetching match data...');
+    
+    const { data, error } = await supabase
+        .from('match_data')
+        .select('*')
+        .eq('team_id', 81)
+        .single();
+    
+    if (error) {
+        console.error('❌ Error fetching match data:', error);
+        return null;
+    }
+    
+    console.log('✅ Match data:', data);
+    return data;
+}
 };
 
 // ==========================================
@@ -464,12 +475,35 @@ function setRandomTrivia() {
 // ==========================================
 // MATCH CARD
 // ==========================================
-function renderMatchCard() {
-    document.getElementById('opponent-name').textContent = nextMatch.opponent;
-    document.getElementById('opponent-crest').textContent = nextMatch.opponentCrest;
-    document.getElementById('match-competition').textContent = nextMatch.competition;
-    document.getElementById('match-date').textContent = nextMatch.date;
-    document.getElementById('match-time').textContent = nextMatch.time;
+async function renderMatchCard() {
+    const match = await fetchMatchData();
+    
+    if (!match) {
+        document.getElementById('opponent-name').textContent = 'TBD';
+        return;
+    }
+    
+    // Next match
+    document.getElementById('opponent-name').textContent = match.next_opponent || 'TBD';
+    document.getElementById('match-competition').textContent = match.next_competition || '';
+    
+    if (match.next_match_date) {
+        const date = new Date(match.next_match_date);
+        document.getElementById('match-date').textContent = date.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+        document.getElementById('match-time').textContent = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+    }
+    
+    // Last match result (add to UI)
+    if (match.last_result) {
+        const resultEmoji = match.last_result === 'WIN' ? '✅' : match.last_result === 'LOSS' ? '❌' : '➖';
+        const lastMatchText = `${resultEmoji} Last: Barça ${match.last_score_home}-${match.last_score_away} ${match.last_opponent}`;
+        
+        // Update motivation text with last result
+        document.getElementById('match-motivation-text').textContent = 
+            match.last_result === 'WIN' 
+                ? `Barça won ${match.last_score_home}-${match.last_score_away}! Keep that winning energy for homework!`
+                : `Finish your missions early to catch the next match!`;
+    }
 }
 
 // ==========================================
