@@ -40,6 +40,15 @@ jobs:
           cd test-scripts
           node sync-canvas-homework.js
       
+      - name: Run Football sync
+        env:
+          FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          cd test-scripts
+          node sync-football.js
+      
       - name: Make reminder call (3pm only)
         if: github.event.schedule == '0 21 * * 1-5' || inputs.make_call == true
         env:
