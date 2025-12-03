@@ -2,11 +2,16 @@ name: Sync Canvas Homework
 
 on:
   schedule:
-    # 7:00 AM CST = 13:00 UTC
+    # 7:00 AM CST = 13:00 UTC (sync only)
     - cron: '0 13 * * 1-5'
-    # 3:00 PM CST = 21:00 UTC
+    # 3:00 PM CST = 21:00 UTC (sync + call)
     - cron: '0 21 * * 1-5'
-  workflow_dispatch: # Allows manual trigger from GitHub UI
+  workflow_dispatch:
+    inputs:
+      make_call:
+        description: 'Make reminder call'
+        type: boolean
+        default: false
 
 jobs:
   sync:
@@ -24,7 +29,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd test-scripts
-          npm install dotenv @supabase/supabase-js cheerio
+          npm install dotenv @supabase/supabase-js cheerio twilio
       
       - name: Run Canvas sync
         env:
@@ -34,4 +39,14 @@ jobs:
         run: |
           cd test-scripts
           node sync-canvas-homework.js
-          
+      
+      - name: Make reminder call (3pm only)
+        if: github.event.schedule == '0 21 * * 1-5' || inputs.make_call == true
+        env:
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_PHONE_NUMBER: ${{ secrets.TWILIO_PHONE_NUMBER }}
+          WILLY_PHONE_NUMBER: ${{ secrets.WILLY_PHONE_NUMBER }}
+        run: |
+          cd test-scripts
+          node test-call.js
