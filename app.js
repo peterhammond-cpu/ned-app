@@ -594,9 +594,32 @@ function renderMorningChecklist() {
 }
 
 function toggleMission(element) {
+   async function toggleMission(element) {
     element.classList.toggle('completed');
+    const isCompleted = element.classList.contains('completed');
+    const itemId = element.dataset.id;
+    
+    // Save to Supabase if it's a homework item
+    if (itemId && itemId.startsWith('hw-')) {
+        const dbId = itemId.replace('hw-', '');
+        const { error } = await supabase
+            .from('homework_items')
+            .update({ 
+                checked_off: isCompleted,
+                checked_at: isCompleted ? new Date().toISOString() : null
+            })
+            .eq('id', dbId);
+        
+        if (error) {
+            console.error('❌ Error saving checkbox:', error);
+        } else {
+            console.log('✅ Checkbox saved to database');
+        }
+    }
+    
     updateStats();
-    saveProgress();
+    saveProgress(); // Keep localStorage as backup
+}
 }
 
 // ==========================================
