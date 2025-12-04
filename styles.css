@@ -829,6 +829,30 @@ body {
     font-weight: 500;
 }
 
+/* Weekend styling */
+.day-card.weekend {
+    border-color: var(--barca-gold);
+    opacity: 0.8;
+}
+
+/* Match styling in week view */
+.day-item.match {
+    color: var(--barca-gold);
+    font-weight: 600;
+}
+
+/* Completed homework in week view */
+.day-item.completed {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+/* No homework message */
+.day-item.no-homework {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
 /* Tests */
 .test-card {
     padding: var(--spacing-md);

@@ -102,11 +102,125 @@ function convertToMissions(homeworkItems) {
     });
 }
 
+// Fetch homework for the week view
+async function fetchWeekHomework() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Get homework for the next 7 days
+    const nextWeek = new Date(today);
+    nextWeek.setDate(nextWeek.getDate() + 7);
+    
+    const { data, error } = await supabase
+        .from('homework_items')
+        .select('*')
+        .eq('student_id', WILLY_STUDENT_ID)
+        .gte('date_due', today.toISOString())
+        .lte('date_due', nextWeek.toISOString())
+        .order('date_due', { ascending: true });
+    
+    if (error) {
+        console.error('❌ Error fetching week homework:', error);
+        return [];
+    }
+    
+    return data || [];
+}
+
+// Render the week view with real data
+async function renderWeekView() {
+    const container = document.getElementById('week-view');
+    const homework = await fetchWeekHomework();
+    const matchData = await fetchMatchData();
+    
+    // Group homework by due date
+    const homeworkByDate = {};
+    homework.forEach(item => {
+        const dateKey = item.date_due;
+        if (!homeworkByDate[dateKey]) {
+            homeworkByDate[dateKey] = [];
+        }
+        homeworkByDate[dateKey].push(item);
+    });
+    
+    // Build array of next 7 days
+    const days = [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    
+    for (let i = 0; i < 7; i++) {
+        const date = new Date(today);
+        date.setDate(date.getDate() + i);
+        const dateStr = date.toISOString().split('T')[0];
+        
+        const dayName = dayNames[date.getDay()];
+        const monthDay = `${monthNames[date.getMonth()]} ${date.getDate()}`;
+        
+        days.push({
+            date: date,
+            dateStr: dateStr,
+            label: `${dayName}, ${monthDay}`,
+            isToday: i === 0,
+            isWeekend: date.getDay() === 0 || date.getDay() === 6,
+            homework: homeworkByDate[dateStr] || [],
+            hasMatch: false,
+            matchInfo: null
+        });
+    }
+    
+    // Check if Barcelona match falls within the week
+    if (matchData && matchData.next_match_date) {
+        const matchDate = new Date(matchData.next_match_date);
+        matchDate.setHours(0, 0, 0, 0);
+        const matchDateStr = matchDate.toISOString().split('T')[0];
+        
+        const matchDay = days.find(d => d.dateStr === matchDateStr);
+        if (matchDay) {
+            matchDay.hasMatch = true;
+            matchDay.matchInfo = {
+                opponent: matchData.next_opponent,
+                time: new Date(matchData.next_match_date).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
+                competition: matchData.next_competition
+            };
+        }
+    }
+    
+    // Render
+    container.innerHTML = days.map(day => `
+        <div class="day-card ${day.isToday ? 'today' : ''} ${day.isWeekend ? 'weekend' : ''}">
+            <div class="day-header">
+                <span class="day-name">${day.label}</span>
+                ${day.isToday ? '<span class="day-badge">TODAY</span>' : ''}
+            </div>
+            <div class="day-items">
+                ${day.hasMatch ? `
+                    <div class="day-item match">
+                        ⚽ Barça vs ${day.matchInfo.opponent} (${day.matchInfo.time})
+                    </div>
+                ` : ''}
+                ${day.homework.length > 0 ? day.homework.map(item => `
+                    <div class="day-item ${item.checked_off ? 'completed' : ''}">
+                        ${item.checked_off ? '✅' : '📚'} ${item.subject}: ${item.title.substring(0, 50)}${item.title.length > 50 ? '...' : ''}
+                    </div>
+                `).join('') : (day.isWeekend ? `
+                    <div class="day-item no-homework">🎉 Weekend!</div>
+                ` : `
+                    <div class="day-item no-homework">No homework due</div>
+                `)}
+            </div>
+        </div>
+    `).join('');
+}
+
 // Check if today is a weekend
 function isWeekend() {
     const day = new Date().getDay();
     return day === 0 || day === 6; // Sunday or Saturday
 }
+
 
 // ==========================================
 // NED APP - PHASE 3 REDESIGN
@@ -364,6 +478,7 @@ async function initializeApp() {
     setRandomTrivia();
     renderMatchCard();
     renderAlerts();
+    renderWeekView();
     setHomeworkSectionTitle(); // Set weekend-aware title
     
     // Fetch real homework from Supabase
