@@ -372,52 +372,6 @@ const morningChecklist = [
     { id: "item4", subject: "Gear", text: "Lunchbox", badge: "", badgeType: "" },
     { id: "item5", subject: "Gear", text: "Water bottle", badge: "", badgeType: "" }
 ];
-
-// ==========================================
-// DATA: Week View
-// ==========================================
-const weekData = [
-    {
-        day: "Monday, Dec 2",
-        isToday: true,
-        items: [
-            { text: "Science: Metabolism Quiz (Ch 3)", isTest: true },
-            { text: "Spanish: Slideshow due" },
-            { text: "SS: Bring 'Story of Us' sheet" },
-            { text: "SS: Calculate grade on MasteryConnect" },
-            { text: "ELA: Find all evidence for essay" },
-            { text: "ELA: Study for G/L" }
-        ]
-    },
-    {
-        day: "Tuesday, Dec 3",
-        items: [
-            { text: "Keep working on ongoing assignments" },
-            { text: "Start studying for Math test (Friday)" }
-        ]
-    },
-    {
-        day: "Wednesday, Dec 4",
-        items: [
-            { text: "Study for Math test (2 days away!)" },
-            { text: "Book Fair with your class - bring money if you want books" }
-        ]
-    },
-    {
-        day: "Thursday, Dec 5",
-        items: [
-            { text: "Final review for Math test tomorrow" }
-        ]
-    },
-    {
-        day: "Friday, Dec 6",
-        items: [
-            { text: "Math: Unit 3 Test", isTest: true },
-            { text: "End of Trimester 1 - you made it! 🎉" }
-        ]
-    }
-];
-
 // ==========================================
 // DATA: Tests
 // ==========================================
@@ -803,26 +757,6 @@ function renderPlayerCards() {
     document.getElementById('total-goals').textContent = totalGoals;
     document.getElementById('total-assists').textContent = totalAssists;
     document.getElementById('avg-rating').textContent = avgRating;
-}
-
-// ==========================================
-// WEEK VIEW
-// ==========================================
-function renderWeekView() {
-    const container = document.getElementById('week-view');
-    container.innerHTML = weekData.map(day => `
-        <div class="day-card ${day.isToday ? 'today' : ''}">
-            <div class="day-header">
-                <span class="day-name">${day.day}</span>
-                ${day.isToday ? '<span class="day-badge">TODAY</span>' : ''}
-            </div>
-            <div class="day-items">
-                ${day.items.map(item => `
-                    <div class="day-item ${item.isTest ? 'test' : ''}">${item.text}</div>
-                `).join('')}
-            </div>
-        </div>
-    `).join('');
 }
 
 // ==========================================
