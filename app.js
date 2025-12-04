@@ -593,8 +593,7 @@ function renderMorningChecklist() {
     `).join('');
 }
 
-function toggleMission(element) {
-   async function toggleMission(element) {
+async function toggleMission(element) {
     element.classList.toggle('completed');
     const isCompleted = element.classList.contains('completed');
     const itemId = element.dataset.id;
@@ -618,8 +617,7 @@ function toggleMission(element) {
     }
     
     updateStats();
-    saveProgress(); // Keep localStorage as backup
-}
+    saveProgress();
 }
 
 // ==========================================
