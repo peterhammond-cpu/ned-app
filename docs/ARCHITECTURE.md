@@ -1,82 +1,172 @@
-# Ned App - Architecture & Product Vision
+# Ned App - Architecture & Technical Status
 
-**Last Updated:** November 26, 2025
-**Status:** Phase 2 - Building Canvas Integration
-
----
-
-## Product Vision
-
-**Ned App = Universal Homework Hub for Families with ADD/ADHD Kids**
+**Last Updated:** December 5, 2024  
+**Current Phase:** Phase 2 - AI Tutor (Starting)
 
 ---
 
-## Current Family Setup
+## What Ned Is
 
-Hammond Family
-- Peter & Julia (Parents)  
-- Willy (13, 7th grade, Canvas, ADD) ⚡ PRIORITY
-- Simone (10, 5th grade, Aspen) - After Willy stable
-
----
-
-## Development Priorities
-
-### Tier 1: Willy NOW ⚡
-- [x] Canvas API working
-- [ ] Homework in database
-- [ ] App shows real Canvas data
-- [ ] Willy uses daily
-
-### Tier 2: Polish (Next Week)
-- [ ] Notifications
-- [ ] Barcelona updates
-- [ ] Dad jokes
-
-### Tier 3: Add Simone (2-3 weeks)
-- [ ] Aspen integration
-
-### Tier 4: Scale (Later)
-- [ ] Beta families
-- [ ] Authentication
-- [ ] Monetization
-
----
-
-## Key Technical Decisions
-
-1. **Multi-tenant from Day 1** - Database supports multiple families now
-2. **LMS Adapter Pattern** - Easy to add new school platforms
-3. **Canvas Pages API** - Parse "7th Grade HW" page instead of filtering assignments
-4. **Security First** - .env files, never commit tokens
+An AI-powered homework companion for kids with ADD/ADHD. Syncs with school LMS, provides Socratic tutoring, builds learning profiles over time, gives parents visibility without surveillance.
 
 ---
 
 ## Current Stack
 
-- Frontend: HTML/CSS/JS on Netlify (PWA on Willy's iPhone)
-- Backend: Supabase (PostgreSQL) + Vercel (scheduled sync)
-- LMS: Canvas API (aaca.instructure.com)
-- Repo: https://github.com/peterhammond-cpu/ned-app
+| Layer | Technology | Status |
+|-------|------------|--------|
+| Frontend | HTML/CSS/JS (vanilla) | ✅ Live |
+| Hosting | Netlify (free tier) | ✅ Live |
+| Database | Supabase PostgreSQL | ✅ Live |
+| LMS Sync | Canvas API | ✅ Automated |
+| Automation | GitHub Actions | ✅ Running |
+| Voice Calls | Twilio | ✅ Working |
+| AI Tutor | Claude API | 🔄 Next |
 
 ---
 
-## Canvas Integration
+## What's Working Today
 
-- Domain: aaca.instructure.com
-- Student: Charles Hammond (ID: 1504)
-- Key Discovery: School maintains "7th Grade HW" page (Course 520)
-- Teachers manually curate daily homework by subject
-- Uses "NH" for No Homework
-- We parse this page instead of filtering all assignments
+### Canvas → Supabase → App Pipeline
+```
+Canvas LMS ──► GitHub Action ──► Supabase ──► Ned App
+              (12pm, 3:15pm)     (PostgreSQL)   (PWA)
+```
+
+- **Sync runs:** 12pm (lunch), 3:15pm (after school)
+- **Smart parsing:** Handles "due Wednesday", "quiz Friday", natural language dates
+- **Homework displays:** Real assignments from Canvas, not hardcoded
+
+### Barcelona Theme & Engagement
+- Player trading cards (Yamal, Raphinha, Lewandowski)
+- Live match data via football-data.org (syncs 7am daily)
+- Three voice personalities: Normal, Stewie, French
+
+### Notifications
+- Twilio voice calls in Stewie's voice
+- Saturday shot reminder functional
+
+### PWA
+- Installed on Willy's iPhone home screen
+- Works offline (cached)
+- Feels like native app
 
 ---
 
-## Next Milestones
+## Database Schema (Supabase)
 
-1. TODAY: Database + Canvas parser
-2. TOMORROW: Frontend pulls from database
-3. THIS WEEK: Willy uses daily
-4. NEXT WEEK: Notifications + polish
-5. 2-3 WEEKS: Add Simone (Aspen)
+### Core Tables
+```sql
+families          -- Multi-tenant support
+users             -- Parents and students
+students          -- School/LMS config per child
+courses           -- Classes tracked
+homework_items    -- Assignments synced from Canvas
+sync_log          -- Automation history
+```
 
+### Coming Soon
+```sql
+tutor_sessions    -- AI conversation logs
+learning_profiles -- Accumulated patterns over time
+```
+
+### Key IDs
+- Willy's student_id: `8021ff47-1a41-4341-a2e0-9c4fa53cc389`
+- Supabase URL: `jzmivepzevgqlmxirlmk.supabase.co`
+
+---
+
+## Key Technical Decisions
+
+| Decision | Rationale |
+|----------|-----------|
+| Multi-tenant DB from day 1 | Hardest to change later; ready for Simone + beta families |
+| Vanilla JS (no React) | Simple enough for now; revisit if painful |
+| PWA not native app | Works on iOS, no App Store hassle, free |
+| Netlify + Supabase | Generous free tiers, scales when needed |
+| GitHub Actions for sync | Free, reliable, easy to adjust timing |
+| LMS adapter pattern | Easy to add Aspen (Simone) or other platforms later |
+
+---
+
+## Architecture Diagram
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      USER DEVICES                           │
+├─────────────────────────────────────────────────────────────┤
+│  Willy's iPhone        Simone (future)      Parent Dashboard│
+│      (PWA)                (PWA)                 (future)    │
+└──────────────┬─────────────────────────────────┬────────────┘
+               │                                 │
+               ▼                                 ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    NETLIFY                                  │
+├─────────────────────────────────────────────────────────────┤
+│  Static Frontend          Serverless Functions              │
+│  - index.html             - ask-ned (AI tutor) [coming]     │
+│  - app.js                 - webhook handlers                │
+│  - styles.css                                               │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+         ┌─────────────────────┼─────────────────────┐
+         │                     │                     │
+         ▼                     ▼                     ▼
+┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
+│   SUPABASE      │  │   CLAUDE API    │  │  EXTERNAL APIs  │
+│                 │  │                 │  │                 │
+│  - PostgreSQL   │  │  - AI tutoring  │  │  - Canvas LMS   │
+│  - Row-level    │  │  - Socratic     │  │  - Football API │
+│    security     │  │    method       │  │  - Twilio       │
+│  - Auth (later) │  │                 │  │                 │
+└─────────────────┘  └─────────────────┘  └─────────────────┘
+         ▲
+         │
+┌─────────────────┐
+│  GITHUB ACTIONS │
+│                 │
+│  - Canvas sync  │
+│    (12pm/3:15pm)│
+│  - Football     │
+│    (7am)        │
+└─────────────────┘
+```
+
+---
+
+## URLs & Resources
+
+| Resource | URL |
+|----------|-----|
+| Live App | https://polite-dasik-8c85da.netlify.app/ |
+| GitHub Repo | https://github.com/peterhammond-cpu/ned-app |
+| Supabase Dashboard | https://supabase.com/dashboard/project/jzmivepzevgqlmxirlmk |
+| Canvas Domain | aaca.instructure.com |
+
+---
+
+## Cost (Current)
+
+| Service | Tier | Monthly Cost |
+|---------|------|--------------|
+| Netlify | Free | $0 |
+| Supabase | Free | $0 |
+| GitHub Actions | Free | $0 |
+| Football API | Free | $0 |
+| Twilio | Pay-as-go | ~$1-2 |
+| Claude API | Not yet | $0 |
+| **Total** | | **~$1-2/month** |
+
+---
+
+## Next Technical Milestone
+
+**AI Tutor (ask-ned function)**
+- Netlify serverless function
+- Claude API integration (Haiku for cost)
+- Conversation logging to Supabase
+- Barcelona personality in system prompt
+- Socratic method enforcement
+
+See ROADMAP.md for full phase breakdown.

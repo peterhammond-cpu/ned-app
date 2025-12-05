@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="talk-to-ned.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ned - Willy's Command Center</title>
@@ -258,5 +259,34 @@
     
     <!-- Load main app -->
     <script src="app.js"></script>
+
+    <!-- Talk to Ned - AI Tutor -->
+<script src="talk-to-ned.js"></script>
+
+<!-- Floating button to open chat -->
+<button class="ned-fab" id="ned-fab-btn" onclick="window.nedTutor.toggle()">
+    💬
+    <span class="ned-fab-label">Ask Ned for help</span>
+</button>
+
+<!-- Chat container (renders here) -->
+<div id="ned-chat"></div>
+
+<script>
+    // Initialize Talk to Ned after page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        // Only initialize if TalkToNed is available
+        if (typeof TalkToNed !== 'undefined') {
+            window.nedTutor = new TalkToNed({
+                studentId: '8021ff47-1a41-4341-a2e0-9c4fa53cc389', // Willy's student ID
+                studentName: 'Willy'
+            });
+            window.nedTutor.render('ned-chat');
+            
+            console.log('✅ Talk to Ned initialized');
+        }
+    });
+</script>
+
 </body>
 </html>
