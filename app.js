@@ -842,15 +842,32 @@ function saveProgress() {
         }
     });
     
-    localStorage.setItem('nedProgress', JSON.stringify(progress));
+    // Save with today's date
+    const saveData = {
+        date: new Date().toDateString(),
+        progress: progress
+    };
+    
+    localStorage.setItem('nedProgress', JSON.stringify(saveData));
 }
 
 function loadProgress() {
     const saved = localStorage.getItem('nedProgress');
     if (saved) {
-        const progress = JSON.parse(saved);
+        const saveData = JSON.parse(saved);
+        const today = new Date().toDateString();
+        
+        // Check if save is from a previous day
+        const isNewDay = saveData.date !== today;
+        
+        const progress = saveData.progress || saveData; // Handle old format
         
         Object.keys(progress).forEach(id => {
+            // Skip morning checklist items if it's a new day
+            if (isNewDay && id.startsWith('item')) {
+                return;
+            }
+            
             const mission = document.querySelector(`.mission-item[data-id="${id}"]`);
             if (mission && progress[id]) {
                 mission.classList.add('completed');
