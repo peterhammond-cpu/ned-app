@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="newsletter-parser.css">
     <link rel="stylesheet" href="talk-to-ned.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -287,6 +288,25 @@
         }
     });
 </script>
+<!-- Newsletter Parser -->
+<script src="newsletter-parser.js"></script>
+
+<!-- Button to open parser (for parents) -->
+<button class="add-events-btn" id="add-events-btn" onclick="window.newsletterParser.toggle()">
+    📧
+</button>
+
+<!-- Parser container -->
+<div id="newsletter-parser"></div>
+
+<script>
+    // Initialize Newsletter Parser
+    window.newsletterParser = new NewsletterParser({
+        studentId: '8021ff47-1a41-4341-a2e0-9c4fa53cc389' // Willy's ID
+    });
+    window.newsletterParser.render('newsletter-parser');
+</script>
+```
 
 </body>
 </html>

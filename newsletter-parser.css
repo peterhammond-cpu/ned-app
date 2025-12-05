@@ -1,0 +1,328 @@
+/* ==========================================
+   NEWSLETTER PARSER STYLES
+   ========================================== */
+
+.newsletter-parser {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    background: linear-gradient(145deg, #1a1a35 0%, #0d0d20 100%);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.newsletter-parser.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.parser-header {
+    padding: 20px;
+    background: linear-gradient(135deg, #004D98 0%, #A50044 100%);
+    position: relative;
+}
+
+.parser-header h3 {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+    color: white;
+}
+
+.parser-header p {
+    margin: 0;
+    font-size: 13px;
+    opacity: 0.9;
+    color: white;
+}
+
+.parser-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.parser-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.parser-content {
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.parser-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.parser-tab {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: rgba(255, 255, 255, 0.05);
+    color: #a0a0c0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.parser-tab:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.parser-tab.active {
+    background: linear-gradient(135deg, #004D98 0%, #A50044 100%);
+    color: white;
+}
+
+.parser-tab-content {
+    display: none;
+}
+
+.parser-tab-content.active {
+    display: block;
+}
+
+.parser-tab-content textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    border-radius: 8px;
+    font-size: 14px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.parser-tab-content textarea:focus {
+    outline: none;
+    border-color: #004D98;
+}
+
+.parser-tab-content textarea::placeholder {
+    color: #6a6a8a;
+}
+
+.image-upload-area {
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.image-upload-area:hover,
+.image-upload-area.dragover {
+    border-color: #004D98;
+    background: rgba(0, 77, 152, 0.1);
+}
+
+.image-upload-area span {
+    font-size: 40px;
+}
+
+.image-upload-area p {
+    margin: 0;
+    color: #a0a0c0;
+    font-size: 14px;
+}
+
+.image-upload-area input {
+    display: none;
+}
+
+.image-preview {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 8px;
+}
+
+.remove-image {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: #ff4757;
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.parser-submit {
+    width: 100%;
+    padding: 15px;
+    margin-top: 15px;
+    border: none;
+    background: linear-gradient(135deg, #004D98 0%, #A50044 100%);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.parser-submit:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 77, 152, 0.4);
+}
+
+.parser-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.parser-results {
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.parser-results h4 {
+    margin: 0 0 15px 0;
+    color: #EDBB00;
+    font-size: 14px;
+}
+
+.parsed-event {
+    display: flex;
+    gap: 15px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border-left: 3px solid #004D98;
+}
+
+.parsed-event.no_school,
+.parsed-event.early_dismissal {
+    border-left-color: #ff4757;
+}
+
+.parsed-event.field_trip,
+.parsed-event.event {
+    border-left-color: #2ed573;
+}
+
+.parsed-event.form_due {
+    border-left-color: #ffa502;
+}
+
+.event-date {
+    font-size: 12px;
+    color: #a0a0c0;
+    min-width: 70px;
+}
+
+.event-info strong {
+    display: block;
+    margin-bottom: 4px;
+    color: white;
+}
+
+.event-info p {
+    margin: 0 0 8px 0;
+    font-size: 13px;
+    color: #a0a0c0;
+}
+
+.action-tag {
+    display: inline-block;
+    padding: 4px 8px;
+    background: rgba(255, 165, 2, 0.2);
+    color: #ffa502;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.no-events {
+    color: #6a6a8a;
+    text-align: center;
+    padding: 20px;
+}
+
+.parser-done {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.parser-done:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Button to open parser (add to main UI) */
+.add-events-btn {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border: none;
+    background: linear-gradient(135deg, #2ed573 0%, #1e90ff 100%);
+    color: white;
+    font-size: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(46, 213, 115, 0.3);
+    z-index: 999;
+    transition: all 0.3s;
+}
+
+.add-events-btn:hover {
+    transform: scale(1.1);
+}
