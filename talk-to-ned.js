@@ -1,6 +1,6 @@
 // ==========================================
 // TALK TO NED - AI Tutor Frontend Component
-// Voice interface for homework help
+// Voice + Photo interface for homework help
 // ==========================================
 
 class TalkToNed {
@@ -14,6 +14,7 @@ class TalkToNed {
         this.conversationHistory = [];
         this.isListening = false;
         this.isProcessing = false;
+        this.pendingImage = null; // Store image to send with next message
         
         // Speech recognition setup
         this.recognition = null;
@@ -100,12 +101,21 @@ class TalkToNed {
                 <div class="ned-messages" id="ned-messages">
                     <div class="ned-message ned-message-assistant">
                         <div class="ned-message-content">
-                            Hey ${this.studentName}! 👋 Need help with homework? Just ask me anything - I'm here to help you figure it out (not give you the answers though! 😄). What are you working on?
+                            Hey ${this.studentName}! 👋 Stuck on something? Tell me what's tripping you up and what you've tried so far - I'm here to help you figure it out (not give you the answers though! 😄)
                         </div>
                     </div>
                 </div>
                 
+                <!-- Image preview area -->
+                <div class="ned-image-preview" id="ned-image-preview" style="display: none;">
+                    <img id="ned-preview-img" src="" alt="Preview" />
+                    <button class="ned-remove-image" id="ned-remove-image" title="Remove image">×</button>
+                </div>
+                
                 <div class="ned-input-area">
+                    <button class="ned-camera-btn" id="ned-camera" title="Take photo or upload">
+                        <span>📷</span>
+                    </button>
                     <button class="ned-mic-btn" id="ned-mic" title="Voice input">
                         <span class="mic-icon">🎤</span>
                         <span class="mic-waves"></span>
@@ -119,6 +129,15 @@ class TalkToNed {
                     <button class="ned-send-btn" id="ned-send" title="Send">
                         <span>➤</span>
                     </button>
+                    
+                    <!-- Hidden file input -->
+                    <input 
+                        type="file" 
+                        id="ned-file-input" 
+                        accept="image/*" 
+                        capture="environment"
+                        style="display: none;"
+                    />
                 </div>
             </div>
         `;
@@ -131,7 +150,12 @@ class TalkToNed {
             micBtn: document.getElementById('ned-mic'),
             sendBtn: document.getElementById('ned-send'),
             closeBtn: document.getElementById('ned-close'),
-            status: document.getElementById('ned-status')
+            status: document.getElementById('ned-status'),
+            cameraBtn: document.getElementById('ned-camera'),
+            fileInput: document.getElementById('ned-file-input'),
+            imagePreview: document.getElementById('ned-image-preview'),
+            previewImg: document.getElementById('ned-preview-img'),
+            removeImageBtn: document.getElementById('ned-remove-image')
         };
 
         // Attach event listeners
@@ -144,21 +168,92 @@ class TalkToNed {
         
         // Send button
         this.elements.sendBtn.addEventListener('click', () => {
-            const message = this.elements.input.value.trim();
-            if (message) this.sendMessage(message);
+            const message = this.elements.input.value.trim() || (this.pendingImage ? "Help me with this" : "");
+            if (message || this.pendingImage) this.sendMessage(message);
         });
         
         // Enter key
         this.elements.input.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                const message = this.elements.input.value.trim();
-                if (message) this.sendMessage(message);
+                const message = this.elements.input.value.trim() || (this.pendingImage ? "Help me with this" : "");
+                if (message || this.pendingImage) this.sendMessage(message);
             }
         });
         
         // Close button
         this.elements.closeBtn.addEventListener('click', () => this.hide());
+        
+        // Camera button
+        this.elements.cameraBtn.addEventListener('click', () => {
+            this.elements.fileInput.click();
+        });
+        
+        // File input change
+        this.elements.fileInput.addEventListener('change', (e) => {
+            this.handleImageUpload(e);
+        });
+        
+        // Remove image button
+        this.elements.removeImageBtn.addEventListener('click', () => {
+            this.clearPendingImage();
+        });
+    }
+
+    handleImageUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        // Check file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            alert('Image too large! Please use an image under 5MB.');
+            return;
+        }
+        
+        // Check file type
+        if (!file.type.startsWith('image/')) {
+            alert('Please upload an image file.');
+            return;
+        }
+        
+        const reader = new FileReader();
+        
+        reader.onload = (e) => {
+            const base64 = e.target.result;
+            
+            // Store the image
+            this.pendingImage = {
+                base64: base64,
+                mediaType: file.type
+            };
+            
+            // Show preview
+            this.elements.previewImg.src = base64;
+            this.elements.imagePreview.style.display = 'flex';
+            
+            // Update placeholder
+            this.elements.input.placeholder = "What do you need help with?";
+            this.elements.input.focus();
+            
+            this.setStatus('📸 Image ready! Ask your question.');
+        };
+        
+        reader.onerror = () => {
+            alert('Failed to read image. Please try again.');
+        };
+        
+        reader.readAsDataURL(file);
+        
+        // Clear the input so the same file can be selected again
+        event.target.value = '';
+    }
+
+    clearPendingImage() {
+        this.pendingImage = null;
+        this.elements.imagePreview.style.display = 'none';
+        this.elements.previewImg.src = '';
+        this.elements.input.placeholder = "Type or tap mic to talk...";
+        this.setStatus('Ready to help!');
     }
 
     toggleVoiceInput() {
@@ -189,7 +284,8 @@ class TalkToNed {
     }
 
     async sendMessage(message) {
-        if (this.isProcessing || !message.trim()) return;
+        if (this.isProcessing) return;
+        if (!message.trim() && !this.pendingImage) return;
         
         this.isProcessing = true;
         this.setStatus('Thinking...');
@@ -197,18 +293,34 @@ class TalkToNed {
         // Clear input
         this.elements.input.value = '';
         
-        // Add user message to UI
-        this.addMessage(message, 'user');
+        // Add user message to UI (with image if present)
+        if (this.pendingImage) {
+            this.addMessageWithImage(message, 'user', this.pendingImage.base64);
+        } else {
+            this.addMessage(message, 'user');
+        }
         
-        // Add to conversation history
-        this.conversationHistory.push({ role: 'user', content: message });
+        // Build the message content for the API
+        let messageContent = message;
+        let imageData = null;
+        
+        if (this.pendingImage) {
+            imageData = {
+                base64: this.pendingImage.base64.split(',')[1], // Remove data:image/...;base64, prefix
+                mediaType: this.pendingImage.mediaType
+            };
+        }
+        
+        // Add to conversation history (text only for history)
+        this.conversationHistory.push({ role: 'user', content: message || "Help me with this image" });
 
         try {
             const response = await fetch(this.apiEndpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    message,
+                    message: message || "Help me understand this worksheet/problem",
+                    image: imageData,
                     conversationHistory: this.conversationHistory.slice(-10), // Last 10 messages
                     studentId: this.studentId,
                     studentName: this.studentName,
@@ -228,9 +340,6 @@ class TalkToNed {
             // Add to conversation history
             this.conversationHistory.push({ role: 'assistant', content: data.reply });
             
-            // Optionally speak the response
-            // this.speak(data.reply);
-            
             this.setStatus('Ready to help!');
             
         } catch (error) {
@@ -239,6 +348,7 @@ class TalkToNed {
             this.setStatus('Error - try again');
         } finally {
             this.isProcessing = false;
+            this.clearPendingImage();
         }
     }
 
@@ -248,6 +358,23 @@ class TalkToNed {
         
         messageDiv.innerHTML = `
             <div class="ned-message-content">${this.formatMessage(content)}</div>
+        `;
+        
+        this.elements.messages.appendChild(messageDiv);
+        
+        // Scroll to bottom
+        this.elements.messages.scrollTop = this.elements.messages.scrollHeight;
+    }
+
+    addMessageWithImage(content, role, imageSrc) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `ned-message ned-message-${role}`;
+        
+        messageDiv.innerHTML = `
+            <div class="ned-message-content">
+                <img src="${imageSrc}" class="ned-message-image" alt="Uploaded image" />
+                ${content ? `<p>${this.formatMessage(content)}</p>` : ''}
+            </div>
         `;
         
         this.elements.messages.appendChild(messageDiv);
@@ -303,13 +430,14 @@ class TalkToNed {
     newSession() {
         this.sessionId = this.generateSessionId();
         this.conversationHistory = [];
+        this.clearPendingImage();
         
         // Clear messages except the intro
         if (this.elements.messages) {
             this.elements.messages.innerHTML = `
                 <div class="ned-message ned-message-assistant">
                     <div class="ned-message-content">
-                        Hey ${this.studentName}! 👋 New conversation started. What can I help you with?
+                        Hey ${this.studentName}! 👋 New conversation. What are you working on, and where are you stuck?
                     </div>
                 </div>
             `;
