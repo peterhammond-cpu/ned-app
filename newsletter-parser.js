@@ -280,7 +280,10 @@ class NewsletterParser {
 
             const { error } = await supabase
                 .from('school_events')
-                .insert(eventsToInsert);
+                .upsert(eventsToInsert, { 
+                    onConflict: 'student_id,event_date,title',
+                    ignoreDuplicates: true 
+                });
 
             if (error) {
                 console.error('Error saving events:', error);
