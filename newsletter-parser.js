@@ -6,6 +6,7 @@
 class NewsletterParser {
     constructor(options = {}) {
         this.studentId = options.studentId;
+        this.studentGrade = options.studentGrade || '7';  // Default grade for this student
         this.apiEndpoint = '/.netlify/functions/parse-newsletter';
         this.elements = {};
         this.isProcessing = false;
@@ -193,7 +194,8 @@ class NewsletterParser {
                 body: JSON.stringify({
                     text: text || null,
                     image: hasImage ? this.pendingImage : null,
-                    studentId: this.studentId
+                    studentId: this.studentId,
+                    studentGrade: this.studentGrade  // Pass grade to backend
                 })
             });
 
@@ -232,6 +234,7 @@ class NewsletterParser {
                     <div class="event-date">${this.formatDate(e.event_date)}</div>
                     <div class="event-info">
                         <strong>${e.title}</strong>
+                        ${e.grade ? `<span class="grade-tag">Grade ${e.grade}</span>` : ''}
                         ${e.description ? `<p>${e.description}</p>` : ''}
                         ${e.action_required ? `<span class="action-tag">⚡ ${e.action_text}</span>` : ''}
                     </div>
@@ -271,6 +274,7 @@ class NewsletterParser {
                 description: e.description || null,
                 action_required: e.action_required || false,
                 action_text: e.action_text || null,
+                grade: e.grade || this.studentGrade,  // Use parsed grade or default to student's grade
                 source: 'email'
             }));
 

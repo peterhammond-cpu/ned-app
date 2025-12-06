@@ -12,14 +12,15 @@ const supabase = createClient(
 
 // Build system prompt with student's grade
 function buildSystemPrompt(grade) {
-  const gradeText = grade ? `${grade} grade` : 'middle school';
+  const gradeText = grade ? `${grade}th grade` : 'middle school';
+  const gradeNum = grade || '7';
   
-  return `You are a helpful assistant that extracts school events from newsletters and emails. Your job is to find information that is relevant to a specific STUDENT.
+  return `You are a helpful assistant that extracts school events from newsletters and emails. Your job is to find information that is relevant to students.
 
 ## Student Context:
-- Grade: ${gradeText}
-- Only include events relevant to ${gradeText}rs (or all-school events)
-- EXCLUDE events specific to other grades (e.g., if student is 7th grade, exclude "8th grade field trip", "6th grade orientation")
+- The student is in ${gradeText}
+- Include events relevant to ${gradeText}rs AND all-school events
+- ALSO include events for OTHER grades (we'll filter later) but mark them with their grade
 
 ## Extract these types of events:
 - **no_school**: Days off, holidays, teacher conferences, breaks
@@ -27,7 +28,7 @@ function buildSystemPrompt(grade) {
 - **field_trip**: Field trips, excursions (note if money or permission slip needed)
 - **form_due**: Permission slips, forms that need signatures
 - **picture_day**: Photo days
-- **event**: Special events at school (book fair, spirit week, assemblies)
+- **event**: Special events at school (book fair, spirit week, assemblies, masses, confessions)
 - **reminder**: Other student-relevant reminders
 
 ## IGNORE these (parent-only stuff):
@@ -38,6 +39,15 @@ function buildSystemPrompt(grade) {
 - Board meetings
 - Parent education nights
 
+## Grade Detection:
+- If an event mentions a specific grade (e.g., "8th Grade Field Trip", "6th Grade Orientation"), set "grade" to that number (e.g., "8", "6")
+- If an event is for ALL students or doesn't mention a grade, set "grade" to null
+- Examples:
+  - "8th Grade Advent Confession" → "grade": "8"
+  - "7th Grade Field Trip" → "grade": "7"
+  - "All School Mass" → "grade": null
+  - "Early Dismissal" → "grade": null
+
 ## Response Format:
 Return ONLY valid JSON array. No markdown, no explanation. Each event:
 {
@@ -45,6 +55,7 @@ Return ONLY valid JSON array. No markdown, no explanation. Each event:
   "event_type": "no_school|early_dismissal|field_trip|form_due|picture_day|event|reminder",
   "title": "Short title",
   "description": "Brief description if needed",
+  "grade": "6" or "7" or "8" or null,
   "action_required": true/false,
   "action_text": "What the student needs to do (if action_required)"
 }
@@ -52,13 +63,15 @@ Return ONLY valid JSON array. No markdown, no explanation. Each event:
 ## Rules:
 - If a date range, create separate events for each day
 - If year not specified, assume current school year (use upcoming date)
-- If no relevant student events found, return empty array: []
+- If no relevant events found, return empty array: []
 - Today's date for reference: ${new Date().toISOString().split('T')[0]}
+- ALWAYS extract the grade if mentioned in the event title or description
 
 Example output:
 [
-  {"event_date": "2024-12-20", "event_type": "no_school", "title": "Winter Break Begins", "description": "No school through Jan 2", "action_required": false, "action_text": null},
-  {"event_date": "2024-12-18", "event_type": "field_trip", "title": "Museum Field Trip", "description": "Science museum visit", "action_required": true, "action_text": "Bring $15 and signed permission slip"}
+  {"event_date": "2024-12-20", "event_type": "no_school", "title": "Winter Break Begins", "description": "No school through Jan 2", "grade": null, "action_required": false, "action_text": null},
+  {"event_date": "2024-12-18", "event_type": "field_trip", "title": "7th Grade Museum Field Trip", "description": "Science museum visit", "grade": "7", "action_required": true, "action_text": "Bring $15 and signed permission slip"},
+  {"event_date": "2024-12-17", "event_type": "event", "title": "8th Grade Advent Confession", "description": "Confession at 10:30am", "grade": "8", "action_required": false, "action_text": null}
 ]`;
 }
 
@@ -74,7 +87,8 @@ exports.handler = async (event, context) => {
     const { 
       text,           // Pasted newsletter text
       image,          // Or image: { base64, mediaType }
-      studentId 
+      studentId,
+      studentGrade    // Can be passed from frontend
     } = JSON.parse(event.body);
 
     if (!text && !image) {
@@ -91,16 +105,19 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Look up student's grade from profile
-    let studentGrade = null;
-    const { data: student } = await supabase
-      .from('students')
-      .select('grade')
-      .eq('id', studentId)
-      .single();
+    // Look up student's grade from profile (or use passed grade)
+    let grade = studentGrade || null;
     
-    if (student) {
-      studentGrade = student.grade;
+    if (!grade) {
+      const { data: student } = await supabase
+        .from('students')
+        .select('grade')
+        .eq('id', studentId)
+        .single();
+      
+      if (student) {
+        grade = student.grade;
+      }
     }
 
     // Build message content
@@ -118,11 +135,11 @@ exports.handler = async (event, context) => {
         },
         {
           type: 'text',
-          text: 'Extract all student-relevant events from this school newsletter/email. Return as JSON array.'
+          text: 'Extract all school events from this newsletter/email. Include events for all grades but mark each with its grade. Return as JSON array.'
         }
       ];
     } else {
-      messageContent = `Extract all student-relevant events from this school newsletter/email. Return as JSON array.\n\n---\n\n${text}`;
+      messageContent = `Extract all school events from this newsletter/email. Include events for all grades but mark each with its grade. Return as JSON array.\n\n---\n\n${text}`;
     }
 
     // Call Claude
@@ -136,7 +153,7 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 2000,
-        system: buildSystemPrompt(studentGrade),
+        system: buildSystemPrompt(grade),
         messages: [{ role: 'user', content: messageContent }]
       })
     });
@@ -182,6 +199,7 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({
         success: true,
         eventsFound: events.length,
+        studentGrade: grade,
         events: events
       })
     };
