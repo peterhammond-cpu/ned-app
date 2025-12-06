@@ -31,17 +31,6 @@
         <!-- TODAY TAB -->
         <div id="today-tab" class="tab-content active">
             
-            <!-- Coming Up - School Events (populated from database) -->
-            <div class="card heads-up-card" id="heads-up-card" style="display: none;">
-                <div class="card-header">
-                    <span class="card-icon">📅</span>
-                    <h2>Coming Up</h2>
-                </div>
-                <div id="heads-up-container">
-                    <!-- Populated by JavaScript -->
-                </div>
-            </div>
-            
             <!-- Saturday Shot Reminder (shown on Saturdays) -->
             <div id="shot-reminder-container"></div>
             
@@ -99,6 +88,17 @@
                 <div id="mission-count" style="display: none;">0/0</div>
                 <div class="mission-list" id="tonight-homework">
                     <!-- Populated by JavaScript from Supabase -->
+                </div>
+            </div>
+            
+            <!-- Coming Up - School Events only (not homework) -->
+            <div class="card heads-up-card" id="heads-up-card" style="display: none;">
+                <div class="card-header">
+                    <span class="card-icon">📅</span>
+                    <h2>Coming Up</h2>
+                </div>
+                <div id="heads-up-container">
+                    <!-- Populated by JavaScript -->
                 </div>
             </div>
             

@@ -54,7 +54,8 @@ async function fetchSchoolEventsFromDB() {
         .from('school_events')
         .select('*')
         .eq('student_id', WILLY_STUDENT_ID)
-        .eq('dismissed', false)  // Only show non-dismissed events
+        .eq('dismissed', false)
+        .or('grade.is.null,grade.eq.7')  // Show events with no grade OR grade = 7
         .gte('event_date', todayISO)
         .lte('event_date', twoWeeksISO)
         .order('event_date', { ascending: true });
@@ -85,54 +86,43 @@ function convertToMissions(homeworkItems) {
         today.setHours(0, 0, 0, 0);
         const daysUntilDue = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
         
-        // Detect tests/quizzes
+        // Smarter test detection - only flag if it's THE test, not homework mentioning a test
         const titleLower = (item.title || '').toLowerCase();
-        const isTest = titleLower.includes('test') || 
-                       titleLower.includes('quiz') || 
-                       titleLower.includes('exam') ||
-                       titleLower.includes('assessment');
+        const isTest = (
+            // Title starts with test/quiz/exam
+            /^(quiz|test|exam|assessment)\b/i.test(item.title || '') ||
+            // Or contains "Quiz:" or "Test:" pattern
+            /\b(quiz|test|exam):/i.test(item.title || '') ||
+            // Or is a short title that's just the test name
+            (titleLower.length < 30 && /\b(quiz|test|exam)\b/.test(titleLower) && !titleLower.includes('study'))
+        );
         
         let badge = 'upcoming';
         let badgeType = 'normal';
         
-        if (isTest) {
-            // Tests get special treatment
-            if (daysUntilDue <= 0) {
-                badge = '📝 TEST TODAY';
-                badgeType = 'urgent';
-            } else if (daysUntilDue === 1) {
-                badge = '📝 TEST TOMORROW';
-                badgeType = 'urgent';
-            } else if (daysUntilDue <= 3) {
-                const dayName = dayNames[dueDate.getDay()];
-                badge = `📝 TEST ${dayName}`;
-                badgeType = 'urgent';
-            } else {
-                const dayName = dayNames[dueDate.getDay()];
-                badge = `📝 ${dayName}`;
-                badgeType = 'warning';
-            }
+        if (daysUntilDue <= 0) {
+            badge = 'TODAY';
+            badgeType = 'urgent';
+        } else if (daysUntilDue === 1) {
+            const tomorrowDay = new Date(today);
+            tomorrowDay.setDate(tomorrowDay.getDate() + 1);
+            const dayName = dayNames[tomorrowDay.getDay()];
+            badge = `due ${dayName}`;
+            badgeType = 'urgent';
+        } else if (daysUntilDue <= 5) {
+            const dayName = dayNames[dueDate.getDay()];
+            badge = `due ${dayName}`;
+            badgeType = daysUntilDue <= 2 ? 'warning' : 'normal';
         } else {
-            // Regular homework
-            if (daysUntilDue <= 0) {
-                badge = 'TODAY';
-                badgeType = 'urgent';
-            } else if (daysUntilDue === 1) {
-                const tomorrowDay = new Date(today);
-                tomorrowDay.setDate(tomorrowDay.getDate() + 1);
-                const dayName = dayNames[tomorrowDay.getDay()];
-                badge = `due ${dayName}`;
-                badgeType = 'urgent';
-            } else if (daysUntilDue <= 5) {
-                const dayName = dayNames[dueDate.getDay()];
-                badge = `due ${dayName}`;
-                badgeType = daysUntilDue <= 2 ? 'warning' : 'normal';
-            } else {
-                const month = dueDate.getMonth() + 1;
-                const day = dueDate.getDate();
-                badge = `${month}/${day}`;
-                badgeType = 'normal';
-            }
+            const month = dueDate.getMonth() + 1;
+            const day = dueDate.getDate();
+            badge = `${month}/${day}`;
+            badgeType = 'normal';
+        }
+        
+        // If it's a test, add the 📝 prefix to badge
+        if (isTest) {
+            badge = `📝 ${badge}`;
         }
         
         return {
@@ -393,71 +383,43 @@ function renderHeadsUp(events) {
     const card = document.getElementById('heads-up-card');
     const container = document.getElementById('heads-up-container');
     
-    // Filter to events in the next 3 days that need attention
+    // Filter to events in the next 5 days
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const threeDaysOut = new Date(today);
-    threeDaysOut.setDate(threeDaysOut.getDate() + 3);
-    
-    const upcomingEvents = (events || []).filter(event => {
-        const eventDate = new Date(event.event_date + 'T00:00:00');
-        return eventDate <= threeDaysOut;
-    });
-    
-    // Also get upcoming tests from homework (next 5 days)
     const fiveDaysOut = new Date(today);
     fiveDaysOut.setDate(fiveDaysOut.getDate() + 5);
     
-    const upcomingTests = (homeworkMissions || []).filter(mission => {
-        if (!mission.isTest) return false;
-        const dueDate = new Date(mission.dueDate + 'T00:00:00');
-        return dueDate >= today && dueDate <= fiveDaysOut;
+    const upcomingEvents = (events || []).filter(event => {
+        const eventDate = new Date(event.event_date + 'T00:00:00');
+        return eventDate <= fiveDaysOut;
     });
     
-    if (upcomingEvents.length === 0 && upcomingTests.length === 0) {
+    // No events? Hide the card
+    if (upcomingEvents.length === 0) {
         card.style.display = 'none';
         return;
     }
     
     card.style.display = 'block';
     
-    let html = '';
-    
-    // Render tests first (most important)
-    upcomingTests.forEach(test => {
-        const relativeDate = formatRelativeDate(test.dueDate);
-        const isUrgent = isToday(test.dueDate) || isTomorrow(test.dueDate);
-        
-        html += `
-            <div class="alert ${isUrgent ? 'urgent' : 'warning'} test-alert">
-                <div class="alert-title">📝 ${relativeDate}: ${test.text}</div>
-                <div class="alert-text">${test.subject} - Start studying now!</div>
-            </div>
-        `;
-    });
-    
-    // Render school events
-    upcomingEvents.forEach(event => {
+    // Render school events only (tests are already in homework section)
+    container.innerHTML = upcomingEvents.map(event => {
         const emoji = getEventEmoji(event.event_type, event.title);
         const relativeDate = formatRelativeDate(event.event_date);
-        const isUrgent = isToday(event.event_date) || isTomorrow(event.event_date);
-        const alertType = event.event_type === 'closure' ? 'info' : (isUrgent ? 'urgent' : 'warning');
         
         let actionHtml = '';
         if (event.action_required && event.action_text) {
             actionHtml = `<div class="alert-action">👉 ${event.action_text}</div>`;
         }
         
-        html += `
-            <div class="alert ${alertType}">
+        return `
+            <div class="alert info">
                 <div class="alert-title">${emoji} ${relativeDate}: ${event.title}</div>
                 ${event.description ? `<div class="alert-text">${event.description}</div>` : ''}
                 ${actionHtml}
             </div>
         `;
-    });
-    
-    container.innerHTML = html;
+    }).join('');
 }
 
 // ==========================================
@@ -477,14 +439,7 @@ function renderMissions(missions) {
         return;
     }
     
-    // Sort: tests first, then by due date
-    const sorted = [...missions].sort((a, b) => {
-        if (a.isTest && !b.isTest) return -1;
-        if (!a.isTest && b.isTest) return 1;
-        return 0;
-    });
-    
-    container.innerHTML = sorted.map(mission => `
+    container.innerHTML = missions.map(mission => `
         <div class="mission-item ${mission.completed ? 'completed' : ''} ${mission.isTest ? 'is-test' : ''}" data-id="${mission.id}" onclick="toggleMission(this)">
             <div class="mission-checkbox"></div>
             <div class="mission-content">
