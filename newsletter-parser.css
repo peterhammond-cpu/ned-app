@@ -233,12 +233,26 @@
 
 .parsed-event {
     display: flex;
-    gap: 15px;
+    gap: 12px;
     padding: 12px;
     background: rgba(255, 255, 255, 0.03);
     border-radius: 8px;
     margin-bottom: 10px;
     border-left: 3px solid #004D98;
+    align-items: flex-start;
+}
+
+.event-checkbox {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: #004D98;
+    flex-shrink: 0;
+}
+
+.parsed-event:has(.event-checkbox:not(:checked)) {
+    opacity: 0.5;
 }
 
 .parsed-event.no_school,

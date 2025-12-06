@@ -10,7 +10,16 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-const SYSTEM_PROMPT = `You are a helpful assistant that extracts school events from newsletters and emails. Your job is to find information that is relevant to a STUDENT (not parents).
+// Build system prompt with student's grade
+function buildSystemPrompt(grade) {
+  const gradeText = grade ? `${grade} grade` : 'middle school';
+  
+  return `You are a helpful assistant that extracts school events from newsletters and emails. Your job is to find information that is relevant to a specific STUDENT.
+
+## Student Context:
+- Grade: ${gradeText}
+- Only include events relevant to ${gradeText}rs (or all-school events)
+- EXCLUDE events specific to other grades (e.g., if student is 7th grade, exclude "8th grade field trip", "6th grade orientation")
 
 ## Extract these types of events:
 - **no_school**: Days off, holidays, teacher conferences, breaks
@@ -51,6 +60,7 @@ Example output:
   {"event_date": "2024-12-20", "event_type": "no_school", "title": "Winter Break Begins", "description": "No school through Jan 2", "action_required": false, "action_text": null},
   {"event_date": "2024-12-18", "event_type": "field_trip", "title": "Museum Field Trip", "description": "Science museum visit", "action_required": true, "action_text": "Bring $15 and signed permission slip"}
 ]`;
+}
 
 exports.handler = async (event, context) => {
   if (event.httpMethod !== 'POST') {
@@ -79,6 +89,18 @@ exports.handler = async (event, context) => {
         statusCode: 400,
         body: JSON.stringify({ error: 'studentId is required' })
       };
+    }
+
+    // Look up student's grade from profile
+    let studentGrade = null;
+    const { data: student } = await supabase
+      .from('students')
+      .select('grade')
+      .eq('id', studentId)
+      .single();
+    
+    if (student) {
+      studentGrade = student.grade;
     }
 
     // Build message content
@@ -114,7 +136,7 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 2000,
-        system: SYSTEM_PROMPT,
+        system: buildSystemPrompt(studentGrade),
         messages: [{ role: 'user', content: messageContent }]
       })
     });
@@ -150,29 +172,7 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Save events to Supabase
-    if (events.length > 0) {
-      const eventsToInsert = events.map(e => ({
-        student_id: studentId,
-        event_date: e.event_date,
-        event_type: e.event_type,
-        title: e.title,
-        description: e.description || null,
-        action_required: e.action_required || false,
-        action_text: e.action_text || null,
-        source: 'email'
-      }));
-
-      const { error: insertError } = await supabase
-        .from('school_events')
-        .insert(eventsToInsert);
-
-      if (insertError) {
-        console.error('Error saving events:', insertError);
-        // Don't fail - still return what we found
-      }
-    }
-
+    // Return events for review (don't save yet - let user exclude some first)
     return {
       statusCode: 200,
       headers: {

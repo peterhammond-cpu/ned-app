@@ -129,9 +129,6 @@ class NewsletterParser {
         
         // Submit
         this.elements.submitBtn.addEventListener('click', () => this.submit());
-        
-        // Done
-        this.elements.doneBtn.addEventListener('click', () => this.hide());
     }
 
     switchTab(tab) {
@@ -220,14 +217,18 @@ class NewsletterParser {
 
     showResults(events) {
         this.elements.results.style.display = 'block';
+        this.parsedEvents = events; // Store for saving
         
         if (events.length === 0) {
             this.elements.eventsList.innerHTML = `
                 <p class="no-events">No student-relevant events found in this newsletter.</p>
             `;
+            this.elements.doneBtn.textContent = 'Done';
+            this.elements.doneBtn.onclick = () => this.hide();
         } else {
-            this.elements.eventsList.innerHTML = events.map(e => `
+            this.elements.eventsList.innerHTML = events.map((e, i) => `
                 <div class="parsed-event ${e.event_type}">
+                    <input type="checkbox" class="event-checkbox" data-index="${i}" checked />
                     <div class="event-date">${this.formatDate(e.event_date)}</div>
                     <div class="event-info">
                         <strong>${e.title}</strong>
@@ -236,11 +237,68 @@ class NewsletterParser {
                     </div>
                 </div>
             `).join('');
+            
+            // Change button to Save Selected
+            this.elements.doneBtn.textContent = 'Save Selected';
+            this.elements.doneBtn.onclick = () => this.saveSelected();
         }
         
         // Clear inputs
         this.elements.textarea.value = '';
         this.clearImage();
+    }
+
+    async saveSelected() {
+        const checkboxes = this.elements.eventsList.querySelectorAll('.event-checkbox:checked');
+        const selectedIndices = Array.from(checkboxes).map(cb => parseInt(cb.dataset.index));
+        const selectedEvents = selectedIndices.map(i => this.parsedEvents[i]);
+        
+        if (selectedEvents.length === 0) {
+            this.hide();
+            return;
+        }
+        
+        this.elements.doneBtn.textContent = 'Saving...';
+        this.elements.doneBtn.disabled = true;
+        
+        try {
+            // Save to Supabase using the existing client
+            const eventsToInsert = selectedEvents.map(e => ({
+                student_id: this.studentId,
+                event_date: e.event_date,
+                event_type: e.event_type,
+                title: e.title,
+                description: e.description || null,
+                action_required: e.action_required || false,
+                action_text: e.action_text || null,
+                source: 'email'
+            }));
+
+            const { error } = await supabase
+                .from('school_events')
+                .insert(eventsToInsert);
+
+            if (error) {
+                console.error('Error saving events:', error);
+                alert('Failed to save events. Try again.');
+                this.elements.doneBtn.textContent = 'Save Selected';
+                this.elements.doneBtn.disabled = false;
+                return;
+            }
+
+            alert(`✅ Saved ${selectedEvents.length} event(s)!`);
+            this.hide();
+            
+            // Refresh the page to show new events (or trigger a refresh function)
+            if (typeof loadSchoolEvents === 'function') {
+                loadSchoolEvents();
+            }
+        } catch (err) {
+            console.error('Save error:', err);
+            alert('Failed to save events. Try again.');
+            this.elements.doneBtn.textContent = 'Save Selected';
+            this.elements.doneBtn.disabled = false;
+        }
     }
 
     formatDate(dateStr) {
