@@ -573,7 +573,7 @@ body {
 }
 
 .mission-checkbox::after {
-    content: '✓';
+    content: 'Ã¢Å“â€œ';
     color: white;
     font-size: 14px;
     font-weight: bold;
@@ -829,30 +829,6 @@ body {
     font-weight: 500;
 }
 
-/* Weekend styling */
-.day-card.weekend {
-    border-color: var(--barca-gold);
-    opacity: 0.8;
-}
-
-/* Match styling in week view */
-.day-item.match {
-    color: var(--barca-gold);
-    font-weight: 600;
-}
-
-/* Completed homework in week view */
-.day-item.completed {
-    text-decoration: line-through;
-    opacity: 0.6;
-}
-
-/* No homework message */
-.day-item.no-homework {
-    color: var(--text-muted);
-    font-style: italic;
-}
-
 /* Tests */
 .test-card {
     padding: var(--spacing-md);
@@ -920,7 +896,7 @@ body {
 }
 
 .study-list li::before {
-    content: '→';
+    content: 'Ã¢â€ â€™';
     position: absolute;
     left: 0;
     color: var(--barca-blue);
@@ -1002,32 +978,194 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--barca-red);
 }
+/* ==========================================
+   PHASE 3+ ADDITIONS - School Events
+   ========================================== */
 
-/* Last Result Banner */
-.last-result {
-    background: rgba(46, 213, 115, 0.15);
-    border: 1px solid rgba(46, 213, 115, 0.3);
-    border-radius: var(--radius-md);
-    padding: 12px 16px;
-    margin-bottom: 16px;
+/* Heads Up Card */
+.heads-up-card {
+    border: 1px solid rgba(255, 165, 2, 0.3);
+    animation: pulse-border 2s ease-in-out infinite;
+}
+
+@keyframes pulse-border {
+    0%, 100% { border-color: rgba(255, 165, 2, 0.3); }
+    50% { border-color: rgba(255, 165, 2, 0.6); }
+}
+
+/* Alert Action Item */
+.alert-action {
+    margin-top: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Empty State */
+.empty-state {
     text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--text-muted);
+}
+
+.empty-icon {
+    font-size: 48px;
+    margin-bottom: var(--spacing-md);
+}
+
+.empty-text {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.empty-subtext {
+    font-size: 14px;
+}
+
+/* Week View Enhancements */
+.day-item.event-item {
+    color: var(--barca-gold);
+    font-weight: 500;
+}
+
+.day-item.empty {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.day-item-detail {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    padding-left: var(--spacing-sm);
+}
+
+/* Trivia box styling fix */
+.joke-box.trivia-box {
+    font-style: normal;
+    border-left-color: var(--barca-gold);
+    background: rgba(0, 77, 152, 0.15);
+    margin-bottom: 0;
+}
+
+/* Card header improvements */
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.card-icon {
+    font-size: 24px;
+}
+
+.card-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    flex: 1;
+    margin: 0;
+}
+
+/* Stats improvements */
+.stats {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.stat-card {
+    flex: 1;
+    text-align: center;
+    padding: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--radius-md);
+}
+
+.stat-number {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--barca-gold);
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+/* Card subtitle */
+.card-subtitle {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: var(--spacing-md);
+}
+
+/* ==========================================
+   TEST/QUIZ HIGHLIGHTING
+   ========================================== */
+
+/* Test mission items - prominent styling */
+.mission-item.is-test {
+    background: rgba(255, 71, 87, 0.1);
+    border: 1px solid rgba(255, 71, 87, 0.3);
+    position: relative;
+}
+
+.mission-item.is-test::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--urgent);
+    border-radius: var(--radius-md) 0 0 var(--radius-md);
+}
+
+.mission-item.is-test:hover {
+    background: rgba(255, 71, 87, 0.15);
+    border-color: rgba(255, 71, 87, 0.5);
+}
+
+.mission-item.is-test .mission-text {
     font-weight: 600;
 }
 
-.last-result.win {
-    background: rgba(46, 213, 115, 0.15);
-    border-color: rgba(46, 213, 115, 0.3);
-    color: #2ed573;
+/* Test alert in Heads Up section */
+.alert.test-alert {
+    background: rgba(255, 71, 87, 0.2);
+    border-color: var(--urgent);
+    animation: pulse-test 2s ease-in-out infinite;
 }
 
-.last-result.loss {
-    background: rgba(255, 71, 87, 0.15);
-    border-color: rgba(255, 71, 87, 0.3);
-    color: #ff4757;
+@keyframes pulse-test {
+    0%, 100% { 
+        box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.4);
+    }
+    50% { 
+        box-shadow: 0 0 15px 0 rgba(255, 71, 87, 0.2);
+    }
 }
 
-.last-result.draw {
-    background: rgba(255, 165, 2, 0.15);
-    border-color: rgba(255, 165, 2, 0.3);
-    color: #ffa502;
+/* Week view test items - more prominent */
+.day-item.test {
+    color: var(--urgent);
+    font-weight: 600;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: rgba(255, 71, 87, 0.1);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--urgent);
+}
+
+/* Test badge styling */
+.mission-badge.urgent {
+    background: rgba(255, 71, 87, 0.2);
+    color: var(--urgent);
+    font-weight: 700;
 }

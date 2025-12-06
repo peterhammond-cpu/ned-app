@@ -7,87 +7,132 @@ const WILLY_STUDENT_ID = '8021ff47-1a41-4341-a2e0-9c4fa53cc389';
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Fetch homework from database
+// ==========================================
+// DATA FETCHING: Homework
+// ==========================================
 async function fetchHomeworkFromDB() {
-    // Get today's date at midnight for comparison
-    const now = new Date();
-    const today = new Date(now);
+    const today = new Date();
     today.setHours(0, 0, 0, 0);
+    const todayISO = today.toISOString();
     
-    // After 3pm, show tomorrow's homework instead of today's
-    const hour = now.getHours();
-    let filterDate = today;
-    
-    if (hour >= 15) {
-        // After 3pm - filter to tomorrow or later
-        filterDate = new Date(today);
-        filterDate.setDate(filterDate.getDate() + 1);
-        console.log('🌙 After 3pm - showing homework due tomorrow or later');
-    } else {
-        console.log('☀️ Before 3pm - showing homework due today or later');
-    }
-    
-    const filterDateISO = filterDate.toISOString();
-    
-    console.log('🔍 Fetching homework from Supabase...');
-    console.log('📅 Looking for items due on or after:', filterDateISO);
+    console.log('📝 Fetching homework from Supabase...');
+    console.log('📅 Looking for items due on or after:', todayISO);
     
     const { data, error } = await supabase
         .from('homework_items')
         .select('*')
         .eq('student_id', WILLY_STUDENT_ID)
-        .gte('date_due', filterDateISO)
+        .gte('date_due', todayISO)
         .order('date_due', { ascending: true });
     
     if (error) {
         console.error('❌ Error fetching homework:', error);
-        return null;
+        return [];
     }
     
     console.log('✅ Fetched homework items:', data?.length || 0);
-    console.log('📋 Data:', data);
-    return data;
+    return data || [];
 }
 
-// Convert database rows to mission format
+// ==========================================
+// DATA FETCHING: School Events
+// ==========================================
+async function fetchSchoolEventsFromDB() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayISO = today.toISOString().split('T')[0]; // Just the date part
+    
+    // Get events for the next 14 days
+    const twoWeeksOut = new Date(today);
+    twoWeeksOut.setDate(twoWeeksOut.getDate() + 14);
+    const twoWeeksISO = twoWeeksOut.toISOString().split('T')[0];
+    
+    console.log('📅 Fetching school events from Supabase...');
+    console.log('📅 Date range:', todayISO, 'to', twoWeeksISO);
+    
+    const { data, error } = await supabase
+        .from('school_events')
+        .select('*')
+        .eq('student_id', WILLY_STUDENT_ID)
+        .eq('dismissed', false)  // Only show non-dismissed events
+        .gte('event_date', todayISO)
+        .lte('event_date', twoWeeksISO)
+        .order('event_date', { ascending: true });
+    
+    if (error) {
+        console.error('❌ Error fetching school events:', error);
+        return [];
+    }
+    
+    console.log('✅ Fetched school events:', data?.length || 0);
+    console.log('📋 Events:', data);
+    return data || [];
+}
+
+// ==========================================
+// DATA CONVERSION: Homework to Missions
+// ==========================================
 function convertToMissions(homeworkItems) {
     if (!homeworkItems || homeworkItems.length === 0) {
-        return []; // Return empty array, NOT hardcoded fallback
+        return [];
     }
     
     const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     
-    return homeworkItems.map((item, index) => {
-        // Determine badge type based on due date
-        const dueDate = new Date(item.date_due + 'T00:00:00'); // Ensure local timezone
+    return homeworkItems.map((item) => {
+        const dueDate = new Date(item.date_due + 'T00:00:00');
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const daysUntilDue = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
         
+        // Detect tests/quizzes
+        const titleLower = (item.title || '').toLowerCase();
+        const isTest = titleLower.includes('test') || 
+                       titleLower.includes('quiz') || 
+                       titleLower.includes('exam') ||
+                       titleLower.includes('assessment');
+        
         let badge = 'upcoming';
         let badgeType = 'normal';
         
-        if (daysUntilDue <= 0) {
-            badge = 'today';
-            badgeType = 'urgent';
-        } else if (daysUntilDue === 1) {
-            // Check if tomorrow is a school day
-            const tomorrowDay = new Date(today);
-            tomorrowDay.setDate(tomorrowDay.getDate() + 1);
-            const dayName = dayNames[tomorrowDay.getDay()];
-            badge = `due ${dayName}`;
-            badgeType = 'urgent';
-        } else if (daysUntilDue <= 5) {
-            // Show day name for items due within the week
-            const dayName = dayNames[dueDate.getDay()];
-            badge = `due ${dayName}`;
-            badgeType = daysUntilDue <= 2 ? 'warning' : 'normal';
+        if (isTest) {
+            // Tests get special treatment
+            if (daysUntilDue <= 0) {
+                badge = '📝 TEST TODAY';
+                badgeType = 'urgent';
+            } else if (daysUntilDue === 1) {
+                badge = '📝 TEST TOMORROW';
+                badgeType = 'urgent';
+            } else if (daysUntilDue <= 3) {
+                const dayName = dayNames[dueDate.getDay()];
+                badge = `📝 TEST ${dayName}`;
+                badgeType = 'urgent';
+            } else {
+                const dayName = dayNames[dueDate.getDay()];
+                badge = `📝 ${dayName}`;
+                badgeType = 'warning';
+            }
         } else {
-            // For items more than 5 days out, show the date
-            const month = dueDate.getMonth() + 1;
-            const day = dueDate.getDate();
-            badge = `${month}/${day}`;
-            badgeType = 'normal';
+            // Regular homework
+            if (daysUntilDue <= 0) {
+                badge = 'TODAY';
+                badgeType = 'urgent';
+            } else if (daysUntilDue === 1) {
+                const tomorrowDay = new Date(today);
+                tomorrowDay.setDate(tomorrowDay.getDate() + 1);
+                const dayName = dayNames[tomorrowDay.getDay()];
+                badge = `due ${dayName}`;
+                badgeType = 'urgent';
+            } else if (daysUntilDue <= 5) {
+                const dayName = dayNames[dueDate.getDay()];
+                badge = `due ${dayName}`;
+                badgeType = daysUntilDue <= 2 ? 'warning' : 'normal';
+            } else {
+                const month = dueDate.getMonth() + 1;
+                const day = dueDate.getDate();
+                badge = `${month}/${day}`;
+                badgeType = 'normal';
+            }
         }
         
         return {
@@ -97,138 +142,91 @@ function convertToMissions(homeworkItems) {
             badge: badge,
             badgeType: badgeType,
             link: item.link || null,
-            completed: item.checked_off || false
+            completed: item.checked_off || false,
+            dueDate: item.date_due,
+            isTest: isTest
         };
     });
 }
 
-// Fetch homework for the week view
-async function fetchWeekHomework() {
+// ==========================================
+// HELPER: Get emoji for event type
+// ==========================================
+function getEventEmoji(eventType, title) {
+    const titleLower = (title || '').toLowerCase();
+    
+    // Check title for common keywords
+    if (titleLower.includes('field trip')) return '🚌';
+    if (titleLower.includes('picture') || titleLower.includes('photo')) return '📸';
+    if (titleLower.includes('book fair')) return '📚';
+    if (titleLower.includes('spirit') || titleLower.includes('dress')) return '👕';
+    if (titleLower.includes('concert') || titleLower.includes('music')) return '🎵';
+    if (titleLower.includes('game') || titleLower.includes('sports')) return '🏆';
+    if (titleLower.includes('meeting') || titleLower.includes('conference')) return '👨‍👩‍👧‍👦';
+    if (titleLower.includes('test') || titleLower.includes('exam')) return '📝';
+    if (titleLower.includes('project')) return '🎨';
+    if (titleLower.includes('break') || titleLower.includes('no school')) return '🎉';
+    if (titleLower.includes('early') && titleLower.includes('dismiss')) return '⏰';
+    
+    // Fall back to event type
+    switch (eventType) {
+        case 'closure': return '🏠';
+        case 'early_dismissal': return '⏰';
+        case 'event': return '📅';
+        case 'action_required': return '⚠️';
+        case 'deadline': return '📋';
+        default: return '📌';
+    }
+}
+
+// ==========================================
+// HELPER: Check if date is today
+// ==========================================
+function isToday(dateStr) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
-    // Get homework for the next 7 days
-    const nextWeek = new Date(today);
-    nextWeek.setDate(nextWeek.getDate() + 7);
-    
-    const { data, error } = await supabase
-        .from('homework_items')
-        .select('*')
-        .eq('student_id', WILLY_STUDENT_ID)
-        .gte('date_due', today.toISOString())
-        .lte('date_due', nextWeek.toISOString())
-        .order('date_due', { ascending: true });
-    
-    if (error) {
-        console.error('❌ Error fetching week homework:', error);
-        return [];
-    }
-    
-    return data || [];
+    const checkDate = new Date(dateStr + 'T00:00:00');
+    return checkDate.getTime() === today.getTime();
 }
 
-// Render the week view with real data
-async function renderWeekView() {
-    const container = document.getElementById('week-view');
-    const homework = await fetchWeekHomework();
-    const matchData = await fetchMatchData();
+// ==========================================
+// HELPER: Check if date is tomorrow
+// ==========================================
+function isTomorrow(dateStr) {
+    const tomorrow = new Date();
+    tomorrow.setHours(0, 0, 0, 0);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const checkDate = new Date(dateStr + 'T00:00:00');
+    return checkDate.getTime() === tomorrow.getTime();
+}
+
+// ==========================================
+// HELPER: Format relative date
+// ==========================================
+function formatRelativeDate(dateStr) {
+    if (isToday(dateStr)) return 'Today';
+    if (isTomorrow(dateStr)) return 'Tomorrow';
     
-    // Group homework by due date
-    const homeworkByDate = {};
-    homework.forEach(item => {
-        const dateKey = item.date_due;
-        if (!homeworkByDate[dateKey]) {
-            homeworkByDate[dateKey] = [];
-        }
-        homeworkByDate[dateKey].push(item);
-    });
-    
-    // Build array of next 7 days
-    const days = [];
+    const date = new Date(dateStr + 'T00:00:00');
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+    const daysAway = Math.ceil((date - today) / (1000 * 60 * 60 * 24));
     
-    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    
-    for (let i = 0; i < 7; i++) {
-        const date = new Date(today);
-        date.setDate(date.getDate() + i);
-        const dateStr = date.toISOString().split('T')[0];
-        
-        const dayName = dayNames[date.getDay()];
-        const monthDay = `${monthNames[date.getMonth()]} ${date.getDate()}`;
-        
-        days.push({
-            date: date,
-            dateStr: dateStr,
-            label: `${dayName}, ${monthDay}`,
-            isToday: i === 0,
-            isWeekend: date.getDay() === 0 || date.getDay() === 6,
-            homework: homeworkByDate[dateStr] || [],
-            hasMatch: false,
-            matchInfo: null
-        });
+    if (daysAway <= 7) {
+        const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        return dayNames[date.getDay()];
     }
     
-    // Check if Barcelona match falls within the week
-    if (matchData && matchData.next_match_date) {
-        const matchDate = new Date(matchData.next_match_date);
-        matchDate.setHours(0, 0, 0, 0);
-        const matchDateStr = matchDate.toISOString().split('T')[0];
-        
-        const matchDay = days.find(d => d.dateStr === matchDateStr);
-        if (matchDay) {
-            matchDay.hasMatch = true;
-            matchDay.matchInfo = {
-                opponent: matchData.next_opponent,
-                time: new Date(matchData.next_match_date).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
-                competition: matchData.next_competition
-            };
-        }
-    }
-    
-    // Render
-    container.innerHTML = days.map(day => `
-        <div class="day-card ${day.isToday ? 'today' : ''} ${day.isWeekend ? 'weekend' : ''}">
-            <div class="day-header">
-                <span class="day-name">${day.label}</span>
-                ${day.isToday ? '<span class="day-badge">TODAY</span>' : ''}
-            </div>
-            <div class="day-items">
-                ${day.hasMatch ? `
-                    <div class="day-item match">
-                        ⚽ Barça vs ${day.matchInfo.opponent} (${day.matchInfo.time})
-                    </div>
-                ` : ''}
-                ${day.homework.length > 0 ? day.homework.map(item => `
-                    <div class="day-item ${item.checked_off ? 'completed' : ''}">
-                        ${item.checked_off ? '✅' : '📚'} ${item.subject}: ${item.title.substring(0, 50)}${item.title.length > 50 ? '...' : ''}
-                    </div>
-                `).join('') : (day.isWeekend ? `
-                    <div class="day-item no-homework">🎉 Weekend!</div>
-                ` : `
-                    <div class="day-item no-homework">No homework due</div>
-                `)}
-            </div>
-        </div>
-    `).join('');
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
-// Check if today is a weekend
-function isWeekend() {
-    const day = new Date().getDay();
-    return day === 0 || day === 6; // Sunday or Saturday
-}
-
-
 // ==========================================
-// NED APP - PHASE 3 REDESIGN
-// Barcelona-themed Command Center
+// NED APP - PHASE 3+
+// Barcelona-themed Command Center with School Events
 // ==========================================
 
 // ==========================================
-// DATA: Player Stats (Hardcoded - will connect to API later)
+// DATA: Player Stats
 // ==========================================
 const playerData = [
     {
@@ -236,12 +234,7 @@ const playerData = [
         position: "Right Winger",
         number: 19,
         emoji: "⚡",
-        stats: {
-            goals: 8,
-            assists: 12,
-            rating: 8.2,
-            matches: 18
-        },
+        stats: { goals: 8, assists: 12, rating: 8.2, matches: 18 },
         form: ["W", "W", "D", "W", "W"]
     },
     {
@@ -249,12 +242,7 @@ const playerData = [
         position: "Left Winger",
         number: 11,
         emoji: "🔥",
-        stats: {
-            goals: 14,
-            assists: 8,
-            rating: 7.9,
-            matches: 20
-        },
+        stats: { goals: 14, assists: 8, rating: 7.9, matches: 20 },
         form: ["W", "W", "W", "L", "W"]
     },
     {
@@ -262,37 +250,22 @@ const playerData = [
         position: "Striker",
         number: 9,
         emoji: "🎯",
-        stats: {
-            goals: 19,
-            assists: 4,
-            rating: 8.0,
-            matches: 19
-        },
+        stats: { goals: 19, assists: 4, rating: 8.0, matches: 19 },
         form: ["W", "D", "W", "W", "W"]
     }
 ];
 
 // ==========================================
-// DATA: Next Match - Barcelona
+// DATA: Next Match (will connect to football API)
 // ==========================================
-// Fetch match data from Supabase
-async function fetchMatchData() {
-    console.log('⚽ Fetching match data...');
-    
-    const { data, error } = await supabase
-        .from('match_data')
-        .select('*')
-        .eq('team_id', 81)
-        .single();
-    
-    if (error) {
-        console.error('❌ Error fetching match data:', error);
-        return null;
-    }
-    
-    console.log('✅ Match data:', data);
-    return data;
-}
+const nextMatch = {
+    opponent: "Atlético Madrid",
+    opponentCrest: "🔴⚪",
+    competition: "La Liga",
+    date: "Saturday, Dec 21",
+    time: "3:00 PM EST",
+    venue: "Spotify Camp Nou"
+};
 
 // ==========================================
 // DATA: Dad Jokes
@@ -354,65 +327,21 @@ const voiceMessages = {
 let currentVoice = localStorage.getItem('nedVoice') || 'normal';
 
 // ==========================================
-// DATA: Alerts
+// DATA: Default Morning Checklist Items
 // ==========================================
-const alerts = [
-    { type: "warning", title: "📋 Daily Reminder:", text: "Check Canvas for any new assignments" },
-    { type: "info", title: "💡 Pro Tip:", text: "Start with the hardest subject first" },
-    { type: "info", title: "🎯 Stay Focused:", text: "Phone away during homework time!" }
+const defaultMorningItems = [
+    { id: "item-chromebook", subject: "Gear", text: "💻 Chromebook + charger" },
+    { id: "item-papers", subject: "Gear", text: "🎒 Check desk - any loose papers?" },
+    { id: "item-homework", subject: "Gear", text: "📚 Homework in backpack?" },
+    { id: "item-lunch", subject: "Gear", text: "🍎 Lunchbox" },
+    { id: "item-water", subject: "Gear", text: "💧 Water bottle" }
 ];
 
 // ==========================================
-// DATA: Morning Checklist
+// GLOBAL STATE
 // ==========================================
-const morningChecklist = [
-    { id: "item1", subject: "Gear", text: "Chromebook + charger", badge: "", badgeType: "" },
-    { id: "item2", subject: "Gear", text: "Check desk - any loose papers?", badge: "", badgeType: "" },
-    { id: "item3", subject: "Gear", text: "Homework in backpack?", badge: "", badgeType: "" },
-    { id: "item4", subject: "Gear", text: "Lunchbox", badge: "", badgeType: "" },
-    { id: "item5", subject: "Gear", text: "Water bottle", badge: "", badgeType: "" }
-];
-// ==========================================
-// DATA: Tests
-// ==========================================
-const testsData = [
-    {
-        date: "TOMORROW - Monday, Dec 2",
-        subject: "🔬 Science: Chapter 3 Metabolism Quiz",
-        details: "Study pages P1-P4 and review questions",
-        urgency: "urgent"
-    },
-    {
-        date: "Friday, Dec 6 (4 days away)",
-        subject: "📊 Math: Unit 3 Test",
-        details: "Start reviewing a little each night!",
-        urgency: "warning"
-    }
-];
-
-// ==========================================
-// DATA: Study Tips
-// ==========================================
-const studyTips = [
-    {
-        title: "For Science Quiz tomorrow:",
-        tips: [
-            "Re-read pages P1-P4",
-            "Answer the follow-up questions",
-            "Make flashcards for key terms",
-            "Quiz yourself tonight"
-        ]
-    },
-    {
-        title: "For Math Test (Friday):",
-        tips: [
-            "Practice on Khan Academy each night",
-            "⚠️ Read the WHOLE question - tip OR total bill?",
-            "Go to small group review in class",
-            "Don't cram Thursday night!"
-        ]
-    }
-];
+let schoolEvents = [];
+let homeworkMissions = [];
 
 // ==========================================
 // INITIALIZATION
@@ -424,34 +353,32 @@ document.addEventListener('DOMContentLoaded', function() {
 async function initializeApp() {
     console.log('🚀 Initializing Ned App...');
     
-    setDateDisplay();
+    // Set static content first
     setGreeting();
-    setMotivation();
-    initVoicePicker();
     setRandomJoke();
     setRandomTrivia();
     renderMatchCard();
-    renderAlerts();
-    renderWeekView();
-    setHomeworkSectionTitle(); // Set weekend-aware title
+    setHomeworkSectionTitle();
     
-    // Fetch real homework from Supabase
-    const homeworkData = await fetchHomeworkFromDB();
-    const missions = convertToMissions(homeworkData);
+    // Fetch data from Supabase
+    console.log('📡 Fetching data from Supabase...');
+    const [homeworkData, eventsData] = await Promise.all([
+        fetchHomeworkFromDB(),
+        fetchSchoolEventsFromDB()
+    ]);
     
-    if (missions.length > 0) {
-        console.log('✅ Rendering', missions.length, 'missions from database');
-        renderMissionsFromDB(missions);
-    } else {
-        console.log('⚠️ No homework found in database - showing empty state');
-        renderEmptyHomework();
-    }
+    // Store globally for use in multiple renders
+    schoolEvents = eventsData;
+    homeworkMissions = convertToMissions(homeworkData);
     
-    renderMorningChecklist();
+    // Render dynamic content
+    renderHeadsUp(schoolEvents);
+    renderMissions(homeworkMissions);
+    renderMorningChecklist(schoolEvents);
+    renderWeekView(homeworkMissions, schoolEvents);
     renderPlayerCards();
-    renderWeekView();
-    renderTests();
-    renderStudyTips();
+    
+    // Load saved progress and update stats
     loadProgress();
     updateStats();
     checkSaturdayReminder();
@@ -459,38 +386,274 @@ async function initializeApp() {
     console.log('✅ App initialization complete');
 }
 
-// Set homework section title based on day of week
+// ==========================================
+// HEADS UP: School Events Display
+// ==========================================
+function renderHeadsUp(events) {
+    const card = document.getElementById('heads-up-card');
+    const container = document.getElementById('heads-up-container');
+    
+    // Filter to events in the next 3 days that need attention
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const threeDaysOut = new Date(today);
+    threeDaysOut.setDate(threeDaysOut.getDate() + 3);
+    
+    const upcomingEvents = (events || []).filter(event => {
+        const eventDate = new Date(event.event_date + 'T00:00:00');
+        return eventDate <= threeDaysOut;
+    });
+    
+    // Also get upcoming tests from homework (next 5 days)
+    const fiveDaysOut = new Date(today);
+    fiveDaysOut.setDate(fiveDaysOut.getDate() + 5);
+    
+    const upcomingTests = (homeworkMissions || []).filter(mission => {
+        if (!mission.isTest) return false;
+        const dueDate = new Date(mission.dueDate + 'T00:00:00');
+        return dueDate >= today && dueDate <= fiveDaysOut;
+    });
+    
+    if (upcomingEvents.length === 0 && upcomingTests.length === 0) {
+        card.style.display = 'none';
+        return;
+    }
+    
+    card.style.display = 'block';
+    
+    let html = '';
+    
+    // Render tests first (most important)
+    upcomingTests.forEach(test => {
+        const relativeDate = formatRelativeDate(test.dueDate);
+        const isUrgent = isToday(test.dueDate) || isTomorrow(test.dueDate);
+        
+        html += `
+            <div class="alert ${isUrgent ? 'urgent' : 'warning'} test-alert">
+                <div class="alert-title">📝 ${relativeDate}: ${test.text}</div>
+                <div class="alert-text">${test.subject} - Start studying now!</div>
+            </div>
+        `;
+    });
+    
+    // Render school events
+    upcomingEvents.forEach(event => {
+        const emoji = getEventEmoji(event.event_type, event.title);
+        const relativeDate = formatRelativeDate(event.event_date);
+        const isUrgent = isToday(event.event_date) || isTomorrow(event.event_date);
+        const alertType = event.event_type === 'closure' ? 'info' : (isUrgent ? 'urgent' : 'warning');
+        
+        let actionHtml = '';
+        if (event.action_required && event.action_text) {
+            actionHtml = `<div class="alert-action">👉 ${event.action_text}</div>`;
+        }
+        
+        html += `
+            <div class="alert ${alertType}">
+                <div class="alert-title">${emoji} ${relativeDate}: ${event.title}</div>
+                ${event.description ? `<div class="alert-text">${event.description}</div>` : ''}
+                ${actionHtml}
+            </div>
+        `;
+    });
+    
+    container.innerHTML = html;
+}
+
+// ==========================================
+// MISSIONS (Homework) Rendering
+// ==========================================
+function renderMissions(missions) {
+    const container = document.getElementById('tonight-homework');
+    
+    if (!missions || missions.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">🔭</div>
+                <div class="empty-text">No homework found!</div>
+                <div class="empty-subtext">Either you're all caught up, or we need to sync with Canvas.</div>
+            </div>
+        `;
+        return;
+    }
+    
+    // Sort: tests first, then by due date
+    const sorted = [...missions].sort((a, b) => {
+        if (a.isTest && !b.isTest) return -1;
+        if (!a.isTest && b.isTest) return 1;
+        return 0;
+    });
+    
+    container.innerHTML = sorted.map(mission => `
+        <div class="mission-item ${mission.completed ? 'completed' : ''} ${mission.isTest ? 'is-test' : ''}" data-id="${mission.id}" onclick="toggleMission(this)">
+            <div class="mission-checkbox"></div>
+            <div class="mission-content">
+                <div class="mission-text">${mission.text}</div>
+                <div class="mission-subject">${mission.subject}</div>
+            </div>
+            ${mission.badge ? `<span class="mission-badge ${mission.badgeType}">${mission.badge}</span>` : ''}
+        </div>
+    `).join('');
+}
+
+// ==========================================
+// MORNING CHECKLIST: With Event Action Items
+// ==========================================
+function renderMorningChecklist(events) {
+    const container = document.getElementById('morning-checklist');
+    
+    // Get tomorrow's date for morning checklist
+    const tomorrow = new Date();
+    tomorrow.setHours(0, 0, 0, 0);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowStr = tomorrow.toISOString().split('T')[0];
+    
+    // Also check today's events (in case viewing in morning)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayStr = today.toISOString().split('T')[0];
+    
+    // Find events with action items for today or tomorrow
+    const actionItems = (events || [])
+        .filter(event => {
+            const hasAction = event.action_required && event.action_text && event.action_text.trim();
+            const isRelevant = event.event_date === todayStr || event.event_date === tomorrowStr;
+            return hasAction && isRelevant;
+        })
+        .map(event => ({
+            id: `event-action-${event.id}`,
+            subject: 'School Event',
+            text: `${getEventEmoji(event.event_type, event.title)} ${event.action_text}`,
+            badge: isToday(event.event_date) ? 'TODAY' : 'TOMORROW',
+            badgeType: 'warning'
+        }));
+    
+    // Combine action items with default morning items
+    const allItems = [...actionItems, ...defaultMorningItems];
+    
+    container.innerHTML = allItems.map(item => `
+        <div class="mission-item" data-id="${item.id}" onclick="toggleMission(this)">
+            <div class="mission-checkbox"></div>
+            <div class="mission-content">
+                <div class="mission-text">${item.text}</div>
+                <div class="mission-subject">${item.subject}</div>
+            </div>
+            ${item.badge ? `<span class="mission-badge ${item.badgeType}">${item.badge}</span>` : ''}
+        </div>
+    `).join('');
+}
+
+// ==========================================
+// WEEK VIEW: Homework + Events Combined
+// ==========================================
+function renderWeekView(missions, events) {
+    const container = document.getElementById('week-view');
+    const titleEl = document.getElementById('week-title');
+    
+    // Build a week starting from today
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const days = [];
+    for (let i = 0; i < 7; i++) {
+        const date = new Date(today);
+        date.setDate(date.getDate() + i);
+        days.push({
+            date: date,
+            dateStr: date.toISOString().split('T')[0],
+            dayName: date.toLocaleDateString('en-US', { weekday: 'long' }),
+            displayDate: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+            isToday: i === 0,
+            items: []
+        });
+    }
+    
+    // Set week title
+    const endDate = days[6].date;
+    titleEl.textContent = `📅 ${days[0].displayDate} - ${days[6].displayDate}`;
+    
+    // Add homework to appropriate days
+    (missions || []).forEach(mission => {
+        const day = days.find(d => d.dateStr === mission.dueDate);
+        if (day) {
+            day.items.push({
+                text: mission.text,
+                subject: mission.subject,
+                type: 'homework',
+                isTest: mission.isTest
+            });
+        }
+    });
+    
+    // Add events to appropriate days
+    (events || []).forEach(event => {
+        const day = days.find(d => d.dateStr === event.event_date);
+        if (day) {
+            const emoji = getEventEmoji(event.event_type, event.title);
+            day.items.push({
+                text: `${emoji} ${event.title}`,
+                subject: event.action_text || '',
+                type: 'event',
+                eventType: event.event_type,
+                isTest: false
+            });
+        }
+    });
+    
+    // Render the week
+    container.innerHTML = days.map(day => {
+        const itemsHtml = day.items.length > 0 
+            ? day.items.map(item => `
+                <div class="day-item ${item.isTest ? 'test' : ''} ${item.type === 'event' ? 'event-item' : ''}">
+                    ${item.text}
+                    ${item.subject ? `<span class="day-item-detail">${item.subject}</span>` : ''}
+                </div>
+            `).join('')
+            : '<div class="day-item empty">Nothing scheduled</div>';
+        
+        return `
+            <div class="day-card ${day.isToday ? 'today' : ''}">
+                <div class="day-header">
+                    <span class="day-name">${day.dayName}, ${day.displayDate}</span>
+                    ${day.isToday ? '<span class="day-badge">TODAY</span>' : ''}
+                </div>
+                <div class="day-items">
+                    ${itemsHtml}
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// ==========================================
+// HOMEWORK SECTION TITLE
+// ==========================================
 function setHomeworkSectionTitle() {
     const titleEl = document.getElementById('homework-section-title');
+    const subtitleEl = document.getElementById('homework-subtitle');
     if (!titleEl) return;
     
     const day = new Date().getDay();
     const hour = new Date().getHours();
     
     if (day === 6) {
-        // Saturday
         titleEl.textContent = "📚 Homework for Next Week";
+        if (subtitleEl) subtitleEl.textContent = "Get ahead this weekend!";
     } else if (day === 0) {
-        // Sunday
         titleEl.textContent = "📚 Homework for This Week";
+        if (subtitleEl) subtitleEl.textContent = "Plan your week ahead";
     } else if (day === 5 && hour >= 15) {
-        // Friday afternoon
         titleEl.textContent = "📚 Weekend Homework";
+        if (subtitleEl) subtitleEl.textContent = "Finish early, enjoy your weekend!";
     } else {
-        // Regular school day
         titleEl.textContent = "📚 Tonight's Missions";
+        if (subtitleEl) subtitleEl.textContent = "Check off as you complete each one";
     }
 }
 
 // ==========================================
-// DATE & GREETING
+// GREETING
 // ==========================================
-function setDateDisplay() {
-    const options = { weekday: 'long', month: 'long', day: 'numeric' };
-    const today = new Date().toLocaleDateString('en-US', options);
-    document.getElementById('date-display').textContent = today;
-}
-
 function setGreeting() {
     const hour = new Date().getHours();
     const messages = voiceMessages[currentVoice].greetings;
@@ -504,44 +667,6 @@ function setGreeting() {
     document.getElementById('greeting').textContent = timePrefix + messages[randomIndex];
 }
 
-function setMotivation() {
-    const messages = voiceMessages[currentVoice].motivation;
-    const randomIndex = Math.floor(Math.random() * messages.length);
-    document.getElementById('motivation-text').textContent = messages[randomIndex];
-    document.getElementById('match-motivation-text').textContent = voiceMessages[currentVoice].matchMotivation;
-}
-
-// ==========================================
-// VOICE PICKER
-// ==========================================
-function initVoicePicker() {
-    const buttons = document.querySelectorAll('.voice-btn');
-    buttons.forEach(btn => {
-        if (btn.dataset.voice === currentVoice) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
-        }
-    });
-}
-
-function setVoice(voice) {
-    currentVoice = voice;
-    localStorage.setItem('nedVoice', voice);
-    
-    const buttons = document.querySelectorAll('.voice-btn');
-    buttons.forEach(btn => {
-        if (btn.dataset.voice === voice) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
-        }
-    });
-    
-    setGreeting();
-    setMotivation();
-}
-
 // ==========================================
 // JOKES & TRIVIA
 // ==========================================
@@ -552,157 +677,29 @@ function setRandomJoke() {
 
 function setRandomTrivia() {
     const randomTrivia = soccerTrivia[Math.floor(Math.random() * soccerTrivia.length)];
-    document.querySelector('.trivia-text').textContent = randomTrivia;
+    const triviaText = document.querySelector('.trivia-text');
+    if (triviaText) {
+        triviaText.textContent = randomTrivia;
+    }
 }
 
 // ==========================================
 // MATCH CARD
 // ==========================================
-async function renderMatchCard() {
-    const match = await fetchMatchData();
+function renderMatchCard() {
+    const elements = {
+        'opponent-name': nextMatch.opponent,
+        'opponent-crest': nextMatch.opponentCrest,
+        'match-competition': nextMatch.competition,
+        'match-date': nextMatch.date,
+        'match-time': nextMatch.time,
+        'match-motivation-text': voiceMessages[currentVoice].matchMotivation
+    };
     
-    if (!match) {
-        document.getElementById('opponent-name').textContent = 'TBD';
-        return;
-    }
-    
-    // Next match
-    document.getElementById('opponent-name').textContent = match.next_opponent || 'TBD';
-    document.getElementById('match-competition').textContent = match.next_competition || '';
-    
-    if (match.next_match_date) {
-        const date = new Date(match.next_match_date);
-        document.getElementById('match-date').textContent = date.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
-        document.getElementById('match-time').textContent = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-    }
-    
-    // Last match result
-    if (match.last_result && match.last_opponent) {
-        const container = document.getElementById('last-result-container');
-        const textEl = document.getElementById('last-result-text');
-        
-        const isHome = match.last_home_or_away === 'HOME';
-        const barcaScore = isHome ? match.last_score_home : match.last_score_away;
-        const oppScore = isHome ? match.last_score_away : match.last_score_home;
-        
-        let emoji, resultClass;
-        if (match.last_result === 'WIN') {
-            emoji = '✅';
-            resultClass = 'win';
-        } else if (match.last_result === 'LOSS') {
-            emoji = '❌';
-            resultClass = 'loss';
-        } else {
-            emoji = '➖';
-            resultClass = 'draw';
-        }
-        
-        textEl.textContent = `${emoji} Last Match: Barça ${barcaScore} - ${oppScore} ${match.last_opponent}`;
-        container.classList.add(resultClass);
-        container.style.display = 'block';
-    }
-    
-    // Update motivation
-    document.getElementById('match-motivation-text').textContent = 'Finish your missions early to catch kickoff!';
-}
-
-// ==========================================
-// ALERTS
-// ==========================================
-function renderAlerts() {
-    const container = document.getElementById('alerts-container');
-    container.innerHTML = alerts.map(alert => `
-        <div class="alert ${alert.type}">
-            <div class="alert-title">${alert.title}</div>
-            <div class="alert-text">${alert.text}</div>
-        </div>
-    `).join('');
-}
-
-// ==========================================
-// MISSIONS (Homework)
-// ==========================================
-function renderEmptyHomework() {
-    const container = document.getElementById('tonight-homework');
-    container.innerHTML = `
-        <div class="empty-state">
-            <div class="empty-icon">📭</div>
-            <div class="empty-text">No homework found!</div>
-            <div class="empty-subtext">Either you're all caught up, or we need to sync with Canvas.</div>
-            <div class="empty-hint">Check the console (F12) for debug info</div>
-        </div>
-    `;
-}
-
-function renderMissionsFromDB(missions) {
-    const container = document.getElementById('tonight-homework');
-    container.innerHTML = missions.map(mission => `
-        <div class="mission-item ${mission.completed ? 'completed' : ''}" data-id="${mission.id}" onclick="toggleMission(this)">
-            <div class="mission-checkbox"></div>
-            <div class="mission-content">
-                <div class="mission-text">${mission.text}</div>
-                <div class="mission-subject">${mission.subject}</div>
-            </div>
-            ${mission.badge ? `<span class="mission-badge ${mission.badgeType}">${mission.badge}</span>` : ''}
-        </div>
-    `).join('');
-}
-
-function renderMorningChecklist() {
-    const container = document.getElementById('morning-checklist');
-    container.innerHTML = morningChecklist.map(item => `
-        <div class="mission-item" data-id="${item.id}" onclick="toggleMission(this)">
-            <div class="mission-checkbox"></div>
-            <div class="mission-content">
-                <div class="mission-text">${item.text}</div>
-                <div class="mission-subject">${item.subject}</div>
-            </div>
-            ${item.badge ? `<span class="mission-badge ${item.badgeType}">${item.badge}</span>` : ''}
-        </div>
-    `).join('');
-}
-
-async function toggleMission(element) {
-    element.classList.toggle('completed');
-    const isCompleted = element.classList.contains('completed');
-    const itemId = element.dataset.id;
-    
-    // Save to Supabase if it's a homework item
-    if (itemId && itemId.startsWith('hw-')) {
-        const dbId = itemId.replace('hw-', '');
-        const { error } = await supabase
-            .from('homework_items')
-            .update({ 
-                checked_off: isCompleted,
-                checked_at: isCompleted ? new Date().toISOString() : null
-            })
-            .eq('id', dbId);
-        
-        if (error) {
-            console.error('❌ Error saving checkbox:', error);
-        } else {
-            console.log('✅ Checkbox saved to database');
-        }
-    }
-    
-    updateStats();
-    saveProgress();
-}
-
-// ==========================================
-// PROGRESS & STATS
-// ==========================================
-function updateStats() {
-    const allMissions = document.querySelectorAll('#today-tab .mission-item');
-    const completedMissions = document.querySelectorAll('#today-tab .mission-item.completed');
-    
-    const total = allMissions.length;
-    const completed = completedMissions.length;
-    const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
-    
-    document.getElementById('mission-count').textContent = `${completed}/${total}`;
-    document.getElementById('progress-fill').style.width = `${percentage}%`;
-    document.getElementById('progress-text').textContent = `${percentage}% Complete`;
+    Object.entries(elements).forEach(([id, value]) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+    });
 }
 
 // ==========================================
@@ -710,6 +707,8 @@ function updateStats() {
 // ==========================================
 function renderPlayerCards() {
     const container = document.getElementById('player-cards');
+    if (!container) return;
+    
     container.innerHTML = playerData.map(player => `
         <div class="player-card" data-number="${player.number}">
             <div class="player-header">
@@ -750,39 +749,46 @@ function renderPlayerCards() {
         </div>
     `).join('');
     
+    // Update season summary
     const totalGoals = playerData.reduce((sum, p) => sum + p.stats.goals, 0);
     const totalAssists = playerData.reduce((sum, p) => sum + p.stats.assists, 0);
     const avgRating = (playerData.reduce((sum, p) => sum + p.stats.rating, 0) / playerData.length).toFixed(1);
     
-    document.getElementById('total-goals').textContent = totalGoals;
-    document.getElementById('total-assists').textContent = totalAssists;
-    document.getElementById('avg-rating').textContent = avgRating;
+    const goalsEl = document.getElementById('total-goals');
+    const assistsEl = document.getElementById('total-assists');
+    const ratingEl = document.getElementById('avg-rating');
+    
+    if (goalsEl) goalsEl.textContent = totalGoals;
+    if (assistsEl) assistsEl.textContent = totalAssists;
+    if (ratingEl) ratingEl.textContent = avgRating;
 }
 
 // ==========================================
-// TESTS
+// MISSION TOGGLE & PROGRESS
 // ==========================================
-function renderTests() {
-    const container = document.getElementById('tests-container');
-    container.innerHTML = testsData.map(test => `
-        <div class="test-card ${test.urgency}">
-            <div class="test-date">${test.date}</div>
-            <div class="test-subject">${test.subject}</div>
-            <div class="test-details">${test.details}</div>
-        </div>
-    `).join('');
+function toggleMission(element) {
+    element.classList.toggle('completed');
+    updateStats();
+    saveProgress();
 }
 
-function renderStudyTips() {
-    const container = document.getElementById('study-tips');
-    container.innerHTML = studyTips.map(section => `
-        <div class="study-section">
-            <div class="study-title">${section.title}</div>
-            <ul class="study-list">
-                ${section.tips.map(tip => `<li>${tip}</li>`).join('')}
-            </ul>
-        </div>
-    `).join('');
+function updateStats() {
+    const allMissions = document.querySelectorAll('#today-tab .mission-item');
+    const completedMissions = document.querySelectorAll('#today-tab .mission-item.completed');
+    
+    const total = allMissions.length;
+    const completed = completedMissions.length;
+    const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+    
+    const countEl = document.getElementById('mission-count');
+    const fillEl = document.getElementById('progress-fill');
+    const textEl = document.getElementById('progress-text');
+    const completedCountEl = document.getElementById('completed-count');
+    
+    if (countEl) countEl.textContent = `${completed}/${total}`;
+    if (fillEl) fillEl.style.width = `${percentage}%`;
+    if (textEl) textEl.textContent = `${percentage}% Complete`;
+    if (completedCountEl) completedCountEl.textContent = completed;
 }
 
 // ==========================================
@@ -797,6 +803,8 @@ function checkSaturdayReminder() {
 
 function showSaturdayReminder() {
     const container = document.getElementById('shot-reminder-container');
+    if (!container) return;
+    
     container.innerHTML = `
         <div class="shot-reminder">
             <h3>💉 IMPORTANT REMINDER</h3>
@@ -842,36 +850,34 @@ function saveProgress() {
         }
     });
     
-    // Save with today's date
-    const saveData = {
-        date: new Date().toDateString(),
-        progress: progress
-    };
-    
-    localStorage.setItem('nedProgress', JSON.stringify(saveData));
+    // Save with today's date so we can reset daily
+    const today = new Date().toISOString().split('T')[0];
+    localStorage.setItem('nedProgress', JSON.stringify({ date: today, items: progress }));
 }
 
 function loadProgress() {
     const saved = localStorage.getItem('nedProgress');
-    if (saved) {
-        const saveData = JSON.parse(saved);
-        const today = new Date().toDateString();
+    if (!saved) return;
+    
+    try {
+        const data = JSON.parse(saved);
+        const today = new Date().toISOString().split('T')[0];
         
-        // Check if save is from a previous day
-        const isNewDay = saveData.date !== today;
+        // Only restore if saved today (reset daily)
+        if (data.date !== today) {
+            console.log('📅 New day - resetting progress');
+            localStorage.removeItem('nedProgress');
+            return;
+        }
         
-        const progress = saveData.progress || saveData; // Handle old format
-        
+        const progress = data.items || {};
         Object.keys(progress).forEach(id => {
-            // Skip morning checklist items if it's a new day
-            if (isNewDay && id.startsWith('item')) {
-                return;
-            }
-            
             const mission = document.querySelector(`.mission-item[data-id="${id}"]`);
             if (mission && progress[id]) {
                 mission.classList.add('completed');
             }
         });
+    } catch (e) {
+        console.error('Error loading progress:', e);
     }
 }

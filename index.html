@@ -1,206 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="newsletter-parser.css">
-    <link rel="stylesheet" href="talk-to-ned.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ned - Willy's Command Center</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
+    <title>Ned - Willy's Assistant</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#004D98">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Stadium Glow Effect -->
-    <div class="stadium-glow"></div>
-    
     <div class="container">
-        <!-- Header -->
         <div class="header">
-            <div class="header-top">
-                <div class="logo">
-                    <span class="logo-icon">⚽</span>
-                    <span class="logo-text">NED</span>
-                </div>
-                <div class="streak-badge">
-                    <span class="streak-fire">🔥</span>
-                    <span class="streak-count">5</span>
-                    <span class="streak-label">day streak</span>
-                </div>
-            </div>
+            <h1>🎯 Ned</h1>
             <p id="greeting">Hey Willy!</p>
-            <p class="subtitle" id="date-display">Loading...</p>
         </div>
         
-        <!-- Voice Picker -->
-        <div class="voice-picker">
-            <button class="voice-btn active" data-voice="normal" onclick="setVoice('normal')">
-                <span class="voice-emoji">😊</span>
-                <span class="voice-name">Normal</span>
-            </button>
-            <button class="voice-btn" data-voice="stewie" onclick="setVoice('stewie')">
-                <span class="voice-emoji">🧐</span>
-                <span class="voice-name">Stewie</span>
-            </button>
-            <button class="voice-btn" data-voice="french" onclick="setVoice('french')">
-                <span class="voice-emoji">🇫🇷</span>
-                <span class="voice-name">French</span>
-            </button>
-        </div>
-        
-        <!-- Motivation Card -->
-        <div class="motivation-card">
-            <p id="motivation-text">Let's crush it today!</p>
-        </div>
-        
-        <!-- Navigation Tabs -->
-  <!-- Navigation Tabs -->
         <nav class="nav-tabs">
             <button class="nav-tab active" onclick="switchTab('today')">
                 <span class="tab-icon">🎯</span>
                 <span class="tab-text">Today</span>
             </button>
-            <button class="nav-tab" onclick="switchTab('players')">
-                <span class="tab-icon">⚽</span>
-                <span class="tab-text">Barça</span>
-            </button>
             <button class="nav-tab" onclick="switchTab('week')">
                 <span class="tab-icon">📅</span>
                 <span class="tab-text">Week</span>
             </button>
-            <!-- Hidden until connected to real data
-            <button class="nav-tab" onclick="switchTab('tests')">
-                <span class="tab-icon">📝</span>
-                <span class="tab-text">Tests</span>
+            <button class="nav-tab" onclick="switchTab('players')">
+                <span class="tab-icon">⭐</span>
+                <span class="tab-text">Players</span>
             </button>
-            -->
         </nav>
         
         <!-- TODAY TAB -->
         <div id="today-tab" class="tab-content active">
             
-            <!-- Shot Reminder (Saturday only - populated by JS) -->
-            <div id="shot-reminder-container"></div>
-            
-            <!-- Daily Fun -->
-            <div class="card">
+            <!-- Heads Up - School Events (populated from database) -->
+            <div class="card heads-up-card" id="heads-up-card" style="display: none;">
                 <div class="card-header">
-                    <span class="card-icon">😂</span>
-                    <h2>Daily Fun</h2>
-                </div>
-                <div class="joke-box" id="joke">Loading joke...</div>
-                <div class="trivia-box">
-                    <span class="trivia-icon">⚽</span>
-                    <span class="trivia-text">Loading trivia...</span>
-                </div>
-            </div>
-            
-    
-    
-            
-            <!-- Alerts -->
-            <div class="card">
-                <div class="card-header">
-                    <span class="card-icon">⚡</span>
+                    <span class="card-icon">⚠️</span>
                     <h2>Heads Up!</h2>
                 </div>
-                <div id="alerts-container"></div>
+                <div id="heads-up-container">
+                    <!-- Populated by JavaScript -->
+                </div>
             </div>
             
-            <!-- Tonight's Homework -->
+            <!-- Saturday Shot Reminder (shown on Saturdays) -->
+            <div id="shot-reminder-container"></div>
+            
             <div class="card">
-                <div class="card-header">
-                    <span class="card-icon">📚</span>
-                    <h2 id="homework-section-title">Tonight's Missions</h2>
-                    <span class="mission-count" id="mission-count">0/0</span>
+                <h2>😂 Daily Fun</h2>
+                <div class="joke-box" id="joke">
+                    Why don't scientists trust atoms? Because they make up everything!
                 </div>
+                <div class="joke-box trivia-box" id="soccer-trivia">
+                    <span class="trivia-icon">⚽</span>
+                    <span class="trivia-text">Who do you think will win the Ballon d'Or this year?</span>
+                </div>
+            </div>
+            
+            <div class="card match-card">
+                <div class="card-header">
+                    <span class="card-icon">⚽</span>
+                    <h2>FC Barcelona</h2>
+                </div>
+                <div class="match-content">
+                    <div class="match-teams">
+                        <div class="team">
+                            <div class="team-crest">🔵🔴</div>
+                            <span class="team-name">Barcelona</span>
+                        </div>
+                        <div class="match-info">
+                            <span class="match-vs">VS</span>
+                            <span class="match-competition" id="match-competition">La Liga</span>
+                        </div>
+                        <div class="team">
+                            <div class="team-crest" id="opponent-crest">🔴⚪</div>
+                            <span class="team-name" id="opponent-name">Atlético Madrid</span>
+                        </div>
+                    </div>
+                    <div class="match-datetime">
+                        <span class="match-date" id="match-date">Saturday, Dec 21</span>
+                        <span class="match-time" id="match-time">3:00 PM EST</span>
+                    </div>
+                    <div class="match-motivation">
+                        <span>💡</span>
+                        <span id="match-motivation-text">Finish your missions early to catch kickoff!</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2 id="homework-section-title">📚 Tonight's Missions</h2>
+                <p class="card-subtitle" id="homework-subtitle">Check off as you complete each one</p>
                 <div class="progress-container">
                     <div class="progress-bar">
                         <div class="progress-fill" id="progress-fill"></div>
                     </div>
                     <span class="progress-text" id="progress-text">0% Complete</span>
                 </div>
+                <div id="mission-count" style="display: none;">0/0</div>
                 <div class="mission-list" id="tonight-homework">
-                    <!-- Populated by JavaScript -->
+                    <!-- Populated by JavaScript from Supabase -->
                 </div>
             </div>
             
-            <!-- Morning Checklist -->
             <div class="card">
-                <div class="card-header">
-                    <span class="card-icon">🌅</span>
-                    <h2>Morning Checklist</h2>
-                </div>
+                <h2 id="morning-title">🌅 Morning Checklist</h2>
                 <p class="card-subtitle">Before you leave for school:</p>
                 <div class="mission-list" id="morning-checklist">
-                    <!-- Populated by JavaScript -->
+                    <!-- Populated by JavaScript - includes event action items -->
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>📊 Progress</h2>
+                <div class="stats">
+                    <div class="stat-card">
+                        <div class="stat-number" id="completed-count">0</div>
+                        <div class="stat-label">Checked Off</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Day Streak 🔥</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- WEEK TAB -->
+        <div id="week-tab" class="tab-content">
+            <div class="card">
+                <h2 id="week-title">📅 This Week</h2>
+                <div class="week-view" id="week-view">
+                    <!-- Populated by JavaScript from Supabase (homework + events) -->
                 </div>
             </div>
         </div>
         
         <!-- PLAYERS TAB -->
-
-        <!-- BARÇA TAB -->
-<div id="players-tab" class="tab-content">
-    <div class="players-header">
-        <h2>🔵🔴 FC Barcelona</h2>
-        <p>Força Barça!</p>
-    </div>
-    
-    <!-- Last Result -->
-    <div class="last-result" id="last-result-container" style="display: none;">
-        <span id="last-result-text">Loading...</span>
-    </div>
-    
-    <!-- Next Match -->
-    <div class="card match-card">   
-        <div class="card-header">
-            <span class="card-icon">📅</span>
-            <h2>Next Match</h2>
-        </div>
-        <div class="match-content">
-            <div class="match-teams">
-                <div class="team">
-                    <div class="team-crest">🔵🔴</div>
-                    <span class="team-name">Barcelona</span>
-                </div>
-                <div class="match-info">
-                    <span class="match-vs">VS</span>
-                    <span class="match-competition" id="match-competition">La Liga</span>
-                </div>
-                <div class="team">
-                    <div class="team-crest" id="opponent-crest">🔴⚪</div>
-                    <span class="team-name" id="opponent-name">Loading...</span>
-                </div>
+        <div id="players-tab" class="tab-content">
+            <div class="players-header">
+                <h2>⭐ Star Players</h2>
+                <p>Track your favorite Barça players</p>
             </div>
-            <div class="match-datetime">
-                <span class="match-date" id="match-date">Loading...</span>
-                <span class="match-time" id="match-time">Loading...</span>
-            </div>
-            <div class="match-motivation">
-                <span>💡</span>
-                <span id="match-motivation-text">Finish your missions early to catch kickoff!</span>
-            </div>
-        </div>
-    </div>
-    
-    <div class="players-header" style="margin-top: 20px;">
-        <h2>⭐ Star Players</h2>
-    </div>
             
             <div class="player-cards" id="player-cards">
                 <!-- Populated by JavaScript -->
             </div>
             
             <div class="card">
-                <div class="card-header">
-                    <span class="card-icon">📊</span>
-                    <h2>Season Summary</h2>
-                </div>
+                <h2>📊 Season Summary</h2>
                 <div class="season-summary">
                     <div class="season-stat">
                         <span class="stat-value" id="total-goals">0</span>
@@ -217,42 +164,6 @@
                 </div>
             </div>
         </div>
-        
-        <!-- WEEK TAB (Hidden for now) -->
-        <div id="week-tab" class="tab-content">
-            <div class="card">
-                <div class="card-header">
-                    <span class="card-icon">📅</span>
-                    <h2>This Week</h2>
-                </div>
-                <div class="week-view" id="week-view">
-                    <!-- Populated by JavaScript -->
-                </div>
-            </div>
-        </div>
-        
-        <!-- TESTS TAB (Hidden for now) -->
-        <div id="tests-tab" class="tab-content">
-            <div class="card">
-                <div class="card-header">
-                    <span class="card-icon">📝</span>
-                    <h2>Upcoming Tests</h2>
-                </div>
-                <div id="tests-container">
-                    <!-- Populated by JavaScript -->
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <span class="card-icon">💡</span>
-                    <h2>Study Tips</h2>
-                </div>
-                <div id="study-tips">
-                    <!-- Populated by JavaScript -->
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Load Supabase from CDN -->
@@ -260,53 +171,5 @@
     
     <!-- Load main app -->
     <script src="app.js"></script>
-
-    <!-- Talk to Ned - AI Tutor -->
-<script src="talk-to-ned.js"></script>
-
-<!-- Floating button to open chat -->
-<button class="ned-fab" id="ned-fab-btn" onclick="window.nedTutor.toggle()">
-    💬
-    <span class="ned-fab-label">Ask Ned for help</span>
-</button>
-
-<!-- Chat container (renders here) -->
-<div id="ned-chat"></div>
-
-<script>
-    // Initialize Talk to Ned after page loads
-    document.addEventListener('DOMContentLoaded', function() {
-        // Only initialize if TalkToNed is available
-        if (typeof TalkToNed !== 'undefined') {
-            window.nedTutor = new TalkToNed({
-                studentId: '8021ff47-1a41-4341-a2e0-9c4fa53cc389', // Willy's student ID
-                studentName: 'Willy'
-            });
-            window.nedTutor.render('ned-chat');
-            
-            console.log('✅ Talk to Ned initialized');
-        }
-    });
-</script>
-<!-- Newsletter Parser -->
-<script src="newsletter-parser.js"></script>
-
-<!-- Button to open parser (for parents) -->
-<button class="add-events-btn" id="add-events-btn" onclick="window.newsletterParser.toggle()">
-    📧
-</button>
-
-<!-- Parser container -->
-<div id="newsletter-parser"></div>
-
-<script>
-    // Initialize Newsletter Parser
-    window.newsletterParser = new NewsletterParser({
-        studentId: '8021ff47-1a41-4341-a2e0-9c4fa53cc389' // Willy's ID
-    });
-    window.newsletterParser.render('newsletter-parser');
-</script>
-```
-
 </body>
 </html>
