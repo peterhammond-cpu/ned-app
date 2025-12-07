@@ -1,6 +1,6 @@
 // sync-canvas-homework.js
 // Fetches fresh homework from Canvas, clears old data, saves to Supabase
-// NOW WITH SMART DUE DATE PARSING!
+// NOW WITH SMART DUE DATE PARSING + SCHOOL CLOSURE AWARENESS!
 
 require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
@@ -18,6 +18,57 @@ const supabase = createClient(
 );
 
 // ==========================================
+// SCHOOL CLOSURES
+// ==========================================
+
+// Fetch school closure dates from database
+async function fetchSchoolClosures() {
+    console.log('📅 Fetching school closures from database...');
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayStr = today.toISOString().split('T')[0];
+    
+    // Get closures for the next 30 days
+    const thirtyDaysOut = new Date(today);
+    thirtyDaysOut.setDate(thirtyDaysOut.getDate() + 30);
+    const thirtyDaysStr = thirtyDaysOut.toISOString().split('T')[0];
+    
+    const { data, error } = await supabase
+        .from('school_events')
+        .select('event_date, title')
+        .eq('student_id', WILLY_STUDENT_ID)
+        .in('event_type', ['no_school', 'closure'])
+        .gte('event_date', todayStr)
+        .lte('event_date', thirtyDaysStr);
+    
+    if (error) {
+        console.error('  ⚠️ Error fetching closures:', error.message);
+        return new Set();
+    }
+    
+    // Create a Set of closure date strings for fast lookup
+    const closureDates = new Set(data.map(row => row.event_date));
+    
+    if (closureDates.size > 0) {
+        console.log(`  ✅ Found ${closureDates.size} closure(s):`);
+        data.forEach(row => {
+            console.log(`     📌 ${row.event_date}: ${row.title}`);
+        });
+    } else {
+        console.log('  ✅ No upcoming closures found');
+    }
+    
+    return closureDates;
+}
+
+// Check if a date is a school closure
+function isSchoolClosure(date, closureDates) {
+    const dateStr = date.toISOString().split('T')[0];
+    return closureDates.has(dateStr);
+}
+
+// ==========================================
 // SMART DUE DATE PARSING
 // ==========================================
 
@@ -32,8 +83,8 @@ const dayMap = {
     'saturday': 6, 'sat': 6
 };
 
-// Get next occurrence of a specific weekday
-function getNextWeekday(fromDate, targetDay) {
+// Get next occurrence of a specific weekday (skipping closures)
+function getNextWeekday(fromDate, targetDay, closureDates) {
     const result = new Date(fromDate);
     const currentDay = result.getDay();
     let daysToAdd = targetDay - currentDay;
@@ -43,31 +94,66 @@ function getNextWeekday(fromDate, targetDay) {
     }
     
     result.setDate(result.getDate() + daysToAdd);
+    
+    // If the target day is a closure, find the next school day after it
+    while (isSchoolClosure(result, closureDates)) {
+        console.log(`    ⚠️ ${result.toDateString()} is a closure, skipping...`);
+        result.setDate(result.getDate() + 1);
+        // Also skip weekends
+        while (result.getDay() === 0 || result.getDay() === 6) {
+            result.setDate(result.getDate() + 1);
+        }
+    }
+    
     return result;
 }
 
-// Get next school day (skip weekends)
-function getNextSchoolDay(fromDate) {
+// Get next school day (skip weekends AND closures)
+function getNextSchoolDay(fromDate, closureDates) {
     const result = new Date(fromDate);
     result.setDate(result.getDate() + 1);
     
-    // Skip Saturday (6) and Sunday (0)
-    while (result.getDay() === 0 || result.getDay() === 6) {
-        result.setDate(result.getDate() + 1);
+    // Keep advancing until we find a school day
+    let maxIterations = 30; // Safety limit
+    while (maxIterations > 0) {
+        // Skip Saturday (6) and Sunday (0)
+        if (result.getDay() === 0 || result.getDay() === 6) {
+            result.setDate(result.getDate() + 1);
+            maxIterations--;
+            continue;
+        }
+        
+        // Skip school closures
+        if (isSchoolClosure(result, closureDates)) {
+            console.log(`    ⚠️ ${result.toDateString()} is a closure, skipping...`);
+            result.setDate(result.getDate() + 1);
+            maxIterations--;
+            continue;
+        }
+        
+        // Found a school day!
+        break;
     }
     
     return result;
 }
 
 // Parse due date from description text
-function parseDueDate(description, assignedDate) {
+function parseDueDate(description, assignedDate, closureDates) {
     const text = description.toLowerCase();
     
     // Pattern 1: "due tomorrow" or "tomorrow"
     if (text.includes('tomorrow') || text.includes('due tomorrow')) {
-        const tomorrow = new Date(assignedDate);
+        let tomorrow = new Date(assignedDate);
         tomorrow.setDate(tomorrow.getDate() + 1);
-        console.log(`    📅 Parsed "tomorrow" → ${tomorrow.toDateString()}`);
+        
+        // Check if tomorrow is a weekend or closure
+        if (tomorrow.getDay() === 0 || tomorrow.getDay() === 6 || isSchoolClosure(tomorrow, closureDates)) {
+            tomorrow = getNextSchoolDay(assignedDate, closureDates);
+            console.log(`    📅 Parsed "tomorrow" but it's not a school day → ${tomorrow.toDateString()}`);
+        } else {
+            console.log(`    📅 Parsed "tomorrow" → ${tomorrow.toDateString()}`);
+        }
         return tomorrow;
     }
     
@@ -76,7 +162,7 @@ function parseDueDate(description, assignedDate) {
     if (dueDayMatch) {
         const targetDay = dayMap[dueDayMatch[1].toLowerCase()];
         if (targetDay !== undefined) {
-            const dueDate = getNextWeekday(assignedDate, targetDay);
+            const dueDate = getNextWeekday(assignedDate, targetDay, closureDates);
             console.log(`    📅 Parsed "due ${dueDayMatch[1]}" → ${dueDate.toDateString()}`);
             return dueDate;
         }
@@ -87,7 +173,14 @@ function parseDueDate(description, assignedDate) {
     if (dueDateMatch) {
         const [month, day] = dueDateMatch[1].split('/').map(Number);
         const year = assignedDate.getFullYear();
-        const dueDate = new Date(year, month - 1, day);
+        let dueDate = new Date(year, month - 1, day);
+        
+        // If it's a closure, bump to next school day
+        if (isSchoolClosure(dueDate, closureDates)) {
+            console.log(`    ⚠️ ${dueDate.toDateString()} is a closure, finding next school day...`);
+            dueDate = getNextSchoolDay(new Date(dueDate.getTime() - 86400000), closureDates);
+        }
+        
         console.log(`    📅 Parsed "due ${dueDateMatch[1]}" → ${dueDate.toDateString()}`);
         return dueDate;
     }
@@ -98,7 +191,14 @@ function parseDueDate(description, assignedDate) {
         const monthNames = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
         const monthIndex = monthNames.findIndex(m => monthDateMatch[1].toLowerCase().startsWith(m));
         if (monthIndex !== -1) {
-            const dueDate = new Date(assignedDate.getFullYear(), monthIndex, parseInt(monthDateMatch[2]));
+            let dueDate = new Date(assignedDate.getFullYear(), monthIndex, parseInt(monthDateMatch[2]));
+            
+            // If it's a closure, bump to next school day
+            if (isSchoolClosure(dueDate, closureDates)) {
+                console.log(`    ⚠️ ${dueDate.toDateString()} is a closure, finding next school day...`);
+                dueDate = getNextSchoolDay(new Date(dueDate.getTime() - 86400000), closureDates);
+            }
+            
             console.log(`    📅 Parsed "${monthDateMatch[0]}" → ${dueDate.toDateString()}`);
             return dueDate;
         }
@@ -108,21 +208,26 @@ function parseDueDate(description, assignedDate) {
     const eventDayMatch = text.match(/(quiz|test|exam)\s+(tomorrow|sun|mon|tue|wed|thu|fri|sat|sunday|monday|tuesday|wednesday|thursday|friday|saturday)/i);
     if (eventDayMatch) {
         if (eventDayMatch[2].toLowerCase() === 'tomorrow') {
-            const tomorrow = new Date(assignedDate);
+            let tomorrow = new Date(assignedDate);
             tomorrow.setDate(tomorrow.getDate() + 1);
+            
+            if (tomorrow.getDay() === 0 || tomorrow.getDay() === 6 || isSchoolClosure(tomorrow, closureDates)) {
+                tomorrow = getNextSchoolDay(assignedDate, closureDates);
+            }
+            
             console.log(`    📅 Parsed "${eventDayMatch[1]} tomorrow" → ${tomorrow.toDateString()}`);
             return tomorrow;
         }
         const targetDay = dayMap[eventDayMatch[2].toLowerCase()];
         if (targetDay !== undefined) {
-            const dueDate = getNextWeekday(assignedDate, targetDay);
+            const dueDate = getNextWeekday(assignedDate, targetDay, closureDates);
             console.log(`    📅 Parsed "${eventDayMatch[1]} ${eventDayMatch[2]}" → ${dueDate.toDateString()}`);
             return dueDate;
         }
     }
     
-    // Default: Next school day
-    const nextDay = getNextSchoolDay(assignedDate);
+    // Default: Next school day (skips weekends AND closures)
+    const nextDay = getNextSchoolDay(assignedDate, closureDates);
     console.log(`    📅 No due date found, defaulting to next school day → ${nextDay.toDateString()}`);
     return nextDay;
 }
@@ -154,7 +259,7 @@ async function fetchCanvasHomeworkPage() {
 }
 
 // Parse homework from HTML
-function parseHomework(html) {
+function parseHomework(html, closureDates) {
     const $ = cheerio.load(html);
     const homeworkByDate = {};
     let currentDate = null;
@@ -198,8 +303,8 @@ function parseHomework(html) {
                 
                 console.log(`  📚 ${subject}: ${homework.substring(0, 50)}...`);
                 
-                // Parse the actual due date from the description
-                const dueDate = parseDueDate(homework, currentDate);
+                // Parse the actual due date from the description (with closure awareness)
+                const dueDate = parseDueDate(homework, currentDate, closureDates);
                 
                 homeworkByDate[currentDateStr].items.push({
                     subject: subject,
@@ -318,11 +423,16 @@ async function syncToDatabase(homeworkByDate) {
 async function sync() {
     try {
         console.log('\n' + '='.repeat(60));
-        console.log('🚀 Starting Canvas → Supabase sync (with smart due dates!)');
+        console.log('🚀 Starting Canvas → Supabase sync');
+        console.log('   (with smart due dates + school closure awareness!)');
         console.log('='.repeat(60) + '\n');
         
+        // First, fetch school closures
+        const closureDates = await fetchSchoolClosures();
+        
+        // Then fetch and parse homework with closure awareness
         const html = await fetchCanvasHomeworkPage();
-        const homeworkByDate = parseHomework(html);
+        const homeworkByDate = parseHomework(html, closureDates);
         await syncToDatabase(homeworkByDate);
         
         console.log('\n' + '='.repeat(60));
