@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.71.2",
     "@supabase/supabase-js": "^2.84.0",
     "cheerio": "^1.1.2",
     "dotenv": "^17.2.3",
