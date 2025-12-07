@@ -27,12 +27,9 @@ async function fetchSchoolClosures() {
     
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+    const todayStr = today.toISOString().split('T')[0];
     
-    // Get closures for homework date range (7 days back to 30 days forward)
-    const sevenDaysAgo = new Date(today);
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-    const sevenDaysAgoStr = sevenDaysAgo.toISOString().split('T')[0];
-    
+    // Get closures for the next 30 days
     const thirtyDaysOut = new Date(today);
     thirtyDaysOut.setDate(thirtyDaysOut.getDate() + 30);
     const thirtyDaysStr = thirtyDaysOut.toISOString().split('T')[0];
@@ -42,7 +39,7 @@ async function fetchSchoolClosures() {
         .select('event_date, title')
         .eq('student_id', WILLY_STUDENT_ID)
         .in('event_type', ['no_school', 'closure'])
-        .gte('event_date', sevenDaysAgoStr)
+        .gte('event_date', todayStr)
         .lte('event_date', thirtyDaysStr);
     
     if (error) {
