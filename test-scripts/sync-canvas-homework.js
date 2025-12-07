@@ -1,10 +1,11 @@
 // sync-canvas-homework.js
 // Fetches fresh homework from Canvas, clears old data, saves to Supabase
-// NOW WITH SMART DUE DATE PARSING + SCHOOL CLOSURE AWARENESS!
+// NOW WITH CLAUDE-POWERED SPLITTING + SCHOOL CLOSURE AWARENESS!
 
 require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
 const cheerio = require('cheerio');
+const Anthropic = require('@anthropic-ai/sdk');
 
 // Config
 const CANVAS_DOMAIN = 'https://aaca.instructure.com';
@@ -17,6 +18,11 @@ const supabase = createClient(
     process.env.SUPABASE_SERVICE_KEY
 );
 
+// Initialize Claude
+const anthropic = new Anthropic({
+    apiKey: process.env.ANTHROPIC_API_KEY
+});
+
 // ==========================================
 // SCHOOL CLOSURES
 // ==========================================
@@ -27,9 +33,12 @@ async function fetchSchoolClosures() {
     
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const todayStr = today.toISOString().split('T')[0];
     
-    // Get closures for the next 30 days
+    // Get closures for homework date range (7 days back to 30 days forward)
+    const sevenDaysAgo = new Date(today);
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    const sevenDaysAgoStr = sevenDaysAgo.toISOString().split('T')[0];
+    
     const thirtyDaysOut = new Date(today);
     thirtyDaysOut.setDate(thirtyDaysOut.getDate() + 30);
     const thirtyDaysStr = thirtyDaysOut.toISOString().split('T')[0];
@@ -39,7 +48,7 @@ async function fetchSchoolClosures() {
         .select('event_date, title')
         .eq('student_id', WILLY_STUDENT_ID)
         .in('event_type', ['no_school', 'closure'])
-        .gte('event_date', todayStr)
+        .gte('event_date', sevenDaysAgoStr)
         .lte('event_date', thirtyDaysStr);
     
     if (error) {
@@ -97,7 +106,7 @@ function getNextWeekday(fromDate, targetDay, closureDates) {
     
     // If the target day is a closure, find the next school day after it
     while (isSchoolClosure(result, closureDates)) {
-        console.log(`    ⚠️ ${result.toDateString()} is a closure, skipping...`);
+        console.log(`      ⚠️ ${result.toDateString()} is a closure, skipping...`);
         result.setDate(result.getDate() + 1);
         // Also skip weekends
         while (result.getDay() === 0 || result.getDay() === 6) {
@@ -125,7 +134,7 @@ function getNextSchoolDay(fromDate, closureDates) {
         
         // Skip school closures
         if (isSchoolClosure(result, closureDates)) {
-            console.log(`    ⚠️ ${result.toDateString()} is a closure, skipping...`);
+            console.log(`      ⚠️ ${result.toDateString()} is a closure, skipping...`);
             result.setDate(result.getDate() + 1);
             maxIterations--;
             continue;
@@ -138,98 +147,114 @@ function getNextSchoolDay(fromDate, closureDates) {
     return result;
 }
 
-// Parse due date from description text
-function parseDueDate(description, assignedDate, closureDates) {
-    const text = description.toLowerCase();
+// Parse due date from a due string (like "tomorrow", "Tuesday", "12/5")
+function parseDueDateFromString(dueStr, assignedDate, closureDates) {
+    if (!dueStr) {
+        return getNextSchoolDay(assignedDate, closureDates);
+    }
     
-    // Pattern 1: "due tomorrow" or "tomorrow"
-    if (text.includes('tomorrow') || text.includes('due tomorrow')) {
+    const text = dueStr.toLowerCase().trim();
+    
+    // "tomorrow"
+    if (text === 'tomorrow') {
         let tomorrow = new Date(assignedDate);
         tomorrow.setDate(tomorrow.getDate() + 1);
         
-        // Check if tomorrow is a weekend or closure
         if (tomorrow.getDay() === 0 || tomorrow.getDay() === 6 || isSchoolClosure(tomorrow, closureDates)) {
-            tomorrow = getNextSchoolDay(assignedDate, closureDates);
-            console.log(`    📅 Parsed "tomorrow" but it's not a school day → ${tomorrow.toDateString()}`);
-        } else {
-            console.log(`    📅 Parsed "tomorrow" → ${tomorrow.toDateString()}`);
+            return getNextSchoolDay(assignedDate, closureDates);
         }
         return tomorrow;
     }
     
-    // Pattern 2: "due [day]" e.g., "due Wednesday", "due Fri"
-    const dueDayMatch = text.match(/due\s+(sun|mon|tue|wed|thu|fri|sat|sunday|monday|tuesday|wednesday|thursday|friday|saturday)/i);
-    if (dueDayMatch) {
-        const targetDay = dayMap[dueDayMatch[1].toLowerCase()];
-        if (targetDay !== undefined) {
-            const dueDate = getNextWeekday(assignedDate, targetDay, closureDates);
-            console.log(`    📅 Parsed "due ${dueDayMatch[1]}" → ${dueDate.toDateString()}`);
-            return dueDate;
+    // Day name like "Tuesday", "Fri"
+    for (const [dayName, dayNum] of Object.entries(dayMap)) {
+        if (text.startsWith(dayName) || text === dayName) {
+            return getNextWeekday(assignedDate, dayNum, closureDates);
         }
     }
     
-    // Pattern 3: "due [date]" e.g., "due 12/5", "due Dec 5"
-    const dueDateMatch = text.match(/due\s+(\d{1,2}\/\d{1,2})/);
-    if (dueDateMatch) {
-        const [month, day] = dueDateMatch[1].split('/').map(Number);
+    // Date like "12/5" or "12/9"
+    const dateMatch = text.match(/(\d{1,2})\/(\d{1,2})/);
+    if (dateMatch) {
+        const month = parseInt(dateMatch[1]);
+        const day = parseInt(dateMatch[2]);
         const year = assignedDate.getFullYear();
         let dueDate = new Date(year, month - 1, day);
         
-        // If it's a closure, bump to next school day
         if (isSchoolClosure(dueDate, closureDates)) {
-            console.log(`    ⚠️ ${dueDate.toDateString()} is a closure, finding next school day...`);
             dueDate = getNextSchoolDay(new Date(dueDate.getTime() - 86400000), closureDates);
         }
-        
-        console.log(`    📅 Parsed "due ${dueDateMatch[1]}" → ${dueDate.toDateString()}`);
         return dueDate;
     }
     
-    // Pattern 4: Explicit date like "Dec 5" or "December 5"
-    const monthDateMatch = text.match(/due\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+(\d{1,2})/i);
-    if (monthDateMatch) {
-        const monthNames = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
-        const monthIndex = monthNames.findIndex(m => monthDateMatch[1].toLowerCase().startsWith(m));
-        if (monthIndex !== -1) {
-            let dueDate = new Date(assignedDate.getFullYear(), monthIndex, parseInt(monthDateMatch[2]));
-            
-            // If it's a closure, bump to next school day
-            if (isSchoolClosure(dueDate, closureDates)) {
-                console.log(`    ⚠️ ${dueDate.toDateString()} is a closure, finding next school day...`);
-                dueDate = getNextSchoolDay(new Date(dueDate.getTime() - 86400000), closureDates);
-            }
-            
-            console.log(`    📅 Parsed "${monthDateMatch[0]}" → ${dueDate.toDateString()}`);
-            return dueDate;
-        }
-    }
+    // Default to next school day
+    return getNextSchoolDay(assignedDate, closureDates);
+}
+
+// ==========================================
+// CLAUDE-POWERED HOMEWORK SPLITTING
+// ==========================================
+
+async function splitHomeworkWithClaude(subject, description, assignedDateStr) {
+    console.log(`  🤖 Asking Claude to analyze: "${description.substring(0, 60)}..."`);
     
-    // Pattern 5: "quiz tomorrow", "test Friday", etc.
-    const eventDayMatch = text.match(/(quiz|test|exam)\s+(tomorrow|sun|mon|tue|wed|thu|fri|sat|sunday|monday|tuesday|wednesday|thursday|friday|saturday)/i);
-    if (eventDayMatch) {
-        if (eventDayMatch[2].toLowerCase() === 'tomorrow') {
-            let tomorrow = new Date(assignedDate);
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            
-            if (tomorrow.getDay() === 0 || tomorrow.getDay() === 6 || isSchoolClosure(tomorrow, closureDates)) {
-                tomorrow = getNextSchoolDay(assignedDate, closureDates);
-            }
-            
-            console.log(`    📅 Parsed "${eventDayMatch[1]} tomorrow" → ${tomorrow.toDateString()}`);
-            return tomorrow;
-        }
-        const targetDay = dayMap[eventDayMatch[2].toLowerCase()];
-        if (targetDay !== undefined) {
-            const dueDate = getNextWeekday(assignedDate, targetDay, closureDates);
-            console.log(`    📅 Parsed "${eventDayMatch[1]} ${eventDayMatch[2]}" → ${dueDate.toDateString()}`);
-            return dueDate;
-        }
+    const prompt = `You are parsing a homework assignment for a 7th grader. The teacher often combines multiple items in one entry.
+
+Subject: ${subject}
+Assigned Date: ${assignedDateStr}
+Description: ${description}
+
+Split this into separate items if there are multiple tasks. For each item, determine:
+1. A clear, concise title (max 150 chars)
+2. The type: "homework", "quiz", "test", "project", or "reading"
+3. When it's due (extract from text, or "tomorrow" if not specified)
+
+IMPORTANT: 
+- If there's a quiz/test mentioned with a day (like "quiz Tuesday"), that's a SEPARATE item from the homework
+- Homework without explicit due date is usually due "tomorrow" (next school day)
+- Keep titles clear and actionable
+
+Respond with ONLY valid JSON, no markdown:
+{
+  "items": [
+    {
+      "title": "Clear title here",
+      "type": "homework|quiz|test|project|reading",
+      "due": "tomorrow|Monday|Tuesday|etc|12/5"
     }
-    
-    // Default: Next school day (skips weekends AND closures)
-    const nextDay = getNextSchoolDay(assignedDate, closureDates);
-    console.log(`    📅 No due date found, defaulting to next school day → ${nextDay.toDateString()}`);
-    return nextDay;
+  ]
+}`;
+
+    try {
+        const response = await anthropic.messages.create({
+            model: 'claude-haiku-4-20250514',
+            max_tokens: 500,
+            messages: [{ role: 'user', content: prompt }]
+        });
+        
+        const content = response.content[0].text.trim();
+        
+        // Parse JSON response
+        const parsed = JSON.parse(content);
+        
+        if (parsed.items && Array.isArray(parsed.items)) {
+            console.log(`    ✅ Claude found ${parsed.items.length} item(s)`);
+            return parsed.items;
+        }
+        
+        throw new Error('Invalid response structure');
+        
+    } catch (error) {
+        console.log(`    ⚠️ Claude parsing failed: ${error.message}`);
+        console.log(`    📝 Falling back to single item`);
+        
+        // Fallback: return as single item
+        return [{
+            title: description,
+            type: 'homework',
+            due: 'tomorrow'
+        }];
+    }
 }
 
 // ==========================================
@@ -258,14 +283,14 @@ async function fetchCanvasHomeworkPage() {
     return data.body; // HTML content
 }
 
-// Parse homework from HTML
-function parseHomework(html, closureDates) {
+// Parse homework from HTML (returns raw items before Claude processing)
+function parseHomeworkRaw(html) {
     const $ = cheerio.load(html);
     const homeworkByDate = {};
     let currentDate = null;
     let currentDateStr = null;
     
-    console.log('📄 Parsing homework...\n');
+    console.log('📄 Parsing homework from Canvas...\n');
     
     $('p').each((i, elem) => {
         const text = $(elem).text().trim();
@@ -301,16 +326,12 @@ function parseHomework(html, closureDates) {
                 // Check for Canvas link
                 const link = $(elem).find('a').first();
                 
-                console.log(`  📚 ${subject}: ${homework.substring(0, 50)}...`);
-                
-                // Parse the actual due date from the description (with closure awareness)
-                const dueDate = parseDueDate(homework, currentDate, closureDates);
+                console.log(`  📚 ${subject}: ${homework.substring(0, 60)}${homework.length > 60 ? '...' : ''}`);
                 
                 homeworkByDate[currentDateStr].items.push({
                     subject: subject,
                     description: homework,
-                    link: link.length > 0 ? link.attr('href') : null,
-                    dueDate: dueDate
+                    link: link.length > 0 ? link.attr('href') : null
                 });
             }
         }
@@ -318,17 +339,62 @@ function parseHomework(html, closureDates) {
     
     const dateCount = Object.keys(homeworkByDate).length;
     const itemCount = Object.values(homeworkByDate).reduce((sum, d) => sum + d.items.length, 0);
-    console.log(`\n✅ Found ${itemCount} homework items across ${dateCount} dates`);
+    console.log(`\n✅ Found ${itemCount} raw homework entries across ${dateCount} dates`);
     
     return homeworkByDate;
+}
+
+// Process homework with Claude splitting
+async function processHomeworkWithClaude(homeworkByDate, closureDates) {
+    console.log('\n🤖 Processing homework with Claude...\n');
+    
+    const processedItems = [];
+    
+    for (const [dateStr, data] of Object.entries(homeworkByDate)) {
+        const assignedDate = data.assignedDate;
+        const assignedDateStr = assignedDate.toISOString().split('T')[0];
+        
+        for (const item of data.items) {
+            // Ask Claude to split this item
+            const splitItems = await splitHomeworkWithClaude(
+                item.subject, 
+                item.description, 
+                assignedDateStr
+            );
+            
+            // Process each split item
+            for (let i = 0; i < splitItems.length; i++) {
+                const splitItem = splitItems[i];
+                
+                // Parse the due date
+                const dueDate = parseDueDateFromString(splitItem.due, assignedDate, closureDates);
+                const dueDateStr = dueDate.toISOString().split('T')[0];
+                
+                console.log(`      → ${splitItem.type}: "${splitItem.title.substring(0, 50)}..." due ${dueDateStr}`);
+                
+                processedItems.push({
+                    subject: item.subject,
+                    title: splitItem.title,
+                    type: splitItem.type,
+                    description: item.description, // Keep original for reference
+                    link: item.link,
+                    assignedDate: assignedDate,
+                    dueDate: dueDate,
+                    splitIndex: i // To make external_id unique
+                });
+            }
+        }
+    }
+    
+    console.log(`\n✅ Processed into ${processedItems.length} total items`);
+    return processedItems;
 }
 
 // ==========================================
 // DATABASE SYNC
 // ==========================================
 
-// Sync homework using UPSERT (preserves checkbox state)
-async function syncToDatabase(homeworkByDate) {
+async function syncToDatabase(processedItems) {
     console.log('\n💾 Syncing homework to database...\n');
     
     let upsertCount = 0;
@@ -339,52 +405,42 @@ async function syncToDatabase(homeworkByDate) {
     const sevenDaysAgo = new Date(today);
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
     
-    // Build array of all homework items
-    const allItems = [];
-    
-    for (const [dateStr, data] of Object.entries(homeworkByDate)) {
+    for (const item of processedItems) {
         // Skip homework assigned more than 7 days ago
-        if (data.assignedDate < sevenDaysAgo) {
+        if (item.assignedDate < sevenDaysAgo) {
             continue;
         }
-        const assignedDate = data.assignedDate;
         
-        for (const item of data.items) {
-            const dueDate = item.dueDate;
-            const dueDateStr = dueDate.toISOString().split('T')[0];
-            const assignedDateStr = assignedDate.toISOString().split('T')[0];
-            
-            // Create unique external_id from subject + assigned date + first 50 chars of description
-            const externalId = `${item.subject}-${assignedDateStr}-${item.description.substring(0, 50).replace(/[^a-zA-Z0-9]/g, '')}`;
-            
-            // Determine status
-            let status = 'pending';
-            if (dueDate < today) {
-                status = 'past';
-            }
-            
-            console.log(`  📝 ${item.subject}: assigned ${assignedDateStr}, due ${dueDateStr}`);
-            
-            allItems.push({
+        const dueDateStr = item.dueDate.toISOString().split('T')[0];
+        const assignedDateStr = item.assignedDate.toISOString().split('T')[0];
+        
+        // Create unique external_id from subject + assigned date + split index + title hash
+        const titleHash = item.title.substring(0, 30).replace(/[^a-zA-Z0-9]/g, '');
+        const externalId = `${item.subject}-${assignedDateStr}-${item.splitIndex}-${titleHash}`;
+        
+        // Determine status
+        let status = 'pending';
+        if (item.dueDate < today) {
+            status = 'past';
+        }
+        
+        console.log(`  📝 ${item.subject} (${item.type}): due ${dueDateStr}`);
+        
+        const { error } = await supabase
+            .from('homework_items')
+            .upsert({
                 student_id: WILLY_STUDENT_ID,
                 source_lms: 'canvas',
                 external_id: externalId,
                 date_assigned: assignedDateStr,
                 date_due: dueDateStr,
                 subject: item.subject,
-                title: item.description.substring(0, 100),
+                title: item.title.substring(0, 200), // Increased from 100
                 description: item.description,
                 link: item.link,
-                status: status
-            });
-        }
-    }
-    
-    // Upsert each item (update if exists, insert if new)
-    for (const item of allItems) {
-        const { error } = await supabase
-            .from('homework_items')
-            .upsert(item, { 
+                status: status,
+                item_type: item.type // New field for homework/quiz/test
+            }, { 
                 onConflict: 'student_id,external_id',
                 ignoreDuplicates: false 
             });
@@ -424,16 +480,21 @@ async function sync() {
     try {
         console.log('\n' + '='.repeat(60));
         console.log('🚀 Starting Canvas → Supabase sync');
-        console.log('   (with smart due dates + school closure awareness!)');
+        console.log('   (with Claude splitting + school closure awareness!)');
         console.log('='.repeat(60) + '\n');
         
-        // First, fetch school closures
+        // Fetch school closures
         const closureDates = await fetchSchoolClosures();
         
-        // Then fetch and parse homework with closure awareness
+        // Fetch and parse raw homework from Canvas
         const html = await fetchCanvasHomeworkPage();
-        const homeworkByDate = parseHomework(html, closureDates);
-        await syncToDatabase(homeworkByDate);
+        const homeworkByDate = parseHomeworkRaw(html);
+        
+        // Process with Claude (split multi-item entries)
+        const processedItems = await processHomeworkWithClaude(homeworkByDate, closureDates);
+        
+        // Sync to database
+        await syncToDatabase(processedItems);
         
         console.log('\n' + '='.repeat(60));
         console.log('🎉 Sync complete!');
@@ -441,6 +502,7 @@ async function sync() {
         
     } catch (error) {
         console.error('\n❌ Sync failed:', error.message);
+        process.exit(1);
     }
 }
 
