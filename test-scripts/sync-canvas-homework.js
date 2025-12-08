@@ -214,7 +214,7 @@ IMPORTANT:
 - Homework without explicit due date is usually due "tomorrow" (next school day)
 - Keep titles clear and actionable
 
-Respond with ONLY valid JSON, no markdown:
+Return ONLY valid JSON, no markdown formatting or code fences. The response must start with { and end with }:
 {
   "items": [
     {
@@ -234,9 +234,18 @@ Respond with ONLY valid JSON, no markdown:
         
         const content = response.content[0].text.trim();
         
-        // Parse JSON response
-        const parsed = JSON.parse(content);
+        // Extract JSON object - find first { and last }
+        const firstBrace = content.indexOf('{');
+        const lastBrace = content.lastIndexOf('}');
         
+        if (firstBrace === -1 || lastBrace === -1) {
+            throw new Error('No JSON object found in response');
+        }
+        
+        const jsonText = content.substring(firstBrace, lastBrace + 1);
+        const parsed = JSON.parse(jsonText);
+        
+        // Success - return parsed items
         if (parsed.items && Array.isArray(parsed.items)) {
             console.log(`    ✅ Claude found ${parsed.items.length} item(s)`);
             return parsed.items;
@@ -350,8 +359,21 @@ async function processHomeworkWithClaude(homeworkByDate, closureDates) {
     
     const processedItems = [];
     
+    // Only process items from last 7 days
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const sevenDaysAgo = new Date(today);
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    
     for (const [dateStr, data] of Object.entries(homeworkByDate)) {
         const assignedDate = data.assignedDate;
+        
+        // Skip old homework - no need to re-process with Claude
+        if (assignedDate < sevenDaysAgo) {
+            console.log(`  ⏭️  Skipping ${dateStr} (older than 7 days)`);
+            continue;
+        }
+        
         const assignedDateStr = assignedDate.toISOString().split('T')[0];
         
         for (const item of data.items) {
@@ -435,11 +457,11 @@ async function syncToDatabase(processedItems) {
                 date_assigned: assignedDateStr,
                 date_due: dueDateStr,
                 subject: item.subject,
-                title: item.title.substring(0, 200), // Increased from 100
+                title: item.title.substring(0, 200),
                 description: item.description,
                 link: item.link,
                 status: status,
-                item_type: item.type // New field for homework/quiz/test
+                item_type: item.type
             }, { 
                 onConflict: 'student_id,external_id',
                 ignoreDuplicates: false 
