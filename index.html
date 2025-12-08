@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ned - Willy's Assistant</title>
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="talk-to-ned.css">
     <link rel="stylesheet" href="newsletter-parser.css">
@@ -214,6 +215,55 @@
             studentGrade: '7'
         });
         window.newsletterParser.render('newsletter-parser');
+    </script>
+
+    <!-- Push Notifications -->
+    <script src="push-notifications.js"></script>
+    <div id="notification-prompt" class="notification-prompt" style="display: none;">
+        <span>Enable notifications for homework reminders?</span>
+        <button onclick="enableNotifications()">Enable</button>
+        <button onclick="dismissNotificationPrompt()">Not now</button>
+    </div>
+    <script>
+        // VAPID public key (safe to expose - browser needs this to subscribe)
+        const VAPID_PUBLIC_KEY = 'BAXpsAiJ7jE5-9vmpdc1zPyZxunj8QJ0GANsJp_BcpI-ffyaZaYVqkFwHu7UISn6GT3CaJf607FfrUPW8e2TIFw';
+
+        async function initPushNotifications() {
+            if (!VAPID_PUBLIC_KEY || VAPID_PUBLIC_KEY === 'YOUR_VAPID_PUBLIC_KEY_HERE') {
+                console.log('VAPID key not configured');
+                return;
+            }
+
+            const supported = await PushNotifications.init(VAPID_PUBLIC_KEY);
+            if (!supported) return;
+
+            const permission = await PushNotifications.getPermissionStatus();
+            const isSubscribed = await PushNotifications.isSubscribed();
+
+            // Show prompt if not yet subscribed and permission not denied
+            if (!isSubscribed && permission !== 'denied') {
+                document.getElementById('notification-prompt').style.display = 'flex';
+            }
+        }
+
+        async function enableNotifications() {
+            const permission = await PushNotifications.requestPermission();
+            if (permission === 'granted') {
+                const success = await PushNotifications.subscribe();
+                if (success) {
+                    console.log('Notifications enabled!');
+                }
+            }
+            document.getElementById('notification-prompt').style.display = 'none';
+        }
+
+        function dismissNotificationPrompt() {
+            document.getElementById('notification-prompt').style.display = 'none';
+            localStorage.setItem('notificationPromptDismissed', Date.now());
+        }
+
+        // Initialize after page loads
+        document.addEventListener('DOMContentLoaded', initPushNotifications);
     </script>
 </body>
 </html>

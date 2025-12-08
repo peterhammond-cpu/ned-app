@@ -23,3 +23,26 @@
   from = "/api/ask-ned"
   to = "/.netlify/functions/ask-ned"
   status = 200
+
+[[redirects]]
+  from = "/api/save-subscription"
+  to = "/.netlify/functions/save-subscription"
+  status = 200
+
+[[redirects]]
+  from = "/api/send-notification"
+  to = "/.netlify/functions/send-notification"
+  status = 200
+
+# Scheduled functions for notifications (all times in CST converted to UTC)
+# 3:10 PM CST = 21:10 UTC (during standard time)
+[functions."notify-homework-daily"]
+  schedule = "10 21 * * 1-5"
+
+# 7:00 PM CST = 01:00 UTC next day (during standard time)
+[functions."notify-homework-nag"]
+  schedule = "0 1 * * 2-6"
+
+# 7:00 PM CST Saturday = 01:00 UTC Sunday
+[functions."notify-saturday-shot"]
+  schedule = "0 1 * * 0"
