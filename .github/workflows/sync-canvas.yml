@@ -18,21 +18,21 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      
+
       - name: Install dependencies
         run: |
           cd test-scripts
           npm install dotenv @supabase/supabase-js cheerio twilio
-      
+
       - name: Run Canvas sync (3:30pm Mon-Fri, 3pm Sunday)
         if: github.event.schedule == '30 21 * * 1-5' || github.event.schedule == '0 21 * * 0' || github.event_name == 'workflow_dispatch'
         env:
@@ -43,18 +43,18 @@ jobs:
         run: |
           cd test-scripts
           node sync-canvas-homework.js
-      
+
       - name: Run Football sync (7am only)
         if: github.event.schedule == '0 13 * * 1-5' || github.event_name == 'workflow_dispatch'
         env:
           FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-        
+
         run: |
           cd test-scripts
           node sync-football.js
-      
+
       - name: Send homework SMS (3:30pm Mon-Fri only)
         if: github.event.schedule == '30 21 * * 1-5' || inputs.make_call == true
         env:
@@ -67,7 +67,7 @@ jobs:
         run: |
           cd test-scripts
           node send-homework-sms.js
-      
+
       - name: Make reminder call (3:30pm Mon-Fri only)
         if: github.event.schedule == '30 21 * * 1-5' || inputs.make_call == true
         env:

@@ -4,61 +4,61 @@ graph TB
         S[Simone's Device]
         P[Parent Dashboard]
     end
-    
+
     subgraph "Frontend - Vercel/Netlify"
         UI[Ned Web App<br/>React/HTML]
         PD[Parent Dashboard<br/>Monitor & Manage]
     end
-    
+
     subgraph "Backend - Vercel Serverless"
         API1[Canvas Sync Function<br/>Runs every 3 hours]
         API2[Email Parser Function<br/>AI-powered extraction]
         API3[Notification Service<br/>Push notifications]
         API4[Voice Input Handler<br/>Speech-to-text]
     end
-    
+
     subgraph "Database - Supabase"
         DB[(PostgreSQL<br/>Multi-user data)]
         RLS[Row Level Security<br/>User isolation]
     end
-    
+
     subgraph "External APIs"
         C[Canvas LMS API]
         G[Gmail API]
         CL[Claude API<br/>AI Parsing]
         TS[TeamSnap API]
     end
-    
+
     subgraph "Secrets - Vercel Env Vars"
         SEC[API Tokens<br/>Canvas, Gmail, Claude]
     end
-    
+
     W -->|Opens app| UI
     S -->|Opens app| UI
     P -->|Monitors| PD
-    
+
     UI -->|Reads data<br/>anon key| DB
     PD -->|Admin access| DB
-    
+
     API1 -->|Every 3 hours| C
     C -->|Returns assignments| API1
     API1 -->|Uses service_role key| DB
-    
+
     API2 -->|Polls for emails| G
     API2 -->|Parses with AI| CL
     API2 -->|Saves homework| DB
-    
+
     API3 -->|Morning/Evening| W
     API3 -->|Reads schedule| DB
-    
+
     API4 -->|Transcribes| UI
     API4 -->|Saves tasks| DB
-    
+
     SEC -.->|Provides credentials| API1
     SEC -.->|Provides credentials| API2
-    
+
     DB -->|Enforces| RLS
-    
+
     style W fill:#667eea,stroke:#333,color:#fff
     style S fill:#667eea,stroke:#333,color:#fff
     style UI fill:#00f5a0,stroke:#333,color:#000

@@ -83,7 +83,7 @@ async function fetchAllHomework() {
       .eq('student_id', WILLY_STUDENT_ID)
       .order('date_due', { ascending: true })
       .limit(20);
-    
+
     if (error) throw error;
     console.log('📚 Fetched ALL homework - showing first 20 items');
     return data || [];

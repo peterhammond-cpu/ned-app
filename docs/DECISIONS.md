@@ -1,7 +1,7 @@
 # Architecture Decisions Log
 
-**Project:** Ned App  
-**Last Updated:** December 2024
+**Project:** Ned App
+**Last Updated:** December 2025
 
 ---
 

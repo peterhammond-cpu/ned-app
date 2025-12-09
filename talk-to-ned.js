@@ -8,19 +8,19 @@ class TalkToNed {
         this.studentId = options.studentId || null;
         this.studentName = options.studentName || 'Willy';
         this.apiEndpoint = '/.netlify/functions/ask-ned';
-        
+
         // Conversation state
         this.sessionId = this.generateSessionId();
         this.conversationHistory = [];
         this.isListening = false;
         this.isProcessing = false;
         this.pendingImage = null; // Store image to send with next message
-        
+
         // Speech recognition setup
         this.recognition = null;
         this.synthesis = window.speechSynthesis;
         this.setupSpeechRecognition();
-        
+
         // DOM elements (set after render)
         this.elements = {};
     }
@@ -31,7 +31,7 @@ class TalkToNed {
 
     setupSpeechRecognition() {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        
+
         if (!SpeechRecognition) {
             console.warn('Speech recognition not supported in this browser');
             return;
@@ -52,9 +52,9 @@ class TalkToNed {
             const transcript = Array.from(event.results)
                 .map(result => result[0].transcript)
                 .join('');
-            
+
             this.elements.input.value = transcript;
-            
+
             // If final result, auto-send
             if (event.results[0].isFinal) {
                 this.sendMessage(transcript);
@@ -65,7 +65,7 @@ class TalkToNed {
             console.error('Speech recognition error:', event.error);
             this.isListening = false;
             this.updateMicButton(false);
-            
+
             if (event.error === 'not-allowed') {
                 this.setStatus('Mic access denied. Click to try again.');
             } else {
@@ -97,7 +97,7 @@ class TalkToNed {
                     </div>
                     <button class="ned-close-btn" id="ned-close" title="Close">×</button>
                 </div>
-                
+
                 <div class="ned-messages" id="ned-messages">
                     <div class="ned-message ned-message-assistant">
                         <div class="ned-message-content">
@@ -105,13 +105,13 @@ class TalkToNed {
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Image preview area -->
                 <div class="ned-image-preview" id="ned-image-preview" style="display: none;">
                     <img id="ned-preview-img" src="" alt="Preview" />
                     <button class="ned-remove-image" id="ned-remove-image" title="Remove image">×</button>
                 </div>
-                
+
                 <div class="ned-input-area">
                     <button class="ned-camera-btn" id="ned-camera" title="Take photo or upload">
                         <span>📷</span>
@@ -120,21 +120,21 @@ class TalkToNed {
                         <span class="mic-icon">🎤</span>
                         <span class="mic-waves"></span>
                     </button>
-                    <input 
-                        type="text" 
-                        id="ned-input" 
+                    <input
+                        type="text"
+                        id="ned-input"
                         placeholder="Type or tap mic to talk..."
                         autocomplete="off"
                     />
                     <button class="ned-send-btn" id="ned-send" title="Send">
                         <span>➤</span>
                     </button>
-                    
+
                     <!-- Hidden file input -->
-                    <input 
-                        type="file" 
-                        id="ned-file-input" 
-                        accept="image/*" 
+                    <input
+                        type="file"
+                        id="ned-file-input"
+                        accept="image/*"
                         capture="environment"
                         style="display: none;"
                     />
@@ -165,13 +165,13 @@ class TalkToNed {
     attachEventListeners() {
         // Mic button
         this.elements.micBtn.addEventListener('click', () => this.toggleVoiceInput());
-        
+
         // Send button
         this.elements.sendBtn.addEventListener('click', () => {
             const message = this.elements.input.value.trim() || (this.pendingImage ? "Help me with this" : "");
             if (message || this.pendingImage) this.sendMessage(message);
         });
-        
+
         // Enter key
         this.elements.input.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
@@ -180,20 +180,20 @@ class TalkToNed {
                 if (message || this.pendingImage) this.sendMessage(message);
             }
         });
-        
+
         // Close button
         this.elements.closeBtn.addEventListener('click', () => this.hide());
-        
+
         // Camera button
         this.elements.cameraBtn.addEventListener('click', () => {
             this.elements.fileInput.click();
         });
-        
+
         // File input change
         this.elements.fileInput.addEventListener('change', (e) => {
             this.handleImageUpload(e);
         });
-        
+
         // Remove image button
         this.elements.removeImageBtn.addEventListener('click', () => {
             this.clearPendingImage();
@@ -203,47 +203,47 @@ class TalkToNed {
     handleImageUpload(event) {
         const file = event.target.files[0];
         if (!file) return;
-        
+
         // Check file size (max 5MB)
         if (file.size > 5 * 1024 * 1024) {
             alert('Image too large! Please use an image under 5MB.');
             return;
         }
-        
+
         // Check file type
         if (!file.type.startsWith('image/')) {
             alert('Please upload an image file.');
             return;
         }
-        
+
         const reader = new FileReader();
-        
+
         reader.onload = (e) => {
             const base64 = e.target.result;
-            
+
             // Store the image
             this.pendingImage = {
                 base64: base64,
                 mediaType: file.type
             };
-            
+
             // Show preview
             this.elements.previewImg.src = base64;
             this.elements.imagePreview.style.display = 'flex';
-            
+
             // Update placeholder
             this.elements.input.placeholder = "What do you need help with?";
             this.elements.input.focus();
-            
+
             this.setStatus('📸 Image ready! Ask your question.');
         };
-        
+
         reader.onerror = () => {
             alert('Failed to read image. Please try again.');
         };
-        
+
         reader.readAsDataURL(file);
-        
+
         // Clear the input so the same file can be selected again
         event.target.value = '';
     }
@@ -286,31 +286,31 @@ class TalkToNed {
     async sendMessage(message) {
         if (this.isProcessing) return;
         if (!message.trim() && !this.pendingImage) return;
-        
+
         this.isProcessing = true;
         this.setStatus('Thinking...');
-        
+
         // Clear input
         this.elements.input.value = '';
-        
+
         // Add user message to UI (with image if present)
         if (this.pendingImage) {
             this.addMessageWithImage(message, 'user', this.pendingImage.base64);
         } else {
             this.addMessage(message, 'user');
         }
-        
+
         // Build the message content for the API
         let messageContent = message;
         let imageData = null;
-        
+
         if (this.pendingImage) {
             imageData = {
                 base64: this.pendingImage.base64.split(',')[1], // Remove data:image/...;base64, prefix
                 mediaType: this.pendingImage.mediaType
             };
         }
-        
+
         // Add to conversation history (text only for history)
         this.conversationHistory.push({ role: 'user', content: message || "Help me with this image" });
 
@@ -333,15 +333,15 @@ class TalkToNed {
             }
 
             const data = await response.json();
-            
+
             // Add Ned's response to UI
             this.addMessage(data.reply, 'assistant');
-            
+
             // Add to conversation history
             this.conversationHistory.push({ role: 'assistant', content: data.reply });
-            
+
             this.setStatus('Ready to help!');
-            
+
         } catch (error) {
             console.error('Error sending message:', error);
             this.addMessage("Oops! Something went wrong. Try again?", 'assistant', true);
@@ -355,13 +355,13 @@ class TalkToNed {
     addMessage(content, role, isError = false) {
         const messageDiv = document.createElement('div');
         messageDiv.className = `ned-message ned-message-${role}${isError ? ' ned-error' : ''}`;
-        
+
         messageDiv.innerHTML = `
             <div class="ned-message-content">${this.formatMessage(content)}</div>
         `;
-        
+
         this.elements.messages.appendChild(messageDiv);
-        
+
         // Scroll to bottom
         this.elements.messages.scrollTop = this.elements.messages.scrollHeight;
     }
@@ -369,16 +369,16 @@ class TalkToNed {
     addMessageWithImage(content, role, imageSrc) {
         const messageDiv = document.createElement('div');
         messageDiv.className = `ned-message ned-message-${role}`;
-        
+
         messageDiv.innerHTML = `
             <div class="ned-message-content">
                 <img src="${imageSrc}" class="ned-message-image" alt="Uploaded image" />
                 ${content ? `<p>${this.formatMessage(content)}</p>` : ''}
             </div>
         `;
-        
+
         this.elements.messages.appendChild(messageDiv);
-        
+
         // Scroll to bottom
         this.elements.messages.scrollTop = this.elements.messages.scrollHeight;
     }
@@ -393,14 +393,14 @@ class TalkToNed {
 
     speak(text) {
         if (!this.synthesis) return;
-        
+
         // Cancel any ongoing speech
         this.synthesis.cancel();
-        
+
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.rate = 1.0;
         utterance.pitch = 1.0;
-        
+
         this.synthesis.speak(utterance);
     }
 
@@ -431,7 +431,7 @@ class TalkToNed {
         this.sessionId = this.generateSessionId();
         this.conversationHistory = [];
         this.clearPendingImage();
-        
+
         // Clear messages except the intro
         if (this.elements.messages) {
             this.elements.messages.innerHTML = `

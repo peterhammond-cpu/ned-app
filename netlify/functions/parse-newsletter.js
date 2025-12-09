@@ -14,7 +14,7 @@ const supabase = createClient(
 function buildSystemPrompt(grade) {
   const gradeText = grade ? `${grade}th grade` : 'middle school';
   const gradeNum = grade || '7';
-  
+
   return `You are a helpful assistant that extracts school events from newsletters and emails. Your job is to find information that is relevant to students.
 
 ## Student Context:
@@ -84,7 +84,7 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { 
+    const {
       text,           // Pasted newsletter text
       image,          // Or image: { base64, mediaType }
       studentId,
@@ -107,14 +107,14 @@ exports.handler = async (event, context) => {
 
     // Look up student's grade from profile (or use passed grade)
     let grade = studentGrade || null;
-    
+
     if (!grade) {
       const { data: student } = await supabase
         .from('students')
         .select('grade')
         .eq('id', studentId)
         .single();
-      
+
       if (student) {
         grade = student.grade;
       }
@@ -122,7 +122,7 @@ exports.handler = async (event, context) => {
 
     // Build message content
     let messageContent;
-    
+
     if (image && image.base64) {
       messageContent = [
         {
@@ -208,7 +208,7 @@ exports.handler = async (event, context) => {
     console.error('Error in parse-newsletter:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         error: 'Failed to parse newsletter',
         details: process.env.NODE_ENV === 'development' ? error.message : undefined
       })

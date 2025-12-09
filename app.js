@@ -14,22 +14,22 @@ async function fetchHomeworkFromDB() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const todayISO = today.toISOString();
-    
+
     console.log('📝 Fetching homework from Supabase...');
     console.log('📅 Looking for items due on or after:', todayISO);
-    
+
     const { data, error } = await supabase
         .from('homework_items')
         .select('*')
         .eq('student_id', WILLY_STUDENT_ID)
         .gte('date_due', todayISO)
         .order('date_due', { ascending: true });
-    
+
     if (error) {
         console.error('❌ Error fetching homework:', error);
         return [];
     }
-    
+
     console.log('✅ Fetched homework items:', data?.length || 0);
     return data || [];
 }
@@ -41,15 +41,15 @@ async function fetchSchoolEventsFromDB() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const todayISO = today.toISOString().split('T')[0]; // Just the date part
-    
+
     // Get events for the next 14 days
     const twoWeeksOut = new Date(today);
     twoWeeksOut.setDate(twoWeeksOut.getDate() + 14);
     const twoWeeksISO = twoWeeksOut.toISOString().split('T')[0];
-    
+
     console.log('📅 Fetching school events from Supabase...');
     console.log('📅 Date range:', todayISO, 'to', twoWeeksISO);
-    
+
     const { data, error } = await supabase
         .from('school_events')
         .select('*')
@@ -59,12 +59,12 @@ async function fetchSchoolEventsFromDB() {
         .gte('event_date', todayISO)
         .lte('event_date', twoWeeksISO)
         .order('event_date', { ascending: true });
-    
+
     if (error) {
         console.error('❌ Error fetching school events:', error);
         return [];
     }
-    
+
     console.log('✅ Fetched school events:', data?.length || 0);
     console.log('📋 Events:', data);
     return data || [];
@@ -77,15 +77,15 @@ function convertToMissions(homeworkItems) {
     if (!homeworkItems || homeworkItems.length === 0) {
         return [];
     }
-    
+
     const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    
+
     return homeworkItems.map((item) => {
         const dueDate = new Date(item.date_due + 'T00:00:00');
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const daysUntilDue = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
-        
+
         // Smarter test detection - only flag if it's THE test, not homework mentioning a test
         const titleLower = (item.title || '').toLowerCase();
         const isTest = (
@@ -96,10 +96,10 @@ function convertToMissions(homeworkItems) {
             // Or is a short title that's just the test name
             (titleLower.length < 30 && /\b(quiz|test|exam)\b/.test(titleLower) && !titleLower.includes('study'))
         );
-        
+
         let badge = 'upcoming';
         let badgeType = 'normal';
-        
+
         if (daysUntilDue <= 0) {
             badge = 'TODAY';
             badgeType = 'urgent';
@@ -119,12 +119,12 @@ function convertToMissions(homeworkItems) {
             badge = `${month}/${day}`;
             badgeType = 'normal';
         }
-        
+
         // If it's a test, add the 📝 prefix to badge
         if (isTest) {
             badge = `📝 ${badge}`;
         }
-        
+
         return {
             id: `hw-${item.id}`,
             subject: item.subject || 'Assignment',
@@ -144,7 +144,7 @@ function convertToMissions(homeworkItems) {
 // ==========================================
 function getEventEmoji(eventType, title) {
     const titleLower = (title || '').toLowerCase();
-    
+
     // Check title for common keywords
     if (titleLower.includes('field trip')) return '🚌';
     if (titleLower.includes('picture') || titleLower.includes('photo')) return '📸';
@@ -157,7 +157,7 @@ function getEventEmoji(eventType, title) {
     if (titleLower.includes('project')) return '🎨';
     if (titleLower.includes('break') || titleLower.includes('no school')) return '🎉';
     if (titleLower.includes('early') && titleLower.includes('dismiss')) return '⏰';
-    
+
     // Fall back to event type
     switch (eventType) {
         case 'closure': return '🏠';
@@ -196,17 +196,17 @@ function isTomorrow(dateStr) {
 function formatRelativeDate(dateStr) {
     if (isToday(dateStr)) return 'Today';
     if (isTomorrow(dateStr)) return 'Tomorrow';
-    
+
     const date = new Date(dateStr + 'T00:00:00');
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const daysAway = Math.ceil((date - today) / (1000 * 60 * 60 * 24));
-    
+
     if (daysAway <= 7) {
         const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         return dayNames[date.getDay()];
     }
-    
+
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
@@ -342,37 +342,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
 async function initializeApp() {
     console.log('🚀 Initializing Ned App...');
-    
+
     // Set static content first
     setGreeting();
     setRandomJoke();
     setRandomTrivia();
     renderMatchCard();
     setHomeworkSectionTitle();
-    
+
     // Fetch data from Supabase
     console.log('📡 Fetching data from Supabase...');
     const [homeworkData, eventsData] = await Promise.all([
         fetchHomeworkFromDB(),
         fetchSchoolEventsFromDB()
     ]);
-    
+
     // Store globally for use in multiple renders
     schoolEvents = eventsData;
     homeworkMissions = convertToMissions(homeworkData);
-    
+
     // Render dynamic content
     renderHeadsUp(schoolEvents);
     renderMissions(homeworkMissions);
     renderMorningChecklist(schoolEvents);
     renderWeekView(homeworkMissions, schoolEvents);
     renderPlayerCards();
-    
+
     // Load saved progress and update stats
     loadProgress();
     updateStats();
     checkSaturdayReminder();
-    
+
     console.log('✅ App initialization complete');
 }
 
@@ -382,36 +382,36 @@ async function initializeApp() {
 function renderHeadsUp(events) {
     const card = document.getElementById('heads-up-card');
     const container = document.getElementById('heads-up-container');
-    
+
     // Filter to events in the next 5 days
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const fiveDaysOut = new Date(today);
     fiveDaysOut.setDate(fiveDaysOut.getDate() + 5);
-    
+
     const upcomingEvents = (events || []).filter(event => {
         const eventDate = new Date(event.event_date + 'T00:00:00');
         return eventDate <= fiveDaysOut;
     });
-    
+
     // No events? Hide the card
     if (upcomingEvents.length === 0) {
         card.style.display = 'none';
         return;
     }
-    
+
     card.style.display = 'block';
-    
+
     // Render school events only (tests are already in homework section)
     container.innerHTML = upcomingEvents.map(event => {
         const emoji = getEventEmoji(event.event_type, event.title);
         const relativeDate = formatRelativeDate(event.event_date);
-        
+
         let actionHtml = '';
         if (event.action_required && event.action_text) {
             actionHtml = `<div class="alert-action">👉 ${event.action_text}</div>`;
         }
-        
+
         return `
             <div class="alert info">
                 <div class="alert-title">${emoji} ${relativeDate}: ${event.title}</div>
@@ -427,7 +427,7 @@ function renderHeadsUp(events) {
 // ==========================================
 function renderMissions(missions) {
     const container = document.getElementById('tonight-homework');
-    
+
     if (!missions || missions.length === 0) {
         container.innerHTML = `
             <div class="empty-state">
@@ -438,7 +438,7 @@ function renderMissions(missions) {
         `;
         return;
     }
-    
+
     container.innerHTML = missions.map(mission => `
         <div class="mission-item ${mission.completed ? 'completed' : ''} ${mission.isTest ? 'is-test' : ''}" data-id="${mission.id}" onclick="toggleMission(this)">
             <div class="mission-checkbox"></div>
@@ -456,18 +456,18 @@ function renderMissions(missions) {
 // ==========================================
 function renderMorningChecklist(events) {
     const container = document.getElementById('morning-checklist');
-    
+
     // Get tomorrow's date for morning checklist
     const tomorrow = new Date();
     tomorrow.setHours(0, 0, 0, 0);
     tomorrow.setDate(tomorrow.getDate() + 1);
     const tomorrowStr = tomorrow.toISOString().split('T')[0];
-    
+
     // Also check today's events (in case viewing in morning)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const todayStr = today.toISOString().split('T')[0];
-    
+
     // Find events with action items for today or tomorrow
     const actionItems = (events || [])
         .filter(event => {
@@ -482,10 +482,10 @@ function renderMorningChecklist(events) {
             badge: isToday(event.event_date) ? 'TODAY' : 'TOMORROW',
             badgeType: 'warning'
         }));
-    
+
     // Combine action items with default morning items
     const allItems = [...actionItems, ...defaultMorningItems];
-    
+
     container.innerHTML = allItems.map(item => `
         <div class="mission-item" data-id="${item.id}" onclick="toggleMission(this)">
             <div class="mission-checkbox"></div>
@@ -504,11 +504,11 @@ function renderMorningChecklist(events) {
 function renderWeekView(missions, events) {
     const container = document.getElementById('week-view');
     const titleEl = document.getElementById('week-title');
-    
+
     // Build a week starting from today
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
+
     const days = [];
     for (let i = 0; i < 7; i++) {
         const date = new Date(today);
@@ -522,11 +522,11 @@ function renderWeekView(missions, events) {
             items: []
         });
     }
-    
+
     // Set week title
     const endDate = days[6].date;
     titleEl.textContent = `📅 ${days[0].displayDate} - ${days[6].displayDate}`;
-    
+
     // Add homework to appropriate days
     (missions || []).forEach(mission => {
         const day = days.find(d => d.dateStr === mission.dueDate);
@@ -539,7 +539,7 @@ function renderWeekView(missions, events) {
             });
         }
     });
-    
+
     // Add events to appropriate days
     (events || []).forEach(event => {
         const day = days.find(d => d.dateStr === event.event_date);
@@ -554,10 +554,10 @@ function renderWeekView(missions, events) {
             });
         }
     });
-    
+
     // Render the week
     container.innerHTML = days.map(day => {
-        const itemsHtml = day.items.length > 0 
+        const itemsHtml = day.items.length > 0
             ? day.items.map(item => `
                 <div class="day-item ${item.isTest ? 'test' : ''} ${item.type === 'event' ? 'event-item' : ''}">
                     ${item.text}
@@ -565,7 +565,7 @@ function renderWeekView(missions, events) {
                 </div>
             `).join('')
             : '<div class="day-item empty">Nothing scheduled</div>';
-        
+
         return `
             <div class="day-card ${day.isToday ? 'today' : ''}">
                 <div class="day-header">
@@ -587,10 +587,10 @@ function setHomeworkSectionTitle() {
     const titleEl = document.getElementById('homework-section-title');
     const subtitleEl = document.getElementById('homework-subtitle');
     if (!titleEl) return;
-    
+
     const day = new Date().getDay();
     const hour = new Date().getHours();
-    
+
     if (day === 6) {
         titleEl.textContent = "📚 Homework for Next Week";
         if (subtitleEl) subtitleEl.textContent = "Get ahead this weekend!";
@@ -613,12 +613,12 @@ function setGreeting() {
     const hour = new Date().getHours();
     const messages = voiceMessages[currentVoice].greetings;
     const randomIndex = Math.floor(Math.random() * messages.length);
-    
+
     let timePrefix = "";
     if (hour < 12) timePrefix = "☀️ ";
     else if (hour < 18) timePrefix = "👋 ";
     else timePrefix = "🌙 ";
-    
+
     document.getElementById('greeting').textContent = timePrefix + messages[randomIndex];
 }
 
@@ -650,7 +650,7 @@ function renderMatchCard() {
         'match-time': nextMatch.time,
         'match-motivation-text': voiceMessages[currentVoice].matchMotivation
     };
-    
+
     Object.entries(elements).forEach(([id, value]) => {
         const el = document.getElementById(id);
         if (el) el.textContent = value;
@@ -663,7 +663,7 @@ function renderMatchCard() {
 function renderPlayerCards() {
     const container = document.getElementById('player-cards');
     if (!container) return;
-    
+
     container.innerHTML = playerData.map(player => `
         <div class="player-card" data-number="${player.number}">
             <div class="player-header">
@@ -703,16 +703,16 @@ function renderPlayerCards() {
             </div>
         </div>
     `).join('');
-    
+
     // Update season summary
     const totalGoals = playerData.reduce((sum, p) => sum + p.stats.goals, 0);
     const totalAssists = playerData.reduce((sum, p) => sum + p.stats.assists, 0);
     const avgRating = (playerData.reduce((sum, p) => sum + p.stats.rating, 0) / playerData.length).toFixed(1);
-    
+
     const goalsEl = document.getElementById('total-goals');
     const assistsEl = document.getElementById('total-assists');
     const ratingEl = document.getElementById('avg-rating');
-    
+
     if (goalsEl) goalsEl.textContent = totalGoals;
     if (assistsEl) assistsEl.textContent = totalAssists;
     if (ratingEl) ratingEl.textContent = avgRating;
@@ -730,16 +730,16 @@ function toggleMission(element) {
 function updateStats() {
     const allMissions = document.querySelectorAll('#today-tab .mission-item');
     const completedMissions = document.querySelectorAll('#today-tab .mission-item.completed');
-    
+
     const total = allMissions.length;
     const completed = completedMissions.length;
     const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
-    
+
     const countEl = document.getElementById('mission-count');
     const fillEl = document.getElementById('progress-fill');
     const textEl = document.getElementById('progress-text');
     const completedCountEl = document.getElementById('completed-count');
-    
+
     if (countEl) countEl.textContent = `${completed}/${total}`;
     if (fillEl) fillEl.style.width = `${percentage}%`;
     if (textEl) textEl.textContent = `${percentage}% Complete`;
@@ -759,7 +759,7 @@ function checkSaturdayReminder() {
 function showSaturdayReminder() {
     const container = document.getElementById('shot-reminder-container');
     if (!container) return;
-    
+
     container.innerHTML = `
         <div class="shot-reminder">
             <h3>💉 IMPORTANT REMINDER</h3>
@@ -782,11 +782,11 @@ function switchTab(tabName) {
     document.querySelectorAll('.tab-content').forEach(tab => {
         tab.classList.remove('active');
     });
-    
+
     document.querySelectorAll('.nav-tab').forEach(tab => {
         tab.classList.remove('active');
     });
-    
+
     document.getElementById(tabName + '-tab').classList.add('active');
     event.target.closest('.nav-tab').classList.add('active');
 }
@@ -797,14 +797,14 @@ function switchTab(tabName) {
 function saveProgress() {
     const missions = document.querySelectorAll('.mission-item');
     const progress = {};
-    
+
     missions.forEach(mission => {
         const id = mission.dataset.id;
         if (id) {
             progress[id] = mission.classList.contains('completed');
         }
     });
-    
+
     // Save with today's date so we can reset daily
     const today = new Date().toISOString().split('T')[0];
     localStorage.setItem('nedProgress', JSON.stringify({ date: today, items: progress }));
@@ -813,18 +813,18 @@ function saveProgress() {
 function loadProgress() {
     const saved = localStorage.getItem('nedProgress');
     if (!saved) return;
-    
+
     try {
         const data = JSON.parse(saved);
         const today = new Date().toISOString().split('T')[0];
-        
+
         // Only restore if saved today (reset daily)
         if (data.date !== today) {
             console.log('📅 New day - resetting progress');
             localStorage.removeItem('nedProgress');
             return;
         }
-        
+
         const progress = data.items || {};
         Object.keys(progress).forEach(id => {
             const mission = document.querySelector(`.mission-item[data-id="${id}"]`);

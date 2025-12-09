@@ -19,7 +19,7 @@
     overflow: hidden;
     z-index: 1000;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    
+
     /* Hidden by default */
     opacity: 0;
     visibility: hidden;
@@ -322,11 +322,11 @@
         max-height: 100%;
         border-radius: 0;
     }
-    
+
     .ned-chat-container.visible {
         border-radius: 0;
     }
-    
+
     .ned-fab {
         bottom: 16px;
         right: 16px;

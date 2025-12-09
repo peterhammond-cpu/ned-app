@@ -14,7 +14,7 @@ async function testConnection() {
       .from('families')
       .select('*')
       .limit(1);
-    
+
     if (error) {
       if (error.message.includes('does not exist')) {
         console.log('✅ Connection successful!');

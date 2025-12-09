@@ -3,7 +3,7 @@
 [build]
   # Directory containing the deploy-ready HTML files
   publish = "."
-  
+
   # Directory containing the serverless functions
   functions = "netlify/functions"
 

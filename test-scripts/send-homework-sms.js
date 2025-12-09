@@ -39,7 +39,7 @@ async function fetchHomework() {
     tomorrow.setDate(tomorrow.getDate() + 1);
     tomorrow.setHours(0, 0, 0, 0);
     const tomorrowISO = tomorrow.toISOString();
-    
+
     const { data, error } = await supabase
         .from('homework_items')
         .select('subject, title')
@@ -47,36 +47,36 @@ async function fetchHomework() {
         .gte('date_due', tomorrowISO)
         .order('date_due', { ascending: true })
         .limit(8);
-    
+
     if (error) {
         console.error('❌ Error fetching homework:', error);
         return [];
     }
-    
+
     return data || [];
 }
 
 // Build SMS message
 function buildMessage(homework) {
     const nag = getTodaysNag();
-    
+
     let message = `📚 Tonight's Homework:\n`;
-    
+
     if (homework.length === 0) {
         message += `• No homework found! Double-check Canvas.\n`;
     } else {
         homework.forEach(item => {
             // Truncate title to keep SMS short
-            const shortTitle = item.title.length > 40 
-                ? item.title.substring(0, 40) + '...' 
+            const shortTitle = item.title.length > 40
+                ? item.title.substring(0, 40) + '...'
                 : item.title;
             message += `• ${item.subject}: ${shortTitle}\n`;
         });
     }
-    
+
     message += `\n${nag.message}`;
     message += `\n\n🔗 polite-dasik-8c85da.netlify.app`;
-    
+
     console.log(`📝 Using ${nag.style} style today`);
     return message;
 }
@@ -87,13 +87,13 @@ async function sendSMS(message) {
     console.log('--- MESSAGE ---');
     console.log(message);
     console.log('---------------\n');
-    
+
     const result = await twilioClient.messages.create({
         body: message,
         from: process.env.TWILIO_PHONE_NUMBER,
         to: process.env.WILLY_PHONE_NUMBER
     });
-    
+
     console.log('✅ SMS sent! SID:', result.sid);
     return result;
 }
@@ -103,13 +103,13 @@ async function main() {
     console.log('='.repeat(50));
     console.log('📱 Homework SMS Sender');
     console.log('='.repeat(50) + '\n');
-    
+
     const homework = await fetchHomework();
     console.log(`📚 Found ${homework.length} homework items\n`);
-    
+
     const message = buildMessage(homework);
     await sendSMS(message);
-    
+
     console.log('\n' + '='.repeat(50));
     console.log('🎉 Done!');
     console.log('='.repeat(50));

@@ -23,21 +23,21 @@ class NewsletterParser {
                     <p>Paste a school newsletter or upload a screenshot</p>
                     <button class="parser-close" id="parser-close">×</button>
                 </div>
-                
+
                 <div class="parser-content">
                     <div class="parser-tabs">
                         <button class="parser-tab active" data-tab="text">Paste Text</button>
                         <button class="parser-tab" data-tab="image">Upload Image</button>
                     </div>
-                    
+
                     <div class="parser-tab-content active" id="text-tab">
-                        <textarea 
-                            id="newsletter-text" 
+                        <textarea
+                            id="newsletter-text"
                             placeholder="Paste the school newsletter or email here..."
                             rows="10"
                         ></textarea>
                     </div>
-                    
+
                     <div class="parser-tab-content" id="image-tab">
                         <div class="image-upload-area" id="image-upload-area">
                             <span>📷</span>
@@ -49,13 +49,13 @@ class NewsletterParser {
                             <button class="remove-image" id="remove-image">×</button>
                         </div>
                     </div>
-                    
+
                     <button class="parser-submit" id="parser-submit">
                         <span id="submit-text">Find Events</span>
                         <span id="submit-loading" style="display:none;">Processing...</span>
                     </button>
                 </div>
-                
+
                 <div class="parser-results" id="parser-results" style="display:none;">
                     <h4>Found Events:</h4>
                     <div id="events-list"></div>
@@ -92,42 +92,42 @@ class NewsletterParser {
     attachEventListeners() {
         // Close button
         this.elements.closeBtn.addEventListener('click', () => this.hide());
-        
+
         // Tab switching
         this.elements.textTab.addEventListener('click', () => this.switchTab('text'));
         this.elements.imageTab.addEventListener('click', () => this.switchTab('image'));
-        
+
         // File input
         this.elements.uploadArea.addEventListener('click', () => {
             this.elements.fileInput.click();
         });
-        
+
         this.elements.fileInput.addEventListener('change', (e) => {
             this.handleImageUpload(e);
         });
-        
+
         // Drag and drop
         this.elements.uploadArea.addEventListener('dragover', (e) => {
             e.preventDefault();
             this.elements.uploadArea.classList.add('dragover');
         });
-        
+
         this.elements.uploadArea.addEventListener('dragleave', () => {
             this.elements.uploadArea.classList.remove('dragover');
         });
-        
+
         this.elements.uploadArea.addEventListener('drop', (e) => {
             e.preventDefault();
             this.elements.uploadArea.classList.remove('dragover');
             const file = e.dataTransfer.files[0];
             if (file) this.processFile(file);
         });
-        
+
         // Remove image
         this.elements.removeImage.addEventListener('click', () => {
             this.clearImage();
         });
-        
+
         // Submit
         this.elements.submitBtn.addEventListener('click', () => this.submit());
     }
@@ -220,7 +220,7 @@ class NewsletterParser {
     showResults(events) {
         this.elements.results.style.display = 'block';
         this.parsedEvents = events; // Store for saving
-        
+
         if (events.length === 0) {
             this.elements.eventsList.innerHTML = `
                 <p class="no-events">No student-relevant events found in this newsletter.</p>
@@ -240,12 +240,12 @@ class NewsletterParser {
                     </div>
                 </div>
             `).join('');
-            
+
             // Change button to Save Selected
             this.elements.doneBtn.textContent = 'Save Selected';
             this.elements.doneBtn.onclick = () => this.saveSelected();
         }
-        
+
         // Clear inputs
         this.elements.textarea.value = '';
         this.clearImage();
@@ -255,15 +255,15 @@ class NewsletterParser {
         const checkboxes = this.elements.eventsList.querySelectorAll('.event-checkbox:checked');
         const selectedIndices = Array.from(checkboxes).map(cb => parseInt(cb.dataset.index));
         const selectedEvents = selectedIndices.map(i => this.parsedEvents[i]);
-        
+
         if (selectedEvents.length === 0) {
             this.hide();
             return;
         }
-        
+
         this.elements.doneBtn.textContent = 'Saving...';
         this.elements.doneBtn.disabled = true;
-        
+
         try {
             // Save to Supabase using the existing client
             const eventsToInsert = selectedEvents.map(e => ({
@@ -280,9 +280,9 @@ class NewsletterParser {
 
             const { error } = await supabase
                 .from('school_events')
-                .upsert(eventsToInsert, { 
+                .upsert(eventsToInsert, {
                     onConflict: 'student_id,event_date,title',
-                    ignoreDuplicates: true 
+                    ignoreDuplicates: true
                 });
 
             if (error) {
@@ -295,7 +295,7 @@ class NewsletterParser {
 
             alert(`✅ Saved ${selectedEvents.length} event(s)!`);
             this.hide();
-            
+
             // Refresh the page to show new events (or trigger a refresh function)
             if (typeof loadSchoolEvents === 'function') {
                 loadSchoolEvents();
@@ -310,10 +310,10 @@ class NewsletterParser {
 
     formatDate(dateStr) {
         const date = new Date(dateStr + 'T00:00:00');
-        return date.toLocaleDateString('en-US', { 
-            weekday: 'short', 
-            month: 'short', 
-            day: 'numeric' 
+        return date.toLocaleDateString('en-US', {
+            weekday: 'short',
+            month: 'short',
+            day: 'numeric'
         });
     }
 

@@ -174,7 +174,7 @@ Build for Willy first. Validate it works. Then expand.
 
 Every feature should answer: "Does this make Willy more likely to open Ned?"
 
-If no → backlog  
+If no → backlog
 If yes → build it
 
 ---

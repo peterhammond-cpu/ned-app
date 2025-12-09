@@ -15,7 +15,7 @@
             <h1>🎯 Ned</h1>
             <p id="greeting">Hey Willy!</p>
         </div>
-        
+
         <nav class="nav-tabs">
             <button class="nav-tab active" onclick="switchTab('today')">
                 <span class="tab-icon">🎯</span>
@@ -30,13 +30,13 @@
                 <span class="tab-text">Players</span>
             </button>
         </nav>
-        
+
         <!-- TODAY TAB -->
         <div id="today-tab" class="tab-content active">
-            
+
             <!-- Saturday Shot Reminder (shown on Saturdays) -->
             <div id="shot-reminder-container"></div>
-            
+
             <div class="card">
                 <h2>😂 Daily Fun</h2>
                 <div class="joke-box" id="joke">
@@ -47,7 +47,7 @@
                     <span class="trivia-text">Who do you think will win the Ballon d'Or this year?</span>
                 </div>
             </div>
-            
+
             <div class="card match-card">
                 <div class="card-header">
                     <span class="card-icon">⚽</span>
@@ -78,7 +78,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="card">
                 <h2 id="homework-section-title">📚 Tonight's Missions</h2>
                 <p class="card-subtitle" id="homework-subtitle">Check off as you complete each one</p>
@@ -93,7 +93,7 @@
                     <!-- Populated by JavaScript from Supabase -->
                 </div>
             </div>
-            
+
             <!-- Coming Up - School Events only (not homework) -->
             <div class="card heads-up-card" id="heads-up-card" style="display: none;">
                 <div class="card-header">
@@ -104,7 +104,7 @@
                     <!-- Populated by JavaScript -->
                 </div>
             </div>
-            
+
             <div class="card">
                 <h2 id="morning-title">🌅 Morning Checklist</h2>
                 <p class="card-subtitle">Before you leave for school:</p>
@@ -112,7 +112,7 @@
                     <!-- Populated by JavaScript - includes event action items -->
                 </div>
             </div>
-            
+
             <div class="card">
                 <h2>📊 Progress</h2>
                 <div class="stats">
@@ -127,7 +127,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- WEEK TAB -->
         <div id="week-tab" class="tab-content">
             <div class="card">
@@ -137,18 +137,18 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- PLAYERS TAB -->
         <div id="players-tab" class="tab-content">
             <div class="players-header">
                 <h2>⭐ Star Players</h2>
                 <p>Track your favorite Barça players</p>
             </div>
-            
+
             <div class="player-cards" id="player-cards">
                 <!-- Populated by JavaScript -->
             </div>
-            
+
             <div class="card">
                 <h2>📊 Season Summary</h2>
                 <div class="season-summary">
@@ -171,10 +171,10 @@
 
     <!-- Load Supabase from CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
+
     <!-- Load main app -->
     <script src="app.js"></script>
-    
+
     <!-- Talk to Ned - AI Tutor -->
     <script src="talk-to-ned.js"></script>
     <!-- Floating button to open chat -->
@@ -194,12 +194,12 @@
                     studentName: 'Willy'
                 });
                 window.nedTutor.render('ned-chat');
-                
+
                 console.log('✅ Talk to Ned initialized');
             }
         });
     </script>
-    
+
     <!-- Newsletter Parser -->
     <script src="newsletter-parser.js"></script>
     <!-- Button to open parser (for parents) -->

@@ -15,7 +15,7 @@ async function debug() {
     console.log('NED APP - DATABASE DEBUG');
     console.log('='.repeat(60));
     console.log('');
-    
+
     // 1. Check today's date
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -23,18 +23,18 @@ async function debug() {
     console.log('📅 Today:', today.toDateString());
     console.log('📅 Today ISO (for query):', todayISO);
     console.log('');
-    
+
     // 2. Get ALL homework for Willy (no date filter)
     console.log('='.repeat(60));
     console.log('ALL HOMEWORK IN DATABASE (no filter):');
     console.log('='.repeat(60));
-    
+
     const { data: allHomework, error: allError } = await supabase
         .from('homework_items')
         .select('id, subject, title, date_due, date_assigned, status')
         .eq('student_id', WILLY_STUDENT_ID)
         .order('date_due', { ascending: true });
-    
+
     if (allError) {
         console.log('❌ ERROR fetching all homework:', allError);
     } else {
@@ -46,21 +46,21 @@ async function debug() {
             console.log(`${marker} | Due: ${item.date_due} | ${item.subject}: ${item.title?.substring(0, 40)}...`);
         });
     }
-    
+
     console.log('');
-    
+
     // 3. Get homework with the SAME filter the app uses
     console.log('='.repeat(60));
     console.log('HOMEWORK AFTER FILTER (date_due >= today):');
     console.log('='.repeat(60));
-    
+
     const { data: filteredHomework, error: filteredError } = await supabase
         .from('homework_items')
         .select('*')
         .eq('student_id', WILLY_STUDENT_ID)
         .gte('date_due', todayISO)
         .order('date_due', { ascending: true });
-    
+
     if (filteredError) {
         console.log('❌ ERROR fetching filtered homework:', filteredError);
     } else {
@@ -68,7 +68,7 @@ async function debug() {
         filteredHomework.forEach(item => {
             console.log(`📚 Due: ${item.date_due} | ${item.subject}: ${item.title}`);
         });
-        
+
         if (filteredHomework.length === 0) {
             console.log('');
             console.log('⚠️  NO HOMEWORK FOUND!');
@@ -79,7 +79,7 @@ async function debug() {
             console.log('   3. The date_due field format doesn\'t match the query');
         }
     }
-    
+
     console.log('');
     console.log('='.repeat(60));
     console.log('DIAGNOSIS COMPLETE');

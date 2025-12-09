@@ -12,13 +12,13 @@ const client = twilio(accountSid, authToken);
 async function makeCall() {
     try {
         console.log('📞 Calling...');
-        
+
         const call = await client.calls.create({
             twiml: '<Response><Say voice="Polly.Brian">Ah, Willy. It is Ned. I see you have homework tonight. Do verify you understand your assignments before leaving school. Victory demands preparation.</Say></Response>',
             to: willyPhone,
             from: twilioPhone
         });
-        
+
         console.log('✅ Call initiated! SID:', call.sid);
     } catch (error) {
         console.error('❌ Error:', error.message);

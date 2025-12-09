@@ -22,7 +22,7 @@ const SAFETY_KEYWORDS = [
 // Check message for safety concerns
 function checkSafetyConcerns(message) {
   const lowerMessage = message.toLowerCase();
-  const flaggedKeywords = SAFETY_KEYWORDS.filter(keyword => 
+  const flaggedKeywords = SAFETY_KEYWORDS.filter(keyword =>
     lowerMessage.includes(keyword)
   );
   return {
@@ -124,13 +124,13 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { 
-      message, 
+    const {
+      message,
       image,  // New: { base64: string, mediaType: string }
-      conversationHistory = [], 
+      conversationHistory = [],
       studentId,
       studentName = 'Willy',
-      sessionId 
+      sessionId
     } = JSON.parse(event.body);
 
     // Validate required fields
@@ -153,13 +153,13 @@ exports.handler = async (event, context) => {
         .eq('student_id', studentId)
         .gte('date_due', new Date().toISOString().split('T')[0])
         .limit(10);
-      
+
       if (homework) currentHomework = homework;
     }
 
     // Build the conversation for Claude
     const systemPrompt = buildSystemPrompt(studentName, currentHomework);
-    
+
     // Build messages array with history
     const messages = conversationHistory.map(msg => ({
       role: msg.role,
@@ -169,7 +169,7 @@ exports.handler = async (event, context) => {
     // Build the current message content
     // If image is present, use array format
     let currentMessageContent;
-    
+
     if (image && image.base64) {
       currentMessageContent = [
         {
@@ -277,7 +277,7 @@ exports.handler = async (event, context) => {
     console.error('Error in ask-ned function:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         error: 'Something went wrong. Try again!',
         details: process.env.NODE_ENV === 'development' ? error.message : undefined
       })
@@ -287,9 +287,9 @@ exports.handler = async (event, context) => {
 
 // Extract topic keywords for parent summary
 function extractTopicKeywords(message) {
-  const subjects = ['math', 'science', 'english', 'ela', 'social studies', 'history', 
+  const subjects = ['math', 'science', 'english', 'ela', 'social studies', 'history',
                     'spanish', 'reading', 'writing', 'homework'];
   const lowerMessage = message.toLowerCase();
-  
+
   return subjects.filter(subject => lowerMessage.includes(subject));
 }
