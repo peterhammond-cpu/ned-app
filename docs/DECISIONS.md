@@ -199,28 +199,21 @@
 
 ---
 
-## ADR-010: Twilio for Voice Reminders
+## ADR-010: ~~Twilio for Voice Reminders~~ (REMOVED)
 
-**Decision:** Use Twilio for critical voice call reminders (Saturday growth hormone shot).
+**Status:** Removed December 2024
 
-**Context:** Push notifications can be ignored. Medical reminder cannot be missed.
+**Original Decision:** Use Twilio for voice call reminders.
 
-**Rationale:**
-- Voice call is intrusive by design
-- Stewie voice personality makes it memorable
-- Can escalate to parent if not acknowledged
-- Pay-per-use (~$0.02/call) is negligible
+**Why Removed:** SMS registration kept failing. Push notifications + UI reminder are sufficient for Saturday shot reminders. Simplifies stack and eliminates monthly cost.
 
-**Consequences:**
-- Requires phone number storage
-- Must handle call failures gracefully
-- Twilio account management overhead
+**Replacement:** Web Push notifications via `notify-saturday-shot.js` function + in-app UI reminder on Saturdays.
 
 ---
 
 ## Decisions Pending
 
-- **Push notification provider** - Web Push vs. service like OneSignal
+- **Push notification provider** - Using Web Push (decided)
 - **Authentication system** - Supabase Auth vs. Auth0 vs. custom
 - **Test prep content** - Licensed vs. generated vs. open source
 - **Coach dashboard access model** - Separate login vs. shared link

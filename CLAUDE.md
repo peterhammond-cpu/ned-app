@@ -11,7 +11,6 @@ I'm a solo developer vibe-coding with Claude Code. Prefer simple, working code o
 - **Hosting:** Netlify (free tier, auto-deploy from main)
 - **Database:** Supabase PostgreSQL (multi-tenant, RLS enabled)
 - **LMS Sync:** Canvas API via GitHub Actions (12pm & 3:15pm daily)
-- **Voice Calls:** Twilio (Saturday shot reminders)
 - **AI Tutor:** Claude API (Phase 2 - in progress)
 - **Football Data:** football-data.org (7am daily sync)
 
@@ -67,7 +66,7 @@ See `docs/DECISIONS.md` for full rationale. Key choices:
 - Barcelona player cards (live stats)
 - Voice personalities
 - PWA on Willy's iPhone
-- Twilio Saturday reminders
+- Saturday shot reminder (push notification + UI)
 
 **In Progress (Phase 2):**
 - `ask-ned` Netlify function (Claude API)

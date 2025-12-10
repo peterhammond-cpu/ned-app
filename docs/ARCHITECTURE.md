@@ -20,7 +20,7 @@ An AI-powered homework companion for kids with ADD/ADHD. Syncs with school LMS, 
 | Database | Supabase PostgreSQL | ✅ Live |
 | LMS Sync | Canvas API | ✅ Automated |
 | Automation | GitHub Actions | ✅ Running |
-| Voice Calls | Twilio | ✅ Working |
+| Notifications | Web Push | ✅ Working |
 | AI Tutor | Claude API | 🔄 Next |
 
 ---
@@ -43,8 +43,8 @@ Canvas LMS ──► GitHub Action ──► Supabase ──► Ned App
 - Three voice personalities: Normal, Stewie, French
 
 ### Notifications
-- Twilio voice calls in Stewie's voice
-- Saturday shot reminder functional
+- Web push notifications for reminders
+- Saturday shot reminder (UI + push)
 
 ### PWA
 - Installed on Willy's iPhone home screen
@@ -118,7 +118,7 @@ learning_profiles -- Accumulated patterns over time
 │                 │  │                 │  │                 │
 │  - PostgreSQL   │  │  - AI tutoring  │  │  - Canvas LMS   │
 │  - Row-level    │  │  - Socratic     │  │  - Football API │
-│    security     │  │    method       │  │  - Twilio       │
+│    security     │  │    method       │  │                 │
 │  - Auth (later) │  │                 │  │                 │
 └─────────────────┘  └─────────────────┘  └─────────────────┘
          ▲
@@ -154,9 +154,8 @@ learning_profiles -- Accumulated patterns over time
 | Supabase | Free | $0 |
 | GitHub Actions | Free | $0 |
 | Football API | Free | $0 |
-| Twilio | Pay-as-go | ~$1-2 |
 | Claude API | Not yet | $0 |
-| **Total** | | **~$1-2/month** |
+| **Total** | | **$0/month** |
 
 ---
 

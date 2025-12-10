@@ -21,7 +21,7 @@ Build for Willy first. Validate it works. Then expand.
 - [x] PWA on Willy's iPhone
 - [x] Barcelona theme with player cards
 - [x] Voice personalities (Normal, Stewie, French)
-- [x] Twilio voice call reminders
+- [x] Saturday shot reminder (push + UI)
 - [x] Live match data from football-data.org
 
 **Status:** Willy has real app with real data ✅
@@ -108,8 +108,7 @@ Build for Willy first. Validate it works. Then expand.
 
 **Goal:** Proactive reminders without nagging
 
-- [ ] PWA push notifications (free)
-- [ ] Twilio SMS for critical items (shot reminder)
+- [x] PWA push notifications (free)
 - [ ] Smart timing (not annoying)
 - [ ] Escalation to parent if ignored
 

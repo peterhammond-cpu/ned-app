@@ -14,7 +14,6 @@
     "@supabase/supabase-js": "^2.84.0",
     "cheerio": "^1.1.2",
     "dotenv": "^17.2.3",
-    "node-fetch": "^3.3.2",
-    "twilio": "^5.10.6"
+    "node-fetch": "^3.3.2"
   }
 }
