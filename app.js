@@ -721,10 +721,64 @@ function renderPlayerCards() {
 // ==========================================
 // MISSION TOGGLE & PROGRESS
 // ==========================================
-function toggleMission(element) {
+async function toggleMission(element) {
+    const id = element.dataset.id;
+    const isNowCompleted = !element.classList.contains('completed');
+
+    // Toggle the visual state immediately for responsiveness
     element.classList.toggle('completed');
     updateStats();
+
+    // If this is a homework item (hw-{uuid}), persist to Supabase
+    if (id && id.startsWith('hw-')) {
+        const homeworkId = id.replace('hw-', '');
+        try {
+            if (isNowCompleted) {
+                await checkOffHomework(homeworkId);
+                console.log('✅ Homework marked complete in database:', homeworkId);
+            } else {
+                await uncheckHomework(homeworkId);
+                console.log('↩️ Homework unmarked in database:', homeworkId);
+            }
+        } catch (err) {
+            console.error('Failed to update homework in database:', err);
+            // Revert the UI if the database update failed
+            element.classList.toggle('completed');
+            updateStats();
+        }
+    }
+
+    // Save all progress to localStorage (for morning checklist which resets daily)
     saveProgress();
+}
+
+// ==========================================
+// DATABASE: Update homework completion status
+// ==========================================
+async function checkOffHomework(homeworkId) {
+    const { error } = await supabase
+        .from('homework_items')
+        .update({ checked_off: true, checked_at: new Date().toISOString() })
+        .eq('id', homeworkId);
+
+    if (error) {
+        console.error('❌ Error checking off homework:', error);
+        throw error;
+    }
+    return true;
+}
+
+async function uncheckHomework(homeworkId) {
+    const { error } = await supabase
+        .from('homework_items')
+        .update({ checked_off: false, checked_at: null })
+        .eq('id', homeworkId);
+
+    if (error) {
+        console.error('❌ Error unchecking homework:', error);
+        throw error;
+    }
+    return true;
 }
 
 function updateStats() {
