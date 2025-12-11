@@ -2,12 +2,8 @@ name: Ned App Sync
 
 on:
   schedule:
-    # 7:00 AM CST = 13:00 UTC (football + calendar + data quality)
-    - cron: '0 13 * * 1-5'
-    # 3:30 PM CST = 21:30 UTC (canvas + calendar sync, Mon-Fri)
-    - cron: '30 21 * * 1-5'
-    # 3:00 PM CST = 21:00 UTC (canvas + calendar sync, Sunday)
-    - cron: '0 21 * * 0'
+    # 3:00 PM CST = 21:00 UTC (all syncs, daily)
+    - cron: '0 21 * * *'
   workflow_dispatch:
 
 jobs:
@@ -28,8 +24,7 @@ jobs:
           cd test-scripts
           npm install dotenv @supabase/supabase-js cheerio googleapis
 
-      - name: Run Canvas sync (3:30pm Mon-Fri, 3pm Sunday)
-        if: github.event.schedule == '30 21 * * 1-5' || github.event.schedule == '0 21 * * 0' || github.event_name == 'workflow_dispatch'
+      - name: Run Canvas sync
         env:
           CANVAS_API_TOKEN: ${{ secrets.CANVAS_API_TOKEN }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -39,8 +34,7 @@ jobs:
           cd test-scripts
           node sync-canvas-homework.js
 
-      - name: Run Football sync (7am only)
-        if: github.event.schedule == '0 13 * * 1-5' || github.event_name == 'workflow_dispatch'
+      - name: Run Football sync
         env:
           FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -49,8 +43,7 @@ jobs:
           cd test-scripts
           node sync-football.js
 
-      - name: Run Google Calendar sync (7am and 3:30pm)
-        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 13 * * 1-5' || github.event.schedule == '30 21 * * 1-5' || github.event.schedule == '0 21 * * 0'
+      - name: Run Google Calendar sync
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
@@ -62,8 +55,7 @@ jobs:
           cd test-scripts
           node sync-google-calendar.js
 
-      - name: Run Data Quality Check (7am only)
-        if: github.event.schedule == '0 13 * * 1-5' || github.event_name == 'workflow_dispatch'
+      - name: Run Data Quality Check
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
