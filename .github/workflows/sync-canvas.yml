@@ -9,11 +9,6 @@ on:
     # 3:00 PM CST = 21:00 UTC (canvas sync, Sunday)
     - cron: '0 21 * * 0'
   workflow_dispatch:
-    inputs:
-      make_call:
-        description: 'Make reminder call'
-        type: boolean
-        default: false
 
 jobs:
   sync:
@@ -31,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd test-scripts
-          npm install dotenv @supabase/supabase-js cheerio twilio
+          npm install dotenv @supabase/supabase-js cheerio
 
       - name: Run Canvas sync (3:30pm Mon-Fri, 3pm Sunday)
         if: github.event.schedule == '30 21 * * 1-5' || github.event.schedule == '0 21 * * 0' || github.event_name == 'workflow_dispatch'
@@ -54,27 +49,3 @@ jobs:
         run: |
           cd test-scripts
           node sync-football.js
-
-      - name: Send homework SMS (3:30pm Mon-Fri only)
-        if: github.event.schedule == '30 21 * * 1-5' || inputs.make_call == true
-        env:
-          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
-          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
-          TWILIO_PHONE_NUMBER: ${{ secrets.TWILIO_PHONE_NUMBER }}
-          WILLY_PHONE_NUMBER: ${{ secrets.WILLY_PHONE_NUMBER }}
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-        run: |
-          cd test-scripts
-          node send-homework-sms.js
-
-      - name: Make reminder call (3:30pm Mon-Fri only)
-        if: github.event.schedule == '30 21 * * 1-5' || inputs.make_call == true
-        env:
-          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
-          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
-          TWILIO_PHONE_NUMBER: ${{ secrets.TWILIO_PHONE_NUMBER }}
-          WILLY_PHONE_NUMBER: ${{ secrets.WILLY_PHONE_NUMBER }}
-        run: |
-          cd test-scripts
-          node test-call.js
