@@ -1,12 +1,12 @@
-name: Sync Canvas Homework
+name: Ned App Sync
 
 on:
   schedule:
-    # 7:00 AM CST = 13:00 UTC (football only, Mon-Fri)
+    # 7:00 AM CST = 13:00 UTC (football + calendar + data quality)
     - cron: '0 13 * * 1-5'
-    # 3:30 PM CST = 21:30 UTC (canvas sync, Mon-Fri)
+    # 3:30 PM CST = 21:30 UTC (canvas + calendar sync, Mon-Fri)
     - cron: '30 21 * * 1-5'
-    # 3:00 PM CST = 21:00 UTC (canvas sync, Sunday)
+    # 3:00 PM CST = 21:00 UTC (canvas + calendar sync, Sunday)
     - cron: '0 21 * * 0'
   workflow_dispatch:
 
@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd test-scripts
-          npm install dotenv @supabase/supabase-js cheerio
+          npm install dotenv @supabase/supabase-js cheerio googleapis
 
       - name: Run Canvas sync (3:30pm Mon-Fri, 3pm Sunday)
         if: github.event.schedule == '30 21 * * 1-5' || github.event.schedule == '0 21 * * 0' || github.event_name == 'workflow_dispatch'
@@ -45,7 +45,28 @@ jobs:
           FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-
         run: |
           cd test-scripts
           node sync-football.js
+
+      - name: Run Google Calendar sync (7am and 3:30pm)
+        if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 13 * * 1-5' || github.event.schedule == '30 21 * * 1-5' || github.event.schedule == '0 21 * * 0'
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          GOOGLE_SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+          GOOGLE_CALENDAR_PARENTING_ID: ${{ secrets.GOOGLE_CALENDAR_PARENTING_ID }}
+          GOOGLE_CALENDAR_SCHOOL_ID: ${{ secrets.GOOGLE_CALENDAR_SCHOOL_ID }}
+          GOOGLE_CALENDAR_SPORTS_ID: ${{ secrets.GOOGLE_CALENDAR_SPORTS_ID }}
+        run: |
+          cd test-scripts
+          node sync-google-calendar.js
+
+      - name: Run Data Quality Check (7am only)
+        if: github.event.schedule == '0 13 * * 1-5' || github.event_name == 'workflow_dispatch'
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          cd test-scripts
+          node data-quality-check.js
