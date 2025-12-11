@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abby Lee - Homework Command Center</title>
+    <link rel="manifest" href="manifest-abby-lee.json">
+    <meta name="theme-color" content="#E91E8C">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icon-abby-lee-192.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="abby-lee.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="sparkle-glow"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-top">
+                <div class="logo">
+                    <span class="logo-icon">💃</span>
+                    <span class="logo-text">ABBY LEE</span>
+                </div>
+                <div class="streak-badge">
+                    <span class="streak-fire">✨</span>
+                    <span class="streak-count" id="streak-count">0</span>
+                    <span class="streak-label">day streak</span>
+                </div>
+            </div>
+            <h1 id="greeting">Hey Simone!</h1>
+            <p class="subtitle" id="motivation-subtitle">Let's crush it today!</p>
+        </header>
+
+        <!-- Motivation Quote -->
+        <div class="motivation-card">
+            <p id="motivation-quote">"Everyone's replaceable. Do your homework!"</p>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('today')">
+                <span class="tab-icon">🎯</span>
+                <span class="tab-text">Today</span>
+            </button>
+            <button class="nav-tab" onclick="switchTab('week')">
+                <span class="tab-icon">📅</span>
+                <span class="tab-text">Week</span>
+            </button>
+            <button class="nav-tab" onclick="switchTab('add')">
+                <span class="tab-icon">➕</span>
+                <span class="tab-text">Add</span>
+            </button>
+            <button class="nav-tab" onclick="switchTab('pyramid')">
+                <span class="tab-icon">🏆</span>
+                <span class="tab-text">Pyramid</span>
+            </button>
+        </nav>
+
+        <!-- Today Tab -->
+        <div id="today-tab" class="tab-content active">
+            <!-- Tonight's Missions -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">💅</span>
+                    <h2 id="homework-section-title">Tonight's Assignments</h2>
+                    <span class="mission-count" id="mission-count">0/0</span>
+                </div>
+                <p class="card-subtitle" id="homework-subtitle">Check off as you complete each one</p>
+
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <span class="progress-text" id="progress-text">0% Complete</span>
+                </div>
+
+                <div class="mission-list" id="tonight-homework">
+                    <!-- Homework items will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Abby Lee Quote -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">💬</span>
+                    <h2>Words of Wisdom</h2>
+                </div>
+                <div class="quote-box">
+                    <span id="abby-quote">"Save your tears for the pillow!"</span>
+                    <div class="quote-attribution">- Abby Lee Miller</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Week Tab -->
+        <div id="week-tab" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📅</span>
+                    <h2 id="week-title">This Week</h2>
+                </div>
+                <div class="week-view" id="week-view">
+                    <!-- Week view will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Homework Tab -->
+        <div id="add-tab" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📋</span>
+                    <h2>Add from Aspen</h2>
+                </div>
+                <p class="card-subtitle">Paste your homework from Aspen or add manually</p>
+
+                <!-- Paste Area -->
+                <div class="paste-area" id="paste-area" onclick="document.getElementById('paste-input').focus()">
+                    <div class="paste-area-icon">📸</div>
+                    <div class="paste-area-text">Paste homework text from Aspen here</div>
+                    <textarea id="paste-input" placeholder="Paste from Aspen..." style="width:100%; margin-top: 12px; min-height: 120px; background: var(--bg-secondary); border: 1px solid var(--al-purple); border-radius: 8px; padding: 12px; color: white; font-family: inherit; font-size: 14px;"></textarea>
+                </div>
+
+                <div class="form-actions" style="margin-top: 16px;">
+                    <button class="btn btn-primary" onclick="parseAspenHomework()">✨ Parse Homework</button>
+                    <button class="btn btn-secondary" onclick="clearPasteArea()">Clear</button>
+                </div>
+
+                <!-- Parsed Preview -->
+                <div id="parsed-preview" style="margin-top: 24px; display: none;">
+                    <h3 style="font-size: 14px; color: var(--al-gold); margin-bottom: 12px;">Preview:</h3>
+                    <div id="parsed-items"></div>
+                    <div class="form-actions" style="margin-top: 16px;">
+                        <button class="btn btn-primary" onclick="saveParsedHomework()">💾 Save All</button>
+                        <button class="btn btn-secondary" onclick="cancelParsed()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manual Add -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">✏️</span>
+                    <h2>Add Manually</h2>
+                </div>
+
+                <div class="homework-form active" id="manual-form">
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <select id="manual-subject">
+                            <option value="">Select subject...</option>
+                            <option value="Math">Math</option>
+                            <option value="ELA">ELA / Reading</option>
+                            <option value="Science">Science</option>
+                            <option value="Social Studies">Social Studies</option>
+                            <option value="Spanish">Spanish</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Assignment</label>
+                        <input type="text" id="manual-title" placeholder="What's the assignment?">
+                    </div>
+                    <div class="form-group">
+                        <label>Due Date</label>
+                        <input type="date" id="manual-due">
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-primary" onclick="saveManualHomework()">💾 Save</button>
+                        <button class="btn btn-secondary" onclick="clearManualForm()">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pyramid Tab -->
+        <div id="pyramid-tab" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🏆</span>
+                    <h2>The Pyramid</h2>
+                </div>
+                <p class="card-subtitle">Complete homework to climb the pyramid!</p>
+
+                <div class="pyramid-container">
+                    <div class="pyramid">
+                        <!-- Top of pyramid -->
+                        <div class="pyramid-row">
+                            <div class="pyramid-spot top" id="pyramid-1">👑</div>
+                        </div>
+                        <!-- Second row -->
+                        <div class="pyramid-row">
+                            <div class="pyramid-spot" id="pyramid-2">⭐</div>
+                            <div class="pyramid-spot" id="pyramid-3">⭐</div>
+                        </div>
+                        <!-- Third row -->
+                        <div class="pyramid-row">
+                            <div class="pyramid-spot" id="pyramid-4">✨</div>
+                            <div class="pyramid-spot" id="pyramid-5">✨</div>
+                            <div class="pyramid-spot" id="pyramid-6">✨</div>
+                        </div>
+                    </div>
+                    <p class="pyramid-label">Complete <span id="pyramid-needed">6</span> assignments this week to reach the top!</p>
+                </div>
+
+                <!-- Weekly Stats -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px;">
+                    <div style="text-align: center; padding: 16px; background: rgba(255,255,255,0.03); border-radius: 12px;">
+                        <div style="font-size: 28px; font-weight: 700; color: var(--al-gold);" id="completed-count">0</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">COMPLETED</div>
+                    </div>
+                    <div style="text-align: center; padding: 16px; background: rgba(255,255,255,0.03); border-radius: 12px;">
+                        <div style="font-size: 28px; font-weight: 700; color: var(--al-pink);" id="pending-count">0</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">PENDING</div>
+                    </div>
+                    <div style="text-align: center; padding: 16px; background: rgba(255,255,255,0.03); border-radius: 12px;">
+                        <div style="font-size: 28px; font-weight: 700; color: var(--al-purple);" id="streak-display">0</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">DAY STREAK</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="abby-lee.js"></script>
+</body>
+</html>

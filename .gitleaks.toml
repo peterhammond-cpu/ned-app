@@ -1,0 +1,9 @@
+# Gitleaks configuration
+# Allow Supabase anon key - this is intentionally public (client-side, read-only)
+
+[allowlist]
+description = "Allowlist for public/anon keys"
+paths = [
+    '''app\.js''',
+    '''abby-lee\.js''',
+]
