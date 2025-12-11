@@ -357,8 +357,9 @@ async function syncToDatabase(homeworkByDate) {
             const dueDateStr = dueDate.toISOString().split('T')[0];
             const assignedDateStr = assignedDate.toISOString().split('T')[0];
 
-            // Create unique external_id from subject + assigned date + first 50 chars of description
-            const externalId = `${item.subject}-${assignedDateStr}-${item.description.substring(0, 50).replace(/[^a-zA-Z0-9]/g, '')}`;
+            // Create unique external_id from subject + DUE date + first 50 chars of description
+            // Using due date (not assigned date) prevents duplicates when same assignment is announced on multiple days
+            const externalId = `${item.subject}-${dueDateStr}-${item.description.substring(0, 50).replace(/[^a-zA-Z0-9]/g, '')}`;
 
             // Determine status
             let status = 'pending';
