@@ -327,6 +327,42 @@ function parseHomework(html, closureDates) {
 }
 
 // ==========================================
+// TITLE NORMALIZATION (for deduplication)
+// ==========================================
+
+// Normalize title for external_id generation
+// Removes dates, day names, relative words so "Quiz TOMORROW" and "Quiz THURS 12/11" become the same
+function normalizeTitle(title) {
+    let normalized = title.toLowerCase();
+
+    // Remove day names
+    normalized = normalized.replace(/\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b/gi, '');
+    normalized = normalized.replace(/\b(mon|tue|tues|wed|thu|thurs|fri|sat|sun)\b/gi, '');
+
+    // Remove relative date words
+    normalized = normalized.replace(/\b(tomorrow|today|tonight)\b/gi, '');
+
+    // Remove date patterns like "12/11", "Dec 11", "December 11"
+    normalized = normalized.replace(/\d{1,2}\/\d{1,2}(\/\d{2,4})?/g, '');
+    normalized = normalized.replace(/\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s*\d{1,2}/gi, '');
+
+    // Normalize singular/plural for common words
+    normalized = normalized.replace(/sacraments/gi, 'sacrament');
+    normalized = normalized.replace(/equations/gi, 'equation');
+
+    // Remove extra whitespace and non-alphanumeric
+    normalized = normalized.replace(/[^a-z0-9]/g, '');
+
+    return normalized;
+}
+
+// Check if title indicates a quiz or test
+function isQuizOrTest(title) {
+    const lower = title.toLowerCase();
+    return /\b(quiz|test|exam|assessment)\b/.test(lower);
+}
+
+// ==========================================
 // DATABASE SYNC
 // ==========================================
 
@@ -357,9 +393,12 @@ async function syncToDatabase(homeworkByDate) {
             const dueDateStr = dueDate.toISOString().split('T')[0];
             const assignedDateStr = assignedDate.toISOString().split('T')[0];
 
-            // Create unique external_id from subject + DUE date + first 50 chars of description
-            // Using due date (not assigned date) prevents duplicates when same assignment is announced on multiple days
-            const externalId = `${item.subject}-${dueDateStr}-${item.description.substring(0, 50).replace(/[^a-zA-Z0-9]/g, '')}`;
+            // Normalize title for deduplication
+            // "Sacraments quiz TOMORROW" and "Sacrament quiz THURS 12/11" both become "sacramentquiz"
+            const normalizedTitle = normalizeTitle(item.description.substring(0, 50));
+
+            // Create unique external_id from subject + DUE date + normalized title
+            const externalId = `${item.subject}-${dueDateStr}-${normalizedTitle}`;
 
             // Determine status
             let status = 'pending';
@@ -368,6 +407,7 @@ async function syncToDatabase(homeworkByDate) {
             }
 
             console.log(`  📝 ${item.subject}: assigned ${assignedDateStr}, due ${dueDateStr}`);
+            console.log(`     🔑 ID: ${externalId}`);
 
             allItems.push({
                 student_id: WILLY_STUDENT_ID,
@@ -384,8 +424,41 @@ async function syncToDatabase(homeworkByDate) {
         }
     }
 
-    // Upsert each item (update if exists, insert if new)
+    // Deduplicate: For quiz/test items with same subject + due date, keep only the most recent
+    const deduped = [];
+    const seen = new Map(); // key: "subject-dueDate-quiz" -> item
+
     for (const item of allItems) {
+        // For quizzes/tests, create a special dedup key
+        if (isQuizOrTest(item.title)) {
+            const dedupKey = `${item.subject}-${item.date_due}-quiztest`;
+
+            if (seen.has(dedupKey)) {
+                // Keep the one with the later assigned date (more recent announcement)
+                const existing = seen.get(dedupKey);
+                if (item.date_assigned > existing.date_assigned) {
+                    console.log(`  🔄 Replacing older quiz/test entry for ${item.subject} on ${item.date_due}`);
+                    seen.set(dedupKey, item);
+                } else {
+                    console.log(`  ⏭️  Skipping older quiz/test entry for ${item.subject} on ${item.date_due}`);
+                }
+            } else {
+                seen.set(dedupKey, item);
+            }
+        } else {
+            // Non-quiz items: use external_id as dedup key
+            if (!seen.has(item.external_id)) {
+                seen.set(item.external_id, item);
+            }
+        }
+    }
+
+    // Convert map back to array
+    const itemsToSync = Array.from(seen.values());
+    console.log(`\n📊 ${allItems.length} items found, ${itemsToSync.length} after deduplication`);
+
+    // Upsert each item (update if exists, insert if new)
+    for (const item of itemsToSync) {
         const { error } = await supabase
             .from('homework_items')
             .upsert(item, {
