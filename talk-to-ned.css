@@ -311,7 +311,54 @@
     transform: translateX(0);
 }
 
-/* Mobile Adjustments */
+/* Tablet/iPad - Larger chat window for working */
+@media (min-width: 481px) and (max-width: 1024px) {
+    .ned-chat-container {
+        width: calc(100% - 48px);
+        max-width: 600px;
+        height: 70vh;
+        max-height: 700px;
+        bottom: 90px;
+        right: 24px;
+    }
+
+    .ned-messages {
+        padding: 20px;
+    }
+
+    .ned-message-content {
+        font-size: 16px;
+        padding: 14px 18px;
+    }
+
+    .ned-input-area input {
+        font-size: 16px;
+        padding: 14px 18px;
+    }
+
+    /* Larger image previews on tablet */
+    .ned-message-image {
+        max-width: 300px;
+        max-height: 250px;
+    }
+
+    .ned-image-preview img {
+        max-width: 120px;
+        max-height: 120px;
+    }
+}
+
+/* Large tablet / iPad Pro landscape */
+@media (min-width: 1025px) {
+    .ned-chat-container {
+        width: 500px;
+        max-width: 500px;
+        height: 600px;
+        max-height: 80vh;
+    }
+}
+
+/* Mobile - Full screen chat */
 @media (max-width: 480px) {
     .ned-chat-container {
         bottom: 0;
