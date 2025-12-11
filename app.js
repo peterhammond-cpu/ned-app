@@ -11,18 +11,30 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // DATA FETCHING: Homework
 // ==========================================
 async function fetchHomeworkFromDB() {
+    const now = new Date();
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const todayISO = today.toISOString();
+
+    // After 3:30 PM, start showing tomorrow's homework instead of today's
+    const schoolEndHour = 15; // 3 PM
+    const schoolEndMinute = 30;
+    const isAfterSchool = now.getHours() > schoolEndHour ||
+        (now.getHours() === schoolEndHour && now.getMinutes() >= schoolEndMinute);
+
+    // If after school, filter to items due AFTER today (tomorrow+)
+    const filterDate = isAfterSchool
+        ? new Date(today.getTime() + 24 * 60 * 60 * 1000) // tomorrow
+        : today;
+    const filterDateISO = filterDate.toISOString();
 
     console.log('📝 Fetching homework from Supabase...');
-    console.log('📅 Looking for items due on or after:', todayISO);
+    console.log(`📅 After school: ${isAfterSchool}, showing items due on or after: ${filterDateISO.split('T')[0]}`);
 
     const { data, error } = await supabase
         .from('homework_items')
         .select('*')
         .eq('student_id', WILLY_STUDENT_ID)
-        .gte('date_due', todayISO)
+        .gte('date_due', filterDateISO)
         .order('date_due', { ascending: true });
 
     if (error) {
