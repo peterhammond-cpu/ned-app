@@ -146,6 +146,7 @@ Build for Willy first. Validate it works. Then expand.
 - IEP/504 report export
 - Executive function coach dashboard
 - Pomodoro/study timer
+- Tutor personality per student (Stewie, Ted Lasso, etc. - stored on student_id)
 
 ### Medium Value
 - Gamification (completing homework "trains" Barcelona players)
