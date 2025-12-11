@@ -12,8 +12,8 @@ const WILLY_STUDENT_ID = '8021ff47-1a41-4341-a2e0-9c4fa53cc389';
 // Calendar IDs - set these in GitHub Secrets or .env
 // You'll get these from Google Calendar settings for each calendar
 const CALENDAR_IDS = {
-    parenting: process.env.GOOGLE_CALENDAR_PARENTING_ID,    // The custody schedule
-    school: process.env.GOOGLE_CALENDAR_SCHOOL_ID,          // St. Alphonsus
+    parenting: process.env.GOOGLE_CALENDAR_PARENTING_ID,    // The custody schedule (your shared calendar)
+    school: process.env.GOOGLE_CALENDAR_SCHOOL_ID || 'info@alphonsusacademy.org',  // St. Alphonsus (public)
     sports: process.env.GOOGLE_CALENDAR_SPORTS_ID           // TeamSnap/GameChanger (optional)
 };
 
