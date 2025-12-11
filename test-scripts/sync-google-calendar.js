@@ -163,14 +163,60 @@ function convertToSupabaseFormat(event) {
 async function syncToDatabase(events) {
     console.log('\n💾 Syncing to Supabase...');
 
-    if (events.length === 0) {
+    const records = events.map(convertToSupabaseFormat);
+
+    // Get the date range we're syncing (7 days ago to 30 days out)
+    const now = new Date();
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    const thirtyDaysOut = new Date();
+    thirtyDaysOut.setDate(thirtyDaysOut.getDate() + 30);
+
+    // STEP 1: Get all external_ids from this sync
+    const syncedExternalIds = records.map(r => r.external_id);
+    console.log(`   📋 Syncing ${records.length} events from Google Calendar`);
+
+    // STEP 2: Delete events that are no longer in Google Calendar
+    // (events in our date range that weren't returned by Google)
+    console.log('   🧹 Removing deleted events...');
+
+    // First, get existing events in our date range
+    const { data: existingEvents } = await supabase
+        .from('calendar_events')
+        .select('external_id')
+        .eq('student_id', WILLY_STUDENT_ID)
+        .gte('start_date', sevenDaysAgo.toISOString().split('T')[0])
+        .lte('start_date', thirtyDaysOut.toISOString().split('T')[0]);
+
+    if (existingEvents && existingEvents.length > 0) {
+        // Find events that exist in DB but not in Google sync
+        const deletedIds = existingEvents
+            .map(e => e.external_id)
+            .filter(id => !syncedExternalIds.includes(id));
+
+        if (deletedIds.length > 0) {
+            const { error: deleteError } = await supabase
+                .from('calendar_events')
+                .delete()
+                .eq('student_id', WILLY_STUDENT_ID)
+                .in('external_id', deletedIds);
+
+            if (deleteError) {
+                console.log(`   ⚠️  Error removing deleted events:`, deleteError.message);
+            } else {
+                console.log(`   ✅ Removed ${deletedIds.length} deleted event(s)`);
+            }
+        } else {
+            console.log(`   ✅ No deleted events to remove`);
+        }
+    }
+
+    // STEP 3: Upsert all current events
+    if (records.length === 0) {
         console.log('   ⏭️  No events to sync');
         return;
     }
 
-    const records = events.map(convertToSupabaseFormat);
-
-    // Upsert all records (update if exists, insert if new)
     let successCount = 0;
     let errorCount = 0;
 
@@ -195,7 +241,7 @@ async function syncToDatabase(events) {
         console.log(`   ⚠️  ${errorCount} errors`);
     }
 
-    // Clean up old events (ended more than 14 days ago)
+    // STEP 4: Clean up old events (ended more than 14 days ago)
     const twoWeeksAgo = new Date();
     twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
 
