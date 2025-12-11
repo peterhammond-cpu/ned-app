@@ -1421,3 +1421,86 @@ body {
     font-size: 0.85rem;
     color: var(--text-secondary);
 }
+
+/* ==========================================
+   HOUSEHOLD COLOR CODING (Week View)
+   ========================================== */
+
+/* Household color variables */
+:root {
+    --household-dad: #3498db;      /* Blue for Dad's house */
+    --household-mom: #9b59b6;      /* Purple for Mom's house */
+    --household-dad-bg: rgba(52, 152, 219, 0.15);
+    --household-mom-bg: rgba(155, 89, 182, 0.15);
+}
+
+/* Day card household backgrounds */
+.day-card.household-dad {
+    background: var(--household-dad-bg);
+    border-left-color: var(--household-dad);
+}
+
+.day-card.household-mom {
+    background: var(--household-mom-bg);
+    border-left-color: var(--household-mom);
+}
+
+/* Keep today styling on top of household */
+.day-card.today.household-dad {
+    background: linear-gradient(135deg, var(--household-dad-bg) 0%, rgba(237, 187, 0, 0.1) 100%);
+    border-left-color: var(--barca-gold);
+}
+
+.day-card.today.household-mom {
+    background: linear-gradient(135deg, var(--household-mom-bg) 0%, rgba(237, 187, 0, 0.1) 100%);
+    border-left-color: var(--barca-gold);
+}
+
+/* Day badges container */
+.day-badges {
+    display: flex;
+    gap: var(--spacing-xs);
+    align-items: center;
+}
+
+/* Household badge */
+.household-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.household-badge.dad {
+    background: var(--household-dad);
+    color: white;
+}
+
+.household-badge.mom {
+    background: var(--household-mom);
+    color: white;
+}
+
+/* Calendar items in week view */
+.day-item.calendar-item {
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.day-item.calendar-item.household-dad {
+    color: var(--household-dad);
+    font-weight: 500;
+}
+
+.day-item.calendar-item.household-mom {
+    color: var(--household-mom);
+    font-weight: 500;
+}
+
+/* Sports/school calendar items */
+.day-item.calendar-item:not(.household-dad):not(.household-mom) {
+    color: var(--barca-gold);
+    font-weight: 500;
+}

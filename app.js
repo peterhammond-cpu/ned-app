@@ -71,6 +71,43 @@ async function fetchSchoolEventsFromDB() {
 }
 
 // ==========================================
+// DATA FETCHING: Calendar Events
+// ==========================================
+async function fetchCalendarEventsFromDB() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayISO = today.toISOString().split('T')[0];
+
+    // Get events for the next 14 days
+    const twoWeeksOut = new Date(today);
+    twoWeeksOut.setDate(twoWeeksOut.getDate() + 14);
+    const twoWeeksISO = twoWeeksOut.toISOString().split('T')[0];
+
+    console.log('📅 Fetching calendar events from Supabase...');
+
+    const { data, error } = await supabase
+        .from('calendar_events')
+        .select('*')
+        .eq('student_id', WILLY_STUDENT_ID)
+        .gte('start_date', todayISO)
+        .lte('start_date', twoWeeksISO)
+        .order('start_date', { ascending: true });
+
+    if (error) {
+        // Table might not exist yet
+        if (error.code === '42P01') {
+            console.log('   ⏭️  calendar_events table does not exist yet');
+            return [];
+        }
+        console.error('❌ Error fetching calendar events:', error);
+        return [];
+    }
+
+    console.log('✅ Fetched calendar events:', data?.length || 0);
+    return data || [];
+}
+
+// ==========================================
 // DATA FETCHING: Match Data
 // ==========================================
 async function fetchMatchDataFromDB() {
@@ -346,6 +383,7 @@ const defaultMorningItems = [
 // ==========================================
 let schoolEvents = [];
 let homeworkMissions = [];
+let calendarEvents = [];
 
 // ==========================================
 // INITIALIZATION
@@ -365,22 +403,24 @@ async function initializeApp() {
 
     // Fetch data from Supabase
     console.log('📡 Fetching data from Supabase...');
-    const [homeworkData, eventsData, matchDataResult] = await Promise.all([
+    const [homeworkData, eventsData, matchDataResult, calendarData] = await Promise.all([
         fetchHomeworkFromDB(),
         fetchSchoolEventsFromDB(),
-        fetchMatchDataFromDB()
+        fetchMatchDataFromDB(),
+        fetchCalendarEventsFromDB()
     ]);
 
     // Store globally for use in multiple renders
     schoolEvents = eventsData;
     homeworkMissions = convertToMissions(homeworkData);
     matchData = matchDataResult;
+    calendarEvents = calendarData;
 
     // Render dynamic content
     renderHeadsUp(schoolEvents);
     renderMissions(homeworkMissions);
     renderMorningChecklist(schoolEvents);
-    renderWeekView(homeworkMissions, schoolEvents);
+    renderWeekView(homeworkMissions, schoolEvents, calendarEvents);
     renderPlayerCards();
     renderMatchSection();  // New: render match data on Players tab
 
@@ -515,9 +555,9 @@ function renderMorningChecklist(events) {
 }
 
 // ==========================================
-// WEEK VIEW: Homework + Events Combined
+// WEEK VIEW: Homework + Events + Calendar Combined
 // ==========================================
-function renderWeekView(missions, events) {
+function renderWeekView(missions, events, calEvents) {
     const container = document.getElementById('week-view');
     const titleEl = document.getElementById('week-title');
 
@@ -535,13 +575,37 @@ function renderWeekView(missions, events) {
             dayName: date.toLocaleDateString('en-US', { weekday: 'long' }),
             displayDate: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
             isToday: i === 0,
-            items: []
+            items: [],
+            household: null  // Track which household for this day
         });
     }
 
     // Set week title
     const endDate = days[6].date;
     titleEl.textContent = `📅 ${days[0].displayDate} - ${days[6].displayDate}`;
+
+    // Add calendar events first (to set household for each day)
+    (calEvents || []).forEach(calEvent => {
+        const day = days.find(d => d.dateStr === calEvent.start_date);
+        if (day) {
+            // Set household for this day if it's a parenting event
+            if (calEvent.household && calEvent.event_type === 'parenting') {
+                day.household = calEvent.household;
+            }
+
+            // Add calendar event to the day's items
+            const emoji = getCalendarEventEmoji(calEvent.event_type, calEvent.title);
+            day.items.push({
+                text: `${emoji} ${calEvent.title}`,
+                subject: calEvent.location || '',
+                type: 'calendar',
+                calendarSource: calEvent.calendar_source,
+                eventType: calEvent.event_type,
+                household: calEvent.household,
+                isTest: false
+            });
+        }
+    });
 
     // Add homework to appropriate days
     (missions || []).forEach(mission => {
@@ -556,7 +620,7 @@ function renderWeekView(missions, events) {
         }
     });
 
-    // Add events to appropriate days
+    // Add school events to appropriate days
     (events || []).forEach(event => {
         const day = days.find(d => d.dateStr === event.event_date);
         if (day) {
@@ -573,20 +637,41 @@ function renderWeekView(missions, events) {
 
     // Render the week
     container.innerHTML = days.map(day => {
+        // Determine day card class based on household
+        const householdClass = day.household ? `household-${day.household}` : '';
+
         const itemsHtml = day.items.length > 0
-            ? day.items.map(item => `
-                <div class="day-item ${item.isTest ? 'test' : ''} ${item.type === 'event' ? 'event-item' : ''}">
-                    ${item.text}
-                    ${item.subject ? `<span class="day-item-detail">${item.subject}</span>` : ''}
-                </div>
-            `).join('')
+            ? day.items.map(item => {
+                const classes = [
+                    'day-item',
+                    item.isTest ? 'test' : '',
+                    item.type === 'event' ? 'event-item' : '',
+                    item.type === 'calendar' ? 'calendar-item' : '',
+                    item.household ? `household-${item.household}` : ''
+                ].filter(Boolean).join(' ');
+
+                return `
+                    <div class="${classes}">
+                        ${item.text}
+                        ${item.subject ? `<span class="day-item-detail">${item.subject}</span>` : ''}
+                    </div>
+                `;
+            }).join('')
             : '<div class="day-item empty">Nothing scheduled</div>';
 
+        // Build household indicator
+        const householdIndicator = day.household
+            ? `<span class="household-badge ${day.household}">${day.household === 'dad' ? "Dad's" : "Mom's"}</span>`
+            : '';
+
         return `
-            <div class="day-card ${day.isToday ? 'today' : ''}">
+            <div class="day-card ${day.isToday ? 'today' : ''} ${householdClass}">
                 <div class="day-header">
                     <span class="day-name">${day.dayName}, ${day.displayDate}</span>
-                    ${day.isToday ? '<span class="day-badge">TODAY</span>' : ''}
+                    <div class="day-badges">
+                        ${householdIndicator}
+                        ${day.isToday ? '<span class="day-badge">TODAY</span>' : ''}
+                    </div>
                 </div>
                 <div class="day-items">
                     ${itemsHtml}
@@ -594,6 +679,38 @@ function renderWeekView(missions, events) {
             </div>
         `;
     }).join('');
+}
+
+// ==========================================
+// HELPER: Get emoji for calendar event type
+// ==========================================
+function getCalendarEventEmoji(eventType, title) {
+    const titleLower = (title || '').toLowerCase();
+
+    // Parenting schedule
+    if (eventType === 'parenting') {
+        if (titleLower.includes('pete') || titleLower.includes('dad')) return '🏠';
+        if (titleLower.includes('julia') || titleLower.includes('mom')) return '🏡';
+        return '👨‍👩‍👦';
+    }
+
+    // Sports events
+    if (eventType === 'sports' || eventType === 'sports_game') return '⚽';
+    if (eventType === 'sports_practice') return '🏃';
+
+    // School-related
+    if (eventType === 'no_school') return '🎉';
+    if (eventType === 'early_dismissal') return '⏰';
+    if (eventType === 'school') return '🏫';
+
+    // Check title for keywords
+    if (titleLower.includes('game') || titleLower.includes('match')) return '⚽';
+    if (titleLower.includes('practice')) return '🏃';
+    if (titleLower.includes('doctor') || titleLower.includes('appointment')) return '🏥';
+    if (titleLower.includes('birthday')) return '🎂';
+    if (titleLower.includes('party')) return '🎉';
+
+    return '📅';
 }
 
 // ==========================================
