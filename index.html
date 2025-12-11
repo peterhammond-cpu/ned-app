@@ -48,37 +48,6 @@
                 </div>
             </div>
 
-            <div class="card match-card">
-                <div class="card-header">
-                    <span class="card-icon">⚽</span>
-                    <h2>FC Barcelona</h2>
-                </div>
-                <div class="match-content">
-                    <div class="match-teams">
-                        <div class="team">
-                            <div class="team-crest">🔵🔴</div>
-                            <span class="team-name">Barcelona</span>
-                        </div>
-                        <div class="match-info">
-                            <span class="match-vs">VS</span>
-                            <span class="match-competition" id="match-competition">La Liga</span>
-                        </div>
-                        <div class="team">
-                            <div class="team-crest" id="opponent-crest">🔴⚪</div>
-                            <span class="team-name" id="opponent-name">Atlético Madrid</span>
-                        </div>
-                    </div>
-                    <div class="match-datetime">
-                        <span class="match-date" id="match-date">Saturday, Dec 21</span>
-                        <span class="match-time" id="match-time">3:00 PM EST</span>
-                    </div>
-                    <div class="match-motivation">
-                        <span>💡</span>
-                        <span id="match-motivation-text">Finish your missions early to catch kickoff!</span>
-                    </div>
-                </div>
-            </div>
-
             <div class="card">
                 <h2 id="homework-section-title">📚 Tonight's Missions</h2>
                 <p class="card-subtitle" id="homework-subtitle">Check off as you complete each one</p>
@@ -140,6 +109,17 @@
 
         <!-- PLAYERS TAB -->
         <div id="players-tab" class="tab-content">
+            <!-- Match Section: Last Result + Next Match -->
+            <div class="card match-section-card">
+                <div class="card-header">
+                    <span class="card-icon">⚽</span>
+                    <h2>FC Barcelona</h2>
+                </div>
+                <div id="match-section">
+                    <!-- Populated by JavaScript from Supabase -->
+                </div>
+            </div>
+
             <div class="players-header">
                 <h2>⭐ Star Players</h2>
                 <p>Track your favorite Barça players</p>

@@ -71,6 +71,27 @@ async function fetchSchoolEventsFromDB() {
 }
 
 // ==========================================
+// DATA FETCHING: Match Data
+// ==========================================
+async function fetchMatchDataFromDB() {
+    console.log('⚽ Fetching Barcelona match data from Supabase...');
+
+    const { data, error } = await supabase
+        .from('match_data')
+        .select('*')
+        .eq('team_id', 81)  // Barcelona
+        .single();
+
+    if (error) {
+        console.error('❌ Error fetching match data:', error);
+        return null;
+    }
+
+    console.log('✅ Fetched match data:', data);
+    return data;
+}
+
+// ==========================================
 // DATA CONVERSION: Homework to Missions
 // ==========================================
 function convertToMissions(homeworkItems) {
@@ -246,16 +267,9 @@ const playerData = [
 ];
 
 // ==========================================
-// DATA: Next Match (will connect to football API)
+// GLOBAL STATE: Match Data (fetched from Supabase)
 // ==========================================
-const nextMatch = {
-    opponent: "Atlético Madrid",
-    opponentCrest: "🔴⚪",
-    competition: "La Liga",
-    date: "Saturday, Dec 21",
-    time: "3:00 PM EST",
-    venue: "Spotify Camp Nou"
-};
+let matchData = null;
 
 // ==========================================
 // DATA: Dad Jokes
@@ -347,19 +361,20 @@ async function initializeApp() {
     setGreeting();
     setRandomJoke();
     setRandomTrivia();
-    renderMatchCard();
     setHomeworkSectionTitle();
 
     // Fetch data from Supabase
     console.log('📡 Fetching data from Supabase...');
-    const [homeworkData, eventsData] = await Promise.all([
+    const [homeworkData, eventsData, matchDataResult] = await Promise.all([
         fetchHomeworkFromDB(),
-        fetchSchoolEventsFromDB()
+        fetchSchoolEventsFromDB(),
+        fetchMatchDataFromDB()
     ]);
 
     // Store globally for use in multiple renders
     schoolEvents = eventsData;
     homeworkMissions = convertToMissions(homeworkData);
+    matchData = matchDataResult;
 
     // Render dynamic content
     renderHeadsUp(schoolEvents);
@@ -367,6 +382,7 @@ async function initializeApp() {
     renderMorningChecklist(schoolEvents);
     renderWeekView(homeworkMissions, schoolEvents);
     renderPlayerCards();
+    renderMatchSection();  // New: render match data on Players tab
 
     // Load saved progress and update stats
     loadProgress();
@@ -639,22 +655,107 @@ function setRandomTrivia() {
 }
 
 // ==========================================
-// MATCH CARD
+// MATCH SECTION (Last Result + Next Match)
 // ==========================================
-function renderMatchCard() {
-    const elements = {
-        'opponent-name': nextMatch.opponent,
-        'opponent-crest': nextMatch.opponentCrest,
-        'match-competition': nextMatch.competition,
-        'match-date': nextMatch.date,
-        'match-time': nextMatch.time,
-        'match-motivation-text': voiceMessages[currentVoice].matchMotivation
-    };
+function renderMatchSection() {
+    const container = document.getElementById('match-section');
+    if (!container) return;
 
-    Object.entries(elements).forEach(([id, value]) => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = value;
-    });
+    if (!matchData) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">⚽</div>
+                <div class="empty-text">No match data available</div>
+            </div>
+        `;
+        return;
+    }
+
+    // Format last match date
+    const lastMatchDate = matchData.last_match_date
+        ? new Date(matchData.last_match_date).toLocaleDateString('en-US', {
+            weekday: 'short', month: 'short', day: 'numeric'
+          })
+        : '';
+
+    // Format next match date and time
+    let nextMatchDate = '';
+    let nextMatchTime = '';
+    if (matchData.next_match_date) {
+        const nextDate = new Date(matchData.next_match_date);
+        nextMatchDate = nextDate.toLocaleDateString('en-US', {
+            weekday: 'long', month: 'short', day: 'numeric'
+        });
+        nextMatchTime = nextDate.toLocaleTimeString('en-US', {
+            hour: 'numeric', minute: '2-digit', timeZoneName: 'short'
+        });
+    }
+
+    // Determine result styling
+    const resultClass = matchData.last_result === 'WIN' ? 'win'
+        : matchData.last_result === 'LOSS' ? 'loss' : 'draw';
+    const resultEmoji = matchData.last_result === 'WIN' ? '🎉'
+        : matchData.last_result === 'LOSS' ? '😤' : '🤝';
+
+    // Format score (Barcelona always shown first)
+    let barcaScore, oppScore;
+    if (matchData.last_home_or_away === 'HOME') {
+        barcaScore = matchData.last_score_home;
+        oppScore = matchData.last_score_away;
+    } else {
+        barcaScore = matchData.last_score_away;
+        oppScore = matchData.last_score_home;
+    }
+
+    container.innerHTML = `
+        <!-- Last Match Result -->
+        <div class="match-result-card ${resultClass}">
+            <div class="match-result-header">
+                <span class="result-label">Last Match ${resultEmoji}</span>
+                <span class="result-competition">${matchData.last_competition || ''}</span>
+            </div>
+            <div class="match-result-content">
+                <div class="match-result-teams">
+                    <span class="team-name barca">Barcelona</span>
+                    <span class="match-score">${barcaScore} - ${oppScore}</span>
+                    <span class="team-name">${matchData.last_opponent || 'Unknown'}</span>
+                </div>
+                <div class="match-result-date">${lastMatchDate} • ${matchData.last_home_or_away || ''}</div>
+            </div>
+        </div>
+
+        <!-- Next Match -->
+        <div class="next-match-card">
+            <div class="next-match-header">
+                <span class="next-label">Next Match</span>
+                <span class="next-competition">${matchData.next_competition || ''}</span>
+            </div>
+            <div class="next-match-content">
+                <div class="next-match-teams">
+                    <div class="team">
+                        <div class="team-crest">🔵🔴</div>
+                        <span class="team-name">Barcelona</span>
+                    </div>
+                    <div class="match-vs">VS</div>
+                    <div class="team">
+                        <div class="team-crest">⚪</div>
+                        <span class="team-name">${matchData.next_opponent || 'TBD'}</span>
+                    </div>
+                </div>
+                <div class="next-match-datetime">
+                    <span class="next-date">📅 ${nextMatchDate || 'TBD'}</span>
+                    <span class="next-time">⏰ ${nextMatchTime || ''}</span>
+                    <span class="next-venue">${matchData.next_home_or_away === 'HOME' ? '🏟️ Home' : '✈️ Away'}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Motivation -->
+        <div class="match-motivation">
+            <span>💡</span>
+            <span>${voiceMessages[currentVoice].matchMotivation}</span>
+        </div>
+    `;
 }
 
 // ==========================================

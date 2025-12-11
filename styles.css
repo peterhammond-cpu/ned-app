@@ -1232,3 +1232,192 @@ body {
 .notification-prompt button:hover {
     transform: scale(1.05);
 }
+
+/* ==========================================
+   MATCH SECTION (Players Tab)
+   ========================================== */
+
+.match-section-card {
+    margin-bottom: var(--spacing-lg);
+}
+
+.match-section-card .card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.match-section-card .card-icon {
+    font-size: 1.5rem;
+}
+
+.match-section-card .card-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+/* Last Match Result Card */
+.match-result-card {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    border-left: 4px solid var(--text-muted);
+}
+
+.match-result-card.win {
+    border-left-color: var(--success);
+    background: linear-gradient(135deg, rgba(46, 213, 115, 0.1) 0%, var(--bg-secondary) 100%);
+}
+
+.match-result-card.loss {
+    border-left-color: var(--urgent);
+    background: linear-gradient(135deg, rgba(255, 71, 87, 0.1) 0%, var(--bg-secondary) 100%);
+}
+
+.match-result-card.draw {
+    border-left-color: var(--warning);
+    background: linear-gradient(135deg, rgba(255, 165, 2, 0.1) 0%, var(--bg-secondary) 100%);
+}
+
+.match-result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.result-label {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.result-competition {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.match-result-content {
+    text-align: center;
+}
+
+.match-result-teams {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
+}
+
+.match-result-teams .team-name {
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.match-result-teams .team-name.barca {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.match-score {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    padding: 0 var(--spacing-sm);
+}
+
+.match-result-date {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Next Match Card */
+.next-match-card {
+    background: var(--gradient-barca);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.next-match-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.next-label {
+    font-weight: 600;
+    color: white;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.next-competition {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.next-match-content {
+    text-align: center;
+}
+
+.next-match-teams {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+}
+
+.next-match-teams .team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.next-match-teams .team-crest {
+    font-size: 2rem;
+}
+
+.next-match-teams .team-name {
+    font-size: 0.9rem;
+    color: white;
+    font-weight: 500;
+}
+
+.next-match-teams .match-vs {
+    font-size: 1rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.next-match-datetime {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.next-match-datetime span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Match Motivation (in match section) */
+#match-section .match-motivation {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
