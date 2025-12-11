@@ -85,11 +85,15 @@ async function fetchCalendarEvents(calendar, calendarId, calendarType) {
 function parseEventDetails(event) {
     const title = (event.summary || '').toLowerCase();
 
-    // Detect parenting schedule
+    // Detect parenting schedule - check various naming patterns
     let household = null;
-    if (title.includes('kids with pete')) {
+
+    // Dad patterns: "Kids with Pete", "Pete's week", "Dad's week", "With Pete", etc.
+    if (title.includes('pete') || title.includes("dad's") || title.includes('dad week')) {
         household = 'dad';
-    } else if (title.includes('kids with julia')) {
+    }
+    // Mom patterns: "Kids with Julia", "Julia's week", "Mom's week", "With Julia", etc.
+    else if (title.includes('julia') || title.includes("mom's") || title.includes('mom week')) {
         household = 'mom';
     }
 

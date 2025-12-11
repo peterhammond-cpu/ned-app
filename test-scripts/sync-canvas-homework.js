@@ -374,6 +374,49 @@ async function syncToDatabase(homeworkByDate) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
+    // STEP 1: Fetch existing checked_off status to preserve it
+    console.log('📋 Fetching existing completion status...');
+    const { data: existingItems } = await supabase
+        .from('homework_items')
+        .select('subject, date_due, title, checked_off, checked_at')
+        .eq('student_id', WILLY_STUDENT_ID)
+        .eq('source_lms', 'canvas');
+
+    // Build lookup map: "subject|date_due" -> {checked_off, checked_at}
+    // Also include title snippet for better matching
+    const completionStatus = new Map();
+    (existingItems || []).forEach(item => {
+        if (item.checked_off) {
+            // Key by subject + due date
+            const key = `${item.subject}|${item.date_due}`;
+            completionStatus.set(key, {
+                checked_off: item.checked_off,
+                checked_at: item.checked_at
+            });
+            // Also key by subject + due date + first 30 chars of title (normalized)
+            const titleKey = `${item.subject}|${item.date_due}|${(item.title || '').substring(0, 30).toLowerCase()}`;
+            completionStatus.set(titleKey, {
+                checked_off: item.checked_off,
+                checked_at: item.checked_at
+            });
+        }
+    });
+    console.log(`  ✅ Found ${completionStatus.size} completed items to preserve`);
+
+    // STEP 2: Clear ALL existing homework (fresh start to remove duplicates)
+    console.log('🧹 Clearing existing homework entries...');
+    const { error: clearError } = await supabase
+        .from('homework_items')
+        .delete()
+        .eq('student_id', WILLY_STUDENT_ID)
+        .eq('source_lms', 'canvas');
+
+    if (clearError) {
+        console.error('  ⚠️ Error clearing old entries:', clearError.message);
+    } else {
+        console.log('  ✅ Cleared old entries');
+    }
+
     // Only sync items assigned within the last 7 days
     const sevenDaysAgo = new Date(today);
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -409,6 +452,27 @@ async function syncToDatabase(homeworkByDate) {
             console.log(`  📝 ${item.subject}: assigned ${assignedDateStr}, due ${dueDateStr}`);
             console.log(`     🔑 ID: ${externalId}`);
 
+            // Check if this item was previously checked off
+            const titleSnippet = item.description.substring(0, 30).toLowerCase();
+            const subjectDueKey = `${item.subject}|${dueDateStr}`;
+            const titleKey = `${item.subject}|${dueDateStr}|${titleSnippet}`;
+
+            let checkedOff = false;
+            let checkedAt = null;
+
+            // Try to find existing completion status
+            if (completionStatus.has(titleKey)) {
+                const savedStatus = completionStatus.get(titleKey);
+                checkedOff = savedStatus.checked_off;
+                checkedAt = savedStatus.checked_at;
+                console.log(`     ✅ Restoring completion status (by title match)`);
+            } else if (completionStatus.has(subjectDueKey)) {
+                const savedStatus = completionStatus.get(subjectDueKey);
+                checkedOff = savedStatus.checked_off;
+                checkedAt = savedStatus.checked_at;
+                console.log(`     ✅ Restoring completion status (by subject+date)`);
+            }
+
             allItems.push({
                 student_id: WILLY_STUDENT_ID,
                 source_lms: 'canvas',
@@ -419,7 +483,9 @@ async function syncToDatabase(homeworkByDate) {
                 title: item.description.substring(0, 100),
                 description: item.description,
                 link: item.link,
-                status: status
+                status: status,
+                checked_off: checkedOff,
+                checked_at: checkedAt
             });
         }
     }
@@ -457,37 +523,17 @@ async function syncToDatabase(homeworkByDate) {
     const itemsToSync = Array.from(seen.values());
     console.log(`\n📊 ${allItems.length} items found, ${itemsToSync.length} after deduplication`);
 
-    // Upsert each item (update if exists, insert if new)
+    // Insert all items (we already cleared the table)
     for (const item of itemsToSync) {
         const { error } = await supabase
             .from('homework_items')
-            .upsert(item, {
-                onConflict: 'student_id,external_id',
-                ignoreDuplicates: false
-            });
+            .insert(item);
 
         if (!error) {
             upsertCount++;
         } else {
-            console.error(`  ⚠️ Error upserting: ${error.message}`);
+            console.error(`  ⚠️ Error inserting: ${error.message}`);
         }
-    }
-
-    // Clean up old items (due more than 7 days ago)
-    const weekAgo = new Date(today);
-    weekAgo.setDate(weekAgo.getDate() - 7);
-    const weekAgoStr = weekAgo.toISOString().split('T')[0];
-
-    const { error: cleanupError } = await supabase
-        .from('homework_items')
-        .delete()
-        .eq('student_id', WILLY_STUDENT_ID)
-        .lt('date_due', weekAgoStr);
-
-    if (cleanupError) {
-        console.error(`  ⚠️ Cleanup error: ${cleanupError.message}`);
-    } else {
-        console.log(`\n🧹 Cleaned up items due before ${weekAgoStr}`);
     }
 
     console.log(`\n✅ Synced ${upsertCount} homework items!`);

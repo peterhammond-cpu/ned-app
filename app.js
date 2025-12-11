@@ -584,30 +584,15 @@ function renderWeekView(missions, events, calEvents) {
     const endDate = days[6].date;
     titleEl.textContent = `📅 ${days[0].displayDate} - ${days[6].displayDate}`;
 
-    // Add calendar events first (to set household for each day)
+    // First pass: set household for each day from parenting events
     (calEvents || []).forEach(calEvent => {
         const day = days.find(d => d.dateStr === calEvent.start_date);
-        if (day) {
-            // Set household for this day if it's a parenting event
-            if (calEvent.household && calEvent.event_type === 'parenting') {
-                day.household = calEvent.household;
-            }
-
-            // Add calendar event to the day's items
-            const emoji = getCalendarEventEmoji(calEvent.event_type, calEvent.title);
-            day.items.push({
-                text: `${emoji} ${calEvent.title}`,
-                subject: calEvent.location || '',
-                type: 'calendar',
-                calendarSource: calEvent.calendar_source,
-                eventType: calEvent.event_type,
-                household: calEvent.household,
-                isTest: false
-            });
+        if (day && calEvent.household && calEvent.event_type === 'parenting') {
+            day.household = calEvent.household;
         }
     });
 
-    // Add homework to appropriate days
+    // Add HOMEWORK FIRST (so it appears at the top of each day)
     (missions || []).forEach(mission => {
         const day = days.find(d => d.dateStr === mission.dueDate);
         if (day) {
@@ -620,7 +605,7 @@ function renderWeekView(missions, events, calEvents) {
         }
     });
 
-    // Add school events to appropriate days
+    // Add school events
     (events || []).forEach(event => {
         const day = days.find(d => d.dateStr === event.event_date);
         if (day) {
@@ -630,6 +615,40 @@ function renderWeekView(missions, events, calEvents) {
                 subject: event.action_text || '',
                 type: 'event',
                 eventType: event.event_type,
+                isTest: false
+            });
+        }
+    });
+
+    // Add calendar events LAST (parenting schedule, sports, etc.)
+    (calEvents || []).forEach(calEvent => {
+        const day = days.find(d => d.dateStr === calEvent.start_date);
+        if (day) {
+            const emoji = getCalendarEventEmoji(calEvent.event_type, calEvent.title);
+
+            // Format time if available (e.g., "7:00 PM")
+            let timeStr = '';
+            if (calEvent.start_time && !calEvent.is_all_day) {
+                const startTime = new Date(calEvent.start_time);
+                timeStr = startTime.toLocaleTimeString('en-US', {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true
+                });
+            }
+
+            // Build display text with optional time
+            const displayText = timeStr
+                ? `${emoji} ${calEvent.title} @ ${timeStr}`
+                : `${emoji} ${calEvent.title}`;
+
+            day.items.push({
+                text: displayText,
+                subject: calEvent.location || '',
+                type: 'calendar',
+                calendarSource: calEvent.calendar_source,
+                eventType: calEvent.event_type,
+                household: calEvent.household,
                 isTest: false
             });
         }
