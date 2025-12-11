@@ -585,10 +585,18 @@ function renderWeekView(missions, events, calEvents) {
     titleEl.textContent = `📅 ${days[0].displayDate} - ${days[6].displayDate}`;
 
     // First pass: set household for each day from parenting events
+    // Parenting events often span multiple days (e.g., Monday to Monday)
     (calEvents || []).forEach(calEvent => {
-        const day = days.find(d => d.dateStr === calEvent.start_date);
-        if (day && calEvent.household && calEvent.event_type === 'parenting') {
-            day.household = calEvent.household;
+        if (calEvent.household && calEvent.event_type === 'parenting') {
+            const eventStart = new Date(calEvent.start_date + 'T00:00:00');
+            const eventEnd = new Date(calEvent.end_date + 'T00:00:00');
+
+            // Apply household to ALL days within the event's date range
+            days.forEach(day => {
+                if (day.date >= eventStart && day.date < eventEnd) {
+                    day.household = calEvent.household;
+                }
+            });
         }
     });
 

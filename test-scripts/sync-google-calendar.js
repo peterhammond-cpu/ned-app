@@ -88,12 +88,12 @@ function parseEventDetails(event) {
     // Detect parenting schedule - check various naming patterns
     let household = null;
 
-    // Dad patterns: "Kids with Pete", "Pete's week", "Dad's week", "With Pete", etc.
-    if (title.includes('pete') || title.includes("dad's") || title.includes('dad week')) {
+    // Dad patterns: "Kids w/ Pete", "Kids with Pete", "Pete's week", "Dad's week", etc.
+    if (title.includes('pete') || title.includes("dad's") || title.includes('dad week') || title.includes("dad's")) {
         household = 'dad';
     }
-    // Mom patterns: "Kids with Julia", "Julia's week", "Mom's week", "With Julia", etc.
-    else if (title.includes('julia') || title.includes("mom's") || title.includes('mom week')) {
+    // Mom patterns: "Kids w/ Julia", "Kids with Julia", "Julia's week", "Mom's week", etc.
+    else if (title.includes('julia') || title.includes("mom's") || title.includes('mom week') || title.includes("mom's")) {
         household = 'mom';
     }
 
