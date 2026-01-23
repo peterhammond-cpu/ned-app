@@ -5,7 +5,7 @@ const SUPABASE_URL = 'https://jzmivepzevgqlmxirlmk.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6bWl2ZXB6ZXZncWxteGlybG1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwODQ2MTAsImV4cCI6MjA3OTY2MDYxMH0.RTfSV7jMgyc1bpcDCZFtVoX9MjBYo0KElC0S16O6_og';
 const WILLY_STUDENT_ID = '8021ff47-1a41-4341-a2e0-9c4fa53cc389';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // ==========================================
 // DATA FETCHING: Homework
@@ -30,7 +30,7 @@ async function fetchHomeworkFromDB() {
     console.log('📝 Fetching homework from Supabase...');
     console.log(`📅 After school: ${isAfterSchool}, showing items due on or after: ${filterDateISO.split('T')[0]}`);
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
         .from('homework_items')
         .select('*')
         .eq('student_id', WILLY_STUDENT_ID)
@@ -62,7 +62,7 @@ async function fetchSchoolEventsFromDB() {
     console.log('📅 Fetching school events from Supabase...');
     console.log('📅 Date range:', todayISO, 'to', twoWeeksISO);
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
         .from('school_events')
         .select('*')
         .eq('student_id', WILLY_STUDENT_ID)
@@ -97,7 +97,7 @@ async function fetchCalendarEventsFromDB() {
 
     console.log('📅 Fetching calendar events from Supabase...');
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
         .from('calendar_events')
         .select('*')
         .eq('student_id', WILLY_STUDENT_ID)
@@ -125,7 +125,7 @@ async function fetchCalendarEventsFromDB() {
 async function fetchMatchDataFromDB() {
     console.log('⚽ Fetching Barcelona match data from Supabase...');
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
         .from('match_data')
         .select('*')
         .eq('team_id', 81)  // Barcelona
@@ -1013,7 +1013,7 @@ async function toggleMission(element) {
 // DATABASE: Update homework completion status
 // ==========================================
 async function checkOffHomework(homeworkId) {
-    const { error } = await supabase
+    const { error } = await supabaseClient
         .from('homework_items')
         .update({ checked_off: true, checked_at: new Date().toISOString() })
         .eq('id', homeworkId);
@@ -1026,7 +1026,7 @@ async function checkOffHomework(homeworkId) {
 }
 
 async function uncheckHomework(homeworkId) {
-    const { error } = await supabase
+    const { error } = await supabaseClient
         .from('homework_items')
         .update({ checked_off: false, checked_at: null })
         .eq('id', homeworkId);
