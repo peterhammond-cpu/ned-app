@@ -5,10 +5,11 @@ const PushNotifications = {
     // Generate with: npx web-push generate-vapid-keys
     VAPID_PUBLIC_KEY: null, // Will be set from environment or config
 
-    studentId: '8021ff47-1a41-4341-a2e0-9c4fa53cc389', // Willy's ID
+    studentId: null, // Set dynamically from NedCore
 
     async init(vapidPublicKey) {
         this.VAPID_PUBLIC_KEY = vapidPublicKey;
+        this.studentId = typeof NedCore !== 'undefined' ? NedCore.getStudentId() : null;
 
         // Check if push notifications are supported
         if (!('serviceWorker' in navigator) || !('PushManager' in window)) {

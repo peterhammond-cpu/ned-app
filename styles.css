@@ -1504,3 +1504,170 @@ body {
     color: var(--barca-gold);
     font-weight: 500;
 }
+
+/* ==========================================
+   CAMP NOU STADIUM GAMIFICATION
+   ========================================== */
+
+.stadium-card {
+    overflow: hidden;
+}
+
+.stadium-bowl {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+    margin: 16px auto;
+    border-radius: 50% 50% 12px 12px;
+    overflow: hidden;
+    background: var(--bg-secondary);
+    aspect-ratio: 4 / 3;
+    display: flex;
+    flex-direction: column;
+}
+
+.crowd-tier {
+    flex: 1;
+    transition: background 0.5s ease;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.crowd-tier.filled {
+    animation: tierFill 0.4s ease-out;
+}
+
+.crowd-tier.tier-4.filled {
+    background: linear-gradient(135deg, var(--barca-red), #c0004e);
+}
+
+.crowd-tier.tier-3.filled {
+    background: linear-gradient(135deg, #b8003d, var(--barca-red));
+}
+
+.crowd-tier.tier-2.filled {
+    background: linear-gradient(135deg, var(--barca-blue), #0066cc);
+}
+
+.crowd-tier.tier-1.filled {
+    background: linear-gradient(135deg, #003a7a, var(--barca-blue));
+}
+
+.stadium-field {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 65%;
+    height: 40%;
+    background: linear-gradient(180deg, #1a5c1a 0%, #2d8c2d 50%, #1a5c1a 100%);
+    border-radius: 50% 50% 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.field-percentage {
+    font-size: 32px;
+    font-weight: 800;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.field-label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    margin-top: 2px;
+    font-weight: 600;
+    padding: 0 8px;
+}
+
+.field-label.milestone {
+    animation: milestonePopIn 0.5s ease-out;
+    color: var(--barca-gold);
+}
+
+/* Match form (streak display) */
+.match-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+}
+
+.form-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.form-results {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.form-badge {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+}
+
+.form-badge.win {
+    background: var(--success);
+}
+
+.form-badge.loss {
+    background: var(--urgent);
+}
+
+.form-badge.pending {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+}
+
+/* Player fact unlock */
+.player-unlock {
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, rgba(237, 187, 0, 0.15), rgba(237, 187, 0, 0.05));
+    border: 1px solid rgba(237, 187, 0, 0.3);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: milestonePopIn 0.6s ease-out;
+}
+
+.unlock-icon {
+    font-size: 20px;
+}
+
+.unlock-text {
+    font-size: 13px;
+    color: var(--barca-gold);
+    line-height: 1.4;
+}
+
+/* Animations */
+@keyframes tierFill {
+    from { opacity: 0; transform: scaleY(0.7); }
+    to { opacity: 1; transform: scaleY(1); }
+}
+
+@keyframes milestonePopIn {
+    0% { opacity: 0; transform: scale(0.8); }
+    60% { transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
+}

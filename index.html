@@ -82,17 +82,25 @@
                 </div>
             </div>
 
-            <div class="card">
-                <h2>📊 Progress</h2>
-                <div class="stats">
-                    <div class="stat-card">
-                        <div class="stat-number" id="completed-count">0</div>
-                        <div class="stat-label">Checked Off</div>
+            <div class="card stadium-card">
+                <h2>🏟️ Camp Nou</h2>
+                <div class="stadium-bowl">
+                    <div class="crowd-tier tier-4" id="crowd-tier-4"></div>
+                    <div class="crowd-tier tier-3" id="crowd-tier-3"></div>
+                    <div class="crowd-tier tier-2" id="crowd-tier-2"></div>
+                    <div class="crowd-tier tier-1" id="crowd-tier-1"></div>
+                    <div class="stadium-field">
+                        <div class="field-percentage" id="stadium-percentage">0%</div>
+                        <div class="field-label" id="stadium-milestone">Fill the stadium!</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">5</div>
-                        <div class="stat-label">Day Streak 🔥</div>
-                    </div>
+                </div>
+                <div class="match-form" id="match-form">
+                    <span class="form-label">This week:</span>
+                    <div class="form-results" id="streak-results"></div>
+                </div>
+                <div class="player-unlock" id="player-unlock" style="display: none;">
+                    <span class="unlock-icon">⚽</span>
+                    <span class="unlock-text" id="unlock-text"></span>
                 </div>
             </div>
         </div>
@@ -152,6 +160,9 @@
     <!-- Load Supabase from CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+    <!-- Shared utilities (must load before app.js) -->
+    <script src="ned-core.js"></script>
+
     <!-- Load main app -->
     <script src="app.js"></script>
 
@@ -170,8 +181,8 @@
             // Only initialize if TalkToNed is available
             if (typeof TalkToNed !== 'undefined') {
                 window.nedTutor = new TalkToNed({
-                    studentId: '8021ff47-1a41-4341-a2e0-9c4fa53cc389', // Willy's student ID
-                    studentName: 'Willy'
+                    studentId: NedCore.getStudentId(),
+                    studentName: NedCore.getStudentConfig().name
                 });
                 window.nedTutor.render('ned-chat');
 
@@ -189,12 +200,16 @@
     <!-- Parser container -->
     <div id="newsletter-parser"></div>
     <script>
-        // Initialize Newsletter Parser
-        window.newsletterParser = new NewsletterParser({
-            studentId: '8021ff47-1a41-4341-a2e0-9c4fa53cc389', // Willy's ID
-            studentGrade: '7'
+        // Initialize Newsletter Parser (after NedCore.init in DOMContentLoaded)
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof NewsletterParser !== 'undefined') {
+                window.newsletterParser = new NewsletterParser({
+                    studentId: NedCore.getStudentId(),
+                    studentGrade: String(NedCore.getStudentConfig().grade)
+                });
+                window.newsletterParser.render('newsletter-parser');
+            }
         });
-        window.newsletterParser.render('newsletter-parser');
     </script>
 
     <!-- Push Notifications -->

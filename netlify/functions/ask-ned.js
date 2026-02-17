@@ -31,8 +31,46 @@ function checkSafetyConcerns(message) {
   };
 }
 
+// Fetch recent tutor sessions for memory context
+async function fetchRecentSessions(studentId, currentSessionId) {
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+  const { data, error } = await supabase
+    .from('tutor_sessions')
+    .select('user_message, ned_response, created_at')
+    .eq('student_id', studentId)
+    .neq('session_id', currentSessionId || '')
+    .gte('created_at', sevenDaysAgo.toISOString())
+    .order('created_at', { ascending: false })
+    .limit(10);
+
+  if (error) {
+    console.error('Error fetching recent sessions:', error);
+    return [];
+  }
+  return data || [];
+}
+
+// Build memory context from recent sessions
+function buildMemoryContext(recentSessions) {
+  if (!recentSessions || recentSessions.length === 0) return '';
+
+  const summaries = recentSessions.map(s => {
+    const date = new Date(s.created_at).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    // Truncate to keep token count low
+    const question = (s.user_message || '').substring(0, 80);
+    return `- ${date}: Asked about "${question}"`;
+  });
+
+  return `\n\n## What You Remember From Recent Sessions
+You've been helping ${recentSessions.length > 5 ? 'a lot' : 'a bit'} this week. Here's what came up:
+${summaries.join('\n')}
+Use this to connect new questions to past work when relevant (e.g., "Last time we worked on fractions - this is similar!"). Don't list these back unless asked.`;
+}
+
 // Build the system prompt for Ned's tutor personality
-function buildSystemPrompt(studentName, currentHomework) {
+function buildSystemPrompt(studentName, currentHomework, memoryContext) {
   const homeworkContext = currentHomework?.length > 0
     ? `Current homework assignments:\n${currentHomework.map(h => `- ${h.subject}: ${h.title}`).join('\n')}`
     : 'No specific homework loaded right now.';
@@ -122,9 +160,10 @@ Activated when student says things like "check my homework", "review my work", "
 - Don't guess - ask: "Your handwriting is tricky to read here - what did you write for #4?"
 
 ## Response Format
-- Keep responses to 2-4 sentences max (ADD = short attention span)
-- End with a question OR clear next step
-- Celebrate EFFORT and PROCESS
+- STRICT: 2-4 sentences max. No exceptions. ADD means long responses get skipped entirely.
+- No bullet points or numbered lists unless doing a worked example
+- End with ONE question OR ONE clear next step
+- Celebrate EFFORT and PROCESS, keep it brief
 
 ## Current Context
 ${homeworkContext}
@@ -136,7 +175,7 @@ ${homeworkContext}
 4. If frustrated, acknowledge it: "I get it, this is hard. Let's try a different approach."
 5. If they mention anything concerning (safety issues), respond supportively and let them know trusted adults are there to help
 
-Remember: The goal is building a brain that can solve problems. Sometimes that means guiding with questions, sometimes it means showing them how - then letting them try.`;
+Remember: The goal is building a brain that can solve problems. Sometimes that means guiding with questions, sometimes it means showing them how - then letting them try.${memoryContext || ''}`;
 }
 
 // Main handler
@@ -170,21 +209,26 @@ exports.handler = async (event, context) => {
     // Check for safety concerns
     const safetyCheck = checkSafetyConcerns(message || '');
 
-    // Fetch current homework for context (optional enhancement)
+    // Fetch homework and recent sessions in parallel for context
     let currentHomework = [];
+    let memoryContext = '';
     if (studentId) {
-      const { data: homework } = await supabase
-        .from('homework_items')
-        .select('subject, title')
-        .eq('student_id', studentId)
-        .gte('date_due', new Date().toISOString().split('T')[0])
-        .limit(10);
+      const [homeworkResult, recentSessions] = await Promise.all([
+        supabase
+          .from('homework_items')
+          .select('subject, title')
+          .eq('student_id', studentId)
+          .gte('date_due', new Date().toISOString().split('T')[0])
+          .limit(10),
+        fetchRecentSessions(studentId, sessionId)
+      ]);
 
-      if (homework) currentHomework = homework;
+      if (homeworkResult.data) currentHomework = homeworkResult.data;
+      memoryContext = buildMemoryContext(recentSessions);
     }
 
     // Build the conversation for Claude
-    const systemPrompt = buildSystemPrompt(studentName, currentHomework);
+    const systemPrompt = buildSystemPrompt(studentName, currentHomework, memoryContext);
 
     // Build messages array with history
     const messages = conversationHistory.map(msg => ({
@@ -227,8 +271,9 @@ exports.handler = async (event, context) => {
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 500, // Keep responses concise
+        model: 'claude-sonnet-4-5-20250929',
+        max_tokens: 1024,
+        temperature: 0.7,
         system: systemPrompt,
         messages: messages
       })

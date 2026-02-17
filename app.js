@@ -1,11 +1,7 @@
 // ==========================================
-// SUPABASE CONNECTION
+// NED APP - Willy's Command Center
+// Uses NedCore for shared utilities
 // ==========================================
-const SUPABASE_URL = 'https://jzmivepzevgqlmxirlmk.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6bWl2ZXB6ZXZncWxteGlybG1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwODQ2MTAsImV4cCI6MjA3OTY2MDYxMH0.RTfSV7jMgyc1bpcDCZFtVoX9MjBYo0KElC0S16O6_og';
-const WILLY_STUDENT_ID = '8021ff47-1a41-4341-a2e0-9c4fa53cc389';
-
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // ==========================================
 // DATA FETCHING: Homework
@@ -27,22 +23,22 @@ async function fetchHomeworkFromDB() {
         : today;
     const filterDateISO = filterDate.toISOString();
 
-    console.log('📝 Fetching homework from Supabase...');
-    console.log(`📅 After school: ${isAfterSchool}, showing items due on or after: ${filterDateISO.split('T')[0]}`);
+    console.log('Fetching homework from Supabase...');
+    console.log(`After school: ${isAfterSchool}, showing items due on or after: ${NedCore.toDateStr(filterDate)}`);
 
-    const { data, error } = await supabaseClient
+    const { data, error } = await NedCore.getClient()
         .from('homework_items')
         .select('*')
-        .eq('student_id', WILLY_STUDENT_ID)
+        .eq('student_id', NedCore.getStudentId())
         .gte('date_due', filterDateISO)
         .order('date_due', { ascending: true });
 
     if (error) {
-        console.error('❌ Error fetching homework:', error);
+        console.error('Error fetching homework:', error);
         return [];
     }
 
-    console.log('✅ Fetched homework items:', data?.length || 0);
+    console.log('Fetched homework items:', data?.length || 0);
     return data || [];
 }
 
@@ -52,33 +48,30 @@ async function fetchHomeworkFromDB() {
 async function fetchSchoolEventsFromDB() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const todayISO = today.toISOString().split('T')[0]; // Just the date part
+    const todayISO = NedCore.toDateStr(today);
 
-    // Get events for the next 14 days
     const twoWeeksOut = new Date(today);
     twoWeeksOut.setDate(twoWeeksOut.getDate() + 14);
-    const twoWeeksISO = twoWeeksOut.toISOString().split('T')[0];
+    const twoWeeksISO = NedCore.toDateStr(twoWeeksOut);
 
-    console.log('📅 Fetching school events from Supabase...');
-    console.log('📅 Date range:', todayISO, 'to', twoWeeksISO);
+    console.log('Fetching school events from Supabase...');
 
-    const { data, error } = await supabaseClient
+    const { data, error } = await NedCore.getClient()
         .from('school_events')
         .select('*')
-        .eq('student_id', WILLY_STUDENT_ID)
+        .eq('student_id', NedCore.getStudentId())
         .eq('dismissed', false)
-        .or('grade.is.null,grade.eq.7')  // Show events with no grade OR grade = 7
+        .or(`grade.is.null,grade.eq.${NedCore.getStudentConfig().grade}`)
         .gte('event_date', todayISO)
         .lte('event_date', twoWeeksISO)
         .order('event_date', { ascending: true });
 
     if (error) {
-        console.error('❌ Error fetching school events:', error);
+        console.error('Error fetching school events:', error);
         return [];
     }
 
-    console.log('✅ Fetched school events:', data?.length || 0);
-    console.log('📋 Events:', data);
+    console.log('Fetched school events:', data?.length || 0);
     return data || [];
 }
 
@@ -88,34 +81,32 @@ async function fetchSchoolEventsFromDB() {
 async function fetchCalendarEventsFromDB() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const todayISO = today.toISOString().split('T')[0];
+    const todayISO = NedCore.toDateStr(today);
 
-    // Get events for the next 14 days
     const twoWeeksOut = new Date(today);
     twoWeeksOut.setDate(twoWeeksOut.getDate() + 14);
-    const twoWeeksISO = twoWeeksOut.toISOString().split('T')[0];
+    const twoWeeksISO = NedCore.toDateStr(twoWeeksOut);
 
-    console.log('📅 Fetching calendar events from Supabase...');
+    console.log('Fetching calendar events from Supabase...');
 
-    const { data, error } = await supabaseClient
+    const { data, error } = await NedCore.getClient()
         .from('calendar_events')
         .select('*')
-        .eq('student_id', WILLY_STUDENT_ID)
+        .eq('student_id', NedCore.getStudentId())
         .gte('start_date', todayISO)
         .lte('start_date', twoWeeksISO)
         .order('start_date', { ascending: true });
 
     if (error) {
-        // Table might not exist yet
         if (error.code === '42P01') {
-            console.log('   ⏭️  calendar_events table does not exist yet');
+            console.log('calendar_events table does not exist yet');
             return [];
         }
-        console.error('❌ Error fetching calendar events:', error);
+        console.error('Error fetching calendar events:', error);
         return [];
     }
 
-    console.log('✅ Fetched calendar events:', data?.length || 0);
+    console.log('Fetched calendar events:', data?.length || 0);
     return data || [];
 }
 
@@ -123,20 +114,20 @@ async function fetchCalendarEventsFromDB() {
 // DATA FETCHING: Match Data
 // ==========================================
 async function fetchMatchDataFromDB() {
-    console.log('⚽ Fetching Barcelona match data from Supabase...');
+    console.log('Fetching Barcelona match data from Supabase...');
 
-    const { data, error } = await supabaseClient
+    const { data, error } = await NedCore.getClient()
         .from('match_data')
         .select('*')
         .eq('team_id', 81)  // Barcelona
         .single();
 
     if (error) {
-        console.error('❌ Error fetching match data:', error);
+        console.error('Error fetching match data:', error);
         return null;
     }
 
-    console.log('✅ Fetched match data:', data);
+    console.log('Fetched match data:', data);
     return data;
 }
 
@@ -159,11 +150,8 @@ function convertToMissions(homeworkItems) {
         // Smarter test detection - only flag if it's THE test, not homework mentioning a test
         const titleLower = (item.title || '').toLowerCase();
         const isTest = (
-            // Title starts with test/quiz/exam
             /^(quiz|test|exam|assessment)\b/i.test(item.title || '') ||
-            // Or contains "Quiz:" or "Test:" pattern
             /\b(quiz|test|exam):/i.test(item.title || '') ||
-            // Or is a short title that's just the test name
             (titleLower.length < 30 && /\b(quiz|test|exam)\b/.test(titleLower) && !titleLower.includes('study'))
         );
 
@@ -190,7 +178,6 @@ function convertToMissions(homeworkItems) {
             badgeType = 'normal';
         }
 
-        // If it's a test, add the 📝 prefix to badge
         if (isTest) {
             badge = `📝 ${badge}`;
         }
@@ -215,7 +202,6 @@ function convertToMissions(homeworkItems) {
 function getEventEmoji(eventType, title) {
     const titleLower = (title || '').toLowerCase();
 
-    // Check title for common keywords
     if (titleLower.includes('field trip')) return '🚌';
     if (titleLower.includes('picture') || titleLower.includes('photo')) return '📸';
     if (titleLower.includes('book fair')) return '📚';
@@ -228,7 +214,6 @@ function getEventEmoji(eventType, title) {
     if (titleLower.includes('break') || titleLower.includes('no school')) return '🎉';
     if (titleLower.includes('early') && titleLower.includes('dismiss')) return '⏰';
 
-    // Fall back to event type
     switch (eventType) {
         case 'closure': return '🏠';
         case 'early_dismissal': return '⏰';
@@ -240,50 +225,31 @@ function getEventEmoji(eventType, title) {
 }
 
 // ==========================================
-// HELPER: Check if date is today
+// HELPER: Get emoji for calendar event type
 // ==========================================
-function isToday(dateStr) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const checkDate = new Date(dateStr + 'T00:00:00');
-    return checkDate.getTime() === today.getTime();
-}
+function getCalendarEventEmoji(eventType, title) {
+    const titleLower = (title || '').toLowerCase();
 
-// ==========================================
-// HELPER: Check if date is tomorrow
-// ==========================================
-function isTomorrow(dateStr) {
-    const tomorrow = new Date();
-    tomorrow.setHours(0, 0, 0, 0);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const checkDate = new Date(dateStr + 'T00:00:00');
-    return checkDate.getTime() === tomorrow.getTime();
-}
-
-// ==========================================
-// HELPER: Format relative date
-// ==========================================
-function formatRelativeDate(dateStr) {
-    if (isToday(dateStr)) return 'Today';
-    if (isTomorrow(dateStr)) return 'Tomorrow';
-
-    const date = new Date(dateStr + 'T00:00:00');
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const daysAway = Math.ceil((date - today) / (1000 * 60 * 60 * 24));
-
-    if (daysAway <= 7) {
-        const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        return dayNames[date.getDay()];
+    if (eventType === 'parenting') {
+        if (titleLower.includes('pete') || titleLower.includes('dad')) return '🏠';
+        if (titleLower.includes('julia') || titleLower.includes('mom')) return '🏡';
+        return '👨‍👩‍👦';
     }
 
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-}
+    if (eventType === 'sports' || eventType === 'sports_game') return '⚽';
+    if (eventType === 'sports_practice') return '🏃';
+    if (eventType === 'no_school') return '🎉';
+    if (eventType === 'early_dismissal') return '⏰';
+    if (eventType === 'school') return '🏫';
 
-// ==========================================
-// NED APP - PHASE 3+
-// Barcelona-themed Command Center with School Events
-// ==========================================
+    if (titleLower.includes('game') || titleLower.includes('match')) return '⚽';
+    if (titleLower.includes('practice')) return '🏃';
+    if (titleLower.includes('doctor') || titleLower.includes('appointment')) return '🏥';
+    if (titleLower.includes('birthday')) return '🎂';
+    if (titleLower.includes('party')) return '🎉';
+
+    return '📅';
+}
 
 // ==========================================
 // DATA: Player Stats
@@ -316,9 +282,12 @@ const playerData = [
 ];
 
 // ==========================================
-// GLOBAL STATE: Match Data (fetched from Supabase)
+// GLOBAL STATE
 // ==========================================
 let matchData = null;
+let schoolEvents = [];
+let homeworkMissions = [];
+let calendarEvents = [];
 
 // ==========================================
 // DATA: Dad Jokes
@@ -391,21 +360,15 @@ const defaultMorningItems = [
 ];
 
 // ==========================================
-// GLOBAL STATE
-// ==========================================
-let schoolEvents = [];
-let homeworkMissions = [];
-let calendarEvents = [];
-
-// ==========================================
 // INITIALIZATION
 // ==========================================
 document.addEventListener('DOMContentLoaded', function() {
+    NedCore.init('willy');
     initializeApp();
 });
 
 async function initializeApp() {
-    console.log('🚀 Initializing Ned App...');
+    console.log('Initializing Ned App...');
 
     // Set static content first
     setGreeting();
@@ -414,7 +377,7 @@ async function initializeApp() {
     setHomeworkSectionTitle();
 
     // Fetch data from Supabase
-    console.log('📡 Fetching data from Supabase...');
+    console.log('Fetching data from Supabase...');
     const [homeworkData, eventsData, matchDataResult, calendarData] = await Promise.all([
         fetchHomeworkFromDB(),
         fetchSchoolEventsFromDB(),
@@ -434,14 +397,14 @@ async function initializeApp() {
     renderMorningChecklist(schoolEvents);
     renderWeekView(homeworkMissions, schoolEvents, calendarEvents);
     renderPlayerCards();
-    renderMatchSection();  // New: render match data on Players tab
+    renderMatchSection();
 
     // Load saved progress and update stats
-    loadProgress();
+    NedCore.loadProgress();
     updateStats();
     checkSaturdayReminder();
 
-    console.log('✅ App initialization complete');
+    console.log('App initialization complete');
 }
 
 // ==========================================
@@ -451,7 +414,6 @@ function renderHeadsUp(events) {
     const card = document.getElementById('heads-up-card');
     const container = document.getElementById('heads-up-container');
 
-    // Filter to events in the next 5 days
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const fiveDaysOut = new Date(today);
@@ -462,7 +424,6 @@ function renderHeadsUp(events) {
         return eventDate <= fiveDaysOut;
     });
 
-    // No events? Hide the card
     if (upcomingEvents.length === 0) {
         card.style.display = 'none';
         return;
@@ -470,10 +431,9 @@ function renderHeadsUp(events) {
 
     card.style.display = 'block';
 
-    // Render school events only (tests are already in homework section)
     container.innerHTML = upcomingEvents.map(event => {
         const emoji = getEventEmoji(event.event_type, event.title);
-        const relativeDate = formatRelativeDate(event.event_date);
+        const relativeDate = NedCore.formatRelativeDate(event.event_date);
 
         let actionHtml = '';
         if (event.action_required && event.action_text) {
@@ -525,18 +485,15 @@ function renderMissions(missions) {
 function renderMorningChecklist(events) {
     const container = document.getElementById('morning-checklist');
 
-    // Get tomorrow's date for morning checklist
     const tomorrow = new Date();
     tomorrow.setHours(0, 0, 0, 0);
     tomorrow.setDate(tomorrow.getDate() + 1);
-    const tomorrowStr = tomorrow.toISOString().split('T')[0];
+    const tomorrowStr = NedCore.toDateStr(tomorrow);
 
-    // Also check today's events (in case viewing in morning)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const todayStr = today.toISOString().split('T')[0];
+    const todayStr = NedCore.toDateStr(today);
 
-    // Find events with action items for today or tomorrow
     const actionItems = (events || [])
         .filter(event => {
             const hasAction = event.action_required && event.action_text && event.action_text.trim();
@@ -547,11 +504,10 @@ function renderMorningChecklist(events) {
             id: `event-action-${event.id}`,
             subject: 'School Event',
             text: `${getEventEmoji(event.event_type, event.title)} ${event.action_text}`,
-            badge: isToday(event.event_date) ? 'TODAY' : 'TOMORROW',
+            badge: NedCore.isToday(event.event_date) ? 'TODAY' : 'TOMORROW',
             badgeType: 'warning'
         }));
 
-    // Combine action items with default morning items
     const allItems = [...actionItems, ...defaultMorningItems];
 
     container.innerHTML = allItems.map(item => `
@@ -573,7 +529,6 @@ function renderWeekView(missions, events, calEvents) {
     const container = document.getElementById('week-view');
     const titleEl = document.getElementById('week-title');
 
-    // Build a week starting from today
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -583,27 +538,21 @@ function renderWeekView(missions, events, calEvents) {
         date.setDate(date.getDate() + i);
         days.push({
             date: date,
-            dateStr: date.toISOString().split('T')[0],
+            dateStr: NedCore.toDateStr(date),
             dayName: date.toLocaleDateString('en-US', { weekday: 'long' }),
             displayDate: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
             isToday: i === 0,
             items: [],
-            household: null  // Track which household for this day
+            household: null
         });
     }
 
-    // Set week title
-    const endDate = days[6].date;
     titleEl.textContent = `📅 ${days[0].displayDate} - ${days[6].displayDate}`;
 
-    // First pass: set household for each day from parenting events
-    // Parenting events often span multiple days (e.g., Monday to Monday)
     (calEvents || []).forEach(calEvent => {
         if (calEvent.household && calEvent.event_type === 'parenting') {
             const eventStart = new Date(calEvent.start_date + 'T00:00:00');
             const eventEnd = new Date(calEvent.end_date + 'T00:00:00');
-
-            // Apply household to ALL days within the event's date range
             days.forEach(day => {
                 if (day.date >= eventStart && day.date < eventEnd) {
                     day.household = calEvent.household;
@@ -612,7 +561,6 @@ function renderWeekView(missions, events, calEvents) {
         }
     });
 
-    // Add HOMEWORK FIRST (so it appears at the top of each day)
     (missions || []).forEach(mission => {
         const day = days.find(d => d.dateStr === mission.dueDate);
         if (day) {
@@ -625,7 +573,6 @@ function renderWeekView(missions, events, calEvents) {
         }
     });
 
-    // Add school events
     (events || []).forEach(event => {
         const day = days.find(d => d.dateStr === event.event_date);
         if (day) {
@@ -640,13 +587,11 @@ function renderWeekView(missions, events, calEvents) {
         }
     });
 
-    // Add calendar events LAST (parenting schedule, sports, etc.)
     (calEvents || []).forEach(calEvent => {
         const day = days.find(d => d.dateStr === calEvent.start_date);
         if (day) {
             const emoji = getCalendarEventEmoji(calEvent.event_type, calEvent.title);
 
-            // Format time if available (e.g., "7:00 PM")
             let timeStr = '';
             if (calEvent.start_time && !calEvent.is_all_day) {
                 const startTime = new Date(calEvent.start_time);
@@ -657,7 +602,6 @@ function renderWeekView(missions, events, calEvents) {
                 });
             }
 
-            // Build display text with optional time
             const displayText = timeStr
                 ? `${emoji} ${calEvent.title} @ ${timeStr}`
                 : `${emoji} ${calEvent.title}`;
@@ -674,9 +618,7 @@ function renderWeekView(missions, events, calEvents) {
         }
     });
 
-    // Render the week
     container.innerHTML = days.map(day => {
-        // Determine day card class based on household
         const householdClass = day.household ? `household-${day.household}` : '';
 
         const itemsHtml = day.items.length > 0
@@ -698,7 +640,6 @@ function renderWeekView(missions, events, calEvents) {
             }).join('')
             : '<div class="day-item empty">Nothing scheduled</div>';
 
-        // Build household indicator
         const householdIndicator = day.household
             ? `<span class="household-badge ${day.household}">${day.household === 'dad' ? "Dad's" : "Mom's"}</span>`
             : '';
@@ -718,38 +659,6 @@ function renderWeekView(missions, events, calEvents) {
             </div>
         `;
     }).join('');
-}
-
-// ==========================================
-// HELPER: Get emoji for calendar event type
-// ==========================================
-function getCalendarEventEmoji(eventType, title) {
-    const titleLower = (title || '').toLowerCase();
-
-    // Parenting schedule
-    if (eventType === 'parenting') {
-        if (titleLower.includes('pete') || titleLower.includes('dad')) return '🏠';
-        if (titleLower.includes('julia') || titleLower.includes('mom')) return '🏡';
-        return '👨‍👩‍👦';
-    }
-
-    // Sports events
-    if (eventType === 'sports' || eventType === 'sports_game') return '⚽';
-    if (eventType === 'sports_practice') return '🏃';
-
-    // School-related
-    if (eventType === 'no_school') return '🎉';
-    if (eventType === 'early_dismissal') return '⏰';
-    if (eventType === 'school') return '🏫';
-
-    // Check title for keywords
-    if (titleLower.includes('game') || titleLower.includes('match')) return '⚽';
-    if (titleLower.includes('practice')) return '🏃';
-    if (titleLower.includes('doctor') || titleLower.includes('appointment')) return '🏥';
-    if (titleLower.includes('birthday')) return '🎂';
-    if (titleLower.includes('party')) return '🎉';
-
-    return '📅';
 }
 
 // ==========================================
@@ -827,14 +736,12 @@ function renderMatchSection() {
         return;
     }
 
-    // Format last match date
     const lastMatchDate = matchData.last_match_date
         ? new Date(matchData.last_match_date).toLocaleDateString('en-US', {
             weekday: 'short', month: 'short', day: 'numeric'
           })
         : '';
 
-    // Format next match date and time
     let nextMatchDate = '';
     let nextMatchTime = '';
     if (matchData.next_match_date) {
@@ -847,13 +754,11 @@ function renderMatchSection() {
         });
     }
 
-    // Determine result styling
     const resultClass = matchData.last_result === 'WIN' ? 'win'
         : matchData.last_result === 'LOSS' ? 'loss' : 'draw';
     const resultEmoji = matchData.last_result === 'WIN' ? '🎉'
         : matchData.last_result === 'LOSS' ? '😤' : '🤝';
 
-    // Format score (Barcelona always shown first)
     let barcaScore, oppScore;
     if (matchData.last_home_or_away === 'HOME') {
         barcaScore = matchData.last_score_home;
@@ -864,7 +769,6 @@ function renderMatchSection() {
     }
 
     container.innerHTML = `
-        <!-- Last Match Result -->
         <div class="match-result-card ${resultClass}">
             <div class="match-result-header">
                 <span class="result-label">Last Match ${resultEmoji}</span>
@@ -880,7 +784,6 @@ function renderMatchSection() {
             </div>
         </div>
 
-        <!-- Next Match -->
         <div class="next-match-card">
             <div class="next-match-header">
                 <span class="next-label">Next Match</span>
@@ -906,7 +809,6 @@ function renderMatchSection() {
             </div>
         </div>
 
-        <!-- Motivation -->
         <div class="match-motivation">
             <span>💡</span>
             <span>${voiceMessages[currentVoice].matchMotivation}</span>
@@ -961,7 +863,6 @@ function renderPlayerCards() {
         </div>
     `).join('');
 
-    // Update season summary
     const totalGoals = playerData.reduce((sum, p) => sum + p.stats.goals, 0);
     const totalAssists = playerData.reduce((sum, p) => sum + p.stats.assists, 0);
     const avgRating = (playerData.reduce((sum, p) => sum + p.stats.rating, 0) / playerData.length).toFixed(1);
@@ -976,67 +877,28 @@ function renderPlayerCards() {
 }
 
 // ==========================================
-// MISSION TOGGLE & PROGRESS
+// MISSION TOGGLE (delegates to NedCore)
 // ==========================================
-async function toggleMission(element) {
-    const id = element.dataset.id;
-    const isNowCompleted = !element.classList.contains('completed');
-
-    // Toggle the visual state immediately for responsiveness
-    element.classList.toggle('completed');
-    updateStats();
-
-    // If this is a homework item (hw-{uuid}), persist to Supabase
-    if (id && id.startsWith('hw-')) {
-        const homeworkId = id.replace('hw-', '');
-        try {
-            if (isNowCompleted) {
-                await checkOffHomework(homeworkId);
-                console.log('✅ Homework marked complete in database:', homeworkId);
-            } else {
-                await uncheckHomework(homeworkId);
-                console.log('↩️ Homework unmarked in database:', homeworkId);
-            }
-        } catch (err) {
-            console.error('Failed to update homework in database:', err);
-            // Revert the UI if the database update failed
-            element.classList.toggle('completed');
-            updateStats();
-        }
-    }
-
-    // Save all progress to localStorage (for morning checklist which resets daily)
-    saveProgress();
+function toggleMission(element) {
+    NedCore.toggleMission(element, updateStats);
 }
 
 // ==========================================
-// DATABASE: Update homework completion status
+// STATS & STADIUM GAMIFICATION
 // ==========================================
-async function checkOffHomework(homeworkId) {
-    const { error } = await supabaseClient
-        .from('homework_items')
-        .update({ checked_off: true, checked_at: new Date().toISOString() })
-        .eq('id', homeworkId);
 
-    if (error) {
-        console.error('❌ Error checking off homework:', error);
-        throw error;
-    }
-    return true;
-}
-
-async function uncheckHomework(homeworkId) {
-    const { error } = await supabaseClient
-        .from('homework_items')
-        .update({ checked_off: false, checked_at: null })
-        .eq('id', homeworkId);
-
-    if (error) {
-        console.error('❌ Error unchecking homework:', error);
-        throw error;
-    }
-    return true;
-}
+const BARCA_FACTS = [
+    "Lamine Yamal became the youngest La Liga scorer at 16 years old!",
+    "Camp Nou holds 99,354 fans - the largest stadium in Europe!",
+    "Messi scored 672 goals for Barcelona in 778 games.",
+    "Barcelona's motto 'Mes que un club' means 'More than a club'.",
+    "Pedri made 73 appearances in his first full season - the most of any Barca player!",
+    "Xavi completed over 28,000 passes in his Barcelona career.",
+    "Raphinha scored a hat-trick against Real Betis in 2024!",
+    "Barcelona won 6 trophies in 2009 - the only club to achieve the sextuple.",
+    "La Masia has produced more first-team players than any other academy in Europe.",
+    "Robert Lewandowski scored 23 La Liga goals in his debut Barca season."
+];
 
 function updateStats() {
     const allMissions = document.querySelectorAll('#today-tab .mission-item');
@@ -1046,15 +908,124 @@ function updateStats() {
     const completed = completedMissions.length;
     const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
+    // Update progress bar
     const countEl = document.getElementById('mission-count');
     const fillEl = document.getElementById('progress-fill');
     const textEl = document.getElementById('progress-text');
-    const completedCountEl = document.getElementById('completed-count');
 
     if (countEl) countEl.textContent = `${completed}/${total}`;
     if (fillEl) fillEl.style.width = `${percentage}%`;
     if (textEl) textEl.textContent = `${percentage}% Complete`;
-    if (completedCountEl) completedCountEl.textContent = completed;
+
+    // Update stadium
+    updateStadium(percentage);
+    updateStreakDisplay();
+
+    // Track today's completion for streak
+    const today = NedCore.toDateStr();
+    if (total > 0 && completed === total) {
+        const streakData = JSON.parse(localStorage.getItem('nedStreak') || '{}');
+        streakData[today] = true;
+        localStorage.setItem('nedStreak', JSON.stringify(streakData));
+        showPlayerUnlock();
+    }
+}
+
+function updateStadium(percentage) {
+    // Fill tiers based on percentage (4 tiers = 25% each)
+    const tiers = [
+        { el: document.getElementById('crowd-tier-1'), threshold: 25 },
+        { el: document.getElementById('crowd-tier-2'), threshold: 50 },
+        { el: document.getElementById('crowd-tier-3'), threshold: 75 },
+        { el: document.getElementById('crowd-tier-4'), threshold: 100 }
+    ];
+
+    tiers.forEach(tier => {
+        if (!tier.el) return;
+        if (percentage >= tier.threshold) {
+            if (!tier.el.classList.contains('filled')) {
+                tier.el.classList.add('filled');
+            }
+        } else {
+            tier.el.classList.remove('filled');
+        }
+    });
+
+    // Update field display
+    const percentEl = document.getElementById('stadium-percentage');
+    const milestoneEl = document.getElementById('stadium-milestone');
+    if (percentEl) percentEl.textContent = `${percentage}%`;
+
+    if (milestoneEl) {
+        let milestone = 'Fill the stadium!';
+        let isMilestone = false;
+
+        if (percentage === 100) {
+            milestone = 'GOOOOOL! 100% complete!';
+            isMilestone = true;
+        } else if (percentage >= 75) {
+            milestone = 'Final push!';
+            isMilestone = true;
+        } else if (percentage >= 50) {
+            milestone = 'Half-time! Keep going!';
+            isMilestone = true;
+        } else if (percentage >= 25) {
+            milestone = 'Crowd is building!';
+            isMilestone = true;
+        }
+
+        milestoneEl.textContent = milestone;
+        milestoneEl.classList.toggle('milestone', isMilestone);
+    }
+}
+
+function updateStreakDisplay() {
+    const resultsEl = document.getElementById('streak-results');
+    if (!resultsEl) return;
+
+    const streakData = JSON.parse(localStorage.getItem('nedStreak') || '{}');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Show last 7 days
+    const badges = [];
+    for (let i = 6; i >= 0; i--) {
+        const date = new Date(today);
+        date.setDate(date.getDate() - i);
+        const dateStr = NedCore.toDateStr(date);
+        const dayName = date.toLocaleDateString('en-US', { weekday: 'narrow' });
+
+        if (i === 0) {
+            // Today - show as pending unless complete
+            badges.push(`<div class="form-badge ${streakData[dateStr] ? 'win' : 'pending'}" title="${dayName}">${streakData[dateStr] ? 'W' : dayName}</div>`);
+        } else if (streakData[dateStr]) {
+            badges.push(`<div class="form-badge win" title="${dayName}">W</div>`);
+        } else {
+            badges.push(`<div class="form-badge loss" title="${dayName}">L</div>`);
+        }
+    }
+
+    resultsEl.innerHTML = badges.join('');
+}
+
+function showPlayerUnlock() {
+    const unlockEl = document.getElementById('player-unlock');
+    const textEl = document.getElementById('unlock-text');
+    if (!unlockEl || !textEl) return;
+
+    // Only show once per day
+    const today = NedCore.toDateStr();
+    if (localStorage.getItem('nedUnlockShown') === today) {
+        unlockEl.style.display = 'flex';
+        textEl.textContent = localStorage.getItem('nedUnlockFact') || BARCA_FACTS[0];
+        return;
+    }
+
+    const fact = BARCA_FACTS[Math.floor(Math.random() * BARCA_FACTS.length)];
+    textEl.textContent = fact;
+    unlockEl.style.display = 'flex';
+    localStorage.setItem('nedUnlockShown', today);
+    localStorage.setItem('nedUnlockFact', fact);
 }
 
 // ==========================================
@@ -1087,63 +1058,8 @@ function showSaturdayReminder() {
 }
 
 // ==========================================
-// TAB NAVIGATION
+// TAB NAVIGATION (delegates to NedCore)
 // ==========================================
 function switchTab(tabName) {
-    document.querySelectorAll('.tab-content').forEach(tab => {
-        tab.classList.remove('active');
-    });
-
-    document.querySelectorAll('.nav-tab').forEach(tab => {
-        tab.classList.remove('active');
-    });
-
-    document.getElementById(tabName + '-tab').classList.add('active');
-    event.target.closest('.nav-tab').classList.add('active');
-}
-
-// ==========================================
-// LOCAL STORAGE
-// ==========================================
-function saveProgress() {
-    const missions = document.querySelectorAll('.mission-item');
-    const progress = {};
-
-    missions.forEach(mission => {
-        const id = mission.dataset.id;
-        if (id) {
-            progress[id] = mission.classList.contains('completed');
-        }
-    });
-
-    // Save with today's date so we can reset daily
-    const today = new Date().toISOString().split('T')[0];
-    localStorage.setItem('nedProgress', JSON.stringify({ date: today, items: progress }));
-}
-
-function loadProgress() {
-    const saved = localStorage.getItem('nedProgress');
-    if (!saved) return;
-
-    try {
-        const data = JSON.parse(saved);
-        const today = new Date().toISOString().split('T')[0];
-
-        // Only restore if saved today (reset daily)
-        if (data.date !== today) {
-            console.log('📅 New day - resetting progress');
-            localStorage.removeItem('nedProgress');
-            return;
-        }
-
-        const progress = data.items || {};
-        Object.keys(progress).forEach(id => {
-            const mission = document.querySelector(`.mission-item[data-id="${id}"]`);
-            if (mission && progress[id]) {
-                mission.classList.add('completed');
-            }
-        });
-    } catch (e) {
-        console.error('Error loading progress:', e);
-    }
+    NedCore.switchTab(tabName);
 }

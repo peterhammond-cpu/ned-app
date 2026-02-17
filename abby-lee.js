@@ -1,12 +1,6 @@
 // abby-lee.js - Homework Command Center for Simone
 // Dance Moms / Theater themed homework tracker
-
-// Supabase config (same instance, different student)
-const SUPABASE_URL = 'https://jzmivepzevgqlmxirlmk.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp6bWl2ZXB6ZXZncWxteGlybG1rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg4MDY2NDcsImV4cCI6MjA2NDM4MjY0N30.tPMNwpWyj7wqAexEgNg3zJxPdKSXBSvhKSHhpfPLdCk';
-const SIMONE_STUDENT_ID = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890';
-
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Uses NedCore for shared utilities (Supabase client, date helpers, etc.)
 
 // State
 let homeworkItems = [];
@@ -39,6 +33,7 @@ const motivationSubtitles = [
 
 // Initialize app
 document.addEventListener('DOMContentLoaded', async () => {
+    NedCore.init('simone');
     setGreeting();
     setRandomQuote();
     setRandomMotivation();
@@ -51,7 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Set default due date to tomorrow
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-    document.getElementById('manual-due').value = tomorrow.toISOString().split('T')[0];
+    document.getElementById('manual-due').value = NedCore.toDateStr(tomorrow);
 });
 
 function setGreeting() {
@@ -108,11 +103,11 @@ function switchTab(tabName) {
 
 // Load homework from Supabase
 async function loadHomework() {
-    const { data, error } = await supabaseClient
+    const { data, error } = await NedCore.getClient()
         .from('homework_items')
         .select('*')
-        .eq('student_id', SIMONE_STUDENT_ID)
-        .gte('date_due', new Date().toISOString().split('T')[0])
+        .eq('student_id', NedCore.getStudentId())
+        .gte('date_due', NedCore.toDateStr())
         .order('date_due', { ascending: true });
 
     if (error) {
@@ -133,8 +128,8 @@ function renderTodayHomework() {
     tomorrow.setDate(tomorrow.getDate() + 1);
 
     // Get homework due today or tomorrow
-    const todayStr = today.toISOString().split('T')[0];
-    const tomorrowStr = tomorrow.toISOString().split('T')[0];
+    const todayStr = NedCore.toDateStr(today);
+    const tomorrowStr = NedCore.toDateStr(tomorrow);
 
     const todaysHomework = homeworkItems.filter(item =>
         item.date_due === todayStr || item.date_due === tomorrowStr
@@ -207,7 +202,7 @@ async function toggleHomework(id) {
     updatePyramid();
 
     // Save to Supabase
-    const { error } = await supabaseClient
+    const { error } = await NedCore.getClient()
         .from('homework_items')
         .update({ checked_off: newStatus })
         .eq('id', id);
@@ -256,7 +251,7 @@ function renderWeekView() {
         date.setDate(startOfWeek.getDate() + i);
         days.push({
             date,
-            dateStr: date.toISOString().split('T')[0],
+            dateStr: NedCore.toDateStr(date),
             dayName: date.toLocaleDateString('en-US', { weekday: 'short' }),
             dayNum: date.getDate(),
             isToday: date.toDateString() === today.toDateString()
@@ -296,7 +291,7 @@ function updatePyramid() {
     const today = new Date();
     const startOfWeek = new Date(today);
     startOfWeek.setDate(today.getDate() - today.getDay());
-    const startStr = startOfWeek.toISOString().split('T')[0];
+    const startStr = NedCore.toDateStr(startOfWeek);
 
     const weeklyCompleted = homeworkItems.filter(h =>
         h.checked_off && h.date_due >= startStr
@@ -374,7 +369,7 @@ function parseAspenHomework() {
     let currentSubject = '';
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-    const defaultDue = tomorrow.toISOString().split('T')[0];
+    const defaultDue = NedCore.toDateStr(tomorrow);
 
     for (const line of lines) {
         const trimmed = line.trim();
@@ -459,7 +454,7 @@ async function saveParsedHomework() {
     if (parsedHomework.length === 0) return;
 
     const items = parsedHomework.map(item => ({
-        student_id: SIMONE_STUDENT_ID,
+        student_id: NedCore.getStudentId(),
         subject: item.subject,
         title: item.title,
         date_due: item.date_due,
@@ -467,7 +462,7 @@ async function saveParsedHomework() {
         source: 'aspen_paste'
     }));
 
-    const { error } = await supabaseClient
+    const { error } = await NedCore.getClient()
         .from('homework_items')
         .insert(items);
 
@@ -512,10 +507,10 @@ async function saveManualHomework() {
         return;
     }
 
-    const { error } = await supabaseClient
+    const { error } = await NedCore.getClient()
         .from('homework_items')
         .insert({
-            student_id: SIMONE_STUDENT_ID,
+            student_id: NedCore.getStudentId(),
             subject,
             title,
             date_due: dueDate,
@@ -547,7 +542,7 @@ function clearManualForm() {
 
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-    document.getElementById('manual-due').value = tomorrow.toISOString().split('T')[0];
+    document.getElementById('manual-due').value = NedCore.toDateStr(tomorrow);
 }
 
 // Make functions available globally
