@@ -1,0 +1,24 @@
+name: Canvas — list courses
+
+# Manual diagnostic. Uses the stored CANVAS_API_TOKEN secret to list which
+# Canvas courses it can see, so the hardcoded COURSE_ID in
+# sync-canvas-homework.js can be updated when Willy changes grade.
+#
+# Results are emitted as ::notice:: annotations so they show on the run
+# summary page without digging through logs. No secret is ever printed.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: List Canvas courses
+        env:
+          CANVAS_API_TOKEN: ${{ secrets.CANVAS_API_TOKEN }}
+        run: node test-scripts/list-canvas-courses.js
