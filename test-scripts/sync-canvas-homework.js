@@ -556,6 +556,20 @@ async function sync() {
         // Then fetch and parse homework with closure awareness
         const html = await fetchCanvasHomeworkPage();
         const homeworkByDate = parseHomework(html, closureDates);
+
+        // An empty parse is not necessarily an error (school breaks, weekends),
+        // but it is never nothing to worry about: syncToDatabase clears the
+        // table before inserting, so zero parsed items empties the app.
+        const parsedCount = Object.values(homeworkByDate || {})
+            .reduce((n, items) => n + (Array.isArray(items) ? items.length : 0), 0);
+        if (parsedCount === 0) {
+            console.log(`::warning::Parsed 0 homework items from course ${COURSE_ID}. ` +
+                        'The table will be emptied. Expected over a break; otherwise the ' +
+                        'course ID is probably stale.');
+        } else {
+            console.log(`::notice::Parsed ${parsedCount} homework items from course ${COURSE_ID}.`);
+        }
+
         await syncToDatabase(homeworkByDate);
 
         console.log('\n' + '='.repeat(60));
@@ -563,7 +577,13 @@ async function sync() {
         console.log('='.repeat(60) + '\n');
 
     } catch (error) {
+        // Exit non-zero so the GitHub Actions step actually fails.
+        // Without this the script swallowed every error and exited 0, so the
+        // workflow went green while Canvas was returning 401 and the app sat
+        // empty. A sync that cannot reach Canvas must be loud, not green.
+        console.error(`::error::Canvas sync failed: ${error.message}`);
         console.error('\n❌ Sync failed:', error.message);
+        process.exitCode = 1;
     }
 }
 
