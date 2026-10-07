@@ -19,12 +19,16 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Install dependencies
         run: |
           cd test-scripts
-          npm install dotenv @supabase/supabase-js cheerio googleapis web-push
+          # npm ci installs the EXACT versions in package-lock.json.
+          # Do not change this back to `npm install <package names>` — that
+          # ignores the lockfile and refetches latest on every run, which is
+          # how a supabase-js release silently broke this sync in 2026.
+          npm ci
 
       - name: Run Canvas sync
         if: github.event.schedule != '30 1 * * *'

@@ -1,0 +1,50 @@
+name: Keepalive
+
+# WHY THIS EXISTS
+# ---------------
+# GitHub automatically disables scheduled workflows in a public repo after
+# 60 days with no repository activity. That is exactly what happened here:
+#
+#   last commit      2026-02-17
+#   last sync run    2026-04-18   <- exactly 60 days later
+#   state            disabled_inactivity
+#
+# The Canvas sync went dark for 171 days and nobody was told. This job makes a
+# tiny commit twice a month, which counts as repository activity and resets
+# GitHub's 60-day clock, so "Ned App Sync" is never auto-disabled again.
+#
+# Knock-on effect worth knowing: the Supabase project only stays awake because
+# the daily sync keeps writing to it. On the Supabase free tier a project is
+# paused after 7 days of inactivity. So this job protects the sync, and the
+# sync protects the database. If you ever remove this, expect both to stop.
+
+on:
+  schedule:
+    # 1st and 15th at 12:17 UTC. Twice a month leaves a wide margin under the
+    # 60-day limit even if a run is skipped or GitHub delays the cron.
+    # Deliberately not on the hour — scheduled jobs at :00 get queued behind
+    # everyone else's and are the first to be dropped under load.
+    - cron: '17 12 1,15 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Touch heartbeat file and push
+        run: |
+          set -euo pipefail
+          mkdir -p .github
+          echo "Last keepalive: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" > .github/KEEPALIVE
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/KEEPALIVE
+          # --allow-empty so a same-minute rerun still produces a commit.
+          git commit --allow-empty -m "chore: keepalive — reset GitHub 60-day inactivity timer"
+          git push
