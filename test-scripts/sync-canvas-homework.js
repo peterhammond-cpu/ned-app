@@ -8,7 +8,20 @@ const cheerio = require('cheerio');
 
 // Config
 const CANVAS_DOMAIN = 'https://aaca.instructure.com';
-const COURSE_ID = '520'; // 7th Grade HW course
+
+// Course discovery.
+//
+// This was hardcoded to '520' (the 7th grade HW course) and silently broke
+// when Willy moved up a grade: Canvas still served the old page, the parser
+// found no current homework, and syncToDatabase cleared the table. The
+// workflow stayed green the whole time.
+//
+// Now resolved at run time. Set CANVAS_COURSE_ID to pin it manually if the
+// heuristic ever picks wrong; otherwise the sync finds the homework course
+// itself and survives the next grade rollover.
+const COURSE_ID_OVERRIDE = process.env.CANVAS_COURSE_ID || null;
+const LEGACY_COURSE_ID = '520'; // last resort only
+let resolvedCourseId = null;
 const WILLY_STUDENT_ID = '8021ff47-1a41-4341-a2e0-9c4fa53cc389';
 
 // Initialize Supabase
@@ -239,26 +252,83 @@ function parseDueDate(description, assignedDate, closureDates) {
 // CANVAS FETCHING & PARSING
 // ==========================================
 
-// Fetch homework page from Canvas
-async function fetchCanvasHomeworkPage() {
-    console.log('📡 Fetching homework page from Canvas...');
+// Small helper so every Canvas call reports status the same way.
+async function canvasGet(path) {
+    const r = await fetch(`${CANVAS_DOMAIN}${path}`, {
+        headers: { 'Authorization': `Bearer ${process.env.CANVAS_API_TOKEN}` }
+    });
+    return { ok: r.ok, status: r.status, body: r.ok ? await r.json() : null };
+}
 
-    const response = await fetch(
-        `${CANVAS_DOMAIN}/api/v1/courses/${COURSE_ID}/front_page`,
-        {
-            headers: {
-                'Authorization': `Bearer ${process.env.CANVAS_API_TOKEN}`
-            }
-        }
-    );
+// Work out which Canvas course holds the homework page.
+//
+// Scoring, highest wins:
+//   +100  name looks like a homework course ("HW", "homework")
+//   + 40  has a front page with real content
+//   +  n  a little weight for how much content, so an abandoned shell loses
+//         to a maintained page
+async function resolveCourseId() {
+    if (resolvedCourseId) return resolvedCourseId;
 
-    if (!response.ok) {
-        throw new Error(`Canvas API error: ${response.status}`);
+    if (COURSE_ID_OVERRIDE) {
+        console.log(`::notice::Using pinned CANVAS_COURSE_ID=${COURSE_ID_OVERRIDE}`);
+        resolvedCourseId = COURSE_ID_OVERRIDE;
+        return resolvedCourseId;
     }
 
-    const data = await response.json();
-    console.log('✅ Got homework page:', data.title);
-    return data.body; // HTML content
+    const courses = await canvasGet('/api/v1/courses?enrollment_state=active&per_page=100');
+    if (!courses.ok) {
+        throw new Error(`Canvas API error listing courses: ${courses.status}`);
+    }
+
+    const candidates = [];
+    for (const c of courses.body) {
+        const name = c.name || '';
+        let score = 0;
+        if (/\bhw\b|homework/i.test(name)) score += 100;
+
+        const fp = await canvasGet(`/api/v1/courses/${c.id}/front_page`);
+        const len = fp.ok ? (fp.body.body || '').length : 0;
+        if (len > 0) score += 40 + Math.min(len / 100, 40);
+
+        if (score > 0) candidates.push({ id: String(c.id), name, len, score });
+    }
+
+    candidates.sort((a, b) => b.score - a.score);
+
+    if (!candidates.length) {
+        console.log('::warning::No Canvas course with a usable front page. ' +
+                    `Falling back to legacy course ${LEGACY_COURSE_ID}.`);
+        resolvedCourseId = LEGACY_COURSE_ID;
+        return resolvedCourseId;
+    }
+
+    const pick = candidates[0];
+    console.log(`::notice::Resolved homework course: ${pick.id} "${pick.name}" ` +
+                `(${pick.len} chars on front page)`);
+    for (const c of candidates.slice(1, 4)) {
+        console.log(`  runner-up: ${c.id} "${c.name}" (${c.len} chars, score ${Math.round(c.score)})`);
+    }
+    if (pick.id !== LEGACY_COURSE_ID) {
+        console.log(`::notice::Course changed from the old hardcoded ${LEGACY_COURSE_ID} to ${pick.id}.`);
+    }
+
+    resolvedCourseId = pick.id;
+    return resolvedCourseId;
+}
+
+// Fetch homework page from Canvas
+async function fetchCanvasHomeworkPage() {
+    const courseId = await resolveCourseId();
+    console.log(`📡 Fetching homework page from Canvas (course ${courseId})...`);
+
+    const page = await canvasGet(`/api/v1/courses/${courseId}/front_page`);
+    if (!page.ok) {
+        throw new Error(`Canvas API error: ${page.status}`);
+    }
+
+    console.log('✅ Got homework page:', page.body.title);
+    return page.body.body; // HTML content
 }
 
 // Parse homework from HTML
@@ -563,11 +633,11 @@ async function sync() {
         const parsedCount = Object.values(homeworkByDate || {})
             .reduce((n, items) => n + (Array.isArray(items) ? items.length : 0), 0);
         if (parsedCount === 0) {
-            console.log(`::warning::Parsed 0 homework items from course ${COURSE_ID}. ` +
+            console.log(`::warning::Parsed 0 homework items from course ${resolvedCourseId}. ` +
                         'The table will be emptied. Expected over a break; otherwise the ' +
                         'course ID is probably stale.');
         } else {
-            console.log(`::notice::Parsed ${parsedCount} homework items from course ${COURSE_ID}.`);
+            console.log(`::notice::Parsed ${parsedCount} homework items from course ${resolvedCourseId}.`);
         }
 
         await syncToDatabase(homeworkByDate);
