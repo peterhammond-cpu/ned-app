@@ -56,4 +56,35 @@ async function get(path) {
     const f = await get(`/api/v1/courses/${c.id}/front_page`);
     if (f.ok) notice(`FRONTPAGE id=${c.id} "${f.body.title}" — ${(f.body.body || '').length} chars`);
   }
+
+  // ---- Does Canvas already hold the grades? -------------------------------
+  // Mastery Connect has no parent API and sends no notification emails, so the
+  // blindsiding problem has no clean route in. But an observer token can read
+  // the observed student's grades, and many teachers mark work in the Canvas
+  // gradebook even when standards assessments live in Mastery Connect. If
+  // grades show up here, Job B needs no new credentials at all.
+  notice('--- GRADES CHECK ---');
+
+  for (const c of act.body) {
+    const en = await get(`/api/v1/courses/${c.id}/enrollments?type[]=StudentEnrollment&include[]=current_grading_period_scores`);
+    if (!en.ok) { notice(`GRADES id=${c.id} enrollments unavailable — HTTP ${en.status}`); continue; }
+    for (const e of en.body) {
+      const g = e.grades || {};
+      const score = g.current_score ?? g.final_score;
+      notice(`GRADES id=${c.id} "${c.name}" student=${e.user_id} score=${score ?? 'none'} grade=${g.current_grade ?? 'none'}`);
+    }
+    if (!en.body.length) notice(`GRADES id=${c.id} "${c.name}" — no student enrollments visible`);
+  }
+
+  // Graded submissions are the early-warning signal: a quiz marked today is
+  // exactly the thing Peter currently finds out about too late.
+  for (const c of act.body) {
+    const sub = await get(`/api/v1/courses/${c.id}/students/submissions?student_ids[]=all&per_page=20&order=graded_at&order_direction=descending`);
+    if (!sub.ok) { notice(`SUBMISSIONS id=${c.id} unavailable — HTTP ${sub.status}`); continue; }
+    const graded = sub.body.filter(s => s.graded_at);
+    notice(`SUBMISSIONS id=${c.id} "${c.name}" — ${graded.length} graded of ${sub.body.length} returned`);
+    for (const s of graded.slice(0, 5)) {
+      notice(`  GRADED id=${c.id} assignment=${s.assignment_id} score=${s.score ?? 'none'} graded_at=${s.graded_at}`);
+    }
+  }
 })();
