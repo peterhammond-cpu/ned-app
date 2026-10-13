@@ -331,17 +331,17 @@ const soccerTrivia = [
 const voiceMessages = {
     normal: {
         greetings: ["What's good, Willy!", "Hey Willy! Let's do this!", "Ready to crush it, Willy?"],
-        motivation: ["Let's crush it today! Your homework missions await.", "You've got this! Time to tackle those missions.", "Another day, another chance to be awesome!"],
-        matchMotivation: "Finish your missions early to catch kickoff!"
+        motivation: ["Let's crush it today!", "You've got this.", "Another day, another chance to be awesome!"],
+        matchMotivation: "Finish your homework early to catch kickoff!"
     },
     stewie: {
         greetings: ["Ah, Willy. I see you've finally arrived.", "Good evening, Willy. Do try to keep up.", "Willy! Excellent. Let's get this over with."],
-        motivation: ["Victory demands discipline, you insufferable child. Now get to work!", "The world won't dominate itself. Complete your missions!", "Blast! These missions won't complete themselves, you know."],
+        motivation: ["Victory demands discipline, you insufferable child. Now get to work!", "The world won't dominate itself. Get your homework done!", "Blast! This homework won't do itself, you know."],
         matchMotivation: "Complete your pathetic homework and perhaps I'll allow you to watch football."
     },
     french: {
         greetings: ["Bonjour, Willy! C'est magnifique!", "Ah, Willy! Mon ami!", "Salut, Willy! Ready for excellence?"],
-        motivation: ["Ooh la la! Your missions await, mon ami! Allez!", "Magnifique! Today we conquer zee homework together!", "C'est parti! Let us show zese missions who is boss!"],
+        motivation: ["Ooh la la! Your homework awaits, mon ami! Allez!", "Magnifique! Today we conquer zee homework together!", "C'est parti! Let us show zis homework who is boss!"],
         matchMotivation: "Finish your work and zen we watch ze beautiful football, non?"
     }
 };
@@ -682,7 +682,7 @@ function setHomeworkSectionTitle() {
         titleEl.textContent = "📚 Weekend Homework";
         if (subtitleEl) subtitleEl.textContent = "Finish early, enjoy your weekend!";
     } else {
-        titleEl.textContent = "📚 Tonight's Missions";
+        titleEl.textContent = "📚 Tonight's Homework";
         if (subtitleEl) subtitleEl.textContent = "Check off as you complete each one";
     }
 }

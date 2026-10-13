@@ -460,7 +460,8 @@ async function syncToDatabase(homeworkByDate) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    // STEP 1: Fetch existing checked_off status to preserve it
+    // STEP 1: Fetch existing checked_off status. Still needed: the upsert
+    // overwrites the whole row, so completion has to be carried forward.
     console.log('📋 Fetching existing completion status...');
     const { data: existingItems } = await supabase
         .from('homework_items')
@@ -489,34 +490,24 @@ async function syncToDatabase(homeworkByDate) {
     });
     console.log(`  ✅ Found ${completionStatus.size} completed items to preserve`);
 
-    // STEP 2: Clear ALL existing homework (fresh start to remove duplicates)
-    console.log('🧹 Clearing existing homework entries...');
-    const { error: clearError } = await supabase
-        .from('homework_items')
-        .delete()
-        .eq('student_id', WILLY_STUDENT_ID)
-        .eq('source_lms', 'canvas');
-
-    if (clearError) {
-        console.error('  ⚠️ Error clearing old entries:', clearError.message);
-        console.log(`::error::Could not clear old homework (${clearError.message}). ` +
-                    'Inserts will duplicate existing rows.');
-    } else {
-        console.log('  ✅ Cleared old entries');
-    }
-
-    // Only sync items assigned within the last 7 days
-    const sevenDaysAgo = new Date(today);
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    // STEP 2: nothing is deleted any more.
+    //
+    // This used to DELETE every canvas row and reinsert only the last 7 days,
+    // so the table never held more than a few days and all history was lost on
+    // every run. History is exactly what a tutor needs — what Willy has been
+    // working on, what he did not finish, which subject keeps reappearing.
+    // Rows are now upserted on (student_id, external_id) instead, so the
+    // record accumulates. Migration 006 adds that constraint.
+    console.log('📚 Preserving history — upserting rather than replacing.');
 
     // Build array of all homework items
     const allItems = [];
 
     for (const [dateStr, data] of Object.entries(homeworkByDate)) {
-        // Skip homework assigned more than 7 days ago
-        if (data.assignedDate < sevenDaysAgo) {
-            continue;
-        }
+        // No date filter. The Canvas page carries the whole school year; we
+        // were parsing all of it and keeping a few days. The app filters by
+        // date_due when rendering, so history in the table costs the student
+        // view nothing and gives the tutor something to work from.
         const assignedDate = data.assignedDate;
 
         for (const item of data.items) {
@@ -613,15 +604,16 @@ async function syncToDatabase(homeworkByDate) {
 
     // Insert all items (we already cleared the table)
     const insertErrors = [];
-    for (const item of itemsToSync) {
+    for (let i = 0; i < itemsToSync.length; i += 100) {
+        const batch = itemsToSync.slice(i, i + 100);
         const { error } = await supabase
             .from('homework_items')
-            .insert(item);
+            .upsert(batch, { onConflict: 'student_id,external_id' });
 
         if (!error) {
-            upsertCount++;
+            upsertCount += batch.length;
         } else {
-            console.error(`  ⚠️ Error inserting: ${error.message}`);
+            console.error(`  ⚠️ Error upserting batch: ${error.message}`);
             insertErrors.push(error.message);
         }
     }
@@ -639,11 +631,11 @@ async function syncToDatabase(homeworkByDate) {
         unique.forEach(m => console.log(`::error::homework_items insert failed: ${m}`));
     }
 
-    // The table is DELETED before this loop, so any failed insert means the app
-    // is now missing homework it had a minute ago. Partial success is failure.
+    // Nothing is deleted now, so a failed batch leaves yesterday's data intact
+    // rather than an empty app. Still a failure — just no longer destructive.
     if (insertErrors.length > 0) {
-        console.log(`::error::${insertErrors.length} of ${itemsToSync.length} inserts failed ` +
-                    'after the table was cleared — the app is now incomplete.');
+        console.log(`::error::${insertErrors.length} batch(es) failed to upsert. ` +
+                    'Existing rows are unaffected, but this run did not land.');
         process.exitCode = 1;
     }
 }
