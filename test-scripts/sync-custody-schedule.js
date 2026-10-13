@@ -34,10 +34,25 @@ const MONTHS = {
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
 
+// Auth: prefer the service account that already exists for the calendar sync.
+// A service account can read any Sheet shared with its email address, so this
+// needs no OAuth consent flow at all — just one "Share" click on the sheet.
+// Falls back to a user OAuth token if one happens to be configured.
 function sheetsClient() {
-  const o = new google.auth.OAuth2(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET);
-  o.setCredentials({ refresh_token: process.env.GOOGLE_REFRESH_TOKEN });
-  return google.sheets({ version: 'v4', auth: o });
+  if (process.env.GOOGLE_SERVICE_ACCOUNT_KEY) {
+    const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY);
+    const auth = new google.auth.GoogleAuth({
+      credentials,
+      scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly']
+    });
+    return { client: google.sheets({ version: 'v4', auth }), who: credentials.client_email };
+  }
+  if (process.env.GOOGLE_REFRESH_TOKEN) {
+    const o = new google.auth.OAuth2(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET);
+    o.setCredentials({ refresh_token: process.env.GOOGLE_REFRESH_TOKEN });
+    return { client: google.sheets({ version: 'v4', auth: o }), who: 'user OAuth token' };
+  }
+  return null;
 }
 
 const val = (cell) =>
@@ -56,6 +71,22 @@ function bg(cell) {
 
 const dist = (a, b) =>
   Math.sqrt((a.r - b.r) ** 2 + (a.g - b.g) ** 2 + (a.b - b.b) ** 2);
+
+// Known colours, taken from life-companion/netlify/functions/sync-custody-sheet.js
+// which has been reading this same sheet in production. Exact matches, because
+// the fills are set from a fixed palette.
+const KNOWN = [
+  { who: 'dad',        rgb: { r: 0,   g: 255, b: 255 } },  // cyan
+  { who: 'mom',        rgb: { r: 255, g: 0,   b: 255 } },  // magenta
+  { who: 'transition', rgb: { r: 234, g: 209, b: 220 } }   // gray-pink: handoff day
+];
+
+function matchKnown(colour) {
+  for (const k of KNOWN) {
+    if (dist(colour, k.rgb) < 30) return k.who;
+  }
+  return null;
+}
 
 // Find the legend: a row holding the labels Pete and Julia in filled cells.
 function findLegend(rows) {
@@ -91,14 +122,15 @@ function pickTab(sheets) {
 }
 
 (async () => {
-  for (const k of ['GOOGLE_CLIENT_ID', 'GOOGLE_CLIENT_SECRET', 'GOOGLE_REFRESH_TOKEN']) {
-    if (!process.env[k]) {
-      console.log(`::warning::${k} not set — custody sync skipped. See docs/school-email-setup.md`);
-      return;
-    }
+  const auth = sheetsClient();
+  if (!auth) {
+    console.log('::warning::No Google credentials — custody sync skipped. ' +
+                'Needs GOOGLE_SERVICE_ACCOUNT_KEY (already set for the calendar sync) ' +
+                'or a user OAuth token.');
+    return;
   }
-
-  const sheets = sheetsClient();
+  const sheets = auth.client;
+  console.log(`Reading as: ${auth.who}`);
   const meta = await sheets.spreadsheets.get({ spreadsheetId: SHEET_ID, includeGridData: false });
   const tab = pickTab(meta.data.sheets);
   console.log(`::notice::Custody tab selected: "${tab}"`);
@@ -111,15 +143,11 @@ function pickTab(sheets) {
   });
   const rows = (resp.data.sheets[0].data[0].rowData) || [];
 
+  // Legend is a safety net for a recoloured sheet; the known palette is primary.
   const legend = findLegend(rows);
-  if (!legend) {
-    console.log('::error::Could not find the Pete/Julia colour legend. The sheet layout ' +
-                'has probably changed — refusing to guess which parent is which.');
-    process.exitCode = 1;
-    return;
-  }
-  console.log(`::notice::Legend — dad rgb(${Object.values(legend.dad)}) ` +
-              `mom rgb(${Object.values(legend.mom)})`);
+  console.log(legend
+    ? `Legend found — dad rgb(${Object.values(legend.dad)}) mom rgb(${Object.values(legend.mom)})`
+    : 'No legend row found; relying on the known colour palette.');
 
   // Walk the grid. Column A carries a month name that applies until the next
   // one appears; day-number cells inherit it.
@@ -144,10 +172,14 @@ function pickTab(sheets) {
       const colour = bg(cell);
       if (!colour) continue;
 
-      const dDad = dist(colour, legend.dad);
-      const dMom = dist(colour, legend.mom);
-      const best = Math.min(dDad, dMom);
-      if (best > 60) { unmatched++; continue; }   // some other highlight
+      // Known palette first; fall back to the legend if the sheet is recoloured.
+      let who = matchKnown(colour);
+      if (!who && legend) {
+        const dDad = dist(colour, legend.dad);
+        const dMom = dist(colour, legend.mom);
+        if (Math.min(dDad, dMom) <= 60) who = dDad <= dMom ? 'dad' : 'mom';
+      }
+      if (!who) { unmatched++; continue; }   // some other highlight
 
       // A day number far from its column's month belongs to the neighbouring
       // month (e.g. "31" in a September block is Aug 31).
@@ -162,7 +194,7 @@ function pickTab(sheets) {
       const date = new Date(Date.UTC(year, m, day));
       if (date.getUTCDate() !== day) continue;     // invalid, e.g. Feb 30
 
-      byDate.set(date.toISOString().slice(0, 10), dDad <= dMom ? 'dad' : 'mom');
+      byDate.set(date.toISOString().slice(0, 10), who);
     }
   }
 
@@ -179,7 +211,9 @@ function pickTab(sheets) {
   // calendar_events.household for event_type 'parenting'.
   const rowsOut = [...byDate.entries()].map(([date, household]) => ({
     student_id: WILLY_STUDENT_ID,
-    title: household === 'dad' ? "Dad's" : "Mom's",
+    title: household === 'dad' ? "Dad's"
+         : household === 'mom' ? "Mom's"
+         : 'Handoff day',
     start_date: date,
     end_date: date,
     is_all_day: true,
@@ -200,8 +234,17 @@ function pickTab(sheets) {
   }
 
   const today = new Date().toISOString().slice(0, 10);
-  console.log(`::notice::Custody synced. Today (${today}): ${byDate.get(today) || 'not in sheet'}`);
+  const counts = [...byDate.values()].reduce((a, v) => (a[v] = (a[v] || 0) + 1, a), {});
+  console.log(`::notice::Custody synced — ${JSON.stringify(counts)}. ` +
+              `Today (${today}): ${byDate.get(today) || 'not in sheet'}`);
 })().catch(err => {
-  console.log(`::error::Custody sync failed: ${err.message}`);
+  const m = err.message || String(err);
+  if (/permission|403|not found|404/i.test(m)) {
+    console.log('::error::Cannot open the custody sheet. Share it (Viewer is enough) ' +
+                'with the service account email printed above, then re-run. ' +
+                `Underlying error: ${m}`);
+  } else {
+    console.log(`::error::Custody sync failed: ${m}`);
+  }
   process.exitCode = 1;
 });
