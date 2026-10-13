@@ -1,4 +1,4 @@
-# School email sync — one-time setup
+# School email + custody sync — one-time setup
 
 Automates what used to be manual: Ned reads school email from Gmail, extracts
 dated events with Claude, and saves them. Replaces open-app-find-email-copy-paste,
@@ -19,7 +19,8 @@ Access is **read-only Gmail**. The credential cannot send, delete or modify mail
 3. **APIs & Services → OAuth consent screen**
    - User type: **External**
    - App name `Ned App`, your email for both support and developer contact
-   - Scopes: add `.../auth/gmail.readonly`
+   - Scopes: add `.../auth/gmail.readonly` **and** `.../auth/spreadsheets.readonly`
+     (the second is for the custody schedule; one consent covers both)
    - Test users: **add your own Gmail address** (required while unpublished)
    - Leave it in **Testing**. Publishing invites Google verification you do not need.
 4. **APIs & Services → Credentials → Create Credentials → OAuth client ID**
@@ -50,7 +51,10 @@ https://github.com/peterhammond-cpu/ned-app/settings/secrets/actions
 |---|---|
 | `GOOGLE_CLIENT_ID` | from step 1 |
 | `GOOGLE_CLIENT_SECRET` | from step 1 |
-| `GMAIL_REFRESH_TOKEN` | from step 2 |
+| `GOOGLE_REFRESH_TOKEN` | from step 2 |
+
+Optional, only if the custody sheet moves or the tab picker guesses wrong:
+`CUSTODY_SHEET_ID`, `CUSTODY_TAB`.
 
 `ANTHROPIC_API_KEY`, `SUPABASE_URL` and `SUPABASE_SERVICE_KEY` already exist.
 
@@ -77,3 +81,27 @@ Look for the annotation:
 - If AACA ever puts event details *inside* an image, the text parser goes blind
   to them. `netlify/functions/parse-newsletter.js` supports image input as a
   manual fallback.
+
+
+---
+
+## Custody schedule
+
+Lives in the shared **Kids Schedule/Finance Tracker** sheet, owned by the other
+household. The schedule is **not text** — the grid holds day numbers, and who
+has the kids is the cell's *background colour*. A legend row pairs a colour
+swatch with "Pete" and "Julia", so `sync-custody-schedule.js` reads the legend
+at run time and matches each day cell against it. Recolouring the sheet does
+not break it; restructuring it will.
+
+**Privacy:** the same workbook has an `Expense Tracker` tab with financial
+detail between the two households. The sync reads only the custody tab and
+refuses any tab matching `expense|finance|owed`. Nothing financial enters Ned,
+and none of it is ever shared with the tutor.
+
+**Fragility:** we do not own this sheet. There are ~17 revision tabs
+(`Rev 3/17`, `Rev_5/6`, `2026 - Rev9.01`...). The picker prefers a tab naming
+the current year, else the first non-financial tab. If the legend cannot be
+found, or no day cell matches it, the sync fails loudly rather than guessing
+which parent is which — reporting the wrong household is worse than reporting
+nothing.

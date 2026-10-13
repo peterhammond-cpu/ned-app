@@ -8,8 +8,8 @@
 //   cd test-scripts
 //   GOOGLE_CLIENT_ID=xxx GOOGLE_CLIENT_SECRET=yyy node mint-gmail-token.js
 //
-// Read-only Gmail scope: this can read mail and nothing else. It cannot send,
-// delete, or modify anything.
+// Read-only scopes only: Gmail read + Sheets read. This credential cannot
+// send, delete, or modify anything, in either service.
 
 const http = require('http');
 const { google } = require('googleapis');
@@ -29,7 +29,12 @@ const oauth2 = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, REDIRECT);
 const url = oauth2.generateAuthUrl({
   access_type: 'offline',        // required to get a refresh token
   prompt: 'consent',             // force a refresh token even on re-auth
-  scope: ['https://www.googleapis.com/auth/gmail.readonly']
+  scope: [
+    'https://www.googleapis.com/auth/gmail.readonly',
+    // Custody schedule lives in a shared Google Sheet, encoded as cell
+    // background colours. Requested here so one consent covers both.
+    'https://www.googleapis.com/auth/spreadsheets.readonly'
+  ]
 });
 
 console.log('\nOpen this URL in your browser and approve:\n');
@@ -46,7 +51,7 @@ const server = http.createServer(async (req, res) => {
     res.end('Done. You can close this tab and return to the terminal.');
     console.log('='.repeat(64));
     if (tokens.refresh_token) {
-      console.log('GMAIL_REFRESH_TOKEN:\n');
+      console.log('GOOGLE_REFRESH_TOKEN:\n');
       console.log(tokens.refresh_token);
       console.log('\nAdd that to GitHub Secrets, along with GOOGLE_CLIENT_ID and');
       console.log('GOOGLE_CLIENT_SECRET. Do not commit it anywhere.');

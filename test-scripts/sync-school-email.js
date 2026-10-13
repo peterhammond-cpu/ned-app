@@ -30,7 +30,7 @@ function gmailClient() {
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET
   );
-  o.setCredentials({ refresh_token: process.env.GMAIL_REFRESH_TOKEN });
+  o.setCredentials({ refresh_token: process.env.GOOGLE_REFRESH_TOKEN });
   return google.gmail({ version: 'v1', auth: o });
 }
 
@@ -118,7 +118,7 @@ ${text.slice(0, 18000)}`;
 }
 
 (async () => {
-  for (const k of ['GOOGLE_CLIENT_ID', 'GOOGLE_CLIENT_SECRET', 'GMAIL_REFRESH_TOKEN', 'ANTHROPIC_API_KEY']) {
+  for (const k of ['GOOGLE_CLIENT_ID', 'GOOGLE_CLIENT_SECRET', 'GOOGLE_REFRESH_TOKEN', 'ANTHROPIC_API_KEY']) {
     if (!process.env[k]) {
       console.log(`::warning::${k} not set — school email sync skipped. See docs/school-email-setup.md`);
       return;
