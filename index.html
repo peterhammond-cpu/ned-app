@@ -31,22 +31,16 @@
             </button>
         </nav>
 
-        <!-- TODAY TAB -->
+        <!-- TODAY TAB
+             Order is deliberate: homework first, then what is coming, then the
+             morning list. The jokes and the Camp Nou stadium used to sit above
+             the homework, so the first thing on screen was never the thing the
+             app is for. They now live on the Players tab, which is where the
+             rest of the reward layer already was. -->
         <div id="today-tab" class="tab-content active">
 
             <!-- Saturday Shot Reminder (shown on Saturdays) -->
             <div id="shot-reminder-container"></div>
-
-            <div class="card">
-                <h2>😂 Daily Fun</h2>
-                <div class="joke-box" id="joke">
-                    Why don't scientists trust atoms? Because they make up everything!
-                </div>
-                <div class="joke-box trivia-box" id="soccer-trivia">
-                    <span class="trivia-icon">⚽</span>
-                    <span class="trivia-text">Who do you think will win the Ballon d'Or this year?</span>
-                </div>
-            </div>
 
             <div class="card">
                 <h2 id="homework-section-title">📚 Tonight's Missions</h2>
@@ -82,6 +76,20 @@
                 </div>
             </div>
 
+        </div>
+
+        <!-- WEEK TAB -->
+        <div id="week-tab" class="tab-content">
+            <div class="card">
+                <h2 id="week-title">📅 This Week</h2>
+                <div class="week-view" id="week-view">
+                    <!-- Populated by JavaScript from Supabase (homework + events) -->
+                </div>
+            </div>
+        </div>
+
+        <!-- PLAYERS TAB -->
+        <div id="players-tab" class="tab-content">
             <div class="card stadium-card">
                 <h2>🏟️ Camp Nou</h2>
                 <div class="stadium-bowl">
@@ -103,20 +111,17 @@
                     <span class="unlock-text" id="unlock-text"></span>
                 </div>
             </div>
-        </div>
-
-        <!-- WEEK TAB -->
-        <div id="week-tab" class="tab-content">
             <div class="card">
-                <h2 id="week-title">📅 This Week</h2>
-                <div class="week-view" id="week-view">
-                    <!-- Populated by JavaScript from Supabase (homework + events) -->
+                <h2>😂 Daily Fun</h2>
+                <div class="joke-box" id="joke">
+                    Why don't scientists trust atoms? Because they make up everything!
+                </div>
+                <div class="joke-box trivia-box" id="soccer-trivia">
+                    <span class="trivia-icon">⚽</span>
+                    <span class="trivia-text">Who do you think will win the Ballon d'Or this year?</span>
                 </div>
             </div>
-        </div>
 
-        <!-- PLAYERS TAB -->
-        <div id="players-tab" class="tab-content">
             <!-- Match Section: Last Result + Next Match -->
             <div class="card match-section-card">
                 <div class="card-header">
