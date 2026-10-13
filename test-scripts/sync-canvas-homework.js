@@ -594,6 +594,7 @@ async function syncToDatabase(homeworkByDate) {
     console.log(`\n📊 ${allItems.length} items found, ${itemsToSync.length} after deduplication`);
 
     // Insert all items (we already cleared the table)
+    const insertErrors = [];
     for (const item of itemsToSync) {
         const { error } = await supabase
             .from('homework_items')
@@ -603,10 +604,28 @@ async function syncToDatabase(homeworkByDate) {
             upsertCount++;
         } else {
             console.error(`  ⚠️ Error inserting: ${error.message}`);
+            insertErrors.push(error.message);
         }
     }
 
     console.log(`\n✅ Synced ${upsertCount} homework items!`);
+
+    // The table is CLEARED before this loop, so silent insert failures leave
+    // the app empty while the workflow reports success. Surface them.
+    console.log(`::notice::Homework sync: ${allItems.length} parsed, ` +
+                `${itemsToSync.length} after dedup, ${upsertCount} inserted, ` +
+                `${insertErrors.length} failed.`);
+
+    if (insertErrors.length) {
+        const unique = [...new Set(insertErrors)].slice(0, 3);
+        unique.forEach(m => console.log(`::error::homework_items insert failed: ${m}`));
+    }
+
+    if (itemsToSync.length > 0 && upsertCount === 0) {
+        console.log('::error::Parsed homework but inserted nothing — the table was ' +
+                    'cleared and is now empty. Treating as failure.');
+        process.exitCode = 1;
+    }
 }
 
 // ==========================================
@@ -630,8 +649,11 @@ async function sync() {
         // An empty parse is not necessarily an error (school breaks, weekends),
         // but it is never nothing to worry about: syncToDatabase clears the
         // table before inserting, so zero parsed items empties the app.
+        // homeworkByDate maps dateStr -> { assignedDate, items: [...] }.
+        // An earlier version treated the values as arrays, so this always
+        // counted 0 and fired a false "parsed nothing" warning.
         const parsedCount = Object.values(homeworkByDate || {})
-            .reduce((n, items) => n + (Array.isArray(items) ? items.length : 0), 0);
+            .reduce((n, d) => n + ((d && Array.isArray(d.items)) ? d.items.length : 0), 0);
         if (parsedCount === 0) {
             console.log(`::warning::Parsed 0 homework items from course ${resolvedCourseId}. ` +
                         'The table will be emptied. Expected over a break; otherwise the ' +
