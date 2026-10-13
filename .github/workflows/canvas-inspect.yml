@@ -1,0 +1,28 @@
+name: Canvas — inspect homework page
+
+# Manual diagnostic. Reports the STRUCTURE of the homework front page so the
+# parser can be rewritten when the page layout changes between school years.
+# Emits structure and short samples as annotations, not the full page.
+
+on:
+  workflow_dispatch:
+    inputs:
+      course_id:
+        description: 'Canvas course ID (blank = 675, the 8th grade course)'
+        required: false
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install deps
+        run: cd test-scripts && npm ci
+      - name: Inspect page
+        env:
+          CANVAS_API_TOKEN: ${{ secrets.CANVAS_API_TOKEN }}
+          CANVAS_COURSE_ID: ${{ github.event.inputs.course_id }}
+        run: node test-scripts/inspect-canvas-page.js
