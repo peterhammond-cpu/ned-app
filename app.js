@@ -471,12 +471,52 @@ function renderMissions(missions) {
         <div class="mission-item ${mission.completed ? 'completed' : ''} ${mission.isTest ? 'is-test' : ''}" data-id="${mission.id}" onclick="toggleMission(this)">
             <div class="mission-checkbox"></div>
             <div class="mission-content">
-                <div class="mission-text">${mission.text}</div>
+                ${(() => {
+                    const parts = splitHomeworkParts(mission.text);
+                    return parts.length > 1
+                        ? `<ul class="mission-parts">${parts.map(p => `<li>${p}</li>`).join('')}</ul>`
+                        : `<div class="mission-text">${parts[0] || mission.text}</div>`;
+                })()}
                 <div class="mission-subject">${mission.subject}</div>
             </div>
             ${mission.badge ? `<span class="mission-badge ${mission.badgeType}">${mission.badge}</span>` : ''}
         </div>
     `).join('');
+}
+
+// ==========================================
+// SPLIT MULTI-PART HOMEWORK
+// ==========================================
+// Teachers write several tasks into one line:
+//   "1) Read Ch 21-22 (Summary, CC)  2) Grammar pg 20  3) WW L3 A"
+// Rendering that as one blob is the worst shape for a kid with ADD — three
+// jobs disguised as one, with no way to see progress through them. Split on
+// the numbering so each part gets its own line.
+//
+// Conservative on purpose: only splits when there are at least two markers,
+// so "1) " used as a stray prefix, or a bare sentence, is left alone.
+function splitHomeworkParts(text) {
+    if (!text) return [];
+    const str = String(text).trim();
+
+    // Matches "1)" "2." "3:" at a boundary — the forms that actually show up.
+    const marker = /(?:^|\s)(\d{1,2})\s*[).:]\s+/g;
+    const hits = [...str.matchAll(marker)];
+    if (hits.length < 2) return [str];
+
+    const parts = [];
+    for (let i = 0; i < hits.length; i++) {
+        const from = hits[i].index + hits[i][0].length;
+        const to = (i + 1 < hits.length) ? hits[i + 1].index : str.length;
+        const piece = str.slice(from, to).trim().replace(/[,;]\s*$/, '');
+        if (piece) parts.push(piece);
+    }
+    // Anything before the first marker is a lead-in, not a task — keep it
+    // attached to the first part so no instruction is lost.
+    const lead = str.slice(0, hits[0].index).trim();
+    if (lead && parts.length) parts[0] = lead + ' ' + parts[0];
+
+    return parts.length ? parts : [str];
 }
 
 // ==========================================
