@@ -281,17 +281,33 @@ async function resolveCourseId() {
         throw new Error(`Canvas API error listing courses: ${courses.status}`);
     }
 
+    // Scoring, deliberately content-first.
+    //
+    // An earlier version scored a name match at +100 and content at most +80,
+    // which recreated the bug it was meant to fix: the stale course is named
+    // "7th Grade HW" (a name match) while the live one is "8th Grade 2026-2027"
+    // (no "HW" at all). If both are still enrolled, the dead course wins on
+    // name and the sync clears the table. So:
+    //   - a course with no front-page content is never a candidate
+    //   - naming the current school year is the strongest signal
+    //   - "HW"/"homework" is only a tiebreaker
+    const now = new Date();
+    const yearA = now.getUTCFullYear();
+    const yearB = now.getUTCMonth() >= 6 ? yearA + 1 : yearA - 1;  // school year spans two
+
     const candidates = [];
     for (const c of courses.body) {
         const name = c.name || '';
-        let score = 0;
-        if (/\bhw\b|homework/i.test(name)) score += 100;
 
         const fp = await canvasGet(`/api/v1/courses/${c.id}/front_page`);
         const len = fp.ok ? (fp.body.body || '').length : 0;
-        if (len > 0) score += 40 + Math.min(len / 100, 40);
+        if (len === 0) continue;               // no content, never a candidate
 
-        if (score > 0) candidates.push({ id: String(c.id), name, len, score });
+        let score = Math.min(len / 500, 60);   // content weight, 0-60
+        if (name.includes(String(yearA)) || name.includes(String(yearB))) score += 120;
+        if (/\bhw\b|homework/i.test(name)) score += 30;
+
+        candidates.push({ id: String(c.id), name, len, score });
     }
 
     candidates.sort((a, b) => b.score - a.score);
@@ -483,6 +499,8 @@ async function syncToDatabase(homeworkByDate) {
 
     if (clearError) {
         console.error('  ⚠️ Error clearing old entries:', clearError.message);
+        console.log(`::error::Could not clear old homework (${clearError.message}). ` +
+                    'Inserts will duplicate existing rows.');
     } else {
         console.log('  ✅ Cleared old entries');
     }
@@ -621,9 +639,11 @@ async function syncToDatabase(homeworkByDate) {
         unique.forEach(m => console.log(`::error::homework_items insert failed: ${m}`));
     }
 
-    if (itemsToSync.length > 0 && upsertCount === 0) {
-        console.log('::error::Parsed homework but inserted nothing — the table was ' +
-                    'cleared and is now empty. Treating as failure.');
+    // The table is DELETED before this loop, so any failed insert means the app
+    // is now missing homework it had a minute ago. Partial success is failure.
+    if (insertErrors.length > 0) {
+        console.log(`::error::${insertErrors.length} of ${itemsToSync.length} inserts failed ` +
+                    'after the table was cleared — the app is now incomplete.');
         process.exitCode = 1;
     }
 }

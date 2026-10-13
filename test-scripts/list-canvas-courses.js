@@ -11,7 +11,10 @@
 
 const DOMAIN = 'https://aaca.instructure.com';
 const TOKEN = process.env.CANVAS_API_TOKEN;
-const CURRENT_HARDCODED_ID = '520'; // keep in sync with sync-canvas-homework.js
+// 520 is last year's 7th-grade course. The sync no longer hardcodes a course
+// ID — it resolves one at run time — so this is only here to report whether
+// the old course is still reachable and still has content.
+const LEGACY_ID = '520';
 
 if (!TOKEN) { console.error('::error::CANVAS_API_TOKEN not set'); process.exit(1); }
 
@@ -41,15 +44,15 @@ async function get(path) {
   }
 
   // Is the hardcoded one still real, and does its front page have content?
-  const old = await get(`/api/v1/courses/${CURRENT_HARDCODED_ID}`);
+  const old = await get(`/api/v1/courses/${LEGACY_ID}`);
   notice(old.ok
-    ? `HARDCODED ${CURRENT_HARDCODED_ID} still accessible: "${old.body.name}"`
-    : `HARDCODED ${CURRENT_HARDCODED_ID} NOT accessible — HTTP ${old.status}`);
+    ? `LEGACY course ${LEGACY_ID} still accessible: "${old.body.name}"`
+    : `LEGACY course ${LEGACY_ID} NOT accessible — HTTP ${old.status}`);
 
-  const fp = await get(`/api/v1/courses/${CURRENT_HARDCODED_ID}/front_page`);
+  const fp = await get(`/api/v1/courses/${LEGACY_ID}/front_page`);
   notice(fp.ok
-    ? `HARDCODED ${CURRENT_HARDCODED_ID} front_page: "${fp.body.title}" — body length ${(fp.body.body || '').length} chars`
-    : `HARDCODED ${CURRENT_HARDCODED_ID} front_page unavailable — HTTP ${fp.status}`);
+    ? `LEGACY course ${LEGACY_ID} front_page: "${fp.body.title}" — body length ${(fp.body.body || '').length} chars`
+    : `LEGACY course ${LEGACY_ID} front_page unavailable — HTTP ${fp.status}`);
 
   // For each active course, does it have a front page worth syncing?
   for (const c of act.body) {

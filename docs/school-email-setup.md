@@ -19,8 +19,8 @@ Access is **read-only Gmail**. The credential cannot send, delete or modify mail
 3. **APIs & Services → OAuth consent screen**
    - User type: **External**
    - App name `Ned App`, your email for both support and developer contact
-   - Scopes: add `.../auth/gmail.readonly` **and** `.../auth/spreadsheets.readonly`
-     (the second is for the custody schedule; one consent covers both)
+   - Scopes: add `.../auth/gmail.readonly`
+     (Sheets is **not** needed here — see the custody section below)
    - Test users: **add your own Gmail address** (required while unpublished)
    - Leave it in **Testing**. Publishing invites Google verification you do not need.
 4. **APIs & Services → Credentials → Create Credentials → OAuth client ID**
@@ -86,6 +86,19 @@ Look for the annotation:
 ---
 
 ## Custody schedule
+
+**No OAuth setup required.** This uses the service account that already powers
+the calendar sync (`GOOGLE_SERVICE_ACCOUNT_KEY`). A service account can read any
+Sheet shared with its email address, so the only step is:
+
+1. Run the sync once. It prints `Reading as: <service-account-email>`.
+2. In the custody sheet, **Share** -> paste that address -> **Viewer** -> Send.
+3. Re-run.
+
+If the account cannot open the sheet, the run says so explicitly rather than
+failing opaquely. Note `life-companion` already reads this same sheet with the
+service account `lifecompanion@ned-app-480920.iam.gserviceaccount.com`; if Ned's
+is the same one, it may already have access.
 
 Lives in the shared **Kids Schedule/Finance Tracker** sheet, owned by the other
 household. The schedule is **not text** — the grid holds day numbers, and who

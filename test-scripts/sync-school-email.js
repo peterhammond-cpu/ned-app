@@ -23,6 +23,15 @@ const HIGH_SIGNAL_SENDER = 'kkey@alphonsusacademy.org';
 const QUERY = 'from:(info@alphonsusacademy.org OR kkey@alphonsusacademy.org)';
 const LOOKBACK_DAYS = Number(process.env.SCHOOL_EMAIL_LOOKBACK_DAYS || 10);
 
+// Must match what the rest of the app understands. sync-canvas-homework.js
+// queries event_type in ('no_school','closure') for closure-aware due dates,
+// and app.js switches on these for icons. A value outside this set is not a
+// cosmetic problem — it silently disables features.
+const VALID_EVENT_TYPES = new Set([
+  'no_school', 'early_dismissal', 'field_trip', 'form_due',
+  'picture_day', 'event', 'reminder'
+]);
+
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
 
 function gmailClient() {
@@ -78,12 +87,20 @@ Return ONLY a JSON array. One object per event:
 {
   "title": "short name",
   "event_date": "YYYY-MM-DD",
-  "event_type": "holiday|meeting|deadline|performance|sports|social|academic|other",
+  "event_type": one of exactly: no_school | early_dismissal | field_trip | form_due | picture_day | event | reminder,
   "description": "detail incl. time and location if given, else null",
   "grade": "8 if 8th-grade specific, otherwise the grades it applies to, else null",
   "action_required": true if a parent must DO something (sign up, pay, RSVP, attend),
   "action_text": "what the parent must do, else null"
 }
+
+event_type rules — these values are load-bearing, not labels:
+- "no_school" for closures, holidays, teacher PD days, breaks. The homework
+  sync queries this exact value to avoid setting due dates on closed days,
+  so a closure typed as anything else silently breaks due-date logic.
+- "early_dismissal" for half days.
+- "form_due" when something must be returned or paid by a date.
+- "event" for everything else with a date; "reminder" for soft nudges.
 
 Rules:
 - Only events with a determinable date. Skip anything undated.
@@ -152,7 +169,7 @@ ${text.slice(0, 18000)}`;
         student_id: WILLY_STUDENT_ID,
         title: String(e.title).slice(0, 200),
         event_date: e.event_date,
-        event_type: e.event_type || 'other',
+        event_type: VALID_EVENT_TYPES.has(e.event_type) ? e.event_type : 'event',
         description: e.description || null,
         grade: e.grade ? String(e.grade) : null,
         action_required: !!e.action_required,

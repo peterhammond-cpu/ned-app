@@ -185,6 +185,14 @@ async function syncToDatabase(events) {
         .from('calendar_events')
         .select('external_id')
         .eq('student_id', WILLY_STUDENT_ID)
+        // Only reap rows this sync owns. The custody sync writes
+        // calendar_source='custody_sheet' rows into the same table and the
+        // same date window; without this filter they are absent from the
+        // Google result set every run and get deleted. They were rewritten
+        // moments later by the custody step, but that step is
+        // continue-on-error — so a single custody failure left the app with
+        // no custody data at all rather than yesterday's.
+        .neq('calendar_source', 'custody_sheet')
         .gte('start_date', sevenDaysAgo.toISOString().split('T')[0])
         .lte('start_date', thirtyDaysOut.toISOString().split('T')[0]);
 

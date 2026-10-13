@@ -90,16 +90,19 @@ function matchKnown(colour) {
 
 // Find the legend: a row holding the labels Pete and Julia in filled cells.
 function findLegend(rows) {
+  // The swatch may be the label cell itself, or the cell beside it. Requiring
+  // the label cell to be filled meant the common layout found no legend at all.
   for (const row of rows.slice(0, 12)) {
     const cells = row.values || [];
     const legend = {};
-    for (const cell of cells) {
+    cells.forEach((cell, i) => {
       const t = val(cell).toLowerCase();
-      const colour = bg(cell);
-      if (!colour) continue;
-      if (t === 'pete' || t === 'dad') legend.dad = colour;
-      else if (t === 'julia' || t === 'mom') legend.mom = colour;
-    }
+      const key = (t === 'pete' || t === 'dad') ? 'dad'
+                : (t === 'julia' || t === 'mom') ? 'mom' : null;
+      if (!key) return;
+      const colour = bg(cell) || bg(cells[i - 1]) || bg(cells[i + 1]);
+      if (colour) legend[key] = colour;
+    });
     if (legend.dad && legend.mom) return legend;
   }
   return null;
@@ -116,9 +119,11 @@ function pickTab(sheets) {
     return TAB_OVERRIDE;
   }
   const year = String(new Date().getUTCFullYear());
+  if (!allowed.length) {
+    throw new Error(`No readable tab: every tab looks financial. Tabs: ${titles.join(', ')}`);
+  }
   const byYear = allowed.filter(t => t.includes(year));
-  if (byYear.length) return byYear[0];
-  return allowed[0];
+  return byYear.length ? byYear[0] : allowed[0];
 }
 
 (async () => {
@@ -149,53 +154,93 @@ function pickTab(sheets) {
     ? `Legend found — dad rgb(${Object.values(legend.dad)}) mom rgb(${Object.values(legend.mom)})`
     : 'No legend row found; relying on the known colour palette.');
 
-  // Walk the grid. Column A carries a month name that applies until the next
-  // one appears; day-number cells inherit it.
-  const year = new Date().getUTCFullYear();
+  // Walk the grid.
+  //
+  // Dates here are genuinely fiddly, and three earlier attempts got them wrong:
+  //   - leading/trailing cells belong to the neighbouring month (a "31" at the
+  //     start of a September block is Aug 31; an "Oct 1" closing it is October)
+  //   - a school-year tab spans two calendar years, so months that wrap round
+  //     to a lower index belong to the following year
+  //   - guessing wrong silently reports the wrong parent, the one outcome worse
+  //     than reporting nothing
+  //
+  // So rather than infer, we VERIFY: the grid has weekday columns, and we only
+  // accept a candidate date whose weekday matches the column it sits in.
+  const WD = { sun:0, sunday:0, m:1, mon:1, monday:1, t:2, tu:2, tue:2, tuesday:2,
+               w:3, wed:3, wednesday:3, th:4, thu:4, thursday:4,
+               f:5, fri:5, friday:5, sat:6, saturday:6 };
+
+  let colWeekday = {};                 // column index -> 0..6
+  let month = null, firstMonth = null, yearOffset = 0, unmatched = 0;
+  // Base year: prefer the year named in the tab ("2026 - Rev9.01"). Using the
+  // clock instead breaks in January, when a run would stamp the tab's autumn
+  // months with the new calendar year and place them a year in the future.
+  const tabYear = (tab.match(/(20\d{2})/) || [])[1];
+  const startYear = tabYear ? Number(tabYear) : new Date().getUTCFullYear();
+  if (tabYear) console.log(`Base year from tab name: ${startYear}`);
   const byDate = new Map();
-  let month = null, unmatched = 0;
 
   for (const row of rows) {
     const cells = row.values || [];
+
+    // A header row re-declares which column is which weekday.
+    const header = {};
+    cells.forEach((cell, i) => {
+      const t = val(cell).toLowerCase().replace(/[^a-z]/g, '');
+      if (WD[t] !== undefined) header[i] = WD[t];
+    });
+    if (Object.keys(header).length >= 5) { colWeekday = header; continue; }
+
+    // A month name applies until the next one appears.
     for (const cell of cells) {
       const t = val(cell).toLowerCase().replace(/[^a-z]/g, '');
-      if (MONTHS[t] !== undefined) { month = MONTHS[t]; break; }
+      if (MONTHS[t] !== undefined) {
+        const m = MONTHS[t];
+        if (firstMonth === null) firstMonth = m;
+        // Wrapping to an earlier month than the tab started with means the
+        // school year has rolled into the next calendar year.
+        else if (m < firstMonth && month !== null && m < month) yearOffset = 1;
+        month = m;
+        break;
+      }
     }
-    if (month === null) continue;
+    if (month === null || !Object.keys(colWeekday).length) continue;
 
-    for (const cell of cells) {
+    cells.forEach((cell, i) => {
       const t = val(cell);
-      if (!/^\d{1,2}$/.test(t)) continue;
+      if (!/^\d{1,2}$/.test(t)) return;
       const day = Number(t);
-      if (day < 1 || day > 31) continue;
+      if (day < 1 || day > 31) return;
 
       const colour = bg(cell);
-      if (!colour) continue;
+      if (!colour) return;
 
-      // Known palette first; fall back to the legend if the sheet is recoloured.
       let who = matchKnown(colour);
       if (!who && legend) {
         const dDad = dist(colour, legend.dad);
         const dMom = dist(colour, legend.mom);
         if (Math.min(dDad, dMom) <= 60) who = dDad <= dMom ? 'dad' : 'mom';
       }
-      if (!who) { unmatched++; continue; }   // some other highlight
+      if (!who) { unmatched++; return; }
 
-      // A day number far from its column's month belongs to the neighbouring
-      // month (e.g. "31" in a September block is Aug 31).
-      let m = month;
-      if (day > 25 && cells.indexOf(cell) <= 3 && month > 0) {
-        // leading cell with a high day number: likely the previous month
-        const probe = new Date(Date.UTC(year, month, 1));
-        probe.setUTCDate(0);
-        if (day > probe.getUTCDate()) m = month - 1;
+      const wantWeekday = colWeekday[i];
+      if (wantWeekday === undefined) return;
+
+      // Try this month and its neighbours; accept only the candidate whose
+      // weekday matches the column. Ambiguity is impossible — the same day
+      // number falls on the same weekday only once across adjacent months.
+      let resolved = null;
+      for (const delta of [0, -1, 1]) {
+        const d = new Date(Date.UTC(startYear + yearOffset, month + delta, day));
+        if (d.getUTCDate() !== day) continue;              // e.g. Sep 31
+        if (d.getUTCDay() !== wantWeekday) continue;       // wrong column
+        resolved = d;
+        break;
       }
+      if (!resolved) { unmatched++; return; }
 
-      const date = new Date(Date.UTC(year, m, day));
-      if (date.getUTCDate() !== day) continue;     // invalid, e.g. Feb 30
-
-      byDate.set(date.toISOString().slice(0, 10), who);
-    }
+      byDate.set(resolved.toISOString().slice(0, 10), who);
+    });
   }
 
   console.log(`::notice::Custody schedule: ${byDate.size} day(s) resolved` +
@@ -215,7 +260,10 @@ function pickTab(sheets) {
          : household === 'mom' ? "Mom's"
          : 'Handoff day',
     start_date: date,
-    end_date: date,
+    // Exclusive end, matching Google's all-day convention and app.js:556,
+    // which renders `date >= start && date < end`. Equal dates made every
+    // custody row invisible in the week view.
+    end_date: new Date(Date.parse(date + 'T00:00:00Z') + 86400000).toISOString().slice(0, 10),
     is_all_day: true,
     event_type: 'parenting',
     household,
