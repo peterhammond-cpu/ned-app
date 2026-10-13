@@ -1,0 +1,9 @@
+# Expiry date of the Canvas token stored in the CANVAS_API_TOKEN secret.
+# Canvas caps access tokens at 90 days, so this WILL expire mid-school-year.
+#
+# When you remint the token, update this date to the new expiry and commit.
+# check-canvas-token-expiry.js reads it and warns before the token dies,
+# instead of letting the sync just break one morning.
+#
+# Format: YYYY-MM-DD on the line below. Nothing else.
+2027-01-10

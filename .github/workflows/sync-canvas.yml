@@ -30,6 +30,13 @@ jobs:
           # how a supabase-js release silently broke this sync in 2026.
           npm ci
 
+      - name: Check Canvas token expiry
+        # Canvas caps tokens at 90 days. Runs first so the warning is visible
+        # even when a later step fails, and continue-on-error so an expired
+        # token does not block the football / calendar syncs that still work.
+        continue-on-error: true
+        run: node test-scripts/check-canvas-token-expiry.js
+
       - name: Run Canvas sync
         if: github.event.schedule != '30 1 * * *'
         env:
