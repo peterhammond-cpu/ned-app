@@ -94,6 +94,15 @@ Return ONLY a JSON array. One object per event:
   "action_text": "what the parent must do, else null"
 }
 
+ALWAYS capture these, even though they read as administrative rather than as
+events. They are the highest-value dates in the whole email:
+- term/trimester start and end ("End of T1", "T2 Begins")
+- report cards, conferences, grade-posting deadlines
+- anything stating when work stops counting
+A trimester ending is when grades lock — it matters more than a pizza lunch.
+Use event_type "reminder" for these and set action_required false unless the
+parent must do something.
+
 event_type rules — these values are load-bearing, not labels:
 - "no_school" for closures, holidays, teacher PD days, breaks. The homework
   sync queries this exact value to avoid setting due dates on closed days,
@@ -134,6 +143,53 @@ ${text.slice(0, 18000)}`;
   catch { console.log(`::warning::Could not parse model output as JSON from ${sender}`); return []; }
 }
 
+// The same event arrives from both senders with different wording —
+//   "No School - Indigenous People's Day"   (homeroom)
+//   "No School—Indigenous Peoples' Day"     (school newsletter)
+// The upsert key is (student_id, event_date, title), so punctuation alone
+// defeats it. Normalise hard for comparison only; the stored title is
+// untouched.
+function normTitle(t) {
+  return String(t || '')
+    .toLowerCase()
+    .replace(/[\u2010-\u2015]/g, '-')      // en/em dashes -> hyphen
+    .replace(/['\u2018\u2019]/g, '')        // apostrophes
+    .replace(/\b(\d{4})\b/g, '')            // years: "Rocket Run 2026" == "Rocket Run"
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\b(the|a|an|our|class|aaca|ums|hr\s*\d+)\b/g, ' ')
+    .trim().replace(/\s+/g, ' ');
+}
+
+// Homeroom wins: it is Willy-specific and tends to carry the correct detail.
+const rank = (src) => (src === 'email:homeroom' ? 2 : 1);
+
+// Exact normalisation misses the common case where one source qualifies the
+// other: "Early Dismissal" vs "Halloween-Early Dismissal", same day, same
+// event. Treat two titles on the SAME DATE as the same event when one wholly
+// contains the other, provided the shorter is substantial enough that the
+// match is not accidental. Same-date is doing most of the safety work here.
+function sameEvent(a, b) {
+  if (a === b) return true;
+  const [short, long] = a.length <= b.length ? [a, b] : [b, a];
+  if (short.split(' ').length < 2 || short.length < 9) return false;
+  return long.includes(short);
+}
+
+// Collapse a day's events, keeping the best-ranked member of each cluster.
+function collapseDay(items) {
+  const kept = [];
+  for (const it of items) {
+    const n = normTitle(it.title);
+    const hit = kept.find(k => sameEvent(normTitle(k.title), n));
+    if (!hit) { kept.push(it); continue; }
+    // Prefer the better source; on a tie prefer the more descriptive title.
+    const better = rank(it.source) > rank(hit.source)
+      || (rank(it.source) === rank(hit.source) && String(it.title).length > String(hit.title).length);
+    if (better) kept[kept.indexOf(hit)] = it;
+  }
+  return kept;
+}
+
 (async () => {
   for (const k of ['GOOGLE_CLIENT_ID', 'GOOGLE_CLIENT_SECRET', 'GOOGLE_REFRESH_TOKEN', 'ANTHROPIC_API_KEY']) {
     if (!process.env[k]) {
@@ -149,6 +205,7 @@ ${text.slice(0, 18000)}`;
   console.log(`Found ${msgs.length} school email(s) in the last ${LOOKBACK_DAYS} days.`);
 
   let totalSaved = 0;
+  const collected = [];
 
   for (const { id } of msgs) {
     const full = await gmail.users.messages.get({ userId: 'me', id, format: 'full' });
@@ -177,16 +234,68 @@ ${text.slice(0, 18000)}`;
         source: highSignal ? 'email:homeroom' : 'email:school'
       }));
 
-    if (!rows.length) continue;
-
-    const { error } = await supabase.from('school_events')
-      .upsert(rows, { onConflict: 'student_id,event_date,title', ignoreDuplicates: true });
-
-    if (error) { console.log(`::warning::Save failed for "${subject}": ${error.message}`); continue; }
-    totalSaved += rows.length;
+    collected.push(...rows);
   }
 
-  console.log(`::notice::School email sync: ${msgs.length} email(s), ${totalSaved} event row(s) upserted.`);
+  // Dedupe within this run, per day, allowing one title to qualify another.
+  const byDay = new Map();
+  for (const r of collected) {
+    if (!byDay.has(r.event_date)) byDay.set(r.event_date, []);
+    byDay.get(r.event_date).push(r);
+  }
+  const deduped = [...byDay.values()].flatMap(collapseDay);
+  const collapsed = collected.length - deduped.length;
+
+  // Reconcile against what is already stored: drop anything that duplicates an
+  // existing row, and clear out duplicates written by earlier runs.
+  const dates = [...new Set(deduped.map(r => r.event_date))];
+  let removed = 0;
+  if (dates.length) {
+    const { data: existing } = await supabase
+      .from('school_events')
+      .select('id,event_date,title,source')
+      .eq('student_id', WILLY_STUDENT_ID)
+      .in('event_date', dates);
+
+    const byDate = new Map();
+    for (const e of (existing || [])) {
+      if (!byDate.has(e.event_date)) byDate.set(e.event_date, []);
+      byDate.get(e.event_date).push(e);
+    }
+
+    // Existing duplicate clusters: keep the best, delete the rest.
+    const doomed = [];
+    for (const dayRows of byDate.values()) {
+      const clusters = [];
+      for (const e of dayRows) {
+        const n = normTitle(e.title);
+        const c = clusters.find(cl => sameEvent(normTitle(cl[0].title), n));
+        if (c) c.push(e); else clusters.push([e]);
+      }
+      for (const cl of clusters) {
+        if (cl.length < 2) continue;
+        cl.sort((a, b) => rank(b.source) - rank(a.source)
+                       || String(b.title).length - String(a.title).length);
+        doomed.push(...cl.slice(1).map(g => g.id));
+      }
+    }
+    if (doomed.length) {
+      const { error } = await supabase.from('school_events').delete().in('id', doomed);
+      if (error) console.log(`::warning::Could not clear duplicates: ${error.message}`);
+      else removed = doomed.length;
+    }
+  }
+
+  if (deduped.length) {
+    const { error } = await supabase.from('school_events')
+      .upsert(deduped, { onConflict: 'student_id,event_date,title', ignoreDuplicates: true });
+    if (error) console.log(`::warning::Save failed: ${error.message}`);
+    else totalSaved = deduped.length;
+  }
+
+  console.log(`::notice::School email sync: ${msgs.length} email(s), ${totalSaved} event(s) upserted` +
+              (collapsed ? `, ${collapsed} cross-source duplicate(s) merged` : '') +
+              (removed ? `, ${removed} stale duplicate(s) removed` : '') + '.');
 })().catch(err => {
   console.log(`::error::School email sync failed: ${err.message}`);
   process.exitCode = 1;
