@@ -1707,3 +1707,81 @@ body {
     60% { transform: scale(1.05); }
     100% { opacity: 1; transform: scale(1); }
 }
+
+
+/* ==========================================
+   HISTORY TAB
+   Everything assigned this school year. Dense on purpose — this is a
+   reference surface for a parent and a tutor, not a to-do list.
+   ========================================== */
+
+.history-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: var(--spacing-sm);
+}
+
+.history-stat {
+    display: grid;
+    grid-template-columns: 76px 1fr 28px;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+}
+
+.history-stat-subject { color: var(--text-secondary); }
+
+.history-stat-bar {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--bg-card-hover);
+    overflow: hidden;
+}
+
+.history-stat-bar > span {
+    display: block;
+    height: 100%;
+    border-radius: 3px;
+    background: var(--barca-blue);
+}
+
+.history-stat-count {
+    text-align: right;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.history-list { display: flex; flex-direction: column; gap: var(--spacing-lg); }
+
+.history-day { display: flex; flex-direction: column; gap: 8px; }
+
+.history-date {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--bg-card-hover);
+}
+
+.history-item {
+    display: grid;
+    grid-template-columns: 76px 1fr;
+    gap: 10px;
+    align-items: start;
+}
+
+.history-subject {
+    font-size: 12px;
+    color: var(--text-secondary);
+    padding-top: 1px;
+}
+
+.history-body .mission-text,
+.history-body .mission-parts li { font-size: 13.5px; }
+
+@media (max-width: 480px) {
+    .history-item { grid-template-columns: 1fr; gap: 2px; }
+    .history-stat { grid-template-columns: 64px 1fr 26px; }
+}

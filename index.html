@@ -25,9 +25,9 @@
                 <span class="tab-icon">📅</span>
                 <span class="tab-text">Week</span>
             </button>
-            <button class="nav-tab" onclick="switchTab('players')">
-                <span class="tab-icon">⭐</span>
-                <span class="tab-text">Players</span>
+            <button class="nav-tab" onclick="switchTab('history')">
+                <span class="tab-icon">📖</span>
+                <span class="tab-text">History</span>
             </button>
         </nav>
 
@@ -68,14 +68,6 @@
                 </div>
             </div>
 
-            <div class="card">
-                <h2 id="morning-title">🌅 Morning Checklist</h2>
-                <p class="card-subtitle">Before you leave for school:</p>
-                <div class="mission-list" id="morning-checklist">
-                    <!-- Populated by JavaScript - includes event action items -->
-                </div>
-            </div>
-
         </div>
 
         <!-- WEEK TAB -->
@@ -88,81 +80,26 @@
             </div>
         </div>
 
-        <!-- PLAYERS TAB -->
-        <div id="players-tab" class="tab-content">
-            <div class="card stadium-card">
-                <h2>🏟️ Camp Nou</h2>
-                <div class="stadium-bowl">
-                    <div class="crowd-tier tier-4" id="crowd-tier-4"></div>
-                    <div class="crowd-tier tier-3" id="crowd-tier-3"></div>
-                    <div class="crowd-tier tier-2" id="crowd-tier-2"></div>
-                    <div class="crowd-tier tier-1" id="crowd-tier-1"></div>
-                    <div class="stadium-field">
-                        <div class="field-percentage" id="stadium-percentage">0%</div>
-                        <div class="field-label" id="stadium-milestone">Fill the stadium!</div>
-                    </div>
-                </div>
-                <div class="match-form" id="match-form">
-                    <span class="form-label">This week:</span>
-                    <div class="form-results" id="streak-results"></div>
-                </div>
-                <div class="player-unlock" id="player-unlock" style="display: none;">
-                    <span class="unlock-icon">⚽</span>
-                    <span class="unlock-text" id="unlock-text"></span>
-                </div>
+        <!-- HISTORY TAB
+             Everything assigned so far this school year, newest first. The
+             Today tab only shows work still due; this is the record a tutor
+             needs — what has been covered, what keeps recurring, where the
+             load actually sits. -->
+        <div id="history-tab" class="tab-content">
+            <div class="card">
+                <h2>📖 Homework History</h2>
+                <p class="card-subtitle" id="history-subtitle">Everything assigned this year</p>
+                <div id="history-summary" class="history-summary"></div>
             </div>
             <div class="card">
-                <h2>😂 Daily Fun</h2>
-                <div class="joke-box" id="joke">
-                    Why don't scientists trust atoms? Because they make up everything!
-                </div>
-                <div class="joke-box trivia-box" id="soccer-trivia">
-                    <span class="trivia-icon">⚽</span>
-                    <span class="trivia-text">Who do you think will win the Ballon d'Or this year?</span>
-                </div>
-            </div>
-
-            <!-- Match Section: Last Result + Next Match -->
-            <div class="card match-section-card">
-                <div class="card-header">
-                    <span class="card-icon">⚽</span>
-                    <h2>FC Barcelona</h2>
-                </div>
-                <div id="match-section">
-                    <!-- Populated by JavaScript from Supabase -->
-                </div>
-            </div>
-
-            <div class="players-header">
-                <h2>⭐ Star Players</h2>
-                <p>Track your favorite Barça players</p>
-            </div>
-
-            <div class="player-cards" id="player-cards">
-                <!-- Populated by JavaScript -->
-            </div>
-
-            <div class="card">
-                <h2>📊 Season Summary</h2>
-                <div class="season-summary">
-                    <div class="season-stat">
-                        <span class="stat-value" id="total-goals">0</span>
-                        <span class="stat-label">Total Goals</span>
-                    </div>
-                    <div class="season-stat">
-                        <span class="stat-value" id="total-assists">0</span>
-                        <span class="stat-label">Total Assists</span>
-                    </div>
-                    <div class="season-stat">
-                        <span class="stat-value" id="avg-rating">0.0</span>
-                        <span class="stat-label">Avg Rating</span>
-                    </div>
+                <div id="history-list" class="history-list">
+                    <!-- Populated by JavaScript -->
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Load Supabase from CDN -->
+    </div><!-- /.container -->
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <!-- Shared utilities (must load before app.js) -->

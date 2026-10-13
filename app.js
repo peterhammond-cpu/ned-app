@@ -372,7 +372,6 @@ async function initializeApp() {
 
     // Set static content first
     setGreeting();
-    setRandomJoke();
     setRandomTrivia();
     setHomeworkSectionTitle();
 
@@ -394,10 +393,7 @@ async function initializeApp() {
     // Render dynamic content
     renderHeadsUp(schoolEvents);
     renderMissions(homeworkMissions);
-    renderMorningChecklist(schoolEvents);
     renderWeekView(homeworkMissions, schoolEvents, calendarEvents);
-    renderPlayerCards();
-    renderMatchSection();
 
     // Load saved progress and update stats
     NedCore.loadProgress();
@@ -485,6 +481,86 @@ function renderMissions(missions) {
 }
 
 // ==========================================
+// HISTORY: everything assigned this school year
+// ==========================================
+// The Today tab filters to date_due >= today, so the 80+ rows of history the
+// sync now preserves were invisible in the app. This is the view a tutor
+// needs: what has been covered, what keeps recurring, where the load sits.
+async function fetchHomeworkHistory() {
+    const today = NedCore.toDateStr(new Date());
+    const { data, error } = await NedCore.getClient()
+        .from('homework_items')
+        .select('*')
+        .eq('student_id', NedCore.getStudentId())
+        .lt('date_due', today)
+        .order('date_due', { ascending: false });
+
+    if (error) { console.error('Error fetching history:', error); return []; }
+    return data || [];
+}
+
+function renderHistory(items) {
+    const list = document.getElementById('history-list');
+    const summary = document.getElementById('history-summary');
+    const subtitle = document.getElementById('history-subtitle');
+    if (!list) return;
+
+    if (!items.length) {
+        list.innerHTML = '<div class="empty-state">Nothing yet.</div>';
+        if (summary) summary.innerHTML = '';
+        return;
+    }
+
+    // Subject counts give the at-a-glance read: which subject dominates.
+    const counts = {};
+    items.forEach(i => { counts[i.subject] = (counts[i.subject] || 0) + 1; });
+    const ordered = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+    const max = ordered[0][1];
+
+    const dates = items.map(i => i.date_due).sort();
+    if (subtitle) {
+        subtitle.textContent = `${items.length} assignments since ${NedCore.formatShortDate
+            ? NedCore.formatShortDate(dates[0]) : dates[0]}`;
+    }
+
+    if (summary) {
+        summary.innerHTML = ordered.map(([subject, n]) => `
+            <div class="history-stat">
+                <span class="history-stat-subject">${subject}</span>
+                <span class="history-stat-bar"><span style="width:${Math.round(n / max * 100)}%"></span></span>
+                <span class="history-stat-count">${n}</span>
+            </div>
+        `).join('');
+    }
+
+    // Group by due date, newest first.
+    const byDate = new Map();
+    items.forEach(i => {
+        if (!byDate.has(i.date_due)) byDate.set(i.date_due, []);
+        byDate.get(i.date_due).push(i);
+    });
+
+    list.innerHTML = [...byDate.entries()].map(([date, rows]) => {
+        const d = new Date(date + 'T00:00:00');
+        const label = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        return `
+            <div class="history-day">
+                <div class="history-date">${label}</div>
+                ${rows.map(r => {
+                    const parts = splitHomeworkParts(r.description || r.title);
+                    const body = parts.length > 1
+                        ? `<ul class="mission-parts">${parts.map(p => `<li>${p}</li>`).join('')}</ul>`
+                        : `<div class="mission-text">${parts[0] || r.title}</div>`;
+                    return `<div class="history-item">
+                        <span class="history-subject">${r.subject}</span>
+                        <div class="history-body">${body}</div>
+                    </div>`;
+                }).join('')}
+            </div>`;
+    }).join('');
+}
+
+// ==========================================
 // SPLIT MULTI-PART HOMEWORK
 // ==========================================
 // Teachers write several tasks into one line:
@@ -519,48 +595,6 @@ function splitHomeworkParts(text) {
     return parts.length ? parts : [str];
 }
 
-// ==========================================
-// MORNING CHECKLIST: With Event Action Items
-// ==========================================
-function renderMorningChecklist(events) {
-    const container = document.getElementById('morning-checklist');
-
-    const tomorrow = new Date();
-    tomorrow.setHours(0, 0, 0, 0);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const tomorrowStr = NedCore.toDateStr(tomorrow);
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const todayStr = NedCore.toDateStr(today);
-
-    const actionItems = (events || [])
-        .filter(event => {
-            const hasAction = event.action_required && event.action_text && event.action_text.trim();
-            const isRelevant = event.event_date === todayStr || event.event_date === tomorrowStr;
-            return hasAction && isRelevant;
-        })
-        .map(event => ({
-            id: `event-action-${event.id}`,
-            subject: 'School Event',
-            text: `${getEventEmoji(event.event_type, event.title)} ${event.action_text}`,
-            badge: NedCore.isToday(event.event_date) ? 'TODAY' : 'TOMORROW',
-            badgeType: 'warning'
-        }));
-
-    const allItems = [...actionItems, ...defaultMorningItems];
-
-    container.innerHTML = allItems.map(item => `
-        <div class="mission-item" data-id="${item.id}" onclick="toggleMission(this)">
-            <div class="mission-checkbox"></div>
-            <div class="mission-content">
-                <div class="mission-text">${item.text}</div>
-                <div class="mission-subject">${item.subject}</div>
-            </div>
-            ${item.badge ? `<span class="mission-badge ${item.badgeType}">${item.badge}</span>` : ''}
-        </div>
-    `).join('');
-}
 
 // ==========================================
 // WEEK VIEW: Homework + Events + Calendar Combined
@@ -746,11 +780,6 @@ function setGreeting() {
 // ==========================================
 // JOKES & TRIVIA
 // ==========================================
-function setRandomJoke() {
-    const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
-    document.getElementById('joke').textContent = randomJoke;
-}
-
 function setRandomTrivia() {
     const randomTrivia = soccerTrivia[Math.floor(Math.random() * soccerTrivia.length)];
     const triviaText = document.querySelector('.trivia-text');
@@ -761,163 +790,6 @@ function setRandomTrivia() {
 
 // ==========================================
 // MATCH SECTION (Last Result + Next Match)
-// ==========================================
-function renderMatchSection() {
-    const container = document.getElementById('match-section');
-    if (!container) return;
-
-    if (!matchData) {
-        container.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-icon">⚽</div>
-                <div class="empty-text">No match data available</div>
-            </div>
-        `;
-        return;
-    }
-
-    const lastMatchDate = matchData.last_match_date
-        ? new Date(matchData.last_match_date).toLocaleDateString('en-US', {
-            weekday: 'short', month: 'short', day: 'numeric'
-          })
-        : '';
-
-    let nextMatchDate = '';
-    let nextMatchTime = '';
-    if (matchData.next_match_date) {
-        const nextDate = new Date(matchData.next_match_date);
-        nextMatchDate = nextDate.toLocaleDateString('en-US', {
-            weekday: 'long', month: 'short', day: 'numeric'
-        });
-        nextMatchTime = nextDate.toLocaleTimeString('en-US', {
-            hour: 'numeric', minute: '2-digit', timeZoneName: 'short'
-        });
-    }
-
-    const resultClass = matchData.last_result === 'WIN' ? 'win'
-        : matchData.last_result === 'LOSS' ? 'loss' : 'draw';
-    const resultEmoji = matchData.last_result === 'WIN' ? '🎉'
-        : matchData.last_result === 'LOSS' ? '😤' : '🤝';
-
-    let barcaScore, oppScore;
-    if (matchData.last_home_or_away === 'HOME') {
-        barcaScore = matchData.last_score_home;
-        oppScore = matchData.last_score_away;
-    } else {
-        barcaScore = matchData.last_score_away;
-        oppScore = matchData.last_score_home;
-    }
-
-    container.innerHTML = `
-        <div class="match-result-card ${resultClass}">
-            <div class="match-result-header">
-                <span class="result-label">Last Match ${resultEmoji}</span>
-                <span class="result-competition">${matchData.last_competition || ''}</span>
-            </div>
-            <div class="match-result-content">
-                <div class="match-result-teams">
-                    <span class="team-name barca">Barcelona</span>
-                    <span class="match-score">${barcaScore} - ${oppScore}</span>
-                    <span class="team-name">${matchData.last_opponent || 'Unknown'}</span>
-                </div>
-                <div class="match-result-date">${lastMatchDate} • ${matchData.last_home_or_away || ''}</div>
-            </div>
-        </div>
-
-        <div class="next-match-card">
-            <div class="next-match-header">
-                <span class="next-label">Next Match</span>
-                <span class="next-competition">${matchData.next_competition || ''}</span>
-            </div>
-            <div class="next-match-content">
-                <div class="next-match-teams">
-                    <div class="team">
-                        <div class="team-crest">🔵🔴</div>
-                        <span class="team-name">Barcelona</span>
-                    </div>
-                    <div class="match-vs">VS</div>
-                    <div class="team">
-                        <div class="team-crest">⚪</div>
-                        <span class="team-name">${matchData.next_opponent || 'TBD'}</span>
-                    </div>
-                </div>
-                <div class="next-match-datetime">
-                    <span class="next-date">📅 ${nextMatchDate || 'TBD'}</span>
-                    <span class="next-time">⏰ ${nextMatchTime || ''}</span>
-                    <span class="next-venue">${matchData.next_home_or_away === 'HOME' ? '🏟️ Home' : '✈️ Away'}</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="match-motivation">
-            <span>💡</span>
-            <span>${voiceMessages[currentVoice].matchMotivation}</span>
-        </div>
-    `;
-}
-
-// ==========================================
-// PLAYER CARDS
-// ==========================================
-function renderPlayerCards() {
-    const container = document.getElementById('player-cards');
-    if (!container) return;
-
-    container.innerHTML = playerData.map(player => `
-        <div class="player-card" data-number="${player.number}">
-            <div class="player-header">
-                <div class="player-avatar">${player.emoji}</div>
-                <div class="player-info">
-                    <h3>${player.name}</h3>
-                    <span class="player-position">#${player.number} • ${player.position}</span>
-                </div>
-            </div>
-            <div class="player-stats">
-                <div class="player-stat">
-                    <span class="stat-value">${player.stats.goals}</span>
-                    <span class="stat-label">Goals</span>
-                </div>
-                <div class="player-stat">
-                    <span class="stat-value">${player.stats.assists}</span>
-                    <span class="stat-label">Assists</span>
-                </div>
-                <div class="player-stat">
-                    <span class="stat-value">${player.stats.rating}</span>
-                    <span class="stat-label">Rating</span>
-                </div>
-                <div class="player-stat">
-                    <span class="stat-value">${player.stats.matches}</span>
-                    <span class="stat-label">Games</span>
-                </div>
-            </div>
-            <div class="player-form">
-                <span class="form-label">Last 5:</span>
-                <div class="form-icons">
-                    ${player.form.map(result => `
-                        <span class="form-icon ${result.toLowerCase() === 'w' ? 'win' : result.toLowerCase() === 'd' ? 'draw' : 'loss'}">
-                            ${result}
-                        </span>
-                    `).join('')}
-                </div>
-            </div>
-        </div>
-    `).join('');
-
-    const totalGoals = playerData.reduce((sum, p) => sum + p.stats.goals, 0);
-    const totalAssists = playerData.reduce((sum, p) => sum + p.stats.assists, 0);
-    const avgRating = (playerData.reduce((sum, p) => sum + p.stats.rating, 0) / playerData.length).toFixed(1);
-
-    const goalsEl = document.getElementById('total-goals');
-    const assistsEl = document.getElementById('total-assists');
-    const ratingEl = document.getElementById('avg-rating');
-
-    if (goalsEl) goalsEl.textContent = totalGoals;
-    if (assistsEl) assistsEl.textContent = totalAssists;
-    if (ratingEl) ratingEl.textContent = avgRating;
-}
-
-// ==========================================
-// MISSION TOGGLE (delegates to NedCore)
 // ==========================================
 function toggleMission(element) {
     NedCore.toggleMission(element, updateStats);
@@ -958,8 +830,6 @@ function updateStats() {
     if (textEl) textEl.textContent = `${percentage}% Complete`;
 
     // Update stadium
-    updateStadium(percentage);
-    updateStreakDisplay();
 
     // Track today's completion for streak
     const today = NedCore.toDateStr();
@@ -967,110 +837,9 @@ function updateStats() {
         const streakData = JSON.parse(localStorage.getItem('nedStreak') || '{}');
         streakData[today] = true;
         localStorage.setItem('nedStreak', JSON.stringify(streakData));
-        showPlayerUnlock();
     }
 }
 
-function updateStadium(percentage) {
-    // Fill tiers based on percentage (4 tiers = 25% each)
-    const tiers = [
-        { el: document.getElementById('crowd-tier-1'), threshold: 25 },
-        { el: document.getElementById('crowd-tier-2'), threshold: 50 },
-        { el: document.getElementById('crowd-tier-3'), threshold: 75 },
-        { el: document.getElementById('crowd-tier-4'), threshold: 100 }
-    ];
-
-    tiers.forEach(tier => {
-        if (!tier.el) return;
-        if (percentage >= tier.threshold) {
-            if (!tier.el.classList.contains('filled')) {
-                tier.el.classList.add('filled');
-            }
-        } else {
-            tier.el.classList.remove('filled');
-        }
-    });
-
-    // Update field display
-    const percentEl = document.getElementById('stadium-percentage');
-    const milestoneEl = document.getElementById('stadium-milestone');
-    if (percentEl) percentEl.textContent = `${percentage}%`;
-
-    if (milestoneEl) {
-        let milestone = 'Fill the stadium!';
-        let isMilestone = false;
-
-        if (percentage === 100) {
-            milestone = 'GOOOOOL! 100% complete!';
-            isMilestone = true;
-        } else if (percentage >= 75) {
-            milestone = 'Final push!';
-            isMilestone = true;
-        } else if (percentage >= 50) {
-            milestone = 'Half-time! Keep going!';
-            isMilestone = true;
-        } else if (percentage >= 25) {
-            milestone = 'Crowd is building!';
-            isMilestone = true;
-        }
-
-        milestoneEl.textContent = milestone;
-        milestoneEl.classList.toggle('milestone', isMilestone);
-    }
-}
-
-function updateStreakDisplay() {
-    const resultsEl = document.getElementById('streak-results');
-    if (!resultsEl) return;
-
-    const streakData = JSON.parse(localStorage.getItem('nedStreak') || '{}');
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    // Show last 7 days
-    const badges = [];
-    for (let i = 6; i >= 0; i--) {
-        const date = new Date(today);
-        date.setDate(date.getDate() - i);
-        const dateStr = NedCore.toDateStr(date);
-        const dayName = date.toLocaleDateString('en-US', { weekday: 'narrow' });
-
-        if (i === 0) {
-            // Today - show as pending unless complete
-            badges.push(`<div class="form-badge ${streakData[dateStr] ? 'win' : 'pending'}" title="${dayName}">${streakData[dateStr] ? 'W' : dayName}</div>`);
-        } else if (streakData[dateStr]) {
-            badges.push(`<div class="form-badge win" title="${dayName}">W</div>`);
-        } else {
-            badges.push(`<div class="form-badge loss" title="${dayName}">L</div>`);
-        }
-    }
-
-    resultsEl.innerHTML = badges.join('');
-}
-
-function showPlayerUnlock() {
-    const unlockEl = document.getElementById('player-unlock');
-    const textEl = document.getElementById('unlock-text');
-    if (!unlockEl || !textEl) return;
-
-    // Only show once per day
-    const today = NedCore.toDateStr();
-    if (localStorage.getItem('nedUnlockShown') === today) {
-        unlockEl.style.display = 'flex';
-        textEl.textContent = localStorage.getItem('nedUnlockFact') || BARCA_FACTS[0];
-        return;
-    }
-
-    const fact = BARCA_FACTS[Math.floor(Math.random() * BARCA_FACTS.length)];
-    textEl.textContent = fact;
-    unlockEl.style.display = 'flex';
-    localStorage.setItem('nedUnlockShown', today);
-    localStorage.setItem('nedUnlockFact', fact);
-}
-
-// ==========================================
-// SATURDAY SHOT REMINDER
-// ==========================================
 function checkSaturdayReminder() {
     const day = new Date().getDay();
     if (day === 6) {
@@ -1100,6 +869,23 @@ function showSaturdayReminder() {
 // ==========================================
 // TAB NAVIGATION (delegates to NedCore)
 // ==========================================
+let historyLoaded = false;
+
 function switchTab(tabName) {
     NedCore.switchTab(tabName);
+
+    // History is a year of rows and nobody needs it on first paint, so load
+    // it the first time the tab is opened rather than on boot.
+    if (tabName === 'history' && !historyLoaded) {
+        historyLoaded = true;
+        const list = document.getElementById('history-list');
+        if (list) list.innerHTML = '<div class="empty-state">Loading…</div>';
+        fetchHomeworkHistory()
+            .then(renderHistory)
+            .catch(err => {
+                console.error('History failed:', err);
+                historyLoaded = false;
+                if (list) list.innerHTML = '<div class="empty-state">Could not load history.</div>';
+            });
+    }
 }
