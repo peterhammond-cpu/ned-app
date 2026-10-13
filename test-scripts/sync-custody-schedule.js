@@ -184,12 +184,20 @@ function pickTab(sheets) {
     const cells = row.values || [];
 
     // A header row re-declares which column is which weekday.
+    //
+    // Do NOT skip the row after finding one: in this sheet the month name and
+    // the weekday header share a single row —
+    //   | Sep | w/o Mon | M | T | W | Th | F | Sat | Sun |
+    // — so continuing here left `month` null and every day cell was discarded.
+    // That is exactly what happened on run #318 (0 days resolved, down from
+    // 350), and the test missed it by putting month and header on separate
+    // rows. Fall through and let the month scan below see this row too.
     const header = {};
     cells.forEach((cell, i) => {
       const t = val(cell).toLowerCase().replace(/[^a-z]/g, '');
       if (WD[t] !== undefined) header[i] = WD[t];
     });
-    if (Object.keys(header).length >= 5) { colWeekday = header; continue; }
+    if (Object.keys(header).length >= 5) colWeekday = header;
 
     // A month name applies until the next one appears.
     for (const cell of cells) {
