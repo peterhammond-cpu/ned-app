@@ -248,6 +248,25 @@ function parseDueDate(description, assignedDate, closureDates) {
     return nextDay;
 }
 
+// Date headers on the Canvas page, tolerant of how the teacher actually
+// writes them: full or abbreviated weekday, optional dots, optional commas.
+const DAY_RE = '(?:mon|tues?|wed(?:s|nes)?|thur?s?|fri|sat(?:ur)?|sun)(?:day)?';
+const DATE_HEADER_RE = new RegExp(
+    '^' + DAY_RE + '\\.?,?\\s+([A-Za-z]+\\.?)\\s+(\\d{1,2}),?\\s+(\\d{4})', 'i');
+
+const MONTHS_SHORT = {
+    jan:0, feb:1, mar:2, apr:3, may:4, jun:5, june:5, jul:6, july:6,
+    aug:7, sep:8, sept:8, oct:9, nov:10, dec:11
+};
+
+function dateFromParts(monthRaw, day, year) {
+    const key = String(monthRaw).toLowerCase().replace(/\./g, '');
+    const m = MONTHS_SHORT[key] ?? MONTHS_SHORT[key.slice(0, 3)];
+    if (m === undefined) return null;
+    const d = new Date(Number(year), m, Number(day));
+    return isNaN(d) ? null : d;
+}
+
 // ==========================================
 // CANVAS FETCHING & PARSING
 // ==========================================
@@ -359,12 +378,28 @@ function parseHomework(html, closureDates) {
     $('p').each((i, elem) => {
         const text = $(elem).text().trim();
 
-        // Check for date header (e.g., "Monday, Dec 1, 2025")
-        const dateMatch = text.match(/^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday),?\s+([A-Za-z]+\.?\s+\d{1,2},?\s+\d{4})/i);
+        // Check for a date header.
+        //
+        // The teacher is inconsistent about weekday names and month dots:
+        //   "Monday, Dec 1, 2025"   "Tues, Oct 20, 2026"
+        //   "Thurs, Oct 15, 2026"   "Tuesday, Oct. 13, 2026"
+        //   "Weds, Oct 21, 2026"    "Friday, Sept. 11, 2026"
+        //
+        // The original pattern required FULL weekday names, so every
+        // abbreviated day was silently skipped along with all its homework.
+        // That is why Mondays looked empty and why nothing showed on
+        // 2026-10-20 even though the section was right there on the page.
+        const dateMatch = text.match(DATE_HEADER_RE);
 
         if (dateMatch) {
             currentDateStr = dateMatch[0].replace(/\*\*/g, '').trim();
-            currentDate = new Date(currentDateStr);
+            // Build the date from captured parts. new Date("Tues, Oct 20,
+            // 2026") is not reliably parseable — the abbreviation defeats it.
+            currentDate = dateFromParts(dateMatch[1], dateMatch[2], dateMatch[3]);
+            if (!currentDate) {
+                console.log(`::warning::Unparseable date header: "${currentDateStr}"`);
+                return;
+            }
             homeworkByDate[currentDateStr] = {
                 assignedDate: currentDate,
                 items: []
