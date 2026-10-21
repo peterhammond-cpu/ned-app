@@ -2,9 +2,19 @@ name: Ned App Sync
 
 on:
   schedule:
-    # 3:00 PM CST = 21:00 UTC (all syncs + notification, daily)
-    - cron: '0 21 * * *'
-    # 7:30 PM CST = 01:30 UTC next day (evening reminder)
+    # Teachers post the day's homework during the school day, and the app
+    # switches to "tonight's homework" at 3:30pm. One run at 21:00 UTC was not
+    # enough: GitHub queued it ~3 hours late (top-of-the-hour slots are the
+    # busiest), so the app sat empty from 3:30 to about 7pm. Three afternoon
+    # runs, deliberately off the hour. Times in UTC; local shifts an hour when
+    # DST ends on 1 Nov:
+    #   19:47 UTC = 2:47pm CDT / 1:47pm CST
+    #   21:17 UTC = 4:17pm CDT / 3:17pm CST
+    #   22:47 UTC = 5:47pm CDT / 4:47pm CST   (also sends the homework push)
+    - cron: '47 19 * * *'
+    - cron: '17 21 * * *'
+    - cron: '47 22 * * *'
+    # 01:30 UTC = 8:30pm CDT / 7:30pm CST: evening reminder only, no syncs
     - cron: '30 1 * * *'
   workflow_dispatch:
 
@@ -120,6 +130,9 @@ jobs:
           node data-quality-check.js
 
       - name: Send Homework Notification
+        # Two pushes a day at most: late afternoon and the evening reminder.
+        # The earlier syncs only refresh data, so Willy is not buzzed 4 times.
+        if: github.event.schedule == '47 22 * * *' || github.event.schedule == '30 1 * * *'
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}

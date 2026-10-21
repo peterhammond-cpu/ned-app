@@ -459,10 +459,32 @@ function renderMissions(missions) {
         container.innerHTML = `
             <div class="empty-state">
                 <div class="empty-icon">🔭</div>
-                <div class="empty-text">No homework found!</div>
-                <div class="empty-subtext">Either you're all caught up, or we need to sync with Canvas.</div>
+                <div class="empty-text">No homework showing yet</div>
+                <div class="empty-subtext" id="homework-sync-note">Checking when Ned last synced with Canvas…</div>
             </div>
         `;
+        // "No homework" and "not synced yet" looked identical, which is how a
+        // late sync passed for an empty evening (21 Oct). Say which it is.
+        NedCore.getClient()
+            .from('homework_items')
+            .select('synced_at')
+            .eq('student_id', NedCore.getStudentId())
+            .order('synced_at', { ascending: false })
+            .limit(1)
+            .then(({ data, error }) => {
+                const note = document.getElementById('homework-sync-note');
+                if (!note) return;
+                if (error || !data?.length) { note.textContent = 'Could not reach the homework database.'; return; }
+                const last = new Date(data[0].synced_at + (/[zZ]|[+-]\d\d:?\d\d$/.test(data[0].synced_at) ? '' : 'Z'));
+                const sameDay = last.toDateString() === new Date().toDateString(); // local days, not UTC
+                const when = last.toLocaleString('en-US', sameDay
+                    ? { hour: 'numeric', minute: '2-digit' }
+                    : { weekday: 'short', hour: 'numeric', minute: '2-digit' });
+                note.textContent = `Ned last checked Canvas ${sameDay ? 'at' : 'on'} ${when}. ` +
+                    (new Date().getHours() < 19
+                        ? "If tonight's homework is on Canvas, it should appear after the next check (around 3, 4 and 6pm)."
+                        : 'If Canvas has homework for tomorrow, something is wrong with the sync.');
+            });
         return;
     }
 

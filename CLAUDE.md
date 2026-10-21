@@ -10,7 +10,7 @@ I'm a solo developer vibe-coding with Claude Code. Prefer simple, working code o
 - **Frontend:** Vanilla HTML/CSS/JS (PWA, no framework - intentional)
 - **Hosting:** Netlify (free tier, auto-deploy from main)
 - **Database:** Supabase PostgreSQL (multi-tenant, RLS enabled)
-- **LMS Sync:** Canvas API via GitHub Actions (12pm & 3:15pm daily)
+- **LMS Sync:** Canvas API via GitHub Actions (~2:47, 4:17, 5:47pm CDT daily; push at 5:47pm + 8:30pm)
 - **AI Tutor:** Claude API (Phase 2 - in progress)
 - **Football Data:** football-data.org (7am daily sync)
 
