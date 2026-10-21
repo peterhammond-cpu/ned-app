@@ -1018,6 +1018,8 @@ function switchTab(tabName) {
             });
     }
 
+    if (tabName === 'hspt' && typeof HSPT !== 'undefined') HSPT.open();
+
     if (tabName === 'mastery' && !masteryLoaded) {
         masteryLoaded = true;
         const head = document.getElementById('mastery-head');
@@ -1026,6 +1028,11 @@ function switchTab(tabName) {
             .then(result => {
                 if (result.status === 'error') masteryLoaded = false;
                 renderMastery(result);
+                // HSPT practice summary sits behind the same key.
+                const reportCard = document.getElementById('hspt-report')?.closest('.card');
+                const keyOk = result.status === 'ok' || result.status === 'empty';
+                if (reportCard) reportCard.style.display = keyOk ? '' : 'none';
+                if (keyOk && typeof HSPT !== 'undefined') HSPT.report(localStorage.getItem(MASTERY_KEY_STORAGE));
             })
             .catch(err => {
                 console.error('Mastery failed:', err);

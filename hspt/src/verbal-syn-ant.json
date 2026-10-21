@@ -1,0 +1,1652 @@
+[
+  {
+    "id": "syn-001",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Abundant</b> most nearly means",
+    "choices": [
+      "scarce",
+      "plentiful",
+      "heavy",
+      "hidden"
+    ],
+    "answer": 1,
+    "explanation": "Abundant means more than enough — plentiful. Tip: 'abound' = to be full of. 'Scarce' is the opposite trap."
+  },
+  {
+    "id": "syn-002",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Reluctant</b> most nearly means",
+    "choices": [
+      "eager",
+      "sorry",
+      "unwilling",
+      "quiet"
+    ],
+    "answer": 2,
+    "explanation": "Reluctant means not wanting to do something — unwilling. 'Eager' is the opposite trap."
+  },
+  {
+    "id": "syn-003",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Vivid</b> most nearly means",
+    "choices": [
+      "bright",
+      "dull",
+      "damp",
+      "brief"
+    ],
+    "answer": 0,
+    "explanation": "Vivid means bright and strong, like vivid colors. Root 'viv' = life (vivid things look alive). 'Dull' is the opposite trap."
+  },
+  {
+    "id": "syn-004",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Tranquil</b> most nearly means",
+    "choices": [
+      "noisy",
+      "calm",
+      "tiny",
+      "chilly"
+    ],
+    "answer": 1,
+    "explanation": "Tranquil means peaceful and calm, like a still lake. 'Noisy' is the opposite trap."
+  },
+  {
+    "id": "syn-005",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Timid</b> most nearly means",
+    "choices": [
+      "shy",
+      "bold",
+      "tired",
+      "small"
+    ],
+    "answer": 0,
+    "explanation": "Timid means shy and easily scared. Tip: timid sounds like 'timorous' — full of fear. 'Bold' is the opposite trap."
+  },
+  {
+    "id": "syn-006",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Feeble</b> most nearly means",
+    "choices": [
+      "strong",
+      "weak",
+      "noisy",
+      "angry"
+    ],
+    "answer": 1,
+    "explanation": "Feeble means weak, without much strength. 'Strong' is the opposite trap."
+  },
+  {
+    "id": "syn-007",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Vague</b> most nearly means",
+    "choices": [
+      "precise",
+      "empty",
+      "valuable",
+      "unclear"
+    ],
+    "answer": 3,
+    "explanation": "Vague means not clear or not specific. 'Precise' is the opposite trap."
+  },
+  {
+    "id": "syn-008",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Novice</b> most nearly means",
+    "choices": [
+      "expert",
+      "story",
+      "helper",
+      "beginner"
+    ],
+    "answer": 3,
+    "explanation": "A novice is a beginner. Root 'nov' = new (like 'novel' and 'renovate'). 'Story' is a trap because 'novel' looks similar, and 'expert' is the opposite."
+  },
+  {
+    "id": "syn-009",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Ample</b> most nearly means",
+    "choices": [
+      "lacking",
+      "simple",
+      "sufficient",
+      "sample"
+    ],
+    "answer": 2,
+    "explanation": "Ample means enough or more than enough. 'Sample' only looks similar, and 'lacking' is the opposite."
+  },
+  {
+    "id": "syn-010",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Hostile</b> most nearly means",
+    "choices": [
+      "welcoming",
+      "sickly",
+      "careless",
+      "unfriendly"
+    ],
+    "answer": 3,
+    "explanation": "Hostile means unfriendly, like an enemy. Tip: 'hostile' and 'hospital' look alike but are unrelated, and 'welcoming' is the opposite trap."
+  },
+  {
+    "id": "syn-011",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Elated</b> most nearly means",
+    "choices": [
+      "overjoyed",
+      "gloomy",
+      "delayed",
+      "tired"
+    ],
+    "answer": 0,
+    "explanation": "Elated means extremely happy. 'Delayed' is a trap because 'elated' contains 'late', and 'gloomy' is the opposite."
+  },
+  {
+    "id": "syn-012",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Rigid</b> most nearly means",
+    "choices": [
+      "stiff",
+      "flexible",
+      "cold",
+      "rough"
+    ],
+    "answer": 0,
+    "explanation": "Rigid means stiff and not able to bend. 'Flexible' is the opposite trap."
+  },
+  {
+    "id": "syn-013",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Fragile</b> most nearly means",
+    "choices": [
+      "sturdy",
+      "small",
+      "breakable",
+      "fresh"
+    ],
+    "answer": 2,
+    "explanation": "Fragile means easily broken. Root 'frag' = break (like 'fragment'). 'Sturdy' is the opposite trap."
+  },
+  {
+    "id": "syn-014",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Drowsy</b> most nearly means",
+    "choices": [
+      "alert",
+      "wet",
+      "dizzy",
+      "sleepy"
+    ],
+    "answer": 3,
+    "explanation": "Drowsy means sleepy. 'Wet' is a trap because 'drowsy' sounds like 'drown', and 'alert' is the opposite."
+  },
+  {
+    "id": "syn-015",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Fatigue</b> most nearly means",
+    "choices": [
+      "exhaustion",
+      "energy",
+      "boredom",
+      "fear"
+    ],
+    "answer": 0,
+    "explanation": "Fatigue means extreme tiredness. 'Boredom' is tempting because bored people can seem tired, but boredom is a lack of interest, not a lack of energy."
+  },
+  {
+    "id": "syn-016",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Peril</b> most nearly means",
+    "choices": [
+      "safety",
+      "anger",
+      "danger",
+      "journey"
+    ],
+    "answer": 2,
+    "explanation": "Peril means serious danger. Tip: 'perilous' = dangerous. 'Journey' is a trap because people face peril on adventures, but they are not the same thing."
+  },
+  {
+    "id": "syn-017",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Conceal</b> most nearly means",
+    "choices": [
+      "reveal",
+      "freeze",
+      "collect",
+      "hide"
+    ],
+    "answer": 3,
+    "explanation": "Conceal means to hide. 'Reveal' is the opposite trap."
+  },
+  {
+    "id": "syn-018",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Vacant</b> most nearly means",
+    "choices": [
+      "empty",
+      "occupied",
+      "cheap",
+      "lazy"
+    ],
+    "answer": 0,
+    "explanation": "Vacant means empty, with no one using it. Root 'vac' = empty (like 'vacuum' and 'vacation'). 'Occupied' is the opposite trap."
+  },
+  {
+    "id": "syn-019",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Hasty</b> most nearly means",
+    "choices": [
+      "careful",
+      "angry",
+      "hurried",
+      "rude"
+    ],
+    "answer": 2,
+    "explanation": "Hasty means done too quickly. Tip: 'haste' = speed. 'Careful' is the opposite trap."
+  },
+  {
+    "id": "syn-020",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 1,
+    "prompt": "<b>Glum</b> most nearly means",
+    "choices": [
+      "cheerful",
+      "sticky",
+      "stubborn",
+      "gloomy"
+    ],
+    "answer": 3,
+    "explanation": "Glum means sad and gloomy. 'Sticky' is a trap because 'glum' sounds like 'glue', and 'cheerful' is the opposite."
+  },
+  {
+    "id": "syn-021",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Candid</b> most nearly means",
+    "choices": [
+      "secretive",
+      "sweet",
+      "careful",
+      "frank"
+    ],
+    "answer": 3,
+    "explanation": "Candid means honest and direct — frank. 'Sweet' is a trap because 'candid' looks like 'candy', and 'secretive' is the opposite."
+  },
+  {
+    "id": "syn-022",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Meager</b> most nearly means",
+    "choices": [
+      "lavish",
+      "eager",
+      "scanty",
+      "bitter"
+    ],
+    "answer": 2,
+    "explanation": "Meager means too small in amount — scanty, like a meager lunch. 'Eager' only looks similar, and 'lavish' is the opposite."
+  },
+  {
+    "id": "syn-023",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Prudent</b> most nearly means",
+    "choices": [
+      "sensible",
+      "reckless",
+      "proud",
+      "rude"
+    ],
+    "answer": 0,
+    "explanation": "Prudent means wise and careful — sensible. 'Proud' only sounds similar, and 'reckless' is the opposite."
+  },
+  {
+    "id": "syn-024",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Diligent</b> most nearly means",
+    "choices": [
+      "lazy",
+      "hardworking",
+      "delicate",
+      "gentle"
+    ],
+    "answer": 1,
+    "explanation": "Diligent means hardworking and steady. 'Delicate' only sounds similar, and 'lazy' is the opposite."
+  },
+  {
+    "id": "syn-025",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Frugal</b> most nearly means",
+    "choices": [
+      "thrifty",
+      "wasteful",
+      "fragile",
+      "grumpy"
+    ],
+    "answer": 0,
+    "explanation": "Frugal means careful not to waste money — thrifty. 'Wasteful' is the opposite trap."
+  },
+  {
+    "id": "syn-026",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Concise</b> most nearly means",
+    "choices": [
+      "wordy",
+      "loud",
+      "brief",
+      "certain"
+    ],
+    "answer": 2,
+    "explanation": "Concise means saying a lot in few words — brief. 'Wordy' is the opposite trap."
+  },
+  {
+    "id": "syn-027",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Obsolete</b> most nearly means",
+    "choices": [
+      "outdated",
+      "modern",
+      "stubborn",
+      "unclear"
+    ],
+    "answer": 0,
+    "explanation": "Obsolete means no longer used — outdated, like a flip phone. 'Stubborn' is a trap because 'obstinate' looks similar, and 'modern' is the opposite."
+  },
+  {
+    "id": "syn-028",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Lenient</b> most nearly means",
+    "choices": [
+      "merciful",
+      "strict",
+      "slanted",
+      "sleepy"
+    ],
+    "answer": 0,
+    "explanation": "Lenient means not strict — going easy on someone, like a lenient teacher. 'Slanted' is a trap because 'lenient' looks like 'leaning', and 'strict' is the opposite."
+  },
+  {
+    "id": "syn-029",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Benevolent</b> most nearly means",
+    "choices": [
+      "kind",
+      "cruel",
+      "wealthy",
+      "famous"
+    ],
+    "answer": 0,
+    "explanation": "Benevolent means kind and wanting to do good. Root 'bene' = good (like 'benefit'). 'Wealthy' is a trap because rich people can give, but being rich is not the same as being kind."
+  },
+  {
+    "id": "syn-030",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Resilient</b> most nearly means",
+    "choices": [
+      "easily broken",
+      "stubborn",
+      "quick to recover",
+      "resentful"
+    ],
+    "answer": 2,
+    "explanation": "Resilient means able to bounce back after trouble. 'Stubborn' is tempting, but stubborn means refusing to change, not recovering."
+  },
+  {
+    "id": "syn-031",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Ominous</b> most nearly means",
+    "choices": [
+      "hopeful",
+      "threatening",
+      "enormous",
+      "numerous"
+    ],
+    "answer": 1,
+    "explanation": "Ominous means seeming to warn that something bad will happen. Tip: an 'omen' is a sign. 'Enormous' only rhymes, and 'hopeful' is the opposite."
+  },
+  {
+    "id": "syn-032",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Tedious</b> most nearly means",
+    "choices": [
+      "exciting",
+      "tidy",
+      "boring",
+      "nervous"
+    ],
+    "answer": 2,
+    "explanation": "Tedious means long, dull, and tiring. 'Tidy' only sounds similar, and 'exciting' is the opposite."
+  },
+  {
+    "id": "syn-033",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Impartial</b> most nearly means",
+    "choices": [
+      "fair",
+      "biased",
+      "incomplete",
+      "polite"
+    ],
+    "answer": 0,
+    "explanation": "Impartial means not taking sides — fair, like a good referee. 'Incomplete' is a trap because 'partial' can mean 'part of', but here it means 'favoring one side'."
+  },
+  {
+    "id": "syn-034",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Scrutinize</b> most nearly means",
+    "choices": [
+      "ignore",
+      "scribble",
+      "scatter",
+      "examine"
+    ],
+    "answer": 3,
+    "explanation": "Scrutinize means to look at something very closely — examine. 'Ignore' is the opposite trap."
+  },
+  {
+    "id": "syn-035",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Eloquent</b> most nearly means",
+    "choices": [
+      "tongue-tied",
+      "well-spoken",
+      "elderly",
+      "loud"
+    ],
+    "answer": 1,
+    "explanation": "Eloquent means speaking clearly and powerfully. Root 'loq' = speak (like 'loquacious'). 'Loud' is tempting, but volume is not skill."
+  },
+  {
+    "id": "syn-036",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Adversary</b> most nearly means",
+    "choices": [
+      "ally",
+      "advertiser",
+      "opponent",
+      "guardian"
+    ],
+    "answer": 2,
+    "explanation": "An adversary is an enemy or opponent. Tip: 'adversity' = hard times. 'Ally' is the opposite trap."
+  },
+  {
+    "id": "syn-037",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Jovial</b> most nearly means",
+    "choices": [
+      "grumpy",
+      "cheerful",
+      "youthful",
+      "formal"
+    ],
+    "answer": 1,
+    "explanation": "Jovial means cheerful and jolly. 'Youthful' is a trap because 'jovial' looks a bit like 'juvenile', and 'grumpy' is the opposite."
+  },
+  {
+    "id": "syn-038",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Ponder</b> most nearly means",
+    "choices": [
+      "ignore",
+      "consider",
+      "pound",
+      "wander"
+    ],
+    "answer": 1,
+    "explanation": "Ponder means to think about something carefully. 'Wander' is a trap because it rhymes, and 'ignore' is the opposite."
+  },
+  {
+    "id": "syn-039",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Hinder</b> most nearly means",
+    "choices": [
+      "assist",
+      "obstruct",
+      "follow",
+      "hide"
+    ],
+    "answer": 1,
+    "explanation": "Hinder means to get in the way of — obstruct. 'Follow' is a trap because 'hind' means behind, and 'assist' is the opposite."
+  },
+  {
+    "id": "syn-040",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Vigilant</b> most nearly means",
+    "choices": [
+      "careless",
+      "violent",
+      "watchful",
+      "brave"
+    ],
+    "answer": 2,
+    "explanation": "Vigilant means carefully watching for danger. Tip: a 'vigil' is staying awake to keep watch. 'Brave' is tempting because guards are brave, but being alert is not the same as being brave."
+  },
+  {
+    "id": "syn-041",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Mediocre</b> most nearly means",
+    "choices": [
+      "excellent",
+      "medical",
+      "honest",
+      "ordinary"
+    ],
+    "answer": 3,
+    "explanation": "Mediocre means only average, not very good. 'Medical' only looks similar, and 'excellent' is the opposite."
+  },
+  {
+    "id": "syn-042",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 2,
+    "prompt": "<b>Imminent</b> most nearly means",
+    "choices": [
+      "distant",
+      "about to happen",
+      "famous",
+      "permanent"
+    ],
+    "answer": 1,
+    "explanation": "Imminent means about to happen very soon, like an imminent storm. 'Famous' is a trap because 'eminent' (well-known) looks almost the same."
+  },
+  {
+    "id": "syn-043",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 3,
+    "prompt": "<b>Ambiguous</b> most nearly means",
+    "choices": [
+      "obvious",
+      "ambitious",
+      "enormous",
+      "having more than one meaning"
+    ],
+    "answer": 3,
+    "explanation": "Ambiguous means it could be understood in more than one way. Root 'ambi' = both (like 'ambidextrous'). 'Ambitious' only looks similar, and 'obvious' is the opposite."
+  },
+  {
+    "id": "syn-044",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 3,
+    "prompt": "<b>Benign</b> most nearly means",
+    "choices": [
+      "dangerous",
+      "harmless",
+      "bending",
+      "foreign"
+    ],
+    "answer": 1,
+    "explanation": "Benign means harmless or gentle. Root 'ben' = good (like 'benefit'). 'Dangerous' is the opposite trap."
+  },
+  {
+    "id": "syn-045",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 3,
+    "prompt": "<b>Garrulous</b> most nearly means",
+    "choices": [
+      "silent",
+      "talkative",
+      "grumpy",
+      "gigantic"
+    ],
+    "answer": 1,
+    "explanation": "Garrulous means talking too much, especially about small things. 'Grumpy' is a trap because 'garrulous' sounds growly, but it is about talking, not mood."
+  },
+  {
+    "id": "syn-046",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 3,
+    "prompt": "<b>Ephemeral</b> most nearly means",
+    "choices": [
+      "eternal",
+      "imaginary",
+      "elegant",
+      "short-lived"
+    ],
+    "answer": 3,
+    "explanation": "Ephemeral means lasting a very short time, like a soap bubble. 'Eternal' is the opposite trap."
+  },
+  {
+    "id": "syn-047",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 3,
+    "prompt": "<b>Lethargic</b> most nearly means",
+    "choices": [
+      "energetic",
+      "deadly",
+      "sluggish",
+      "logical"
+    ],
+    "answer": 2,
+    "explanation": "Lethargic means slow and without energy — sluggish. 'Deadly' is a trap because 'lethal' looks similar, and 'energetic' is the opposite."
+  },
+  {
+    "id": "syn-048",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 3,
+    "prompt": "<b>Magnanimous</b> most nearly means",
+    "choices": [
+      "petty",
+      "huge",
+      "stubborn",
+      "generous"
+    ],
+    "answer": 3,
+    "explanation": "Magnanimous means generous and forgiving, especially toward a rival. 'Huge' is a trap: 'magn' = great (like 'magnify'), but here it means a great spirit, not great size."
+  },
+  {
+    "id": "syn-049",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 3,
+    "prompt": "<b>Tenacious</b> most nearly means",
+    "choices": [
+      "yielding",
+      "tense",
+      "persistent",
+      "tender"
+    ],
+    "answer": 2,
+    "explanation": "Tenacious means holding on and not giving up — persistent. Root 'ten' = hold. 'Yielding' is the opposite trap."
+  },
+  {
+    "id": "syn-050",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 3,
+    "prompt": "<b>Placate</b> most nearly means",
+    "choices": [
+      "provoke",
+      "place",
+      "plead",
+      "soothe"
+    ],
+    "answer": 3,
+    "explanation": "Placate means to calm someone down — soothe. Tip: think 'placid' = calm. 'Provoke' is the opposite trap."
+  },
+  {
+    "id": "syn-051",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 3,
+    "prompt": "<b>Austere</b> most nearly means",
+    "choices": [
+      "stern",
+      "lavish",
+      "cheerful",
+      "ancient"
+    ],
+    "answer": 0,
+    "explanation": "Austere means strict, serious, and plain — stern, like an austere principal. 'Lavish' (fancy and rich) is the opposite of austere's plain side."
+  },
+  {
+    "id": "syn-052",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 3,
+    "prompt": "<b>Deference</b> most nearly means",
+    "choices": [
+      "disrespect",
+      "respect",
+      "difference",
+      "delay"
+    ],
+    "answer": 1,
+    "explanation": "Deference means showing respect by going along with someone, like deference to a judge. 'Difference' only looks similar, and 'disrespect' is the opposite."
+  },
+  {
+    "id": "syn-053",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 3,
+    "prompt": "<b>Meticulous</b> most nearly means",
+    "choices": [
+      "extremely careful",
+      "sloppy",
+      "metallic",
+      "fearful"
+    ],
+    "answer": 0,
+    "explanation": "Meticulous means paying close attention to every detail. 'Fearful' is tempting because careful people can seem cautious, but meticulous is about detail, not fear."
+  },
+  {
+    "id": "syn-054",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 3,
+    "prompt": "<b>Pragmatic</b> most nearly means",
+    "choices": [
+      "idealistic",
+      "dramatic",
+      "practical",
+      "talkative"
+    ],
+    "answer": 2,
+    "explanation": "Pragmatic means focused on what actually works — practical. 'Dramatic' only rhymes, and 'idealistic' (focused on dreams) is the opposite."
+  },
+  {
+    "id": "syn-055",
+    "section": "verbal",
+    "type": "synonym",
+    "difficulty": 3,
+    "prompt": "<b>Ubiquitous</b> most nearly means",
+    "choices": [
+      "rare",
+      "found everywhere",
+      "unique",
+      "unknown"
+    ],
+    "answer": 1,
+    "explanation": "Ubiquitous means seeming to be everywhere at once, like phones. 'Rare' and 'unique' are opposite traps."
+  },
+  {
+    "id": "ant-001",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Ancient</b> means the opposite of",
+    "choices": [
+      "old",
+      "broken",
+      "famous",
+      "modern"
+    ],
+    "answer": 3,
+    "explanation": "Ancient means very old, so the opposite is modern. 'Old' is the synonym trap."
+  },
+  {
+    "id": "ant-002",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Generous</b> means the opposite of",
+    "choices": [
+      "kind",
+      "wealthy",
+      "stingy",
+      "gentle"
+    ],
+    "answer": 2,
+    "explanation": "Generous means happy to give, so the opposite is stingy. 'Kind' is the synonym trap."
+  },
+  {
+    "id": "ant-003",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Expand</b> means the opposite of",
+    "choices": [
+      "grow",
+      "explain",
+      "shrink",
+      "spend"
+    ],
+    "answer": 2,
+    "explanation": "Expand means to get bigger, so the opposite is shrink. 'Grow' is the synonym trap."
+  },
+  {
+    "id": "ant-004",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Victory</b> means the opposite of",
+    "choices": [
+      "triumph",
+      "battle",
+      "defeat",
+      "army"
+    ],
+    "answer": 2,
+    "explanation": "Victory means a win, so the opposite is defeat. 'Triumph' is the synonym trap."
+  },
+  {
+    "id": "ant-005",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Permanent</b> means the opposite of",
+    "choices": [
+      "lasting",
+      "important",
+      "temporary",
+      "frozen"
+    ],
+    "answer": 2,
+    "explanation": "Permanent means lasting forever, so the opposite is temporary. 'Lasting' is the synonym trap."
+  },
+  {
+    "id": "ant-006",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Humble</b> means the opposite of",
+    "choices": [
+      "modest",
+      "arrogant",
+      "hungry",
+      "quiet"
+    ],
+    "answer": 1,
+    "explanation": "Humble means not bragging, so the opposite is arrogant (thinking you're better than others). 'Modest' is the synonym trap."
+  },
+  {
+    "id": "ant-007",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Reckless</b> means the opposite of",
+    "choices": [
+      "careless",
+      "lonely",
+      "quick",
+      "careful"
+    ],
+    "answer": 3,
+    "explanation": "Reckless means not thinking about danger, so the opposite is careful. 'Careless' is the synonym trap — it looks like 'careful' but means the same as reckless."
+  },
+  {
+    "id": "ant-008",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Brave</b> means the opposite of",
+    "choices": [
+      "bold",
+      "cowardly",
+      "angry",
+      "loud"
+    ],
+    "answer": 1,
+    "explanation": "Brave means not afraid, so the opposite is cowardly. 'Bold' is the synonym trap."
+  },
+  {
+    "id": "ant-009",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Ascend</b> means the opposite of",
+    "choices": [
+      "climb",
+      "assign",
+      "rescue",
+      "descend"
+    ],
+    "answer": 3,
+    "explanation": "Ascend means to go up, so the opposite is descend (go down). 'Climb' is the synonym trap."
+  },
+  {
+    "id": "ant-010",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Inferior</b> means the opposite of",
+    "choices": [
+      "lower",
+      "interior",
+      "superior",
+      "poor"
+    ],
+    "answer": 2,
+    "explanation": "Inferior means lower in quality or rank, so the opposite is superior. 'Interior' only looks similar, and 'lower' is the synonym trap."
+  },
+  {
+    "id": "ant-011",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Maximum</b> means the opposite of",
+    "choices": [
+      "most",
+      "middle",
+      "many",
+      "minimum"
+    ],
+    "answer": 3,
+    "explanation": "Maximum means the most possible, so the opposite is minimum (the least). Root 'max' = greatest, 'min' = least. 'Most' is the synonym trap."
+  },
+  {
+    "id": "ant-012",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Graceful</b> means the opposite of",
+    "choices": [
+      "elegant",
+      "clumsy",
+      "grateful",
+      "slow"
+    ],
+    "answer": 1,
+    "explanation": "Graceful means moving smoothly, so the opposite is clumsy. 'Grateful' only looks similar, and 'elegant' is the synonym trap."
+  },
+  {
+    "id": "ant-013",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Sincere</b> means the opposite of",
+    "choices": [
+      "honest",
+      "serious",
+      "phony",
+      "simple"
+    ],
+    "answer": 2,
+    "explanation": "Sincere means truly meaning what you say, so the opposite is phony (fake). 'Honest' is the synonym trap."
+  },
+  {
+    "id": "ant-014",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Exterior</b> means the opposite of",
+    "choices": [
+      "outside",
+      "interior",
+      "extra",
+      "upper"
+    ],
+    "answer": 1,
+    "explanation": "Exterior means the outside, so the opposite is interior (the inside). Root 'ex' = out. 'Outside' is the synonym trap."
+  },
+  {
+    "id": "ant-015",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Ally</b> means the opposite of",
+    "choices": [
+      "friend",
+      "leader",
+      "enemy",
+      "partner"
+    ],
+    "answer": 2,
+    "explanation": "An ally is someone on your side, so the opposite is an enemy. 'Friend' and 'partner' are synonym traps."
+  },
+  {
+    "id": "ant-016",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Include</b> means the opposite of",
+    "choices": [
+      "exclude",
+      "contain",
+      "conclude",
+      "invite"
+    ],
+    "answer": 0,
+    "explanation": "Include means to let in, so the opposite is exclude (keep out). 'Contain' is the synonym trap, and 'conclude' only looks similar."
+  },
+  {
+    "id": "ant-017",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Fertile</b> means the opposite of",
+    "choices": [
+      "fruitful",
+      "barren",
+      "fearful",
+      "flat"
+    ],
+    "answer": 1,
+    "explanation": "Fertile land grows lots of plants, so the opposite is barren (nothing grows). 'Fruitful' is the synonym trap."
+  },
+  {
+    "id": "ant-018",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Praise</b> means the opposite of",
+    "choices": [
+      "criticize",
+      "compliment",
+      "pray",
+      "raise"
+    ],
+    "answer": 0,
+    "explanation": "Praise means to say good things about someone, so the opposite is criticize. 'Compliment' is the synonym trap."
+  },
+  {
+    "id": "ant-019",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Accept</b> means the opposite of",
+    "choices": [
+      "receive",
+      "reject",
+      "except",
+      "expect"
+    ],
+    "answer": 1,
+    "explanation": "Accept means to take or agree to, so the opposite is reject. 'Except' and 'expect' only look similar, and 'receive' is the synonym trap."
+  },
+  {
+    "id": "ant-020",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 1,
+    "prompt": "<b>Sturdy</b> means the opposite of",
+    "choices": [
+      "strong",
+      "sticky",
+      "dirty",
+      "flimsy"
+    ],
+    "answer": 3,
+    "explanation": "Sturdy means strong and solid, so the opposite is flimsy (weak and easily broken). 'Strong' is the synonym trap."
+  },
+  {
+    "id": "ant-021",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Affluent</b> means the opposite of",
+    "choices": [
+      "wealthy",
+      "fluent",
+      "poor",
+      "friendly"
+    ],
+    "answer": 2,
+    "explanation": "Affluent means rich, so the opposite is poor. 'Fluent' only looks similar, and 'wealthy' is the synonym trap."
+  },
+  {
+    "id": "ant-022",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Eager</b> means the opposite of",
+    "choices": [
+      "keen",
+      "angry",
+      "hungry",
+      "uninterested"
+    ],
+    "answer": 3,
+    "explanation": "Eager means really wanting to do something, so the opposite is uninterested. 'Keen' is the synonym trap."
+  },
+  {
+    "id": "ant-023",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Veteran</b> means the opposite of",
+    "choices": [
+      "expert",
+      "soldier",
+      "patient",
+      "beginner"
+    ],
+    "answer": 3,
+    "explanation": "A veteran is someone with lots of experience, so the opposite is a beginner. 'Soldier' is tempting because veterans are often ex-soldiers, and 'expert' is the synonym trap."
+  },
+  {
+    "id": "ant-024",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Harsh</b> means the opposite of",
+    "choices": [
+      "gentle",
+      "severe",
+      "rough",
+      "bitter"
+    ],
+    "answer": 0,
+    "explanation": "Harsh means rough or cruel, so the opposite is gentle. 'Severe', 'rough', and 'bitter' are synonym traps."
+  },
+  {
+    "id": "ant-025",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Flexible</b> means the opposite of",
+    "choices": [
+      "bendable",
+      "frequent",
+      "rigid",
+      "muscular"
+    ],
+    "answer": 2,
+    "explanation": "Flexible means able to bend, so the opposite is rigid (stiff). Root 'flex' = bend. 'Bendable' is the synonym trap."
+  },
+  {
+    "id": "ant-026",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Despair</b> means the opposite of",
+    "choices": [
+      "misery",
+      "repair",
+      "hope",
+      "desire"
+    ],
+    "answer": 2,
+    "explanation": "Despair means losing all hope, so the opposite is hope. Tip: 'de' = away from, 'spair' comes from 'hope'. 'Misery' is the synonym trap."
+  },
+  {
+    "id": "ant-027",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Extravagant</b> means the opposite of",
+    "choices": [
+      "lavish",
+      "economical",
+      "external",
+      "foolish"
+    ],
+    "answer": 1,
+    "explanation": "Extravagant means spending way too much, so the opposite is economical (careful with money). 'Lavish' is the synonym trap."
+  },
+  {
+    "id": "ant-028",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Deliberate</b> means the opposite of",
+    "choices": [
+      "intentional",
+      "accidental",
+      "delivered",
+      "liberated"
+    ],
+    "answer": 1,
+    "explanation": "Deliberate means done on purpose, so the opposite is accidental. 'Intentional' is the synonym trap."
+  },
+  {
+    "id": "ant-029",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Optimistic</b> means the opposite of",
+    "choices": [
+      "hopeful",
+      "optical",
+      "pessimistic",
+      "careful"
+    ],
+    "answer": 2,
+    "explanation": "Optimistic means expecting good things, so the opposite is pessimistic (expecting bad things). 'Hopeful' is the synonym trap, and 'optical' only looks similar."
+  },
+  {
+    "id": "ant-030",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Turbulent</b> means the opposite of",
+    "choices": [
+      "stormy",
+      "turning",
+      "loud",
+      "calm"
+    ],
+    "answer": 3,
+    "explanation": "Turbulent means wild and stormy, like turbulence on a plane, so the opposite is calm. 'Stormy' is the synonym trap."
+  },
+  {
+    "id": "ant-031",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Dull</b> means the opposite of",
+    "choices": [
+      "brilliant",
+      "boring",
+      "dim",
+      "heavy"
+    ],
+    "answer": 0,
+    "explanation": "Dull can mean boring, dim, or not smart, so the opposite here is brilliant (bright or very smart). 'Boring' and 'dim' are synonym traps."
+  },
+  {
+    "id": "ant-032",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Vigorous</b> means the opposite of",
+    "choices": [
+      "weak",
+      "energetic",
+      "rigorous",
+      "violent"
+    ],
+    "answer": 0,
+    "explanation": "Vigorous means strong and full of energy, so the opposite is weak. 'Rigorous' only rhymes, and 'energetic' is the synonym trap."
+  },
+  {
+    "id": "ant-033",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Courteous</b> means the opposite of",
+    "choices": [
+      "rude",
+      "polite",
+      "courageous",
+      "careful"
+    ],
+    "answer": 0,
+    "explanation": "Courteous means polite, so the opposite is rude. 'Courageous' only looks similar, and 'polite' is the synonym trap."
+  },
+  {
+    "id": "ant-034",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Prohibit</b> means the opposite of",
+    "choices": [
+      "allow",
+      "forbid",
+      "exhibit",
+      "protect"
+    ],
+    "answer": 0,
+    "explanation": "Prohibit means to forbid, so the opposite is allow. 'Forbid' is the synonym trap."
+  },
+  {
+    "id": "ant-035",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Amateur</b> means the opposite of",
+    "choices": [
+      "beginner",
+      "professional",
+      "athlete",
+      "critic"
+    ],
+    "answer": 1,
+    "explanation": "An amateur does something for fun, not for pay, so the opposite is a professional. 'Beginner' is the synonym trap."
+  },
+  {
+    "id": "ant-036",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Evasive</b> means the opposite of",
+    "choices": [
+      "direct",
+      "avoiding",
+      "invasive",
+      "polite"
+    ],
+    "answer": 0,
+    "explanation": "Evasive means dodging a question, so the opposite is direct. Tip: evasive comes from 'evade'. 'Avoiding' is the synonym trap, and 'invasive' only looks similar."
+  },
+  {
+    "id": "ant-037",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Cordial</b> means the opposite of",
+    "choices": [
+      "warm",
+      "unfriendly",
+      "musical",
+      "careful"
+    ],
+    "answer": 1,
+    "explanation": "Cordial means warm and friendly, so the opposite is unfriendly. Root 'cord' = heart. 'Warm' is the synonym trap, and 'musical' is a trap because of 'chord'."
+  },
+  {
+    "id": "ant-038",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Explicit</b> means the opposite of",
+    "choices": [
+      "clear",
+      "implied",
+      "exciting",
+      "illegal"
+    ],
+    "answer": 1,
+    "explanation": "Explicit means stated clearly and directly, so the opposite is implied (hinted at, not said). 'Clear' is the synonym trap."
+  },
+  {
+    "id": "ant-039",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Sufficient</b> means the opposite of",
+    "choices": [
+      "enough",
+      "efficient",
+      "inadequate",
+      "suffering"
+    ],
+    "answer": 2,
+    "explanation": "Sufficient means enough, so the opposite is inadequate (not enough). 'Enough' is the synonym trap, and 'efficient' only rhymes."
+  },
+  {
+    "id": "ant-040",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Superb</b> means the opposite of",
+    "choices": [
+      "excellent",
+      "suburban",
+      "awful",
+      "proud"
+    ],
+    "answer": 2,
+    "explanation": "Superb means excellent, so the opposite is awful. 'Excellent' is the synonym trap."
+  },
+  {
+    "id": "ant-041",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Morose</b> means the opposite of",
+    "choices": [
+      "cheerful",
+      "gloomy",
+      "numerous",
+      "brief"
+    ],
+    "answer": 0,
+    "explanation": "Morose means sullen and gloomy, so the opposite is cheerful. 'Gloomy' is the synonym trap."
+  },
+  {
+    "id": "ant-042",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 2,
+    "prompt": "<b>Inevitable</b> means the opposite of",
+    "choices": [
+      "unavoidable",
+      "invisible",
+      "avoidable",
+      "inventive"
+    ],
+    "answer": 2,
+    "explanation": "Inevitable means certain to happen, so the opposite is avoidable. 'Unavoidable' is the synonym trap, and 'invisible' only looks similar."
+  },
+  {
+    "id": "ant-043",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 3,
+    "prompt": "<b>Verbose</b> means the opposite of",
+    "choices": [
+      "wordy",
+      "verbal",
+      "angry",
+      "brief"
+    ],
+    "answer": 3,
+    "explanation": "Verbose means using too many words, so the opposite is brief. Root 'verb' = word. 'Wordy' is the synonym trap; 'verbal' just means 'in words', not too many."
+  },
+  {
+    "id": "ant-044",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 3,
+    "prompt": "<b>Belligerent</b> means the opposite of",
+    "choices": [
+      "warlike",
+      "beautiful",
+      "loud",
+      "peaceful"
+    ],
+    "answer": 3,
+    "explanation": "Belligerent means eager to fight, so the opposite is peaceful. Root 'bell' = war (like 'rebellion'). 'Warlike' is the synonym trap, and 'beautiful' only starts the same way."
+  },
+  {
+    "id": "ant-045",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 3,
+    "prompt": "<b>Perpetual</b> means the opposite of",
+    "choices": [
+      "fleeting",
+      "endless",
+      "perfect",
+      "punctual"
+    ],
+    "answer": 0,
+    "explanation": "Perpetual means lasting forever, so the opposite is fleeting (passing quickly). 'Endless' is the synonym trap."
+  },
+  {
+    "id": "ant-046",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 3,
+    "prompt": "<b>Taciturn</b> means the opposite of",
+    "choices": [
+      "talkative",
+      "quiet",
+      "tactful",
+      "tired"
+    ],
+    "answer": 0,
+    "explanation": "Taciturn means not saying much, so the opposite is talkative. Tip: 'tacit' = unspoken. 'Quiet' is the synonym trap, and 'tactful' only looks similar."
+  },
+  {
+    "id": "ant-047",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 3,
+    "prompt": "<b>Exacerbate</b> means the opposite of",
+    "choices": [
+      "relieve",
+      "worsen",
+      "exaggerate",
+      "examine"
+    ],
+    "answer": 0,
+    "explanation": "Exacerbate means to make a problem worse, so the opposite is relieve (make it better). 'Worsen' is the synonym trap, and 'exaggerate' only looks similar."
+  },
+  {
+    "id": "ant-048",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 3,
+    "prompt": "<b>Opulent</b> means the opposite of",
+    "choices": [
+      "luxurious",
+      "open",
+      "optimistic",
+      "shabby"
+    ],
+    "answer": 3,
+    "explanation": "Opulent means rich and fancy, like a palace, so the opposite is shabby (worn and run-down). 'Luxurious' is the synonym trap."
+  },
+  {
+    "id": "ant-049",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 3,
+    "prompt": "<b>Negligent</b> means the opposite of",
+    "choices": [
+      "careless",
+      "elegant",
+      "negative",
+      "attentive"
+    ],
+    "answer": 3,
+    "explanation": "Negligent means failing to take proper care, so the opposite is attentive. Tip: think 'neglect'. 'Careless' is the synonym trap."
+  },
+  {
+    "id": "ant-050",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 3,
+    "prompt": "<b>Apathetic</b> means the opposite of",
+    "choices": [
+      "concerned",
+      "indifferent",
+      "pathetic",
+      "lazy"
+    ],
+    "answer": 0,
+    "explanation": "Apathetic means not caring at all, so the opposite is concerned. Root 'a' = without, 'path' = feeling. 'Indifferent' is the synonym trap, and 'pathetic' only looks similar."
+  },
+  {
+    "id": "ant-051",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 3,
+    "prompt": "<b>Docile</b> means the opposite of",
+    "choices": [
+      "obedient",
+      "doubtful",
+      "silent",
+      "unruly"
+    ],
+    "answer": 3,
+    "explanation": "Docile means calm and easy to control, like a docile puppy, so the opposite is unruly (wild, hard to control). 'Obedient' is the synonym trap."
+  },
+  {
+    "id": "ant-052",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 3,
+    "prompt": "<b>Aloof</b> means the opposite of",
+    "choices": [
+      "distant",
+      "friendly",
+      "aloft",
+      "clever"
+    ],
+    "answer": 1,
+    "explanation": "Aloof means cool and distant toward others, so the opposite is friendly. 'Distant' is the synonym trap, and 'aloft' (up in the air) only looks similar."
+  },
+  {
+    "id": "ant-053",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 3,
+    "prompt": "<b>Frivolous</b> means the opposite of",
+    "choices": [
+      "serious",
+      "silly",
+      "frightened",
+      "friendly"
+    ],
+    "answer": 0,
+    "explanation": "Frivolous means silly and not important, so the opposite is serious. 'Silly' is the synonym trap."
+  },
+  {
+    "id": "ant-054",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 3,
+    "prompt": "<b>Obstinate</b> means the opposite of",
+    "choices": [
+      "stubborn",
+      "agreeable",
+      "obvious",
+      "absent"
+    ],
+    "answer": 1,
+    "explanation": "Obstinate means stubborn, refusing to change your mind, so the opposite is agreeable (willing to go along). 'Stubborn' is the synonym trap."
+  },
+  {
+    "id": "ant-055",
+    "section": "verbal",
+    "type": "antonym",
+    "difficulty": 3,
+    "prompt": "<b>Zealous</b> means the opposite of",
+    "choices": [
+      "passionate",
+      "unenthusiastic",
+      "jealous",
+      "zany"
+    ],
+    "answer": 1,
+    "explanation": "Zealous means full of energy and passion for a cause, so the opposite is unenthusiastic. 'Passionate' is the synonym trap, and 'jealous' only rhymes."
+  }
+]

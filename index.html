@@ -29,6 +29,10 @@
                 <span class="tab-icon">📖</span>
                 <span class="tab-text">History</span>
             </button>
+            <button class="nav-tab" onclick="switchTab('hspt')">
+                <span class="tab-icon">🎓</span>
+                <span class="tab-text">HSPT</span>
+            </button>
             <button class="nav-tab" id="mastery-tab-btn" onclick="switchTab('mastery')">
                 <span class="tab-icon">📊</span>
                 <span class="tab-text">Mastery</span>
@@ -102,6 +106,16 @@
             </div>
         </div>
 
+        <!-- HSPT TAB
+             Willy's daily practice for the HSPT (5 Dec). Logic in hspt.js. -->
+        <div id="hspt-tab" class="tab-content">
+            <div class="card">
+                <h2>🎓 HSPT Practice</h2>
+                <div id="hspt-home"><div class="empty-state">Loading…</div></div>
+                <div id="hspt-quiz" hidden></div>
+            </div>
+        </div>
+
         <!-- MASTERY TAB
              Standards-level grades from Mastery Connect, for Peter and Alex.
              Below-mastery first, because that is what a tutoring session can
@@ -119,6 +133,10 @@
                 <h2>All classes</h2>
                 <div id="mastery-classes"></div>
             </div>
+            <div class="card">
+                <h2>🎓 HSPT practice</h2>
+                <div id="hspt-report"></div>
+            </div>
         </div>
 
     </div><!-- /.container -->
@@ -130,6 +148,7 @@
 
     <!-- Load main app -->
     <script src="app.js"></script>
+    <script src="hspt.js"></script>
 
     <!-- Talk to Ned - AI Tutor -->
     <script src="talk-to-ned.js"></script>

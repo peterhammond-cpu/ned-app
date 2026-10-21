@@ -1,0 +1,902 @@
+[
+  {
+    "id": "lang-001",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "The dog wagged it's tail when we came home.",
+      "My aunt lives in Denver, Colorado.",
+      "We bought apples, pears, and grapes.",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "\"It's\" means \"it is\"; the possessive is \"its.\""
+  },
+  {
+    "id": "lang-002",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "The museum opens at nine o'clock.",
+      "Me and Jake went to the game on Friday.",
+      "She asked whether the bus was late.",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "Use the subject pronoun: \"Jake and I went.\""
+  },
+  {
+    "id": "lang-003",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "My brother is taller than I am.",
+      "The team celebrated its victory.",
+      "We read about the American revolution in class.",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "Names of historical events are capitalized: \"American Revolution.\""
+  },
+  {
+    "id": "lang-004",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Although it was raining, the game continued.",
+      "Ms. Patel, our coach, gave a short speech.",
+      "Neither of the answers is correct.",
+      "No mistake"
+    ],
+    "answer": 3,
+    "explanation": "All three sentences are correct."
+  },
+  {
+    "id": "lang-005",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Between you and I, the test was easy.",
+      "The children's books were on the bottom shelf.",
+      "Mount Rainier is in Washington.",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "After a preposition like \"between,\" use the object pronoun: \"you and me.\""
+  },
+  {
+    "id": "lang-006",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 3,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Every student needs a pencil.",
+      "The flowers smell sweetly after the rain.",
+      "He did well on the quiz.",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "Linking verbs like \"smell\" take an adjective: \"smell sweet.\""
+  },
+  {
+    "id": "lang-007",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "We will leave on Tuesday, March 4.",
+      "Their house is next to ours.",
+      "The coach said, “practice starts at noon.”",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "A quoted full sentence begins with a capital letter: \"Practice.\""
+  },
+  {
+    "id": "lang-008",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 3,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Whom did you invite to the party?",
+      "The jury has reached its verdict.",
+      "I could have finished sooner.",
+      "No mistake"
+    ],
+    "answer": 3,
+    "explanation": "All three sentences are correct."
+  },
+  {
+    "id": "lang-009",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "I could of called you yesterday.",
+      "The bakery on Main Street sells bagels.",
+      "Please bring your notebook tomorrow.",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "The correct form is \"could have,\" not \"could of.\""
+  },
+  {
+    "id": "lang-010",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Dad drove us to the airport.",
+      "The book was laying on the table all week.",
+      "Lie down if you feel dizzy.",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "\"Lie\" means to rest, so the book was \"lying\"; \"lay\" needs an object."
+  },
+  {
+    "id": "lang-011",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "My favorite subject is science.",
+      "Our neighbors, the Garcias, have a new puppy.",
+      "There are less students in the class this year.",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "Use \"fewer\" for things you can count: \"fewer students.\""
+  },
+  {
+    "id": "lang-012",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Each of the girls have finished the project.",
+      "The geese flew south in October.",
+      "Who's coming to dinner tonight?",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "\"Each\" is singular, so the verb is \"has.\""
+  },
+  {
+    "id": "lang-013",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "We hiked to the top of the hill.",
+      "The storm knocked out our power, we used candles all night.",
+      "After lunch, we went swimming.",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "Two complete sentences cannot be joined by a comma alone (comma splice)."
+  },
+  {
+    "id": "lang-014",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "I enjoy reading mysteries.",
+      "My mother speaks Spanish and French.",
+      "Grandpa visited us last thanksgiving.",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "Holidays are capitalized: \"Thanksgiving.\""
+  },
+  {
+    "id": "lang-015",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 3,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "The players, tired and hungry, boarded the bus.",
+      "Is this your jacket or hers?",
+      "Of the two essays, hers is the better one.",
+      "No mistake"
+    ],
+    "answer": 3,
+    "explanation": "All three sentences are correct."
+  },
+  {
+    "id": "lang-016",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 3,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "The principal gave awards to Maria and myself.",
+      "The orchestra performed on Saturday.",
+      "Please set the box down gently.",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "\"Myself\" is only used when \"I\" is also the subject; here it should be \"me.\""
+  },
+  {
+    "id": "lang-017",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "The movie was really exciting.",
+      "Your going to love this song.",
+      "They're waiting for us outside.",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "\"You're\" (you are) is needed, not the possessive \"your.\""
+  },
+  {
+    "id": "lang-018",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "The class read “The Raven” by Edgar Allan Poe.",
+      "He has already eaten lunch.",
+      "The dog and the cat is sleeping on the couch.",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "Two subjects joined by \"and\" take a plural verb: \"are sleeping.\""
+  },
+  {
+    "id": "lang-019",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "She don't know the answer.",
+      "We took a field trip to the Field Museum.",
+      "Our teacher, Mr. Lee, grew up in Ohio.",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "A singular subject takes \"doesn't,\" not \"don't.\""
+  },
+  {
+    "id": "lang-020",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 3,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Carlos swam faster than anyone else on the team.",
+      "Running down the street, my backpack fell open.",
+      "The soup tastes delicious.",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "The opening phrase must describe the subject, but a backpack cannot run (dangling modifier)."
+  },
+  {
+    "id": "lang-021",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "We need three things: flour, eggs, and milk.",
+      "The book's cover was torn.",
+      "I have went to that store many times.",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "The past participle of \"go\" is \"gone\": \"have gone.\""
+  },
+  {
+    "id": "lang-022",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "The teacher told Sam and he to stay after class.",
+      "My cousin's wedding is in June.",
+      "We drove east toward the ocean.",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "The object of \"told\" needs the object pronoun: \"Sam and him.\""
+  },
+  {
+    "id": "lang-023",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "She sings beautifully.",
+      "This is the most tallest building in the city.",
+      "Which of the two cars is faster?",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "Do not use \"most\" with an -est adjective; say \"tallest.\""
+  },
+  {
+    "id": "lang-024",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 3,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "The scissors are in the top drawer.",
+      "If I were you, I would apologize.",
+      "Lisa, who sits next to me, lent me a pen.",
+      "No mistake"
+    ],
+    "answer": 3,
+    "explanation": "All three sentences are correct."
+  },
+  {
+    "id": "lang-025",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Dr. Kim's office is on Elm Avenue.",
+      "We visited my grandmother in the spring.",
+      "The news was better than we expected.",
+      "No mistake"
+    ],
+    "answer": 3,
+    "explanation": "All three sentences are correct; seasons are not capitalized."
+  },
+  {
+    "id": "lang-026",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 1,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "recieve",
+      "library",
+      "calendar",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "The correct spelling is \"receive\" (i before e, except after c)."
+  },
+  {
+    "id": "lang-027",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 2,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "necessary",
+      "definately",
+      "separate",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "The correct spelling is \"definitely.\""
+  },
+  {
+    "id": "lang-028",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 1,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "February",
+      "beginning",
+      "goverment",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "The correct spelling is \"government.\""
+  },
+  {
+    "id": "lang-029",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 3,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "accommodate",
+      "conscience",
+      "rhythm",
+      "No mistake"
+    ],
+    "answer": 3,
+    "explanation": "All three words are spelled correctly."
+  },
+  {
+    "id": "lang-030",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 3,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "embarass",
+      "privilege",
+      "occasion",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "The correct spelling is \"embarrass,\" with double r and double s."
+  },
+  {
+    "id": "lang-031",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 1,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "believe",
+      "wierd",
+      "neighbor",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "The correct spelling is \"weird,\" an exception to the i-before-e rule."
+  },
+  {
+    "id": "lang-032",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 1,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "probably",
+      "truly",
+      "tommorow",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "The correct spelling is \"tomorrow,\" with one m and double r."
+  },
+  {
+    "id": "lang-033",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 3,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "occurence",
+      "maintenance",
+      "guarantee",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "The correct spelling is \"occurrence,\" with double r."
+  },
+  {
+    "id": "lang-034",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 3,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "achievement",
+      "acquaintence",
+      "knowledge",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "The correct spelling is \"acquaintance.\""
+  },
+  {
+    "id": "lang-035",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 3,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "exaggerate",
+      "mischievous",
+      "persistant",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "The correct spelling is \"persistent.\""
+  },
+  {
+    "id": "lang-036",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 2,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "environment",
+      "restaurant",
+      "Wednesday",
+      "No mistake"
+    ],
+    "answer": 3,
+    "explanation": "All three words are spelled correctly."
+  },
+  {
+    "id": "lang-037",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 2,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "arguement",
+      "immediately",
+      "sincerely",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "The correct spelling is \"argument\"; the e in \"argue\" is dropped."
+  },
+  {
+    "id": "lang-038",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 2,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "humorous",
+      "noticable",
+      "familiar",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "The correct spelling is \"noticeable\"; the e stays to keep the c soft."
+  },
+  {
+    "id": "lang-039",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 3,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "license",
+      "vacuum",
+      "millenium",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "The correct spelling is \"millennium,\" with double l and double n."
+  },
+  {
+    "id": "lang-040",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 2,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "committee",
+      "parallel",
+      "foreign",
+      "No mistake"
+    ],
+    "answer": 3,
+    "explanation": "All three words are spelled correctly."
+  },
+  {
+    "id": "lang-041",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 1,
+    "prompt": "Choose the word or phrase that best completes the sentences.\n\nMaya studied for hours. ____, she earned the highest score in the class.",
+    "choices": [
+      "As a result",
+      "However",
+      "Instead",
+      "Meanwhile"
+    ],
+    "answer": 0,
+    "explanation": "\"As a result\" shows that the high score was caused by studying."
+  },
+  {
+    "id": "lang-042",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 1,
+    "prompt": "Choose the word or phrase that best completes the sentences.\n\nThe forecast called for sunshine. ____, it rained all afternoon.",
+    "choices": [
+      "Therefore",
+      "However",
+      "For example",
+      "Similarly"
+    ],
+    "answer": 1,
+    "explanation": "\"However\" signals a contrast between what was expected and what happened."
+  },
+  {
+    "id": "lang-043",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 1,
+    "prompt": "Choose the clearest way to combine the sentences.\n\nEli plays the trumpet. Eli plays in the school band.",
+    "choices": [
+      "Eli plays the trumpet, and Eli plays in the school band.",
+      "Eli plays, the trumpet, in the school band.",
+      "Eli plays the trumpet in the school band.",
+      "Playing the trumpet, the school band has Eli."
+    ],
+    "answer": 2,
+    "explanation": "The best combination removes the repeated words without changing the meaning."
+  },
+  {
+    "id": "lang-044",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 1,
+    "prompt": "Which sentence does not belong in the paragraph?\n\n(1) Honeybees live in large colonies. (2) Each colony has one queen, who lays the eggs. (3) Worker bees gather nectar and care for the young. (4) Wasps can sting more than once.",
+    "choices": [
+      "Sentence 1",
+      "Sentence 2",
+      "Sentence 3",
+      "Sentence 4"
+    ],
+    "answer": 3,
+    "explanation": "The paragraph is about honeybee colonies; the sentence about wasps is off topic."
+  },
+  {
+    "id": "lang-045",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 1,
+    "prompt": "Choose the word or phrase that best completes the sentences.\n\nJordan wanted to buy a new bike. ____, he saved part of his allowance every week.",
+    "choices": [
+      "Nevertheless",
+      "On the other hand",
+      "In contrast",
+      "Therefore"
+    ],
+    "answer": 3,
+    "explanation": "\"Therefore\" shows that saving money was the result of wanting the bike."
+  },
+  {
+    "id": "lang-046",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that would best begin this paragraph.\n\n____ Some can see colors that humans cannot, including ultraviolet light. Others have eyes on the sides of their heads, giving them a nearly complete view of their surroundings.",
+    "choices": [
+      "Many birds have remarkable eyesight.",
+      "Birds build nests in many different places.",
+      "Ultraviolet light can damage human skin.",
+      "Humans have two eyes."
+    ],
+    "answer": 0,
+    "explanation": "A topic sentence states the main idea that the rest of the paragraph supports."
+  },
+  {
+    "id": "lang-047",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 1,
+    "prompt": "Choose the clearest way to combine the sentences.\n\nThe storm was strong. The storm knocked down several trees.",
+    "choices": [
+      "The storm was strong, and the storm knocked down several trees.",
+      "The strong storm knocked down several trees.",
+      "Several trees, the storm was strong, were knocked down.",
+      "Being strong, several trees were knocked down by the storm."
+    ],
+    "answer": 1,
+    "explanation": "Turning \"strong\" into an adjective combines the ideas in the fewest clear words."
+  },
+  {
+    "id": "lang-048",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 1,
+    "prompt": "Choose the word or phrase that best completes the sentences.\n\nOur class collected cans for the food drive. ____, we raised money by holding a bake sale.",
+    "choices": [
+      "Otherwise",
+      "Unfortunately",
+      "In addition",
+      "For instance"
+    ],
+    "answer": 2,
+    "explanation": "\"In addition\" signals that a second, similar action is being added."
+  },
+  {
+    "id": "lang-049",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 2,
+    "prompt": "Which sentence does not belong in the paragraph?\n\n(1) Some people prefer cats to dogs. (2) Training a puppy takes patience. (3) Short, daily lessons work better than long ones. (4) Rewarding good behavior with a treat helps the puppy learn.",
+    "choices": [
+      "Sentence 1",
+      "Sentence 2",
+      "Sentence 3",
+      "Sentence 4"
+    ],
+    "answer": 0,
+    "explanation": "The paragraph is about training a puppy; preferring cats is off topic."
+  },
+  {
+    "id": "lang-050",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 2,
+    "prompt": "Which sentence best concludes the paragraph?\n\nRecycling helps the environment in several ways. It reduces the amount of trash in landfills. It also saves energy, because making products from recycled materials uses less power than making them from scratch.",
+    "choices": [
+      "Landfills are often located far from cities.",
+      "For these reasons, recycling is worth the small effort it takes.",
+      "Some people forget to recycle.",
+      "Paper is made from trees."
+    ],
+    "answer": 1,
+    "explanation": "A good conclusion sums up the main idea of the paragraph."
+  },
+  {
+    "id": "lang-051",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 2,
+    "prompt": "Choose the clearest way to combine the sentences.\n\nWe arrived at the theater. The movie had already started.",
+    "choices": [
+      "We arrived at the theater, the movie had already started.",
+      "We arrived at the theater, and so the movie had already started.",
+      "By the time we arrived at the theater, the movie had already started.",
+      "The movie, arriving at the theater, had already started."
+    ],
+    "answer": 2,
+    "explanation": "\"By the time\" shows the correct time relationship without a comma splice."
+  },
+  {
+    "id": "lang-052",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 2,
+    "prompt": "Choose the word or phrase that best completes the sentences.\n\nPenguins are birds. ____, they cannot fly.",
+    "choices": [
+      "Consequently",
+      "For example",
+      "Similarly",
+      "Even so"
+    ],
+    "answer": 3,
+    "explanation": "\"Even so\" signals a contrast with what you might expect of a bird."
+  },
+  {
+    "id": "lang-053",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 1,
+    "prompt": "Which sentence does not belong in the paragraph?\n\n(1) The Great Wall of China stretches for thousands of miles. (2) Workers built it over many centuries to protect against invaders. (3) China is also famous for its delicious food. (4) Today, millions of tourists visit the wall each year.",
+    "choices": [
+      "Sentence 1",
+      "Sentence 2",
+      "Sentence 3",
+      "Sentence 4"
+    ],
+    "answer": 2,
+    "explanation": "The paragraph is about the Great Wall; the sentence about food is off topic."
+  },
+  {
+    "id": "lang-054",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 2,
+    "prompt": "Which sentence is written most clearly?",
+    "choices": [
+      "Mr. Ortiz handed out the tests after he collected our phones.",
+      "After collecting, Mr. Ortiz, our phones, handed out the tests.",
+      "Mr. Ortiz handed out, after collecting our phones, the tests to us that were.",
+      "Collecting our phones, the tests were handed out by Mr. Ortiz."
+    ],
+    "answer": 0,
+    "explanation": "The clearest sentence keeps the subject, verb, and object in a natural order."
+  },
+  {
+    "id": "lang-055",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 2,
+    "prompt": "Choose the word or phrase that best completes the sentences.\n\nSome animals hibernate in winter. Bears, ____, sleep for months in their dens.",
+    "choices": [
+      "however",
+      "for example",
+      "in contrast",
+      "finally"
+    ],
+    "answer": 1,
+    "explanation": "\"For example\" introduces bears as one case of an animal that hibernates."
+  },
+  {
+    "id": "lang-056",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 2,
+    "prompt": "Choose the clearest way to combine the sentences.\n\nSofia likes to paint. She also likes to draw. She does not like to sculpt.",
+    "choices": [
+      "Sofia likes to paint, she likes to draw, she does not like to sculpt.",
+      "Sofia likes painting and to draw, but not sculpting.",
+      "Sofia, liking to paint and draw, sculpting she does not like.",
+      "Sofia likes to paint and draw, but she does not like to sculpt."
+    ],
+    "answer": 3,
+    "explanation": "The best choice uses parallel verb forms and \"but\" to show the contrast."
+  },
+  {
+    "id": "lang-057",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 1,
+    "prompt": "Which sentence best supports this topic sentence?\n\nExercise has many benefits for teenagers.",
+    "choices": [
+      "Regular exercise can improve sleep and help students focus in class.",
+      "Many teenagers own smartphones.",
+      "Gym shoes come in many colors.",
+      "Some sports are played indoors."
+    ],
+    "answer": 0,
+    "explanation": "A supporting sentence gives a specific example of the main idea."
+  },
+  {
+    "id": "lang-058",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 3,
+    "prompt": "Choose the word or phrase that best completes the sentences.\n\nThe experiment did not go as planned; ____, the students learned a great deal from their mistakes.",
+    "choices": [
+      "therefore",
+      "for instance",
+      "nonetheless",
+      "likewise"
+    ],
+    "answer": 2,
+    "explanation": "\"Nonetheless\" shows that the second idea is true despite the first."
+  },
+  {
+    "id": "lang-059",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 3,
+    "prompt": "Which sentence does not belong in the paragraph?\n\n(1) The monarch butterfly migrates up to 3,000 miles each fall. (2) Butterflies taste with sensors on their feet. (3) Monarchs travel from Canada and the northern United States to central Mexico. (4) There, millions of them cluster together on fir trees to survive the winter.",
+    "choices": [
+      "Sentence 1",
+      "Sentence 2",
+      "Sentence 3",
+      "Sentence 4"
+    ],
+    "answer": 1,
+    "explanation": "The paragraph is about the monarch migration; how butterflies taste is a true fact but off topic."
+  },
+  {
+    "id": "lang-060",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 3,
+    "prompt": "Choose the clearest way to combine the sentences.\n\nThe bridge was built in 1932. It is the oldest bridge in the county. It still carries traffic every day.",
+    "choices": [
+      "The bridge was built in 1932, it is the oldest in the county, it still carries traffic every day.",
+      "The bridge, which still carries traffic every day, and it was built in 1932, is the oldest in the county.",
+      "Being the oldest bridge in the county, 1932 was when it was built, and it still carries traffic.",
+      "Built in 1932, the oldest bridge in the county still carries traffic every day."
+    ],
+    "answer": 3,
+    "explanation": "An opening phrase that describes the subject joins all three ideas in one clear sentence."
+  }
+]

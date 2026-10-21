@@ -1,0 +1,1154 @@
+[
+  {
+    "id": "rd-01-1",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 2,
+    "passage_id": "rd-01",
+    "genre": "fiction",
+    "passage": "Maya carried the box up the stairs two at a time. Inside, wrapped in yesterday's newspaper, was the gold statue with \"MVP\" stamped on its base.\n\n\"Aren't you putting it on the shelf?\" her mother asked from the doorway.\n\nMaya glanced at the empty spot next to her brother's old trophies. Then she thought of Priya, who had played the whole season with a sprained wrist and never once complained. When the coach read Maya's name at the banquet, Priya had clapped louder than anyone. Her eyes had been red the entire time.\n\n\"Maybe later,\" Maya said. She slid the box under her bed, next to the cleats she had outgrown, and pulled the blanket down so it hung all the way to the floor.\n\nThat night, she texted Priya: \"You were the real MVP. Seriously.\" She stared at the screen until three dots appeared, then disappeared, then appeared again.",
+    "prompt": "Why does Maya put the trophy under her bed?",
+    "choices": [
+      "She thinks her friend deserved the award more.",
+      "She has no room left on her shelf for another trophy.",
+      "She is ashamed of how badly she played this season.",
+      "She is planning to give the trophy to Priya the next day."
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"You were the real MVP\" (para 5) and \"Maybe later.\" Maya hides the trophy because she believes Priya earned it. The shelf choice fails because the passage says there is an \"empty spot\" waiting for it."
+  },
+  {
+    "id": "rd-01-2",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 2,
+    "passage_id": "rd-01",
+    "genre": "fiction",
+    "passage": "Maya carried the box up the stairs two at a time. Inside, wrapped in yesterday's newspaper, was the gold statue with \"MVP\" stamped on its base.\n\n\"Aren't you putting it on the shelf?\" her mother asked from the doorway.\n\nMaya glanced at the empty spot next to her brother's old trophies. Then she thought of Priya, who had played the whole season with a sprained wrist and never once complained. When the coach read Maya's name at the banquet, Priya had clapped louder than anyone. Her eyes had been red the entire time.\n\n\"Maybe later,\" Maya said. She slid the box under her bed, next to the cleats she had outgrown, and pulled the blanket down so it hung all the way to the floor.\n\nThat night, she texted Priya: \"You were the real MVP. Seriously.\" She stared at the screen until three dots appeared, then disappeared, then appeared again.",
+    "prompt": "What does the detail that Priya's \"eyes had been red the entire time\" suggest?",
+    "choices": [
+      "Priya was angry at Maya and wanted her to know it.",
+      "Priya hid her disappointment behind cheering.",
+      "Priya had allergies at the banquet.",
+      "Priya did not care about the award at all."
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"Priya had clapped louder than anyone\" (para 3) and \"Her eyes had been red.\" (para 3) She cheered on the outside while hurting on the inside. The angry choice fails because someone who wants to show anger does not clap the loudest."
+  },
+  {
+    "id": "rd-01-3",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 3,
+    "passage_id": "rd-01",
+    "genre": "fiction",
+    "passage": "Maya carried the box up the stairs two at a time. Inside, wrapped in yesterday's newspaper, was the gold statue with \"MVP\" stamped on its base.\n\n\"Aren't you putting it on the shelf?\" her mother asked from the doorway.\n\nMaya glanced at the empty spot next to her brother's old trophies. Then she thought of Priya, who had played the whole season with a sprained wrist and never once complained. When the coach read Maya's name at the banquet, Priya had clapped louder than anyone. Her eyes had been red the entire time.\n\n\"Maybe later,\" Maya said. She slid the box under her bed, next to the cleats she had outgrown, and pulled the blanket down so it hung all the way to the floor.\n\nThat night, she texted Priya: \"You were the real MVP. Seriously.\" She stared at the screen until three dots appeared, then disappeared, then appeared again.",
+    "prompt": "The three dots that appear, disappear, and appear again most likely show that Priya",
+    "choices": [
+      "is ignoring Maya on purpose",
+      "is typing an angry reply",
+      "is unsure what to say back",
+      "has a broken phone"
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"three dots appeared, then disappeared, then appeared again.\" (para 5) She keeps starting and stopping a reply, which shows she is searching for the right words. The ignoring choice fails because someone ignoring a text would not start typing at all."
+  },
+  {
+    "id": "rd-01-4",
+    "section": "reading",
+    "type": "theme",
+    "difficulty": 2,
+    "passage_id": "rd-01",
+    "genre": "fiction",
+    "passage": "Maya carried the box up the stairs two at a time. Inside, wrapped in yesterday's newspaper, was the gold statue with \"MVP\" stamped on its base.\n\n\"Aren't you putting it on the shelf?\" her mother asked from the doorway.\n\nMaya glanced at the empty spot next to her brother's old trophies. Then she thought of Priya, who had played the whole season with a sprained wrist and never once complained. When the coach read Maya's name at the banquet, Priya had clapped louder than anyone. Her eyes had been red the entire time.\n\n\"Maybe later,\" Maya said. She slid the box under her bed, next to the cleats she had outgrown, and pulled the blanket down so it hung all the way to the floor.\n\nThat night, she texted Priya: \"You were the real MVP. Seriously.\" She stared at the screen until three dots appeared, then disappeared, then appeared again.",
+    "prompt": "Which statement best expresses the theme of the passage?",
+    "choices": [
+      "Hard work is always rewarded in the end, even when no one notices.",
+      "Trophies are completely meaningless.",
+      "Coaches usually make unfair choices.",
+      "Caring about a friend can matter more than personal glory."
+    ],
+    "answer": 3,
+    "explanation": "Evidence: Maya hides the trophy and texts \"You were the real MVP.\" (para 5) She puts Priya's feelings ahead of showing off her award. The trophies choice is too extreme; the trophy matters to Maya, which is exactly why hiding it means something."
+  },
+  {
+    "id": "rd-02-1",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 1,
+    "passage_id": "rd-02",
+    "genre": "fiction",
+    "passage": "The lake was a sheet of hammered tin by the time Grandpa finally cast his line. He settled into the folding chair and cleared his throat.\n\n\"Did I ever tell you about the pike I caught in '71? Big as a canoe paddle.\"\n\nTheo had heard the story at Easter. He had heard it again on the drive up that morning. He reeled in slowly, watching the lure wobble toward the dock.\n\n\"No,\" he said. \"How big?\"\n\nGrandpa's hands spread wide, and his face lit up the way it did in old photographs. He told it all: the rain, the broken net, the way the fish had looked him straight in the eye. Theo asked questions in all the right places.\n\nWhen the story ended, Grandpa gazed out at the water for a long time. \"Your dad never liked fishing,\" he said quietly. \"Glad somebody does.\"\n\nTheo didn't like fishing much either. He cast again anyway.",
+    "prompt": "Why does Theo say \"No\" when Grandpa asks if he has heard the story?",
+    "choices": [
+      "He has honestly forgotten the story.",
+      "He wants Grandpa to enjoy telling it again.",
+      "He hopes to catch Grandpa telling it wrong.",
+      "He thinks the story will end differently this time."
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"Theo had heard the story at Easter\" (para 3) and \"Theo asked questions in all the right places.\" (para 5) He pretends it is new so Grandpa can have fun telling it. The forgotten choice fails because he heard it that very morning."
+  },
+  {
+    "id": "rd-02-2",
+    "section": "reading",
+    "type": "figurative",
+    "difficulty": 2,
+    "passage_id": "rd-02",
+    "genre": "fiction",
+    "passage": "The lake was a sheet of hammered tin by the time Grandpa finally cast his line. He settled into the folding chair and cleared his throat.\n\n\"Did I ever tell you about the pike I caught in '71? Big as a canoe paddle.\"\n\nTheo had heard the story at Easter. He had heard it again on the drive up that morning. He reeled in slowly, watching the lure wobble toward the dock.\n\n\"No,\" he said. \"How big?\"\n\nGrandpa's hands spread wide, and his face lit up the way it did in old photographs. He told it all: the rain, the broken net, the way the fish had looked him straight in the eye. Theo asked questions in all the right places.\n\nWhen the story ended, Grandpa gazed out at the water for a long time. \"Your dad never liked fishing,\" he said quietly. \"Glad somebody does.\"\n\nTheo didn't like fishing much either. He cast again anyway.",
+    "prompt": "The phrase \"The lake was a sheet of hammered tin\" suggests that the water",
+    "choices": [
+      "was polluted with metal from nearby factories",
+      "was frozen solid",
+      "looked flat and gray, with small ripples",
+      "was loud and crashing"
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"a sheet of hammered tin.\" (para 1) Hammered metal is flat and dull gray with tiny dents, like a lake with small ripples. The frozen choice fails because Grandpa \"cast his line\" (para 1) into it."
+  },
+  {
+    "id": "rd-02-3",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 3,
+    "passage_id": "rd-02",
+    "genre": "fiction",
+    "passage": "The lake was a sheet of hammered tin by the time Grandpa finally cast his line. He settled into the folding chair and cleared his throat.\n\n\"Did I ever tell you about the pike I caught in '71? Big as a canoe paddle.\"\n\nTheo had heard the story at Easter. He had heard it again on the drive up that morning. He reeled in slowly, watching the lure wobble toward the dock.\n\n\"No,\" he said. \"How big?\"\n\nGrandpa's hands spread wide, and his face lit up the way it did in old photographs. He told it all: the rain, the broken net, the way the fish had looked him straight in the eye. Theo asked questions in all the right places.\n\nWhen the story ended, Grandpa gazed out at the water for a long time. \"Your dad never liked fishing,\" he said quietly. \"Glad somebody does.\"\n\nTheo didn't like fishing much either. He cast again anyway.",
+    "prompt": "The last two sentences (\"Theo didn't like fishing much either. He cast again anyway.\") show that Theo",
+    "choices": [
+      "secretly loves fishing more than anything",
+      "wants to catch a bigger fish than Grandpa caught in '71",
+      "is trying to prove he is better than his dad",
+      "stays for Grandpa's sake, not for his own enjoyment"
+    ],
+    "answer": 3,
+    "explanation": "Evidence: \"Theo didn't like fishing much either\" (para 7) right after Grandpa says \"Glad somebody does.\" (para 6) Theo keeps fishing so Grandpa will not feel alone. The loves-fishing choice is the opposite of what the line says."
+  },
+  {
+    "id": "rd-02-4",
+    "section": "reading",
+    "type": "theme",
+    "difficulty": 2,
+    "passage_id": "rd-02",
+    "genre": "fiction",
+    "passage": "The lake was a sheet of hammered tin by the time Grandpa finally cast his line. He settled into the folding chair and cleared his throat.\n\n\"Did I ever tell you about the pike I caught in '71? Big as a canoe paddle.\"\n\nTheo had heard the story at Easter. He had heard it again on the drive up that morning. He reeled in slowly, watching the lure wobble toward the dock.\n\n\"No,\" he said. \"How big?\"\n\nGrandpa's hands spread wide, and his face lit up the way it did in old photographs. He told it all: the rain, the broken net, the way the fish had looked him straight in the eye. Theo asked questions in all the right places.\n\nWhen the story ended, Grandpa gazed out at the water for a long time. \"Your dad never liked fishing,\" he said quietly. \"Glad somebody does.\"\n\nTheo didn't like fishing much either. He cast again anyway.",
+    "prompt": "Which statement best expresses the theme of the passage?",
+    "choices": [
+      "Small acts of patience can be a way of showing love.",
+      "Fishing is the best way to bring a family closer together.",
+      "Old stories are not worth listening to.",
+      "People should always tell the exact truth."
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"Theo asked questions in all the right places\" (para 5) and \"He cast again anyway.\" (para 7) Theo shows love by being patient with Grandpa. The fishing choice is too literal; Theo does not even like fishing, so fishing is not what connects them."
+  },
+  {
+    "id": "rd-03-1",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 2,
+    "passage_id": "rd-03",
+    "genre": "fiction",
+    "passage": "\"Try not to trip over the ball,\" Dani said as I climbed out of the car. \"It's round. It rolls. Just a heads-up.\"\n\n\"Thanks,\" I said. \"Super helpful.\"\n\nShe was already looking at her phone. My sister had been sixteen for three weeks and acted like driving me anywhere was a punishment invented specifically for her.\n\nTryouts lasted two hours. I missed an easy pass in the first drill and felt my face go hot for the rest of the afternoon. When the coach finally blew the whistle, I walked to the parking lot slowly, expecting an empty space and a text that said \"walk home.\"\n\nDani's car was in the same spot. The engine was off. Her phone was face-down on the dashboard, and there was a sports drink in the cupholder, the blue kind I like, still cold.\n\n\"Took you long enough,\" she said. \"Get in.\"",
+    "prompt": "What does the ending reveal about Dani?",
+    "choices": [
+      "She is annoyed that she had to wait so long.",
+      "She feels guilty and plans to apologize for teasing him.",
+      "She cares about her brother more than her words show.",
+      "She wants to become a soccer coach."
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"Dani's car was in the same spot\" (para 5) and \"the blue kind I like, still cold.\" (para 5) She waited and brought his favorite drink, even though she talks tough. The annoyed choice is too literal; \"Took you long enough\" (para 6) is teasing, and her actions say the opposite."
+  },
+  {
+    "id": "rd-03-2",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 3,
+    "passage_id": "rd-03",
+    "genre": "fiction",
+    "passage": "\"Try not to trip over the ball,\" Dani said as I climbed out of the car. \"It's round. It rolls. Just a heads-up.\"\n\n\"Thanks,\" I said. \"Super helpful.\"\n\nShe was already looking at her phone. My sister had been sixteen for three weeks and acted like driving me anywhere was a punishment invented specifically for her.\n\nTryouts lasted two hours. I missed an easy pass in the first drill and felt my face go hot for the rest of the afternoon. When the coach finally blew the whistle, I walked to the parking lot slowly, expecting an empty space and a text that said \"walk home.\"\n\nDani's car was in the same spot. The engine was off. Her phone was face-down on the dashboard, and there was a sports drink in the cupholder, the blue kind I like, still cold.\n\n\"Took you long enough,\" she said. \"Get in.\"",
+    "prompt": "The detail that the drink was \"still cold\" most likely suggests that",
+    "choices": [
+      "the car's air conditioning had kept the drink cool",
+      "the narrator brought it from home",
+      "Dani forgot to drink it herself",
+      "Dani bought it recently, near the end of tryouts"
+    ],
+    "answer": 3,
+    "explanation": "Evidence: \"still cold\" and \"The engine was off.\" (para 5) A cold drink in a car with the engine off must have been bought not long before. The air conditioning choice fails because the engine was off."
+  },
+  {
+    "id": "rd-03-3",
+    "section": "reading",
+    "type": "figurative",
+    "difficulty": 1,
+    "passage_id": "rd-03",
+    "genre": "fiction",
+    "passage": "\"Try not to trip over the ball,\" Dani said as I climbed out of the car. \"It's round. It rolls. Just a heads-up.\"\n\n\"Thanks,\" I said. \"Super helpful.\"\n\nShe was already looking at her phone. My sister had been sixteen for three weeks and acted like driving me anywhere was a punishment invented specifically for her.\n\nTryouts lasted two hours. I missed an easy pass in the first drill and felt my face go hot for the rest of the afternoon. When the coach finally blew the whistle, I walked to the parking lot slowly, expecting an empty space and a text that said \"walk home.\"\n\nDani's car was in the same spot. The engine was off. Her phone was face-down on the dashboard, and there was a sports drink in the cupholder, the blue kind I like, still cold.\n\n\"Took you long enough,\" she said. \"Get in.\"",
+    "prompt": "When the narrator \"felt my face go hot,\" he most likely felt",
+    "choices": [
+      "embarrassed about his mistake",
+      "sick with a fever",
+      "warm because it was a sunny day",
+      "angry at the coach"
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"I missed an easy pass in the first drill and felt my face go hot.\" (para 4) A hot face right after a mistake means embarrassment. The coach choice fails because the coach did nothing to him in the passage."
+  },
+  {
+    "id": "rd-03-4",
+    "section": "reading",
+    "type": "purpose_tone",
+    "difficulty": 2,
+    "passage_id": "rd-03",
+    "genre": "fiction",
+    "passage": "\"Try not to trip over the ball,\" Dani said as I climbed out of the car. \"It's round. It rolls. Just a heads-up.\"\n\n\"Thanks,\" I said. \"Super helpful.\"\n\nShe was already looking at her phone. My sister had been sixteen for three weeks and acted like driving me anywhere was a punishment invented specifically for her.\n\nTryouts lasted two hours. I missed an easy pass in the first drill and felt my face go hot for the rest of the afternoon. When the coach finally blew the whistle, I walked to the parking lot slowly, expecting an empty space and a text that said \"walk home.\"\n\nDani's car was in the same spot. The engine was off. Her phone was face-down on the dashboard, and there was a sports drink in the cupholder, the blue kind I like, still cold.\n\n\"Took you long enough,\" she said. \"Get in.\"",
+    "prompt": "In paragraph 3, the narrator's tone when he describes driving as \"a punishment invented specifically for her\" is",
+    "choices": [
+      "deeply hurt",
+      "mildly sarcastic",
+      "admiring",
+      "frightened"
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"a punishment invented specifically for her.\" (para 3) He is exaggerating on purpose to poke fun at how dramatic his sister acts. The hurt choice is too extreme; he jokes back with \"Super helpful\" instead of being wounded."
+  },
+  {
+    "id": "rd-04-1",
+    "section": "reading",
+    "type": "figurative",
+    "difficulty": 3,
+    "passage_id": "rd-04",
+    "genre": "fiction",
+    "passage": "Without the furniture, Rosa's bedroom looked bigger and somehow smaller at the same time. Her footsteps echoed. Pale rectangles on the wall showed where her posters had been, as if the room were keeping a list of everything she had taken from it.\n\nHer father appeared in the doorway with the last box. \"Ready, kiddo?\"\n\nShe wasn't. She ran her thumb along the doorframe, over the pencil lines that marked her height on every birthday since she was four. The top line, from March, was almost level with her father's shoulder.\n\n\"Can we take this?\" she asked.\n\nHe laughed, then saw her face and stopped. He set the box down, pulled a tape measure from his pocket, and knelt beside the doorframe. One by one, he read the numbers aloud, and Rosa wrote each one on the back of her hand in blue ink.\n\nIn the car, she kept her fist closed the whole way to the new house.",
+    "prompt": "The phrase \"as if the room were keeping a list of everything she had taken from it\" suggests that",
+    "choices": [
+      "the walls were dirty and needed a fresh coat of paint",
+      "someone had written a list on the wall",
+      "Rosa had taken things that were not hers",
+      "the empty spots made her loss feel personal"
+    ],
+    "answer": 3,
+    "explanation": "Evidence: \"Pale rectangles on the wall showed where her posters had been.\" (para 1) Each empty spot reminds her of something that is gone. The dirty-walls choice is too literal; the line is about how the room feels to Rosa, not about cleaning."
+  },
+  {
+    "id": "rd-04-2",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 2,
+    "passage_id": "rd-04",
+    "genre": "fiction",
+    "passage": "Without the furniture, Rosa's bedroom looked bigger and somehow smaller at the same time. Her footsteps echoed. Pale rectangles on the wall showed where her posters had been, as if the room were keeping a list of everything she had taken from it.\n\nHer father appeared in the doorway with the last box. \"Ready, kiddo?\"\n\nShe wasn't. She ran her thumb along the doorframe, over the pencil lines that marked her height on every birthday since she was four. The top line, from March, was almost level with her father's shoulder.\n\n\"Can we take this?\" she asked.\n\nHe laughed, then saw her face and stopped. He set the box down, pulled a tape measure from his pocket, and knelt beside the doorframe. One by one, he read the numbers aloud, and Rosa wrote each one on the back of her hand in blue ink.\n\nIn the car, she kept her fist closed the whole way to the new house.",
+    "prompt": "Why does Rosa's father stop laughing?",
+    "choices": [
+      "He realizes the doorframe matters deeply to Rosa.",
+      "He is angry that she wants to damage the new owners' house.",
+      "He remembers they are late for the moving truck.",
+      "He cannot find his tape measure."
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"He laughed, then saw her face and stopped.\" (para 5) Her face shows him the question is serious to her. The angry choice fails because he helps her right away instead of scolding her."
+  },
+  {
+    "id": "rd-04-3",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 1,
+    "passage_id": "rd-04",
+    "genre": "fiction",
+    "passage": "Without the furniture, Rosa's bedroom looked bigger and somehow smaller at the same time. Her footsteps echoed. Pale rectangles on the wall showed where her posters had been, as if the room were keeping a list of everything she had taken from it.\n\nHer father appeared in the doorway with the last box. \"Ready, kiddo?\"\n\nShe wasn't. She ran her thumb along the doorframe, over the pencil lines that marked her height on every birthday since she was four. The top line, from March, was almost level with her father's shoulder.\n\n\"Can we take this?\" she asked.\n\nHe laughed, then saw her face and stopped. He set the box down, pulled a tape measure from his pocket, and knelt beside the doorframe. One by one, he read the numbers aloud, and Rosa wrote each one on the back of her hand in blue ink.\n\nIn the car, she kept her fist closed the whole way to the new house.",
+    "prompt": "Why does Rosa keep her fist closed in the car?",
+    "choices": [
+      "She is still angry at her father for laughing at her.",
+      "She is guarding the numbers from her old doorframe.",
+      "She is holding the tape measure.",
+      "She is cold from the drive."
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"Rosa wrote each one on the back of her hand\" (para 5) and \"she kept her fist closed the whole way.\" (para 6) She is guarding the height marks she copied. The tape measure choice fails because her father \"pulled a tape measure from his pocket,\" (para 5) and nothing says he gave it to her."
+  },
+  {
+    "id": "rd-04-4",
+    "section": "reading",
+    "type": "theme",
+    "difficulty": 2,
+    "passage_id": "rd-04",
+    "genre": "fiction",
+    "passage": "Without the furniture, Rosa's bedroom looked bigger and somehow smaller at the same time. Her footsteps echoed. Pale rectangles on the wall showed where her posters had been, as if the room were keeping a list of everything she had taken from it.\n\nHer father appeared in the doorway with the last box. \"Ready, kiddo?\"\n\nShe wasn't. She ran her thumb along the doorframe, over the pencil lines that marked her height on every birthday since she was four. The top line, from March, was almost level with her father's shoulder.\n\n\"Can we take this?\" she asked.\n\nHe laughed, then saw her face and stopped. He set the box down, pulled a tape measure from his pocket, and knelt beside the doorframe. One by one, he read the numbers aloud, and Rosa wrote each one on the back of her hand in blue ink.\n\nIn the car, she kept her fist closed the whole way to the new house.",
+    "prompt": "Which statement best expresses the theme of the passage?",
+    "choices": [
+      "Moving to a new house is always exciting.",
+      "Growing up means leaving your childhood memories behind.",
+      "Memories of a place can come with us when we leave.",
+      "Parents never understand their children."
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"Rosa wrote each one on the back of her hand in blue ink.\" (para 5) She takes the memory of the doorframe with her. The parents choice is the opposite of the story; her father understands her and helps."
+  },
+  {
+    "id": "rd-05-1",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 3,
+    "passage_id": "rd-05",
+    "genre": "fiction",
+    "passage": "The new kid, Arturo, eats lunch at the end of the table by the window, and every day he sets up a little magnetic chess board next to his tray. Nobody plays with him. Honestly, I don't see why anyone would. Chess is for people who don't have friends.\n\nI have friends. Well, I had Derek, until Derek made the travel baseball team and started sitting with them.\n\nToday Arturo moved his knight, frowned, and moved it back. He was playing both sides. That's the saddest thing I've ever seen, I told myself, and I watched for twenty minutes to make sure.\n\nWhen the bell rang, he caught me looking. \"You play?\" he asked.\n\n\"No,\" I said. Then, because my mouth apparently works without me: \"My grandpa taught me. A little. A long time ago.\"\n\nHe turned the board around so the white pieces faced my seat. \"Tomorrow, then.\"\n\nI didn't say yes. But I didn't say no, either.",
+    "prompt": "Why is it surprising that the narrator says \"Chess is for people who don't have friends\"?",
+    "choices": [
+      "The narrator seems lonely himself since losing Derek's company.",
+      "The narrator is secretly the best chess player in the whole school.",
+      "Arturo actually has many friends.",
+      "The narrator has never seen a game of chess."
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"I have friends. Well, I had Derek, until Derek made the travel baseball team.\" (para 2) He mocks people without friends while he has just lost his own. The never-seen-chess choice fails because \"My grandpa taught me.\" (para 5)"
+  },
+  {
+    "id": "rd-05-2",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 2,
+    "passage_id": "rd-05",
+    "genre": "fiction",
+    "passage": "The new kid, Arturo, eats lunch at the end of the table by the window, and every day he sets up a little magnetic chess board next to his tray. Nobody plays with him. Honestly, I don't see why anyone would. Chess is for people who don't have friends.\n\nI have friends. Well, I had Derek, until Derek made the travel baseball team and started sitting with them.\n\nToday Arturo moved his knight, frowned, and moved it back. He was playing both sides. That's the saddest thing I've ever seen, I told myself, and I watched for twenty minutes to make sure.\n\nWhen the bell rang, he caught me looking. \"You play?\" he asked.\n\n\"No,\" I said. Then, because my mouth apparently works without me: \"My grandpa taught me. A little. A long time ago.\"\n\nHe turned the board around so the white pieces faced my seat. \"Tomorrow, then.\"\n\nI didn't say yes. But I didn't say no, either.",
+    "prompt": "The narrator says he \"watched for twenty minutes to make sure.\" This suggests he",
+    "choices": [
+      "is planning to report Arturo to a teacher",
+      "is more interested in Arturo's game than he admits",
+      "is learning how the chess pieces move for the very first time",
+      "is making fun of Arturo with his friends"
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"I watched for twenty minutes.\" (para 3) Nobody watches something for twenty minutes unless it interests them, no matter what they tell themselves. The first-time choice fails because his grandpa already taught him."
+  },
+  {
+    "id": "rd-05-3",
+    "section": "reading",
+    "type": "figurative",
+    "difficulty": 1,
+    "passage_id": "rd-05",
+    "genre": "fiction",
+    "passage": "The new kid, Arturo, eats lunch at the end of the table by the window, and every day he sets up a little magnetic chess board next to his tray. Nobody plays with him. Honestly, I don't see why anyone would. Chess is for people who don't have friends.\n\nI have friends. Well, I had Derek, until Derek made the travel baseball team and started sitting with them.\n\nToday Arturo moved his knight, frowned, and moved it back. He was playing both sides. That's the saddest thing I've ever seen, I told myself, and I watched for twenty minutes to make sure.\n\nWhen the bell rang, he caught me looking. \"You play?\" he asked.\n\n\"No,\" I said. Then, because my mouth apparently works without me: \"My grandpa taught me. A little. A long time ago.\"\n\nHe turned the board around so the white pieces faced my seat. \"Tomorrow, then.\"\n\nI didn't say yes. But I didn't say no, either.",
+    "prompt": "What does the narrator mean by \"my mouth apparently works without me\"?",
+    "choices": [
+      "He has trouble speaking clearly.",
+      "He talks too loudly at lunch.",
+      "He says something he had not planned to say.",
+      "He often tells lies when he is put on the spot."
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"my mouth apparently works without me\" (para 5) and \"My grandpa taught me.\" (para 5) He meant to stop at \"No,\" but the truth slipped out. The lies choice fails because what slips out is true."
+  },
+  {
+    "id": "rd-05-4",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 2,
+    "passage_id": "rd-05",
+    "genre": "fiction",
+    "passage": "The new kid, Arturo, eats lunch at the end of the table by the window, and every day he sets up a little magnetic chess board next to his tray. Nobody plays with him. Honestly, I don't see why anyone would. Chess is for people who don't have friends.\n\nI have friends. Well, I had Derek, until Derek made the travel baseball team and started sitting with them.\n\nToday Arturo moved his knight, frowned, and moved it back. He was playing both sides. That's the saddest thing I've ever seen, I told myself, and I watched for twenty minutes to make sure.\n\nWhen the bell rang, he caught me looking. \"You play?\" he asked.\n\n\"No,\" I said. Then, because my mouth apparently works without me: \"My grandpa taught me. A little. A long time ago.\"\n\nHe turned the board around so the white pieces faced my seat. \"Tomorrow, then.\"\n\nI didn't say yes. But I didn't say no, either.",
+    "prompt": "What will the narrator most likely do next?",
+    "choices": [
+      "Start sitting with Derek and the baseball team",
+      "Tell everyone that Arturo is strange",
+      "Ask the school to ban chess at lunch",
+      "Play chess with Arturo the next day"
+    ],
+    "answer": 3,
+    "explanation": "Evidence: \"He turned the board around so the white pieces faced my seat\" (para 6) and \"I didn't say no, either.\" (para 7) The open invitation and his not refusing point toward playing. The Derek choice has no support; Derek already left to sit with his new team."
+  },
+  {
+    "id": "rd-06-1",
+    "section": "reading",
+    "type": "figurative",
+    "difficulty": 1,
+    "passage_id": "rd-06",
+    "genre": "fiction",
+    "passage": "By April the wind had stopped feeling like weather and started feeling like a houseguest who would not leave. It rattled the windows at breakfast. It hissed under the door at supper. Every morning Ma swept a little dune off the kitchen floor, and every evening it was back.\n\nLucy's job was the tomatoes. She had planted them in coffee cans along the porch rail, twelve cans, and she carried water to them from the pump in a bucket that sloshed against her shins. Pa said it was a waste of good water. Ma said nothing, but she saved the dishwater in a pan and set it by the porch steps.\n\nOn Sunday a dust cloud rolled in from the west, black as a bruise, and the family hid inside with wet towels over their faces. When it passed, Lucy ran out to the porch. Eleven cans were buried. One small green stem stood up out of the twelfth, bent but not broken.\n\nShe went to get the bucket.",
+    "prompt": "Describing the wind as \"a houseguest who would not leave\" suggests that the wind was",
+    "choices": [
+      "friendly company for the family",
+      "constant and unwelcome",
+      "gentle and pleasant",
+      "blowing only once in a while"
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"It rattled the windows at breakfast. It hissed under the door at supper.\" (para 1) The wind is there all day, like a guest who stays too long. The friendly choice fails because a guest \"who would not leave\" (para 1) is someone you want gone."
+  },
+  {
+    "id": "rd-06-2",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 2,
+    "passage_id": "rd-06",
+    "genre": "fiction",
+    "passage": "By April the wind had stopped feeling like weather and started feeling like a houseguest who would not leave. It rattled the windows at breakfast. It hissed under the door at supper. Every morning Ma swept a little dune off the kitchen floor, and every evening it was back.\n\nLucy's job was the tomatoes. She had planted them in coffee cans along the porch rail, twelve cans, and she carried water to them from the pump in a bucket that sloshed against her shins. Pa said it was a waste of good water. Ma said nothing, but she saved the dishwater in a pan and set it by the porch steps.\n\nOn Sunday a dust cloud rolled in from the west, black as a bruise, and the family hid inside with wet towels over their faces. When it passed, Lucy ran out to the porch. Eleven cans were buried. One small green stem stood up out of the twelfth, bent but not broken.\n\nShe went to get the bucket.",
+    "prompt": "What does Ma's choice to save the dishwater show?",
+    "choices": [
+      "She agrees with Pa that watering is wasteful.",
+      "She wants Lucy to stop growing tomatoes.",
+      "She quietly supports Lucy's effort.",
+      "She is trying to wash the porch."
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"Ma said nothing, but she saved the dishwater in a pan and set it by the porch steps.\" (para 2) Ma does not argue with Pa, but she gives Lucy water for the plants. The agrees-with-Pa choice is the opposite; she does something to help."
+  },
+  {
+    "id": "rd-06-3",
+    "section": "reading",
+    "type": "purpose_tone",
+    "difficulty": 3,
+    "passage_id": "rd-06",
+    "genre": "fiction",
+    "passage": "By April the wind had stopped feeling like weather and started feeling like a houseguest who would not leave. It rattled the windows at breakfast. It hissed under the door at supper. Every morning Ma swept a little dune off the kitchen floor, and every evening it was back.\n\nLucy's job was the tomatoes. She had planted them in coffee cans along the porch rail, twelve cans, and she carried water to them from the pump in a bucket that sloshed against her shins. Pa said it was a waste of good water. Ma said nothing, but she saved the dishwater in a pan and set it by the porch steps.\n\nOn Sunday a dust cloud rolled in from the west, black as a bruise, and the family hid inside with wet towels over their faces. When it passed, Lucy ran out to the porch. Eleven cans were buried. One small green stem stood up out of the twelfth, bent but not broken.\n\nShe went to get the bucket.",
+    "prompt": "The phrase \"black as a bruise\" mainly creates a feeling of",
+    "choices": [
+      "calm beauty",
+      "playful mystery",
+      "cheerful excitement",
+      "danger and harm"
+    ],
+    "answer": 3,
+    "explanation": "Evidence: \"black as a bruise\" (para 3) and \"hid inside with wet towels over their faces.\" (para 3) A bruise comes from being hurt, and the family has to hide. The mystery choice fails because the family knows exactly what the cloud is and fears it."
+  },
+  {
+    "id": "rd-06-4",
+    "section": "reading",
+    "type": "theme",
+    "difficulty": 2,
+    "passage_id": "rd-06",
+    "genre": "fiction",
+    "passage": "By April the wind had stopped feeling like weather and started feeling like a houseguest who would not leave. It rattled the windows at breakfast. It hissed under the door at supper. Every morning Ma swept a little dune off the kitchen floor, and every evening it was back.\n\nLucy's job was the tomatoes. She had planted them in coffee cans along the porch rail, twelve cans, and she carried water to them from the pump in a bucket that sloshed against her shins. Pa said it was a waste of good water. Ma said nothing, but she saved the dishwater in a pan and set it by the porch steps.\n\nOn Sunday a dust cloud rolled in from the west, black as a bruise, and the family hid inside with wet towels over their faces. When it passed, Lucy ran out to the porch. Eleven cans were buried. One small green stem stood up out of the twelfth, bent but not broken.\n\nShe went to get the bucket.",
+    "prompt": "Which statement best expresses the theme of the passage?",
+    "choices": [
+      "Hope can survive even in very hard conditions.",
+      "Nature always destroys whatever people try to build.",
+      "Children should always obey their fathers.",
+      "Farming during the 1930s was impossible."
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"One small green stem stood up out of the twelfth, bent but not broken\" (para 3) and \"She went to get the bucket.\" (para 4) Lucy keeps going because one plant lived. The nature-always-destroys choice fails because one plant survived."
+  },
+  {
+    "id": "rd-07-1",
+    "section": "reading",
+    "type": "figurative",
+    "difficulty": 1,
+    "passage_id": "rd-07",
+    "genre": "fiction",
+    "passage": "Everyone on Delmar Street knew to stay off Mrs. Kessler's lawn. She had a voice like a rusty gate and a habit of watching the street from behind her curtains.\n\nSo when Omar's kick sailed over the fence and through her garage window, his friends scattered like pigeons. Omar stood alone on the sidewalk, staring at the jagged hole.\n\nHe could have run. Instead, he walked up the path and knocked.\n\nMrs. Kessler opened the door and looked at him for a long moment. \"Well,\" she said. \"At least one of you has a spine.\"\n\nShe told him a new pane would cost forty dollars. He didn't have forty dollars. \"Then you'll rake,\" she said. \"Saturdays, until it's paid.\"\n\nThe first Saturday, she watched from the porch and corrected his technique. The second Saturday, she brought out lemonade. By the fourth, she was telling him about her husband, who had played goalkeeper in Poland before the war, and Omar realized she had stopped mentioning the forty dollars weeks ago.",
+    "prompt": "The phrase \"his friends scattered like pigeons\" means that his friends",
+    "choices": [
+      "made loud noises",
+      "climbed up onto the fence",
+      "ran off quickly in different directions",
+      "gathered around the broken window to look at the damage"
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"his friends scattered like pigeons. Omar stood alone.\" (para 2) Pigeons fly away in all directions when startled, and Omar is left by himself. The gathered choice is the opposite; they left."
+  },
+  {
+    "id": "rd-07-2",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 2,
+    "passage_id": "rd-07",
+    "genre": "fiction",
+    "passage": "Everyone on Delmar Street knew to stay off Mrs. Kessler's lawn. She had a voice like a rusty gate and a habit of watching the street from behind her curtains.\n\nSo when Omar's kick sailed over the fence and through her garage window, his friends scattered like pigeons. Omar stood alone on the sidewalk, staring at the jagged hole.\n\nHe could have run. Instead, he walked up the path and knocked.\n\nMrs. Kessler opened the door and looked at him for a long moment. \"Well,\" she said. \"At least one of you has a spine.\"\n\nShe told him a new pane would cost forty dollars. He didn't have forty dollars. \"Then you'll rake,\" she said. \"Saturdays, until it's paid.\"\n\nThe first Saturday, she watched from the porch and corrected his technique. The second Saturday, she brought out lemonade. By the fourth, she was telling him about her husband, who had played goalkeeper in Poland before the war, and Omar realized she had stopped mentioning the forty dollars weeks ago.",
+    "prompt": "When Mrs. Kessler says \"At least one of you has a spine,\" she means that she",
+    "choices": [
+      "thinks Omar hurt his back",
+      "is threatening to call Omar's parents",
+      "wants Omar to tell her the names of the friends who ran",
+      "respects Omar's courage in admitting what he did"
+    ],
+    "answer": 3,
+    "explanation": "Evidence: \"He could have run. Instead, he walked up the path and knocked.\" (para 3) Having \"a spine\" means being brave, and he is the only one who did not run. The hurt-back choice is too literal."
+  },
+  {
+    "id": "rd-07-3",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 3,
+    "passage_id": "rd-07",
+    "genre": "fiction",
+    "passage": "Everyone on Delmar Street knew to stay off Mrs. Kessler's lawn. She had a voice like a rusty gate and a habit of watching the street from behind her curtains.\n\nSo when Omar's kick sailed over the fence and through her garage window, his friends scattered like pigeons. Omar stood alone on the sidewalk, staring at the jagged hole.\n\nHe could have run. Instead, he walked up the path and knocked.\n\nMrs. Kessler opened the door and looked at him for a long moment. \"Well,\" she said. \"At least one of you has a spine.\"\n\nShe told him a new pane would cost forty dollars. He didn't have forty dollars. \"Then you'll rake,\" she said. \"Saturdays, until it's paid.\"\n\nThe first Saturday, she watched from the porch and corrected his technique. The second Saturday, she brought out lemonade. By the fourth, she was telling him about her husband, who had played goalkeeper in Poland before the war, and Omar realized she had stopped mentioning the forty dollars weeks ago.",
+    "prompt": "Why has Mrs. Kessler most likely stopped mentioning the forty dollars?",
+    "choices": [
+      "She has come to value Omar's company over the money.",
+      "Omar has already paid her back with money from his parents.",
+      "She forgot about the broken window.",
+      "She decided the window was never really broken."
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"she brought out lemonade\" (para 6) and \"she was telling him about her husband.\" (para 6) She treats him like a friend now, not a worker. The paid-back choice fails because \"He didn't have forty dollars,\" (para 5) and nothing says he paid."
+  },
+  {
+    "id": "rd-07-4",
+    "section": "reading",
+    "type": "theme",
+    "difficulty": 2,
+    "passage_id": "rd-07",
+    "genre": "fiction",
+    "passage": "Everyone on Delmar Street knew to stay off Mrs. Kessler's lawn. She had a voice like a rusty gate and a habit of watching the street from behind her curtains.\n\nSo when Omar's kick sailed over the fence and through her garage window, his friends scattered like pigeons. Omar stood alone on the sidewalk, staring at the jagged hole.\n\nHe could have run. Instead, he walked up the path and knocked.\n\nMrs. Kessler opened the door and looked at him for a long moment. \"Well,\" she said. \"At least one of you has a spine.\"\n\nShe told him a new pane would cost forty dollars. He didn't have forty dollars. \"Then you'll rake,\" she said. \"Saturdays, until it's paid.\"\n\nThe first Saturday, she watched from the porch and corrected his technique. The second Saturday, she brought out lemonade. By the fourth, she was telling him about her husband, who had played goalkeeper in Poland before the war, and Omar realized she had stopped mentioning the forty dollars weeks ago.",
+    "prompt": "Which statement best expresses the theme of the passage?",
+    "choices": [
+      "Friends will always run away and leave you when things go wrong.",
+      "Taking responsibility for a mistake can lead to something good.",
+      "Children should never play ball near houses.",
+      "Raking leaves is boring, hard work."
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"Instead, he walked up the path and knocked,\" (para 3) and later she tells him about her husband. Owning up led to a friendship. The friends-abandon choice is too extreme; it happens once here, and the story is about Omar's choice."
+  },
+  {
+    "id": "rd-08-1",
+    "section": "reading",
+    "type": "figurative",
+    "difficulty": 3,
+    "passage_id": "rd-08",
+    "genre": "fiction",
+    "passage": "The goalkeeper was bouncing on his toes, making himself as wide as a door. Behind him, the net hung loose and patient.\n\nNico placed the ball on the spot and stepped back four paces, the way he had done a thousand times in the backyard against a goal his uncle had built from PVC pipe. In the backyard, nobody was watching. Here, the whole left bleacher was on its feet, and someone was banging on a cooler like a drum.\n\nHis heartbeat was louder than the cooler.\n\nHe looked at the keeper, then at the left corner, then at the keeper again. The keeper leaned, just slightly, to his right.\n\nNico let out a breath. He thought about nothing: not the bleachers, not the score, not his father at the fence with both hands on top of his head. Only the grass, the ball, and the corner.\n\nHe ran.",
+    "prompt": "Describing the net as hanging \"loose and patient\" makes it seem",
+    "choices": [
+      "broken and in need of repair after many games",
+      "boring, like the game itself",
+      "nervous, like Nico",
+      "calm and waiting, as if expecting the ball"
+    ],
+    "answer": 3,
+    "explanation": "Evidence: \"the net hung loose and patient.\" (para 1) Something patient waits calmly, so the net seems to be waiting for the ball. The nervous choice fails because loose and patient are the opposite of nervous."
+  },
+  {
+    "id": "rd-08-2",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 1,
+    "passage_id": "rd-08",
+    "genre": "fiction",
+    "passage": "The goalkeeper was bouncing on his toes, making himself as wide as a door. Behind him, the net hung loose and patient.\n\nNico placed the ball on the spot and stepped back four paces, the way he had done a thousand times in the backyard against a goal his uncle had built from PVC pipe. In the backyard, nobody was watching. Here, the whole left bleacher was on its feet, and someone was banging on a cooler like a drum.\n\nHis heartbeat was louder than the cooler.\n\nHe looked at the keeper, then at the left corner, then at the keeper again. The keeper leaned, just slightly, to his right.\n\nNico let out a breath. He thought about nothing: not the bleachers, not the score, not his father at the fence with both hands on top of his head. Only the grass, the ball, and the corner.\n\nHe ran.",
+    "prompt": "Nico's father standing \"with both hands on top of his head\" most likely shows that his father is",
+    "choices": [
+      "nervous about the kick",
+      "celebrating a goal his son has just scored",
+      "bored by the game",
+      "fixing his hat"
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"his father at the fence with both hands on top of his head\" (para 5) before Nico has even run. People hold their heads like that when they are tense. The celebrating choice fails because no goal has happened yet."
+  },
+  {
+    "id": "rd-08-3",
+    "section": "reading",
+    "type": "detail",
+    "difficulty": 2,
+    "passage_id": "rd-08",
+    "genre": "fiction",
+    "passage": "The goalkeeper was bouncing on his toes, making himself as wide as a door. Behind him, the net hung loose and patient.\n\nNico placed the ball on the spot and stepped back four paces, the way he had done a thousand times in the backyard against a goal his uncle had built from PVC pipe. In the backyard, nobody was watching. Here, the whole left bleacher was on its feet, and someone was banging on a cooler like a drum.\n\nHis heartbeat was louder than the cooler.\n\nHe looked at the keeper, then at the left corner, then at the keeper again. The keeper leaned, just slightly, to his right.\n\nNico let out a breath. He thought about nothing: not the bleachers, not the score, not his father at the fence with both hands on top of his head. Only the grass, the ball, and the corner.\n\nHe ran.",
+    "prompt": "The detail about the backyard goal mainly shows that Nico",
+    "choices": [
+      "prefers to play soccer alone",
+      "has practiced penalty kicks many times",
+      "has never played in a real game before",
+      "learned to play soccer mostly from his father"
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"the way he had done a thousand times in the backyard.\" (para 2) His routine comes from lots of practice. The father choice fails because the backyard goal was built by \"his uncle,\" not his father."
+  },
+  {
+    "id": "rd-08-4",
+    "section": "reading",
+    "type": "purpose_tone",
+    "difficulty": 2,
+    "passage_id": "rd-08",
+    "genre": "fiction",
+    "passage": "The goalkeeper was bouncing on his toes, making himself as wide as a door. Behind him, the net hung loose and patient.\n\nNico placed the ball on the spot and stepped back four paces, the way he had done a thousand times in the backyard against a goal his uncle had built from PVC pipe. In the backyard, nobody was watching. Here, the whole left bleacher was on its feet, and someone was banging on a cooler like a drum.\n\nHis heartbeat was louder than the cooler.\n\nHe looked at the keeper, then at the left corner, then at the keeper again. The keeper leaned, just slightly, to his right.\n\nNico let out a breath. He thought about nothing: not the bleachers, not the score, not his father at the fence with both hands on top of his head. Only the grass, the ball, and the corner.\n\nHe ran.",
+    "prompt": "How does the mood of the passage change?",
+    "choices": [
+      "It moves from calm and quiet to panicked and frightened.",
+      "It moves from happy to sad.",
+      "It moves from tense and noisy to calm and focused.",
+      "It moves from angry to joyful."
+    ],
+    "answer": 2,
+    "explanation": "Evidence: early on, \"His heartbeat was louder than the cooler\" (para 3); later, \"He thought about nothing\" (para 5) and \"Only the grass, the ball, and the corner.\" (para 5) The noise fades into focus. The calm-to-panicked choice reverses the order."
+  },
+  {
+    "id": "rd-09-1",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 2,
+    "passage_id": "rd-09",
+    "genre": "fiction",
+    "passage": "The photo arrived in the group chat at 9:47 p.m., the night before the history test. At first it was just a gray rectangle, loading. Then Bella's message appeared underneath: \"u didn't get this from me.\"\n\nAva put her phone face-down on the desk. She picked it back up. She put it in the drawer and closed the drawer with her knee.\n\nShe studied until 11:30, flashcards spread across the bed like fallen leaves, until the dates started swimming.\n\nOn Friday the tests came back. Bella had a 98 circled in red and kept turning her paper so people could see it. Ava had an 84. She folded it in half, then in half again.\n\nAt dinner her dad asked how the test went.\n\n\"Eighty-four,\" she said.\n\n\"You okay with that?\"\n\nAva thought about the gray rectangle, still sitting unopened in the chat. \"Yeah,\" she said, and was surprised to find she meant it.",
+    "prompt": "Ava puts the phone down, picks it up, and then shuts it in a drawer. These actions show that she",
+    "choices": [
+      "is tempted to look but is trying to resist",
+      "has easily decided to ignore the photo",
+      "is angry at Bella for sending the photo so late at night",
+      "thinks her phone is broken"
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"Ava put her phone face-down on the desk. She picked it back up. She put it in the drawer.\" (para 2) Going back and forth shows a struggle, and the drawer ends it. The easily-decided choice fails because she \"picked it back up,\" (para 2) so it was not easy."
+  },
+  {
+    "id": "rd-09-2",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 2,
+    "passage_id": "rd-09",
+    "genre": "fiction",
+    "passage": "The photo arrived in the group chat at 9:47 p.m., the night before the history test. At first it was just a gray rectangle, loading. Then Bella's message appeared underneath: \"u didn't get this from me.\"\n\nAva put her phone face-down on the desk. She picked it back up. She put it in the drawer and closed the drawer with her knee.\n\nShe studied until 11:30, flashcards spread across the bed like fallen leaves, until the dates started swimming.\n\nOn Friday the tests came back. Bella had a 98 circled in red and kept turning her paper so people could see it. Ava had an 84. She folded it in half, then in half again.\n\nAt dinner her dad asked how the test went.\n\n\"Eighty-four,\" she said.\n\n\"You okay with that?\"\n\nAva thought about the gray rectangle, still sitting unopened in the chat. \"Yeah,\" she said, and was surprised to find she meant it.",
+    "prompt": "Why does Ava fold her test \"in half, then in half again\"?",
+    "choices": [
+      "She is proud of her grade and wants to save it.",
+      "She is disappointed in her score next to Bella's.",
+      "She is hiding the fact that she used the photo to cheat.",
+      "She is hiding that she earned the top grade."
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"Bella had a 98... Ava had an 84. She folded it in half.\" (para 4) Bella shows off her paper while Ava hides hers. The cheated choice fails because the photo stayed \"unopened.\""
+  },
+  {
+    "id": "rd-09-3",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 3,
+    "passage_id": "rd-09",
+    "genre": "fiction",
+    "passage": "The photo arrived in the group chat at 9:47 p.m., the night before the history test. At first it was just a gray rectangle, loading. Then Bella's message appeared underneath: \"u didn't get this from me.\"\n\nAva put her phone face-down on the desk. She picked it back up. She put it in the drawer and closed the drawer with her knee.\n\nShe studied until 11:30, flashcards spread across the bed like fallen leaves, until the dates started swimming.\n\nOn Friday the tests came back. Bella had a 98 circled in red and kept turning her paper so people could see it. Ava had an 84. She folded it in half, then in half again.\n\nAt dinner her dad asked how the test went.\n\n\"Eighty-four,\" she said.\n\n\"You okay with that?\"\n\nAva thought about the gray rectangle, still sitting unopened in the chat. \"Yeah,\" she said, and was surprised to find she meant it.",
+    "prompt": "Ava \"was surprised to find she meant it.\" This suggests she realizes that she",
+    "choices": [
+      "wishes she had opened the photo after all",
+      "believes 84 was the highest grade in the class",
+      "values having earned her grade honestly",
+      "wants her dad to stop asking questions"
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"Ava thought about the gray rectangle, still sitting unopened\" (para 8) just before saying \"Yeah.\" Remembering she did not cheat makes her at peace with an 84. The wishes choice is the opposite of feeling okay."
+  },
+  {
+    "id": "rd-09-4",
+    "section": "reading",
+    "type": "theme",
+    "difficulty": 1,
+    "passage_id": "rd-09",
+    "genre": "fiction",
+    "passage": "The photo arrived in the group chat at 9:47 p.m., the night before the history test. At first it was just a gray rectangle, loading. Then Bella's message appeared underneath: \"u didn't get this from me.\"\n\nAva put her phone face-down on the desk. She picked it back up. She put it in the drawer and closed the drawer with her knee.\n\nShe studied until 11:30, flashcards spread across the bed like fallen leaves, until the dates started swimming.\n\nOn Friday the tests came back. Bella had a 98 circled in red and kept turning her paper so people could see it. Ava had an 84. She folded it in half, then in half again.\n\nAt dinner her dad asked how the test went.\n\n\"Eighty-four,\" she said.\n\n\"You okay with that?\"\n\nAva thought about the gray rectangle, still sitting unopened in the chat. \"Yeah,\" she said, and was surprised to find she meant it.",
+    "prompt": "Which statement best expresses the theme of the passage?",
+    "choices": [
+      "Cheaters always get caught.",
+      "Good grades are what matter most.",
+      "Friends should never share homework answers with each other.",
+      "Honest effort can feel better than an easy shortcut."
+    ],
+    "answer": 3,
+    "explanation": "Evidence: \"'Yeah,' she said, and was surprised to find she meant it.\" (para 8) Ava is satisfied because she did the work herself. The caught choice fails because Bella got a 98 and nothing happened to her."
+  },
+  {
+    "id": "rd-10-1",
+    "section": "reading",
+    "type": "main_idea",
+    "difficulty": 2,
+    "passage_id": "rd-10",
+    "genre": "nonfiction",
+    "passage": "An octopus has no bones, no shell, and very little protection from the many fish, seals, and eels that want to eat it. What it does have is one of the most remarkable disguise systems in the animal world.\n\nJust beneath an octopus's skin lie thousands of tiny sacs of color called chromatophores. Each sac is surrounded by muscles. When the muscles squeeze or relax, the sac opens or closes, changing the color of that spot of skin in less than a second. Some octopuses can also raise small bumps on their skin, making smooth skin look rough like a rock or coral.\n\nWhat puzzles scientists is that most octopuses are believed to be colorblind. Their eyes have only one type of color-sensing cell, yet they match their surroundings with astonishing accuracy. One possible explanation is that their skin itself contains light-sensing proteins similar to those found in eyes. If so, an octopus may, in a sense, \"see\" with its skin.\n\nResearchers are still testing this idea. For now, the octopus remains a master of disguise that keeps its biggest secret well hidden.",
+    "prompt": "What is the main idea of the passage?",
+    "choices": [
+      "Octopuses are the smartest animals in the ocean, able to outthink fish, seals, and eels.",
+      "Octopuses have an amazing disguise ability that scientists are still trying to explain.",
+      "Most octopuses are believed to be colorblind.",
+      "Fish, seals, and eels all hunt octopuses."
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"one of the most remarkable disguise systems in the animal world\" (para 1) and \"Researchers are still testing this idea.\" (para 4) The passage is about the disguise and the mystery behind it. The colorblind choice is a true detail, but it is only one part of the passage."
+  },
+  {
+    "id": "rd-10-2",
+    "section": "reading",
+    "type": "detail",
+    "difficulty": 1,
+    "passage_id": "rd-10",
+    "genre": "nonfiction",
+    "passage": "An octopus has no bones, no shell, and very little protection from the many fish, seals, and eels that want to eat it. What it does have is one of the most remarkable disguise systems in the animal world.\n\nJust beneath an octopus's skin lie thousands of tiny sacs of color called chromatophores. Each sac is surrounded by muscles. When the muscles squeeze or relax, the sac opens or closes, changing the color of that spot of skin in less than a second. Some octopuses can also raise small bumps on their skin, making smooth skin look rough like a rock or coral.\n\nWhat puzzles scientists is that most octopuses are believed to be colorblind. Their eyes have only one type of color-sensing cell, yet they match their surroundings with astonishing accuracy. One possible explanation is that their skin itself contains light-sensing proteins similar to those found in eyes. If so, an octopus may, in a sense, \"see\" with its skin.\n\nResearchers are still testing this idea. For now, the octopus remains a master of disguise that keeps its biggest secret well hidden.",
+    "prompt": "According to the passage, what makes a chromatophore change the color of the skin?",
+    "choices": [
+      "Small bumps rise on the skin.",
+      "The octopus eats brightly colored food.",
+      "Muscles around it squeeze or relax.",
+      "Light-sensing proteins in the eyes."
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"When the muscles squeeze or relax, the sac opens or closes, changing the color.\" (para 2) The bumps choice is a real detail, but bumps change texture, not color."
+  },
+  {
+    "id": "rd-10-3",
+    "section": "reading",
+    "type": "vocab_context",
+    "difficulty": 1,
+    "passage_id": "rd-10",
+    "genre": "nonfiction",
+    "passage": "An octopus has no bones, no shell, and very little protection from the many fish, seals, and eels that want to eat it. What it does have is one of the most remarkable disguise systems in the animal world.\n\nJust beneath an octopus's skin lie thousands of tiny sacs of color called chromatophores. Each sac is surrounded by muscles. When the muscles squeeze or relax, the sac opens or closes, changing the color of that spot of skin in less than a second. Some octopuses can also raise small bumps on their skin, making smooth skin look rough like a rock or coral.\n\nWhat puzzles scientists is that most octopuses are believed to be colorblind. Their eyes have only one type of color-sensing cell, yet they match their surroundings with astonishing accuracy. One possible explanation is that their skin itself contains light-sensing proteins similar to those found in eyes. If so, an octopus may, in a sense, \"see\" with its skin.\n\nResearchers are still testing this idea. For now, the octopus remains a master of disguise that keeps its biggest secret well hidden.",
+    "prompt": "As used in paragraph 3, the word \"astonishing\" most nearly means",
+    "choices": [
+      "slow",
+      "careless",
+      "frightening",
+      "amazing"
+    ],
+    "answer": 3,
+    "explanation": "Evidence: \"yet they match their surroundings with astonishing accuracy.\" (para 3) The word \"yet\" shows the matching is surprisingly good for a colorblind animal. The frightening choice fails because nothing in the sentence is scary."
+  },
+  {
+    "id": "rd-10-4",
+    "section": "reading",
+    "type": "purpose_tone",
+    "difficulty": 3,
+    "passage_id": "rd-10",
+    "genre": "nonfiction",
+    "passage": "An octopus has no bones, no shell, and very little protection from the many fish, seals, and eels that want to eat it. What it does have is one of the most remarkable disguise systems in the animal world.\n\nJust beneath an octopus's skin lie thousands of tiny sacs of color called chromatophores. Each sac is surrounded by muscles. When the muscles squeeze or relax, the sac opens or closes, changing the color of that spot of skin in less than a second. Some octopuses can also raise small bumps on their skin, making smooth skin look rough like a rock or coral.\n\nWhat puzzles scientists is that most octopuses are believed to be colorblind. Their eyes have only one type of color-sensing cell, yet they match their surroundings with astonishing accuracy. One possible explanation is that their skin itself contains light-sensing proteins similar to those found in eyes. If so, an octopus may, in a sense, \"see\" with its skin.\n\nResearchers are still testing this idea. For now, the octopus remains a master of disguise that keeps its biggest secret well hidden.",
+    "prompt": "Why does the author mention that most octopuses are believed to be colorblind?",
+    "choices": [
+      "To set up a puzzle about how they match colors so well",
+      "To show that octopuses are weak and easy to catch",
+      "To prove that octopuses definitely see colors with their skin",
+      "To explain how human eyes work"
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"What puzzles scientists is that most octopuses are believed to be colorblind.\" (para 3) The fact creates a mystery. The prove choice is too extreme; the author says \"may\" and \"Researchers are still testing this idea.\" (para 4)"
+  },
+  {
+    "id": "rd-11-1",
+    "section": "reading",
+    "type": "main_idea",
+    "difficulty": 1,
+    "passage_id": "rd-11",
+    "genre": "nonfiction",
+    "passage": "In 1817, New York governor DeWitt Clinton proposed digging a canal more than 360 miles long, connecting the Hudson River at Albany to Lake Erie at Buffalo. Many people thought the idea was absurd. At the time, the longest canal in America was less than 30 miles long. Critics mocked the project as \"Clinton's Ditch.\"\n\nConstruction took eight years. Workers, many of them Irish immigrants, dug much of the canal by hand with shovels, picks, and horse-drawn plows. Because few American engineers had canal experience, many learned on the job, solving problems as they appeared.\n\nWhen the Erie Canal opened in 1825, the results silenced most critics. Before the canal, moving a ton of goods from Buffalo to New York City cost about $100 and took weeks. Afterward, it cost roughly $10 and took about eight days. Farmers in the Midwest could suddenly sell crops on the East Coast, and New York City grew into the busiest port in the nation.\n\nThe \"ditch\" that people once laughed at had changed the shape of American trade.",
+    "prompt": "Which statement best expresses the main idea of the passage?",
+    "choices": [
+      "Irish immigrants built most of the canals in America during the 1800s.",
+      "DeWitt Clinton was New York's most popular governor.",
+      "A canal that many people doubted ended up transforming American trade.",
+      "Canals were faster than every other way to ship goods."
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"Many people thought the idea was absurd\" (para 1) and \"had changed the shape of American trade.\" (para 4) The passage goes from doubt to success. The Irish choice is too broad; the passage only says many workers on this one canal were Irish."
+  },
+  {
+    "id": "rd-11-2",
+    "section": "reading",
+    "type": "vocab_context",
+    "difficulty": 2,
+    "passage_id": "rd-11",
+    "genre": "nonfiction",
+    "passage": "In 1817, New York governor DeWitt Clinton proposed digging a canal more than 360 miles long, connecting the Hudson River at Albany to Lake Erie at Buffalo. Many people thought the idea was absurd. At the time, the longest canal in America was less than 30 miles long. Critics mocked the project as \"Clinton's Ditch.\"\n\nConstruction took eight years. Workers, many of them Irish immigrants, dug much of the canal by hand with shovels, picks, and horse-drawn plows. Because few American engineers had canal experience, many learned on the job, solving problems as they appeared.\n\nWhen the Erie Canal opened in 1825, the results silenced most critics. Before the canal, moving a ton of goods from Buffalo to New York City cost about $100 and took weeks. Afterward, it cost roughly $10 and took about eight days. Farmers in the Midwest could suddenly sell crops on the East Coast, and New York City grew into the busiest port in the nation.\n\nThe \"ditch\" that people once laughed at had changed the shape of American trade.",
+    "prompt": "As used in paragraph 1, the word \"absurd\" most nearly means",
+    "choices": [
+      "expensive",
+      "dangerous",
+      "brilliant",
+      "ridiculous"
+    ],
+    "answer": 3,
+    "explanation": "Evidence: \"Critics mocked the project.\" (para 1) People mock ideas they think are ridiculous. The expensive choice fails because the passage never mentions what the canal cost to build."
+  },
+  {
+    "id": "rd-11-3",
+    "section": "reading",
+    "type": "detail",
+    "difficulty": 1,
+    "passage_id": "rd-11",
+    "genre": "nonfiction",
+    "passage": "In 1817, New York governor DeWitt Clinton proposed digging a canal more than 360 miles long, connecting the Hudson River at Albany to Lake Erie at Buffalo. Many people thought the idea was absurd. At the time, the longest canal in America was less than 30 miles long. Critics mocked the project as \"Clinton's Ditch.\"\n\nConstruction took eight years. Workers, many of them Irish immigrants, dug much of the canal by hand with shovels, picks, and horse-drawn plows. Because few American engineers had canal experience, many learned on the job, solving problems as they appeared.\n\nWhen the Erie Canal opened in 1825, the results silenced most critics. Before the canal, moving a ton of goods from Buffalo to New York City cost about $100 and took weeks. Afterward, it cost roughly $10 and took about eight days. Farmers in the Midwest could suddenly sell crops on the East Coast, and New York City grew into the busiest port in the nation.\n\nThe \"ditch\" that people once laughed at had changed the shape of American trade.",
+    "prompt": "According to the passage, how did the canal help Midwest farmers?",
+    "choices": [
+      "It let them sell crops on the East Coast.",
+      "It gave them jobs digging the canal.",
+      "It lowered the price of horse-drawn plows.",
+      "It helped them move to New York City."
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"Farmers in the Midwest could suddenly sell crops on the East Coast.\" (para 3) The digging-jobs choice fails because the diggers mentioned are \"Irish immigrants,\" not farmers."
+  },
+  {
+    "id": "rd-11-4",
+    "section": "reading",
+    "type": "purpose_tone",
+    "difficulty": 3,
+    "passage_id": "rd-11",
+    "genre": "nonfiction",
+    "passage": "In 1817, New York governor DeWitt Clinton proposed digging a canal more than 360 miles long, connecting the Hudson River at Albany to Lake Erie at Buffalo. Many people thought the idea was absurd. At the time, the longest canal in America was less than 30 miles long. Critics mocked the project as \"Clinton's Ditch.\"\n\nConstruction took eight years. Workers, many of them Irish immigrants, dug much of the canal by hand with shovels, picks, and horse-drawn plows. Because few American engineers had canal experience, many learned on the job, solving problems as they appeared.\n\nWhen the Erie Canal opened in 1825, the results silenced most critics. Before the canal, moving a ton of goods from Buffalo to New York City cost about $100 and took weeks. Afterward, it cost roughly $10 and took about eight days. Farmers in the Midwest could suddenly sell crops on the East Coast, and New York City grew into the busiest port in the nation.\n\nThe \"ditch\" that people once laughed at had changed the shape of American trade.",
+    "prompt": "Why does the author put the word \"ditch\" in quotation marks in the last sentence?",
+    "choices": [
+      "To show that the finished canal was actually small and narrow, like a ditch",
+      "To recall the critics' insulting nickname and show they were wrong",
+      "To quote something DeWitt Clinton said",
+      "To define a technical word used by engineers"
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"Critics mocked the project\" (para 1) and \"The 'ditch' that people once laughed at.\" (para 4) The quotation marks point back to the insult. The Clinton choice fails because the critics used that name, not Clinton."
+  },
+  {
+    "id": "rd-12-1",
+    "section": "reading",
+    "type": "main_idea",
+    "difficulty": 2,
+    "passage_id": "rd-12",
+    "genre": "nonfiction",
+    "passage": "As a young child in Tennessee in the 1940s, Wilma Rudolph was sick so often that her family wondered whether she would survive. After she caught polio, a doctor told her mother she would never walk normally. Wilma wore a heavy metal brace on her left leg, and twice a week her mother took her on a fifty-mile bus ride to a hospital for treatment. At home, her brothers and sisters took turns rubbing her weak leg.\n\nWilma later said that she simply decided the doctor was wrong. By age twelve she was walking without the brace. In high school she became a basketball star, and a college track coach noticed her speed.\n\nAt the 1960 Olympics in Rome, Rudolph won three gold medals, becoming the first American woman to win three track-and-field golds at a single Olympic Games. When her hometown planned a celebration, she refused to attend unless Black and white residents were allowed to celebrate together. The parade became one of the first integrated public events in the town's history.",
+    "prompt": "What is the main idea of the passage?",
+    "choices": [
+      "Polio was a common illness in the 1940s.",
+      "Rudolph's mother was the real reason she won, since she took her to every treatment.",
+      "Rudolph was a better basketball player than runner.",
+      "Wilma Rudolph overcame illness to become a champion who also stood up for fairness."
+    ],
+    "answer": 3,
+    "explanation": "Evidence: \"a doctor told her mother she would never walk normally,\" (para 1) \"won three gold medals,\" (para 3) and \"she refused to attend unless Black and white residents were allowed to celebrate together.\" (para 3) The passage covers all three parts of her story. The mother choice is too extreme; her mother helped, but the passage credits Wilma's own decision too."
+  },
+  {
+    "id": "rd-12-2",
+    "section": "reading",
+    "type": "detail",
+    "difficulty": 1,
+    "passage_id": "rd-12",
+    "genre": "nonfiction",
+    "passage": "As a young child in Tennessee in the 1940s, Wilma Rudolph was sick so often that her family wondered whether she would survive. After she caught polio, a doctor told her mother she would never walk normally. Wilma wore a heavy metal brace on her left leg, and twice a week her mother took her on a fifty-mile bus ride to a hospital for treatment. At home, her brothers and sisters took turns rubbing her weak leg.\n\nWilma later said that she simply decided the doctor was wrong. By age twelve she was walking without the brace. In high school she became a basketball star, and a college track coach noticed her speed.\n\nAt the 1960 Olympics in Rome, Rudolph won three gold medals, becoming the first American woman to win three track-and-field golds at a single Olympic Games. When her hometown planned a celebration, she refused to attend unless Black and white residents were allowed to celebrate together. The parade became one of the first integrated public events in the town's history.",
+    "prompt": "According to the passage, what did Wilma's brothers and sisters do to help her?",
+    "choices": [
+      "They took turns rubbing her weak leg.",
+      "They rode the bus with her to the hospital.",
+      "They coached her in track.",
+      "They carried her to school each day."
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"her brothers and sisters took turns rubbing her weak leg.\" (para 1) The bus choice is a trap; it was \"her mother\" who took her on the bus."
+  },
+  {
+    "id": "rd-12-3",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 2,
+    "passage_id": "rd-12",
+    "genre": "nonfiction",
+    "passage": "As a young child in Tennessee in the 1940s, Wilma Rudolph was sick so often that her family wondered whether she would survive. After she caught polio, a doctor told her mother she would never walk normally. Wilma wore a heavy metal brace on her left leg, and twice a week her mother took her on a fifty-mile bus ride to a hospital for treatment. At home, her brothers and sisters took turns rubbing her weak leg.\n\nWilma later said that she simply decided the doctor was wrong. By age twelve she was walking without the brace. In high school she became a basketball star, and a college track coach noticed her speed.\n\nAt the 1960 Olympics in Rome, Rudolph won three gold medals, becoming the first American woman to win three track-and-field golds at a single Olympic Games. When her hometown planned a celebration, she refused to attend unless Black and white residents were allowed to celebrate together. The parade became one of the first integrated public events in the town's history.",
+    "prompt": "Why did Rudolph most likely refuse to attend the celebration unless everyone could attend together?",
+    "choices": [
+      "She did not enjoy parades.",
+      "She believed everyone in her town deserved to celebrate equally.",
+      "She was too tired after the Olympics.",
+      "She wanted a much bigger parade, with more people from nearby towns."
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"unless Black and white residents were allowed to celebrate together.\" (para 3) Her condition was about fairness, not about the party. The bigger-parade choice is too literal; her point was who was allowed in, not how many."
+  },
+  {
+    "id": "rd-12-4",
+    "section": "reading",
+    "type": "purpose_tone",
+    "difficulty": 3,
+    "passage_id": "rd-12",
+    "genre": "nonfiction",
+    "passage": "As a young child in Tennessee in the 1940s, Wilma Rudolph was sick so often that her family wondered whether she would survive. After she caught polio, a doctor told her mother she would never walk normally. Wilma wore a heavy metal brace on her left leg, and twice a week her mother took her on a fifty-mile bus ride to a hospital for treatment. At home, her brothers and sisters took turns rubbing her weak leg.\n\nWilma later said that she simply decided the doctor was wrong. By age twelve she was walking without the brace. In high school she became a basketball star, and a college track coach noticed her speed.\n\nAt the 1960 Olympics in Rome, Rudolph won three gold medals, becoming the first American woman to win three track-and-field golds at a single Olympic Games. When her hometown planned a celebration, she refused to attend unless Black and white residents were allowed to celebrate together. The parade became one of the first integrated public events in the town's history.",
+    "prompt": "The author's attitude toward Wilma Rudolph is best described as",
+    "choices": [
+      "critical",
+      "amused",
+      "admiring",
+      "disappointed"
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"she simply decided the doctor was wrong\" (para 2) and \"one of the first integrated public events in the town's history.\" (para 3) The author highlights her courage and achievements. The critical choice fails because the author never points out a single fault."
+  },
+  {
+    "id": "rd-13-1",
+    "section": "reading",
+    "type": "main_idea",
+    "difficulty": 2,
+    "passage_id": "rd-13",
+    "genre": "nonfiction",
+    "passage": "Many people believe autumn leaves turn red and yellow because the cold \"paints\" them. In fact, much of that color was there all summer, hidden.\n\nA leaf's green comes from chlorophyll, the chemical plants use to turn sunlight into food. Leaves also contain yellow and orange chemicals called carotenoids, but in summer there is so much chlorophyll that it masks them. As days shorten in the fall, trees stop producing chlorophyll. The green fades, and the yellows and oranges that were underneath all along finally show through.\n\nRed is different. The reds and purples of maples and sumacs come from chemicals called anthocyanins, which many trees actually produce in the fall. Scientists think anthocyanins may act like sunscreen, protecting the leaf while the tree pulls valuable nutrients out of it before it drops.\n\nWeather does play a role. Sunny days and cool, but not freezing, nights tend to produce the brightest reds. So the cold doesn't paint the leaves, but it can help choose the colors.",
+    "prompt": "What is the main idea of the passage?",
+    "choices": [
+      "Fall colors come mostly from chemicals in leaves, not just from cold.",
+      "Maple trees have the brightest fall leaves.",
+      "Chlorophyll helps plants turn sunlight into food.",
+      "Freezing nights are the main thing that produce the brightest fall colors."
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"much of that color was there all summer, hidden\" (para 1) and \"the cold doesn't paint the leaves.\" (para 4) The chlorophyll choice is true, but it is one detail that supports the main idea, not the main idea itself."
+  },
+  {
+    "id": "rd-13-2",
+    "section": "reading",
+    "type": "vocab_context",
+    "difficulty": 1,
+    "passage_id": "rd-13",
+    "genre": "nonfiction",
+    "passage": "Many people believe autumn leaves turn red and yellow because the cold \"paints\" them. In fact, much of that color was there all summer, hidden.\n\nA leaf's green comes from chlorophyll, the chemical plants use to turn sunlight into food. Leaves also contain yellow and orange chemicals called carotenoids, but in summer there is so much chlorophyll that it masks them. As days shorten in the fall, trees stop producing chlorophyll. The green fades, and the yellows and oranges that were underneath all along finally show through.\n\nRed is different. The reds and purples of maples and sumacs come from chemicals called anthocyanins, which many trees actually produce in the fall. Scientists think anthocyanins may act like sunscreen, protecting the leaf while the tree pulls valuable nutrients out of it before it drops.\n\nWeather does play a role. Sunny days and cool, but not freezing, nights tend to produce the brightest reds. So the cold doesn't paint the leaves, but it can help choose the colors.",
+    "prompt": "As used in paragraph 2, the word \"masks\" most nearly means",
+    "choices": [
+      "protects",
+      "hides",
+      "paints",
+      "removes"
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"so much chlorophyll that it masks them\" (para 2) and the yellows \"were underneath all along\" (para 2) and \"finally show through.\" (para 2) Something underneath that later shows through was hidden. The protects choice is tempting because masks can protect, but protection is what anthocyanins do in paragraph 3, not chlorophyll here."
+  },
+  {
+    "id": "rd-13-3",
+    "section": "reading",
+    "type": "detail",
+    "difficulty": 2,
+    "passage_id": "rd-13",
+    "genre": "nonfiction",
+    "passage": "Many people believe autumn leaves turn red and yellow because the cold \"paints\" them. In fact, much of that color was there all summer, hidden.\n\nA leaf's green comes from chlorophyll, the chemical plants use to turn sunlight into food. Leaves also contain yellow and orange chemicals called carotenoids, but in summer there is so much chlorophyll that it masks them. As days shorten in the fall, trees stop producing chlorophyll. The green fades, and the yellows and oranges that were underneath all along finally show through.\n\nRed is different. The reds and purples of maples and sumacs come from chemicals called anthocyanins, which many trees actually produce in the fall. Scientists think anthocyanins may act like sunscreen, protecting the leaf while the tree pulls valuable nutrients out of it before it drops.\n\nWeather does play a role. Sunny days and cool, but not freezing, nights tend to produce the brightest reds. So the cold doesn't paint the leaves, but it can help choose the colors.",
+    "prompt": "According to the passage, which fall color do many trees actually produce in the fall?",
+    "choices": [
+      "Yellow",
+      "Orange",
+      "Red",
+      "Green"
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"Red is different... anthocyanins, which many trees actually produce in the fall.\" (para 3) The yellow choice fails because yellow \"was there all summer, hidden.\" (para 1)"
+  },
+  {
+    "id": "rd-13-4",
+    "section": "reading",
+    "type": "purpose_tone",
+    "difficulty": 3,
+    "passage_id": "rd-13",
+    "genre": "nonfiction",
+    "passage": "Many people believe autumn leaves turn red and yellow because the cold \"paints\" them. In fact, much of that color was there all summer, hidden.\n\nA leaf's green comes from chlorophyll, the chemical plants use to turn sunlight into food. Leaves also contain yellow and orange chemicals called carotenoids, but in summer there is so much chlorophyll that it masks them. As days shorten in the fall, trees stop producing chlorophyll. The green fades, and the yellows and oranges that were underneath all along finally show through.\n\nRed is different. The reds and purples of maples and sumacs come from chemicals called anthocyanins, which many trees actually produce in the fall. Scientists think anthocyanins may act like sunscreen, protecting the leaf while the tree pulls valuable nutrients out of it before it drops.\n\nWeather does play a role. Sunny days and cool, but not freezing, nights tend to produce the brightest reds. So the cold doesn't paint the leaves, but it can help choose the colors.",
+    "prompt": "Why does the author begin with the idea that cold weather \"paints\" the leaves?",
+    "choices": [
+      "To prove that cold weather is the main cause of all fall color",
+      "To describe a famous painting of autumn",
+      "To show that scientists disagree about leaves",
+      "To introduce a common belief that the passage will correct"
+    ],
+    "answer": 3,
+    "explanation": "Evidence: \"Many people believe\" (para 1) followed by \"In fact, much of that color was there all summer.\" (para 1) \"In fact\" signals that the author is correcting the belief. The prove choice is the opposite of what the passage argues."
+  },
+  {
+    "id": "rd-14-1",
+    "section": "reading",
+    "type": "main_idea",
+    "difficulty": 2,
+    "passage_id": "rd-14",
+    "genre": "nonfiction",
+    "passage": "On January 15, 1919, an unusually warm day in Boston, a giant steel tank near the waterfront burst open. More than two million gallons of molasses poured into the streets in a wave estimated at twenty-five feet high, moving at about thirty-five miles per hour. It knocked buildings off their foundations and swept up horses, wagons, and people. Twenty-one people died, and about 150 were injured.\n\nThe disaster may sound almost comic today, but it was no accident of nature. The tank had leaked from the start, so badly that neighbors collected the dripping molasses for their kitchens. Instead of fixing the problem, the company painted the tank brown so the leaks would be harder to see. The man in charge of building the tank was not an engineer and could not read blueprints.\n\nAfter years of court hearings, the company was found responsible. The case helped lead to new rules requiring that plans for large structures be checked and signed by qualified engineers. A sticky, strange tragedy became a lesson in public safety.",
+    "prompt": "Which statement best expresses the main idea of the passage?",
+    "choices": [
+      "Molasses was the most important product in Boston.",
+      "A deadly flood caused by careless building led to new safety rules.",
+      "Unusually warm weather, not people, was the true cause of the disaster.",
+      "Neighbors caused the tank to burst by taking its molasses."
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"it was no accident of nature\" (para 2) and \"The case helped lead to new rules.\" (para 3) The passage blames careless building and shows what changed. The warm-weather choice fails because the author says it was \"no accident of nature.\" (para 2)"
+  },
+  {
+    "id": "rd-14-2",
+    "section": "reading",
+    "type": "detail",
+    "difficulty": 1,
+    "passage_id": "rd-14",
+    "genre": "nonfiction",
+    "passage": "On January 15, 1919, an unusually warm day in Boston, a giant steel tank near the waterfront burst open. More than two million gallons of molasses poured into the streets in a wave estimated at twenty-five feet high, moving at about thirty-five miles per hour. It knocked buildings off their foundations and swept up horses, wagons, and people. Twenty-one people died, and about 150 were injured.\n\nThe disaster may sound almost comic today, but it was no accident of nature. The tank had leaked from the start, so badly that neighbors collected the dripping molasses for their kitchens. Instead of fixing the problem, the company painted the tank brown so the leaks would be harder to see. The man in charge of building the tank was not an engineer and could not read blueprints.\n\nAfter years of court hearings, the company was found responsible. The case helped lead to new rules requiring that plans for large structures be checked and signed by qualified engineers. A sticky, strange tragedy became a lesson in public safety.",
+    "prompt": "According to the passage, what did the company do about the leaks?",
+    "choices": [
+      "It patched the tank with extra steel.",
+      "It hired a qualified engineer.",
+      "It painted the tank brown.",
+      "It sold the leaking molasses to neighbors."
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"Instead of fixing the problem, the company painted the tank brown so the leaks would be harder to see.\" (para 2) The sold choice is a trap; neighbors \"collected\" the molasses, and nothing says the company sold it."
+  },
+  {
+    "id": "rd-14-3",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 2,
+    "passage_id": "rd-14",
+    "genre": "nonfiction",
+    "passage": "On January 15, 1919, an unusually warm day in Boston, a giant steel tank near the waterfront burst open. More than two million gallons of molasses poured into the streets in a wave estimated at twenty-five feet high, moving at about thirty-five miles per hour. It knocked buildings off their foundations and swept up horses, wagons, and people. Twenty-one people died, and about 150 were injured.\n\nThe disaster may sound almost comic today, but it was no accident of nature. The tank had leaked from the start, so badly that neighbors collected the dripping molasses for their kitchens. Instead of fixing the problem, the company painted the tank brown so the leaks would be harder to see. The man in charge of building the tank was not an engineer and could not read blueprints.\n\nAfter years of court hearings, the company was found responsible. The case helped lead to new rules requiring that plans for large structures be checked and signed by qualified engineers. A sticky, strange tragedy became a lesson in public safety.",
+    "prompt": "Why does the author include the detail that the builder \"could not read blueprints\"?",
+    "choices": [
+      "To show that molasses tanks are simple to build without plans",
+      "To explain why the day was so warm",
+      "To praise the builder for working hard",
+      "To show the tank was built without proper skill"
+    ],
+    "answer": 3,
+    "explanation": "Evidence: \"was not an engineer and could not read blueprints,\" (para 2) followed by the new rule that plans be \"signed by qualified engineers.\" (para 3) The detail shows the builder lacked the right skills. The easy-to-build choice is the opposite; the tank failed because it was built badly."
+  },
+  {
+    "id": "rd-14-4",
+    "section": "reading",
+    "type": "vocab_context",
+    "difficulty": 1,
+    "passage_id": "rd-14",
+    "genre": "nonfiction",
+    "passage": "On January 15, 1919, an unusually warm day in Boston, a giant steel tank near the waterfront burst open. More than two million gallons of molasses poured into the streets in a wave estimated at twenty-five feet high, moving at about thirty-five miles per hour. It knocked buildings off their foundations and swept up horses, wagons, and people. Twenty-one people died, and about 150 were injured.\n\nThe disaster may sound almost comic today, but it was no accident of nature. The tank had leaked from the start, so badly that neighbors collected the dripping molasses for their kitchens. Instead of fixing the problem, the company painted the tank brown so the leaks would be harder to see. The man in charge of building the tank was not an engineer and could not read blueprints.\n\nAfter years of court hearings, the company was found responsible. The case helped lead to new rules requiring that plans for large structures be checked and signed by qualified engineers. A sticky, strange tragedy became a lesson in public safety.",
+    "prompt": "As used in paragraph 2, the word \"comic\" most nearly means",
+    "choices": [
+      "funny",
+      "tragic",
+      "scientific",
+      "famous"
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"may sound almost comic today, but it was no accident.\" (para 2) The word \"but\" sets up a contrast: a flood of syrup sounds funny, yet it was deadly. The tragic choice is what the flood really was, the opposite of how it \"may sound.\""
+  },
+  {
+    "id": "rd-15-1",
+    "section": "reading",
+    "type": "main_idea",
+    "difficulty": 2,
+    "passage_id": "rd-15",
+    "genre": "nonfiction",
+    "passage": "If you have ever lain awake at 11 p.m. feeling wide awake, only to be nearly impossible to wake at 7 a.m., your body may not be lazy. It may be right on schedule.\n\nDuring the teenage years, the brain begins releasing melatonin, the hormone that signals it is time to sleep, about one to two hours later than it did in childhood. As a result, many teenagers naturally feel sleepy later at night. Yet most still need eight to ten hours of sleep, and school start times rarely shift to match.\n\nThat missing sleep matters. While we sleep, the brain sorts through the day's experiences and strengthens the memories it decides to keep. Students who study and then sleep well tend to remember more than those who stay up late cramming. Sleep also helps control mood and attention, which is why a short night can make even simple tasks feel frustrating.\n\nSome school districts have moved high school start times later. Several studies of these districts found that students slept longer, attended class more often, and were less likely to fall asleep at their desks.",
+    "prompt": "What is the main idea of the passage?",
+    "choices": [
+      "Teenagers are lazy and stay up too late, so they should go to bed earlier.",
+      "All schools should start at noon.",
+      "Teens' sleep timing shifts later, and enough sleep matters for learning.",
+      "Melatonin is a hormone that signals sleep."
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"the brain begins releasing melatonin... about one to two hours later\" (para 2) and \"That missing sleep matters.\" (para 3) The passage explains the shift and why sleep matters. The melatonin choice is a true detail, but it is not the whole point."
+  },
+  {
+    "id": "rd-15-2",
+    "section": "reading",
+    "type": "detail",
+    "difficulty": 1,
+    "passage_id": "rd-15",
+    "genre": "nonfiction",
+    "passage": "If you have ever lain awake at 11 p.m. feeling wide awake, only to be nearly impossible to wake at 7 a.m., your body may not be lazy. It may be right on schedule.\n\nDuring the teenage years, the brain begins releasing melatonin, the hormone that signals it is time to sleep, about one to two hours later than it did in childhood. As a result, many teenagers naturally feel sleepy later at night. Yet most still need eight to ten hours of sleep, and school start times rarely shift to match.\n\nThat missing sleep matters. While we sleep, the brain sorts through the day's experiences and strengthens the memories it decides to keep. Students who study and then sleep well tend to remember more than those who stay up late cramming. Sleep also helps control mood and attention, which is why a short night can make even simple tasks feel frustrating.\n\nSome school districts have moved high school start times later. Several studies of these districts found that students slept longer, attended class more often, and were less likely to fall asleep at their desks.",
+    "prompt": "According to the passage, what happens to melatonin during the teenage years?",
+    "choices": [
+      "The brain stops releasing it.",
+      "The brain begins releasing it earlier in the evening than before.",
+      "The brain releases twice as much of it.",
+      "It is released one to two hours later than in childhood."
+    ],
+    "answer": 3,
+    "explanation": "Evidence: \"the brain begins releasing melatonin... about one to two hours later than it did in childhood.\" (para 2) The earlier choice reverses the fact."
+  },
+  {
+    "id": "rd-15-3",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 2,
+    "passage_id": "rd-15",
+    "genre": "nonfiction",
+    "passage": "If you have ever lain awake at 11 p.m. feeling wide awake, only to be nearly impossible to wake at 7 a.m., your body may not be lazy. It may be right on schedule.\n\nDuring the teenage years, the brain begins releasing melatonin, the hormone that signals it is time to sleep, about one to two hours later than it did in childhood. As a result, many teenagers naturally feel sleepy later at night. Yet most still need eight to ten hours of sleep, and school start times rarely shift to match.\n\nThat missing sleep matters. While we sleep, the brain sorts through the day's experiences and strengthens the memories it decides to keep. Students who study and then sleep well tend to remember more than those who stay up late cramming. Sleep also helps control mood and attention, which is why a short night can make even simple tasks feel frustrating.\n\nSome school districts have moved high school start times later. Several studies of these districts found that students slept longer, attended class more often, and were less likely to fall asleep at their desks.",
+    "prompt": "Based on the passage, which student would most likely remember the most on a test?",
+    "choices": [
+      "A student who studies in the evening, then sleeps a full night",
+      "A student who stays up until 2 a.m. cramming",
+      "A student who sleeps through the class before the test",
+      "A student who skips studying entirely in order to sleep twelve hours"
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"Students who study and then sleep well tend to remember more than those who stay up late cramming.\" (para 3) The twelve-hours choice fails because the passage says to study and then sleep; that student skips the studying."
+  },
+  {
+    "id": "rd-15-4",
+    "section": "reading",
+    "type": "purpose_tone",
+    "difficulty": 3,
+    "passage_id": "rd-15",
+    "genre": "nonfiction",
+    "passage": "If you have ever lain awake at 11 p.m. feeling wide awake, only to be nearly impossible to wake at 7 a.m., your body may not be lazy. It may be right on schedule.\n\nDuring the teenage years, the brain begins releasing melatonin, the hormone that signals it is time to sleep, about one to two hours later than it did in childhood. As a result, many teenagers naturally feel sleepy later at night. Yet most still need eight to ten hours of sleep, and school start times rarely shift to match.\n\nThat missing sleep matters. While we sleep, the brain sorts through the day's experiences and strengthens the memories it decides to keep. Students who study and then sleep well tend to remember more than those who stay up late cramming. Sleep also helps control mood and attention, which is why a short night can make even simple tasks feel frustrating.\n\nSome school districts have moved high school start times later. Several studies of these districts found that students slept longer, attended class more often, and were less likely to fall asleep at their desks.",
+    "prompt": "Why does the author open by describing lying awake at 11 p.m.?",
+    "choices": [
+      "To argue that teenagers should go to bed earlier",
+      "To connect the topic to an experience many readers share",
+      "To describe the author's own trouble falling asleep at night",
+      "To prove that teenagers are lazy"
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"If you have ever lain awake\" (para 1) and \"your body may not be lazy.\" (para 1) Speaking to \"you\" pulls readers in with something familiar. The lazy choice is the opposite; the author says the body \"may not be lazy.\" (para 1)"
+  },
+  {
+    "id": "rd-16-1",
+    "section": "reading",
+    "type": "main_idea",
+    "difficulty": 2,
+    "passage_id": "rd-16",
+    "genre": "nonfiction",
+    "passage": "In the early 1800s, the crumbling cliffs near Lyme Regis, on England's southern coast, were dangerous places. Landslides were common, especially after winter storms. They were also among the best places in the country to find fossils, and no one searched them more skillfully than Mary Anning.\n\nAnning's family was poor. After her father died, she and her brother sold fossils to tourists to help pay the family's debts. Around the age of twelve, Mary helped uncover one of the first complete skeletons of an ichthyosaur, a sea reptile that had lived millions of years earlier. Later she found a nearly complete plesiosaur, a creature so strange that one famous scientist at first suspected it was a fake.\n\nDespite her discoveries, Anning was not allowed to join Britain's leading scientific society, which did not admit women. Wealthy collectors often bought her fossils and described them in scientific papers without mentioning her name. Still, many experts quietly came to her for advice, because she understood the ancient creatures better than almost anyone.\n\nToday she is recognized as one of the founders of paleontology, the study of fossils.",
+    "prompt": "What is the main idea of the passage?",
+    "choices": [
+      "The cliffs at Lyme Regis were dangerous because of landslides.",
+      "Ichthyosaurs were sea reptiles that lived millions of years ago.",
+      "Wealthy collectors stole every fossil Anning found and took credit for all of them.",
+      "Mary Anning made major fossil finds despite poverty and being excluded as a woman."
+    ],
+    "answer": 3,
+    "explanation": "Evidence: \"Anning's family was poor,\" (para 2) \"Despite her discoveries, Anning was not allowed to join,\" (para 3) and \"one of the founders of paleontology.\" (para 4) The stole choice is too extreme; collectors \"bought\" her fossils, and only \"often\" left out her name."
+  },
+  {
+    "id": "rd-16-2",
+    "section": "reading",
+    "type": "vocab_context",
+    "difficulty": 3,
+    "passage_id": "rd-16",
+    "genre": "nonfiction",
+    "passage": "In the early 1800s, the crumbling cliffs near Lyme Regis, on England's southern coast, were dangerous places. Landslides were common, especially after winter storms. They were also among the best places in the country to find fossils, and no one searched them more skillfully than Mary Anning.\n\nAnning's family was poor. After her father died, she and her brother sold fossils to tourists to help pay the family's debts. Around the age of twelve, Mary helped uncover one of the first complete skeletons of an ichthyosaur, a sea reptile that had lived millions of years earlier. Later she found a nearly complete plesiosaur, a creature so strange that one famous scientist at first suspected it was a fake.\n\nDespite her discoveries, Anning was not allowed to join Britain's leading scientific society, which did not admit women. Wealthy collectors often bought her fossils and described them in scientific papers without mentioning her name. Still, many experts quietly came to her for advice, because she understood the ancient creatures better than almost anyone.\n\nToday she is recognized as one of the founders of paleontology, the study of fossils.",
+    "prompt": "As used in paragraph 3, the word \"quietly\" suggests that the experts",
+    "choices": [
+      "asked for her help without publicly crediting her",
+      "spoke to her only in soft whispers when they visited",
+      "visited her only late at night",
+      "were shy people who seldom talked"
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"without mentioning her name. Still, many experts quietly came to her for advice.\" (para 3) Here, quietly means privately, in a way the public did not see. The whispers choice is too literal."
+  },
+  {
+    "id": "rd-16-3",
+    "section": "reading",
+    "type": "detail",
+    "difficulty": 1,
+    "passage_id": "rd-16",
+    "genre": "nonfiction",
+    "passage": "In the early 1800s, the crumbling cliffs near Lyme Regis, on England's southern coast, were dangerous places. Landslides were common, especially after winter storms. They were also among the best places in the country to find fossils, and no one searched them more skillfully than Mary Anning.\n\nAnning's family was poor. After her father died, she and her brother sold fossils to tourists to help pay the family's debts. Around the age of twelve, Mary helped uncover one of the first complete skeletons of an ichthyosaur, a sea reptile that had lived millions of years earlier. Later she found a nearly complete plesiosaur, a creature so strange that one famous scientist at first suspected it was a fake.\n\nDespite her discoveries, Anning was not allowed to join Britain's leading scientific society, which did not admit women. Wealthy collectors often bought her fossils and described them in scientific papers without mentioning her name. Still, many experts quietly came to her for advice, because she understood the ancient creatures better than almost anyone.\n\nToday she is recognized as one of the founders of paleontology, the study of fossils.",
+    "prompt": "According to the passage, why did Mary and her brother sell fossils?",
+    "choices": [
+      "To become famous scientists",
+      "To help pay the family's debts",
+      "To earn a place in the scientific society",
+      "To pay for a trip to London"
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"she and her brother sold fossils to tourists to help pay the family's debts.\" (para 2) The society choice fails because the society \"did not admit women,\" (para 3) no matter what she did."
+  },
+  {
+    "id": "rd-16-4",
+    "section": "reading",
+    "type": "purpose_tone",
+    "difficulty": 2,
+    "passage_id": "rd-16",
+    "genre": "nonfiction",
+    "passage": "In the early 1800s, the crumbling cliffs near Lyme Regis, on England's southern coast, were dangerous places. Landslides were common, especially after winter storms. They were also among the best places in the country to find fossils, and no one searched them more skillfully than Mary Anning.\n\nAnning's family was poor. After her father died, she and her brother sold fossils to tourists to help pay the family's debts. Around the age of twelve, Mary helped uncover one of the first complete skeletons of an ichthyosaur, a sea reptile that had lived millions of years earlier. Later she found a nearly complete plesiosaur, a creature so strange that one famous scientist at first suspected it was a fake.\n\nDespite her discoveries, Anning was not allowed to join Britain's leading scientific society, which did not admit women. Wealthy collectors often bought her fossils and described them in scientific papers without mentioning her name. Still, many experts quietly came to her for advice, because she understood the ancient creatures better than almost anyone.\n\nToday she is recognized as one of the founders of paleontology, the study of fossils.",
+    "prompt": "Why does the author mention that a famous scientist suspected the plesiosaur was a fake?",
+    "choices": [
+      "To suggest that Anning was dishonest",
+      "To prove that scientists of that time were always wrong",
+      "To show how unusual and surprising her discovery was",
+      "To explain how fossils form in cliffs"
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"a creature so strange that one famous scientist at first suspected it was a fake.\" (para 2) The words \"so strange\" show the point is how surprising the find was. The dishonest choice fails because the scientist only suspected it \"at first,\" and she is called a founder of the field."
+  }
+]

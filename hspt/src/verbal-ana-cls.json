@@ -1,0 +1,1652 @@
+[
+ {
+  "id": "ana-001",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Glove</b> is to <b>hand</b> as <b>sock</b> is to",
+  "choices": [
+   "shoe",
+   "leg",
+   "toe",
+   "foot"
+  ],
+  "answer": 3,
+  "explanation": "Bridge: a glove is worn on a hand. A sock is worn on a foot. 'Shoe' goes with a sock, but a sock isn't worn on a shoe."
+ },
+ {
+  "id": "ana-002",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Puppy</b> is to <b>dog</b> as <b>kitten</b> is to",
+  "choices": [
+   "cat",
+   "mouse",
+   "milk",
+   "puppy"
+  ],
+  "answer": 0,
+  "explanation": "Bridge: a puppy is a young dog. A kitten is a young cat. 'Puppy' is another baby animal, not what a kitten grows into."
+ },
+ {
+  "id": "ana-003",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Hot</b> is to <b>cold</b> as <b>up</b> is to",
+  "choices": [
+   "high",
+   "over",
+   "top",
+   "down"
+  ],
+  "answer": 3,
+  "explanation": "Bridge: hot is the opposite of cold. Up is the opposite of down. 'High' means almost the same as up, not the opposite."
+ },
+ {
+  "id": "ana-004",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Pen</b> is to <b>write</b> as <b>knife</b> is to",
+  "choices": [
+   "fork",
+   "sharp",
+   "cut",
+   "kitchen"
+  ],
+  "answer": 2,
+  "explanation": "Bridge: a pen is used to write. A knife is used to cut. 'Sharp' describes a knife but isn't what you do with it."
+ },
+ {
+  "id": "ana-005",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Bird</b> is to <b>nest</b> as <b>bee</b> is to",
+  "choices": [
+   "hive",
+   "honey",
+   "flower",
+   "sting"
+  ],
+  "answer": 0,
+  "explanation": "Bridge: a bird lives in a nest. A bee lives in a hive. 'Honey' is something a bee makes, not where it lives."
+ },
+ {
+  "id": "ana-006",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Page</b> is to <b>book</b> as <b>petal</b> is to",
+  "choices": [
+   "vase",
+   "flower",
+   "bee",
+   "water"
+  ],
+  "answer": 1,
+  "explanation": "Bridge: a page is part of a book. A petal is part of a flower. 'Vase' holds a flower, but a petal isn't part of a vase."
+ },
+ {
+  "id": "ana-007",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Teacher</b> is to <b>school</b> as <b>doctor</b> is to",
+  "choices": [
+   "hospital",
+   "nurse",
+   "medicine",
+   "patient"
+  ],
+  "answer": 0,
+  "explanation": "Bridge: a teacher works in a school. A doctor works in a hospital. 'Nurse' is a coworker, not a place."
+ },
+ {
+  "id": "ana-008",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Cow</b> is to <b>milk</b> as <b>hen</b> is to",
+  "choices": [
+   "egg",
+   "farm",
+   "corn",
+   "rooster"
+  ],
+  "answer": 0,
+  "explanation": "Bridge: a cow gives us milk. A hen gives us eggs. 'Farm' is where a hen lives, not what it produces."
+ },
+ {
+  "id": "ana-009",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Happy</b> is to <b>sad</b> as <b>big</b> is to",
+  "choices": [
+   "large",
+   "huge",
+   "small",
+   "tall"
+  ],
+  "answer": 2,
+  "explanation": "Bridge: happy is the opposite of sad. Big is the opposite of small. 'Large' means the same as big, not the opposite."
+ },
+ {
+  "id": "ana-010",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Foot</b> is to <b>toe</b> as <b>hand</b> is to",
+  "choices": [
+   "arm",
+   "finger",
+   "glove",
+   "ring"
+  ],
+  "answer": 1,
+  "explanation": "Bridge: a toe is part of a foot. A finger is part of a hand. 'Arm' is attached to the hand but isn't part of it."
+ },
+ {
+  "id": "ana-011",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Monday</b> is to <b>Tuesday</b> as <b>January</b> is to",
+  "choices": [
+   "March",
+   "December",
+   "February",
+   "month"
+  ],
+  "answer": 2,
+  "explanation": "Bridge: Tuesday comes right after Monday. February comes right after January. 'March' comes two months later, not right after."
+ },
+ {
+  "id": "ana-012",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Chef</b> is to <b>kitchen</b> as <b>farmer</b> is to",
+  "choices": [
+   "tractor",
+   "cow",
+   "farm",
+   "crop"
+  ],
+  "answer": 2,
+  "explanation": "Bridge: a chef works in a kitchen. A farmer works on a farm. 'Tractor' is a farmer's tool, not the workplace."
+ },
+ {
+  "id": "ana-013",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Broom</b> is to <b>sweep</b> as <b>shovel</b> is to",
+  "choices": [
+   "dig",
+   "dirt",
+   "garden",
+   "rake"
+  ],
+  "answer": 0,
+  "explanation": "Bridge: a broom is used to sweep. A shovel is used to dig. 'Dirt' is what a shovel moves, not the action."
+ },
+ {
+  "id": "ana-014",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Wet</b> is to <b>dry</b> as <b>early</b> is to",
+  "choices": [
+   "late",
+   "first",
+   "soon",
+   "morning"
+  ],
+  "answer": 0,
+  "explanation": "Bridge: wet is the opposite of dry. Early is the opposite of late. 'Soon' is close in meaning to early, not the opposite."
+ },
+ {
+  "id": "ana-015",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Ear</b> is to <b>hear</b> as <b>eye</b> is to",
+  "choices": [
+   "nose",
+   "see",
+   "glasses",
+   "face"
+  ],
+  "answer": 1,
+  "explanation": "Bridge: you use your ear to hear. You use your eye to see. 'Glasses' help you see but are not an action."
+ },
+ {
+  "id": "ana-016",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Calf</b> is to <b>cow</b> as <b>foal</b> is to",
+  "choices": [
+   "colt",
+   "horse",
+   "barn",
+   "hay"
+  ],
+  "answer": 1,
+  "explanation": "Bridge: a calf is a young cow. A foal is a young horse. 'Colt' is also a young horse, not the grown-up animal."
+ },
+ {
+  "id": "ana-017",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Fish</b> is to <b>swim</b> as <b>bird</b> is to",
+  "choices": [
+   "feather",
+   "nest",
+   "worm",
+   "fly"
+  ],
+  "answer": 3,
+  "explanation": "Bridge: a fish moves by swimming. A bird moves by flying. 'Feather' is part of a bird, not how it moves."
+ },
+ {
+  "id": "ana-018",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Car</b> is to <b>road</b> as <b>train</b> is to",
+  "choices": [
+   "station",
+   "engine",
+   "ticket",
+   "track"
+  ],
+  "answer": 3,
+  "explanation": "Bridge: a car travels on a road. A train travels on a track. A train stops at a 'station' but doesn't ride on it."
+ },
+ {
+  "id": "ana-019",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Baker</b> is to <b>bread</b> as <b>tailor</b> is to",
+  "choices": [
+   "needle",
+   "thread",
+   "clothing",
+   "shop"
+  ],
+  "answer": 2,
+  "explanation": "Bridge: a baker makes bread. A tailor makes clothing. 'Needle' is a tool a tailor uses, not what the tailor makes."
+ },
+ {
+  "id": "ana-020",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 1,
+  "prompt": "<b>Grass</b> is to <b>green</b> as <b>snow</b> is to",
+  "choices": [
+   "winter",
+   "ice",
+   "white",
+   "flake"
+  ],
+  "answer": 2,
+  "explanation": "Bridge: grass is the color green. Snow is the color white. 'Winter' is when snow falls, not its color."
+ },
+ {
+  "id": "ana-021",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Warm</b> is to <b>hot</b> as <b>cool</b> is to",
+  "choices": [
+   "mild",
+   "cold",
+   "warm",
+   "chilly"
+  ],
+  "answer": 1,
+  "explanation": "Bridge: hot is a stronger degree of warm. Cold is a stronger degree of cool. 'Chilly' means about the same as cool, so it isn't stronger."
+ },
+ {
+  "id": "ana-022",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Big</b> is to <b>enormous</b> as <b>smart</b> is to",
+  "choices": [
+   "clever",
+   "dull",
+   "school",
+   "brilliant"
+  ],
+  "answer": 3,
+  "explanation": "Bridge: enormous is a much stronger form of big. Brilliant is a much stronger form of smart. 'Clever' means about the same as smart, not more."
+ },
+ {
+  "id": "ana-023",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Thermometer</b> is to <b>temperature</b> as <b>scale</b> is to",
+  "choices": [
+   "weight",
+   "kitchen",
+   "heavy",
+   "ruler"
+  ],
+  "answer": 0,
+  "explanation": "Bridge: a thermometer measures temperature. A scale measures weight. 'Heavy' describes weight but isn't the thing being measured."
+ },
+ {
+  "id": "ana-024",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Author</b> is to <b>novel</b> as <b>composer</b> is to",
+  "choices": [
+   "orchestra",
+   "symphony",
+   "piano",
+   "conductor"
+  ],
+  "answer": 1,
+  "explanation": "Bridge: an author creates a novel. A composer creates a symphony. The 'orchestra' plays the symphony; it isn't what the composer creates."
+ },
+ {
+  "id": "ana-025",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Carpenter</b> is to <b>hammer</b> as <b>surgeon</b> is to",
+  "choices": [
+   "scalpel",
+   "hospital",
+   "patient",
+   "nurse"
+  ],
+  "answer": 0,
+  "explanation": "Bridge: a carpenter uses a hammer as a tool. A surgeon uses a scalpel as a tool. 'Hospital' is where a surgeon works, not a tool."
+ },
+ {
+  "id": "ana-026",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Wolf</b> is to <b>pack</b> as <b>fish</b> is to",
+  "choices": [
+   "ocean",
+   "fin",
+   "flock",
+   "school"
+  ],
+  "answer": 3,
+  "explanation": "Bridge: a group of wolves is a pack. A group of fish is a school. 'Flock' is a group, but of birds, not fish."
+ },
+ {
+  "id": "ana-027",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Seed</b> is to <b>tree</b> as <b>egg</b> is to",
+  "choices": [
+   "chicken",
+   "nest",
+   "shell",
+   "breakfast"
+  ],
+  "answer": 0,
+  "explanation": "Bridge: a seed grows into a tree. An egg grows into a chicken. 'Shell' is part of the egg, not what it becomes."
+ },
+ {
+  "id": "ana-028",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Germ</b> is to <b>disease</b> as <b>spark</b> is to",
+  "choices": [
+   "match",
+   "fire",
+   "water",
+   "wood"
+  ],
+  "answer": 1,
+  "explanation": "Bridge: a germ can cause a disease. A spark can cause a fire. 'Match' makes a spark; it isn't what the spark causes."
+ },
+ {
+  "id": "ana-029",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Dove</b> is to <b>peace</b> as <b>heart</b> is to",
+  "choices": [
+   "body",
+   "red",
+   "love",
+   "card"
+  ],
+  "answer": 2,
+  "explanation": "Bridge: a dove is a symbol of peace. A heart is a symbol of love. 'Red' is the heart's color, not what it stands for."
+ },
+ {
+  "id": "ana-030",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Brave</b> is to <b>cowardly</b> as <b>generous</b> is to",
+  "choices": [
+   "kind",
+   "giving",
+   "stingy",
+   "rich"
+  ],
+  "answer": 2,
+  "explanation": "Bridge: brave is the opposite of cowardly. Generous is the opposite of stingy. 'Giving' means the same as generous, not the opposite."
+ },
+ {
+  "id": "ana-031",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Quick</b> is to <b>fast</b> as <b>angry</b> is to",
+  "choices": [
+   "calm",
+   "glad",
+   "red",
+   "mad"
+  ],
+  "answer": 3,
+  "explanation": "Bridge: quick means the same as fast. Angry means the same as mad. 'Calm' is the opposite of angry."
+ },
+ {
+  "id": "ana-032",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Grape</b> is to <b>raisin</b> as <b>plum</b> is to",
+  "choices": [
+   "peach",
+   "tree",
+   "prune",
+   "juice"
+  ],
+  "answer": 2,
+  "explanation": "Bridge: a raisin is a dried grape. A prune is a dried plum. 'Juice' can be made from a plum, but it isn't a dried plum."
+ },
+ {
+  "id": "ana-033",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Wool</b> is to <b>sheep</b> as <b>silk</b> is to",
+  "choices": [
+   "cotton",
+   "dress",
+   "butterfly",
+   "silkworm"
+  ],
+  "answer": 3,
+  "explanation": "Bridge: wool comes from a sheep. Silk comes from a silkworm. 'Cotton' is another fabric, not where silk comes from."
+ },
+ {
+  "id": "ana-034",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Judge</b> is to <b>courtroom</b> as <b>actor</b> is to",
+  "choices": [
+   "script",
+   "stage",
+   "audience",
+   "director"
+  ],
+  "answer": 1,
+  "explanation": "Bridge: a judge works in a courtroom. An actor works on a stage. A 'script' is used by an actor, but it isn't a place."
+ },
+ {
+  "id": "ana-035",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Star</b> is to <b>galaxy</b> as <b>tree</b> is to",
+  "choices": [
+   "forest",
+   "leaf",
+   "root",
+   "lumber"
+  ],
+  "answer": 0,
+  "explanation": "Bridge: a star is one of many that make up a galaxy. A tree is one of many that make up a forest. A 'leaf' is part of a tree, which flips the direction."
+ },
+ {
+  "id": "ana-036",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Freshman</b> is to <b>sophomore</b> as <b>junior</b> is to",
+  "choices": [
+   "graduate",
+   "student",
+   "freshman",
+   "senior"
+  ],
+  "answer": 3,
+  "explanation": "Bridge: sophomore is the year right after freshman. Senior is the year right after junior. A 'graduate' comes after senior year, not right after junior."
+ },
+ {
+  "id": "ana-037",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Salmon</b> is to <b>fish</b> as <b>eagle</b> is to",
+  "choices": [
+   "bird",
+   "nest",
+   "feather",
+   "hawk"
+  ],
+  "answer": 0,
+  "explanation": "Bridge: a salmon is a kind of fish. An eagle is a kind of bird. 'Hawk' is another kind of bird, not the group an eagle belongs to."
+ },
+ {
+  "id": "ana-038",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Whisper</b> is to <b>shout</b> as <b>drizzle</b> is to",
+  "choices": [
+   "rain",
+   "cloud",
+   "mist",
+   "downpour"
+  ],
+  "answer": 3,
+  "explanation": "Bridge: a shout is a much stronger whisper. A downpour is a much stronger drizzle. 'Mist' is even lighter than a drizzle, so it goes the wrong way."
+ },
+ {
+  "id": "ana-039",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Hungry</b> is to <b>starving</b> as <b>tired</b> is to",
+  "choices": [
+   "sleepy",
+   "rested",
+   "exhausted",
+   "bed"
+  ],
+  "answer": 2,
+  "explanation": "Bridge: starving is an extreme form of hungry. Exhausted is an extreme form of tired. 'Sleepy' means about the same as tired, not more."
+ },
+ {
+  "id": "ana-040",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Telescope</b> is to <b>stars</b> as <b>microscope</b> is to",
+  "choices": [
+   "lens",
+   "scientist",
+   "germs",
+   "planets"
+  ],
+  "answer": 2,
+  "explanation": "Bridge: a telescope is used to look at stars. A microscope is used to look at germs. 'Planets' are seen with a telescope, not a microscope."
+ },
+ {
+  "id": "ana-041",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Painter</b> is to <b>brush</b> as <b>writer</b> is to",
+  "choices": [
+   "book",
+   "library",
+   "story",
+   "pen"
+  ],
+  "answer": 3,
+  "explanation": "Bridge: a painter uses a brush as a tool. A writer uses a pen as a tool. A 'book' is what a writer makes, not the tool."
+ },
+ {
+  "id": "ana-042",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 2,
+  "prompt": "<b>Second</b> is to <b>minute</b> as <b>minute</b> is to",
+  "choices": [
+   "clock",
+   "hour",
+   "second",
+   "time"
+  ],
+  "answer": 1,
+  "explanation": "Bridge: 60 seconds make up a minute. 60 minutes make up an hour. A 'clock' shows minutes but isn't made of them."
+ },
+ {
+  "id": "ana-043",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 3,
+  "prompt": "<b>Candid</b> is to <b>frank</b> as <b>timid</b> is to",
+  "choices": [
+   "bold",
+   "brave",
+   "shy",
+   "honest"
+  ],
+  "answer": 2,
+  "explanation": "Bridge: candid means the same as frank. Timid means the same as shy. 'Honest' goes with candid, not with timid."
+ },
+ {
+  "id": "ana-044",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 3,
+  "prompt": "<b>Frugal</b> is to <b>wasteful</b> as <b>humble</b> is to",
+  "choices": [
+   "modest",
+   "arrogant",
+   "meek",
+   "poor"
+  ],
+  "answer": 1,
+  "explanation": "Bridge: frugal is the opposite of wasteful. Humble is the opposite of arrogant. 'Modest' means the same as humble, not the opposite."
+ },
+ {
+  "id": "ana-045",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 3,
+  "prompt": "<b>Annoyed</b> is to <b>furious</b> as <b>content</b> is to",
+  "choices": [
+   "ecstatic",
+   "satisfied",
+   "gloomy",
+   "calm"
+  ],
+  "answer": 0,
+  "explanation": "Bridge: furious is a much stronger form of annoyed. Ecstatic is a much stronger form of content. 'Satisfied' means about the same as content, not stronger."
+ },
+ {
+  "id": "ana-046",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 3,
+  "prompt": "<b>Cartographer</b> is to <b>map</b> as <b>architect</b> is to",
+  "choices": [
+   "ruler",
+   "city",
+   "carpenter",
+   "blueprint"
+  ],
+  "answer": 3,
+  "explanation": "Bridge: a cartographer draws maps. An architect draws blueprints. A 'ruler' is a tool an architect uses, not what they draw."
+ },
+ {
+  "id": "ana-047",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 3,
+  "prompt": "<b>Drought</b> is to <b>famine</b> as <b>deluge</b> is to",
+  "choices": [
+   "storm",
+   "flood",
+   "drizzle",
+   "dry"
+  ],
+  "answer": 1,
+  "explanation": "Bridge: a drought (no rain) can cause a famine. A deluge (a huge downpour) can cause a flood. A 'storm' causes a deluge; it isn't caused by one."
+ },
+ {
+  "id": "ana-048",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 3,
+  "prompt": "<b>Pearl</b> is to <b>oyster</b> as <b>ivory</b> is to",
+  "choices": [
+   "jewel",
+   "piano",
+   "white",
+   "elephant"
+  ],
+  "answer": 3,
+  "explanation": "Bridge: a pearl comes from an oyster. Ivory comes from an elephant. Old 'piano' keys were made from ivory, but ivory doesn't come from a piano."
+ },
+ {
+  "id": "ana-049",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 3,
+  "prompt": "<b>Scales</b> is to <b>justice</b> as <b>olive branch</b> is to",
+  "choices": [
+   "tree",
+   "war",
+   "peace",
+   "oil"
+  ],
+  "answer": 2,
+  "explanation": "Bridge: scales are a symbol of justice. An olive branch is a symbol of peace. 'War' is the opposite of what an olive branch stands for."
+ },
+ {
+  "id": "ana-050",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 3,
+  "prompt": "<b>Cygnet</b> is to <b>swan</b> as <b>fawn</b> is to",
+  "choices": [
+   "fox",
+   "antler",
+   "deer",
+   "forest"
+  ],
+  "answer": 2,
+  "explanation": "Bridge: a cygnet is a young swan. A fawn is a young deer. 'Antler' is part of a grown deer, not the animal itself."
+ },
+ {
+  "id": "ana-051",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 3,
+  "prompt": "<b>Sculptor</b> is to <b>chisel</b> as <b>blacksmith</b> is to",
+  "choices": [
+   "anvil",
+   "horse",
+   "iron",
+   "sword"
+  ],
+  "answer": 0,
+  "explanation": "Bridge: a sculptor uses a chisel as a tool. A blacksmith uses an anvil as a tool. 'Iron' is the material a blacksmith works on, not a tool."
+ },
+ {
+  "id": "ana-052",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 3,
+  "prompt": "<b>Stanza</b> is to <b>poem</b> as <b>movement</b> is to",
+  "choices": [
+   "conductor",
+   "orchestra",
+   "ticket",
+   "symphony"
+  ],
+  "answer": 3,
+  "explanation": "Bridge: a stanza is one section of a poem. A movement is one section of a symphony. The 'orchestra' plays the symphony; a movement isn't part of it."
+ },
+ {
+  "id": "ana-053",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 3,
+  "prompt": "<b>Sedative</b> is to <b>calm</b> as <b>stimulant</b> is to",
+  "choices": [
+   "sleep",
+   "excite",
+   "medicine",
+   "relax"
+  ],
+  "answer": 1,
+  "explanation": "Bridge: a sedative makes a person calm. A stimulant makes a person excited. 'Relax' is what a sedative does, the opposite of a stimulant."
+ },
+ {
+  "id": "ana-054",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 3,
+  "prompt": "<b>Abbot</b> is to <b>monastery</b> as <b>warden</b> is to",
+  "choices": [
+   "prisoner",
+   "prison",
+   "guard",
+   "key"
+  ],
+  "answer": 1,
+  "explanation": "Bridge: an abbot is the person in charge of a monastery. A warden is the person in charge of a prison. A 'guard' works in a prison, but a guard is a person, not a place."
+ },
+ {
+  "id": "ana-055",
+  "section": "verbal",
+  "type": "analogy",
+  "difficulty": 3,
+  "prompt": "<b>Transparent</b> is to <b>opaque</b> as <b>flexible</b> is to",
+  "choices": [
+   "bendable",
+   "rigid",
+   "elastic",
+   "clear"
+  ],
+  "answer": 1,
+  "explanation": "Bridge: transparent (see-through) is the opposite of opaque (not see-through). Flexible is the opposite of rigid. 'Bendable' means the same as flexible, not the opposite."
+ },
+ {
+  "id": "cls-001",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "apple",
+   "carrot",
+   "banana",
+   "grape"
+  ],
+  "answer": 1,
+  "explanation": "Apple, banana and grape are fruits; a carrot is a vegetable."
+ },
+ {
+  "id": "cls-002",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "red",
+   "circle",
+   "blue",
+   "green"
+  ],
+  "answer": 1,
+  "explanation": "Red, blue and green are colors; a circle is a shape."
+ },
+ {
+  "id": "cls-003",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "hammer",
+   "wrench",
+   "pillow",
+   "screwdriver"
+  ],
+  "answer": 2,
+  "explanation": "Hammer, wrench and screwdriver are tools; a pillow is not."
+ },
+ {
+  "id": "cls-004",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "piano",
+   "painting",
+   "guitar",
+   "violin"
+  ],
+  "answer": 1,
+  "explanation": "Piano, guitar and violin are musical instruments; a painting is art you look at."
+ },
+ {
+  "id": "cls-005",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "Monday",
+   "Friday",
+   "June",
+   "Sunday"
+  ],
+  "answer": 2,
+  "explanation": "Monday, Friday and Sunday are days of the week; June is a month."
+ },
+ {
+  "id": "cls-006",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "robin",
+   "dog",
+   "cat",
+   "horse"
+  ],
+  "answer": 0,
+  "explanation": "Dog, cat and horse are mammals; a robin is a bird."
+ },
+ {
+  "id": "cls-007",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "shirt",
+   "pants",
+   "jacket",
+   "spoon"
+  ],
+  "answer": 3,
+  "explanation": "Shirt, pants and jacket are clothes; a spoon is not."
+ },
+ {
+  "id": "cls-008",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "soccer",
+   "chess",
+   "tennis",
+   "basketball"
+  ],
+  "answer": 1,
+  "explanation": "Soccer, tennis and basketball are sports played with a ball; chess is a board game."
+ },
+ {
+  "id": "cls-009",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "angry",
+   "happy",
+   "glad",
+   "joyful"
+  ],
+  "answer": 0,
+  "explanation": "Happy, glad and joyful all mean the same thing; angry is a different feeling."
+ },
+ {
+  "id": "cls-010",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "nose",
+   "knee",
+   "ear",
+   "mouth"
+  ],
+  "answer": 1,
+  "explanation": "Nose, ear and mouth are parts of the head; the knee is part of the leg."
+ },
+ {
+  "id": "cls-011",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "oak",
+   "maple",
+   "pine",
+   "rose"
+  ],
+  "answer": 3,
+  "explanation": "Oak, maple and pine are trees; a rose is a flower."
+ },
+ {
+  "id": "cls-012",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "car",
+   "bus",
+   "sailboat",
+   "truck"
+  ],
+  "answer": 2,
+  "explanation": "Car, bus and truck travel on roads; a sailboat travels on water."
+ },
+ {
+  "id": "cls-013",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "milk",
+   "juice",
+   "water",
+   "bread"
+  ],
+  "answer": 3,
+  "explanation": "Milk, juice and water are drinks; bread is a food you eat."
+ },
+ {
+  "id": "cls-014",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "sand",
+   "rain",
+   "snow",
+   "hail"
+  ],
+  "answer": 0,
+  "explanation": "Rain, snow and hail fall from the sky as weather; sand does not."
+ },
+ {
+  "id": "cls-015",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "wolf",
+   "lion",
+   "tiger",
+   "leopard"
+  ],
+  "answer": 0,
+  "explanation": "Lion, tiger and leopard are big cats; a wolf is in the dog family."
+ },
+ {
+  "id": "cls-016",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "plate",
+   "spoon",
+   "fork",
+   "knife"
+  ],
+  "answer": 0,
+  "explanation": "Spoon, fork and knife are utensils you hold; a plate is a dish food sits on."
+ },
+ {
+  "id": "cls-017",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "Tuesday",
+   "January",
+   "March",
+   "July"
+  ],
+  "answer": 0,
+  "explanation": "January, March and July are months; Tuesday is a day of the week."
+ },
+ {
+  "id": "cls-018",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "dollar bill",
+   "penny",
+   "dime",
+   "quarter"
+  ],
+  "answer": 0,
+  "explanation": "Penny, dime and quarter are coins; a dollar bill is paper money."
+ },
+ {
+  "id": "cls-019",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "big",
+   "large",
+   "tiny",
+   "huge"
+  ],
+  "answer": 2,
+  "explanation": "Big, large and huge all mean large in size; tiny means the opposite."
+ },
+ {
+  "id": "cls-020",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 1,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "cup",
+   "fork",
+   "mug",
+   "glass"
+  ],
+  "answer": 1,
+  "explanation": "Cup, mug and glass are things you drink from; a fork is for eating."
+ },
+ {
+  "id": "cls-021",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "bee",
+   "ant",
+   "spider",
+   "beetle"
+  ],
+  "answer": 2,
+  "explanation": "Bees, ants and beetles are insects with six legs; a spider has eight legs and is not an insect."
+ },
+ {
+  "id": "cls-022",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "cube",
+   "sphere",
+   "square",
+   "cylinder"
+  ],
+  "answer": 2,
+  "explanation": "A cube, sphere and cylinder are solid 3-D shapes; a square is flat."
+ },
+ {
+  "id": "cls-023",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "three",
+   "seven",
+   "nine",
+   "ten"
+  ],
+  "answer": 3,
+  "explanation": "Three, seven and nine are odd numbers; ten is even."
+ },
+ {
+  "id": "cls-024",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "inch",
+   "foot",
+   "yard",
+   "ounce"
+  ],
+  "answer": 3,
+  "explanation": "Inch, foot and yard measure length; an ounce measures weight."
+ },
+ {
+  "id": "cls-025",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "run",
+   "jump",
+   "swim",
+   "quickly"
+  ],
+  "answer": 3,
+  "explanation": "Run, jump and swim are verbs (actions); quickly is an adverb that describes how an action is done."
+ },
+ {
+  "id": "cls-026",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "cotton",
+   "plastic",
+   "wool",
+   "silk"
+  ],
+  "answer": 1,
+  "explanation": "Cotton, wool and silk are natural materials from plants or animals; plastic is man-made."
+ },
+ {
+  "id": "cls-027",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "whale",
+   "dolphin",
+   "porpoise",
+   "shark"
+  ],
+  "answer": 3,
+  "explanation": "Whales, dolphins and porpoises are mammals that breathe air; a shark is a fish."
+ },
+ {
+  "id": "cls-028",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "glance",
+   "listen",
+   "peek",
+   "stare"
+  ],
+  "answer": 1,
+  "explanation": "Glance, peek and stare are ways of looking; listen uses your ears."
+ },
+ {
+  "id": "cls-029",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "Mercury",
+   "Mars",
+   "Moon",
+   "Jupiter"
+  ],
+  "answer": 2,
+  "explanation": "Mercury, Mars and Jupiter are planets; the Moon orbits Earth and is not a planet."
+ },
+ {
+  "id": "cls-030",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "flute",
+   "trumpet",
+   "trombone",
+   "tuba"
+  ],
+  "answer": 0,
+  "explanation": "Trumpet, trombone and tuba are brass instruments you buzz your lips into; a flute is a woodwind."
+ },
+ {
+  "id": "cls-031",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "sprint",
+   "dash",
+   "stroll",
+   "hurry"
+  ],
+  "answer": 2,
+  "explanation": "Sprint, dash and hurry mean moving fast; stroll means walking slowly."
+ },
+ {
+  "id": "cls-032",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "mile",
+   "hour",
+   "minute",
+   "second"
+  ],
+  "answer": 0,
+  "explanation": "Hour, minute and second measure time; a mile measures distance."
+ },
+ {
+  "id": "cls-033",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "copper",
+   "iron",
+   "wood",
+   "gold"
+  ],
+  "answer": 2,
+  "explanation": "Copper, iron and gold are metals; wood is not."
+ },
+ {
+  "id": "cls-034",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "lizard",
+   "frog",
+   "toad",
+   "salamander"
+  ],
+  "answer": 0,
+  "explanation": "Frogs, toads and salamanders are amphibians; a lizard is a reptile."
+ },
+ {
+  "id": "cls-035",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "gram",
+   "meter",
+   "kilogram",
+   "milligram"
+  ],
+  "answer": 1,
+  "explanation": "Gram, kilogram and milligram measure weight; a meter measures length."
+ },
+ {
+  "id": "cls-036",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "carrot",
+   "potato",
+   "lettuce",
+   "beet"
+  ],
+  "answer": 2,
+  "explanation": "Carrots, potatoes and beets grow underground; we eat the leaves of lettuce."
+ },
+ {
+  "id": "cls-037",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "she",
+   "he",
+   "the",
+   "they"
+  ],
+  "answer": 2,
+  "explanation": "She, he and they are pronouns that stand for people; 'the' is an article."
+ },
+ {
+  "id": "cls-038",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "talked",
+   "sing",
+   "jumped",
+   "played"
+  ],
+  "answer": 1,
+  "explanation": "Talked, jumped and played are past-tense verbs; sing is present tense."
+ },
+ {
+  "id": "cls-039",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "doctor",
+   "lawyer",
+   "nurse",
+   "surgeon"
+  ],
+  "answer": 1,
+  "explanation": "Doctors, nurses and surgeons work in medicine; a lawyer works in law."
+ },
+ {
+  "id": "cls-040",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "Spain",
+   "France",
+   "Italy",
+   "Paris"
+  ],
+  "answer": 3,
+  "explanation": "Spain, France and Italy are countries; Paris is a city."
+ },
+ {
+  "id": "cls-041",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "mumble",
+   "whisper",
+   "murmur",
+   "yell"
+  ],
+  "answer": 3,
+  "explanation": "Mumble, whisper and murmur are quiet ways of speaking; yell is loud."
+ },
+ {
+  "id": "cls-042",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 2,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "ancient",
+   "old",
+   "modern",
+   "aged"
+  ],
+  "answer": 2,
+  "explanation": "Ancient, old and aged all mean not new; modern means new or current."
+ },
+ {
+  "id": "cls-043",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 3,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "river",
+   "stream",
+   "creek",
+   "pond"
+  ],
+  "answer": 3,
+  "explanation": "Rivers, streams and creeks are flowing water; a pond is still water."
+ },
+ {
+  "id": "cls-044",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 3,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "brave",
+   "bold",
+   "fearless",
+   "cautious"
+  ],
+  "answer": 3,
+  "explanation": "Brave, bold and fearless all mean not afraid; cautious means careful."
+ },
+ {
+  "id": "cls-045",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 3,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "earthquake",
+   "tornado",
+   "hurricane",
+   "blizzard"
+  ],
+  "answer": 0,
+  "explanation": "Tornadoes, hurricanes and blizzards are weather storms; an earthquake happens in the ground, not the weather."
+ },
+ {
+  "id": "cls-046",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 3,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "frugal",
+   "thrifty",
+   "lavish",
+   "economical"
+  ],
+  "answer": 2,
+  "explanation": "Frugal, thrifty and economical all mean careful with money; lavish means spending a lot."
+ },
+ {
+  "id": "cls-047",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 3,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "quickly",
+   "happily",
+   "friendly",
+   "softly"
+  ],
+  "answer": 2,
+  "explanation": "Quickly, happily and softly are adverbs; friendly ends in -ly but is an adjective (a friendly dog)."
+ },
+ {
+  "id": "cls-048",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 3,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "wander",
+   "roam",
+   "meander",
+   "march"
+  ],
+  "answer": 3,
+  "explanation": "Wander, roam and meander mean to move without a set path; march means to move in a straight, set way."
+ },
+ {
+  "id": "cls-049",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 3,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "obscure",
+   "obvious",
+   "evident",
+   "apparent"
+  ],
+  "answer": 0,
+  "explanation": "Obvious, evident and apparent all mean easy to see; obscure means hard to see or understand."
+ },
+ {
+  "id": "cls-050",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 3,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "teach",
+   "learn",
+   "instruct",
+   "educate"
+  ],
+  "answer": 1,
+  "explanation": "Teach, instruct and educate are what the teacher does; learn is what the student does."
+ },
+ {
+  "id": "cls-051",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 3,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "pound",
+   "gallon",
+   "quart",
+   "pint"
+  ],
+  "answer": 0,
+  "explanation": "Gallon, quart and pint measure liquid volume; a pound measures weight."
+ },
+ {
+  "id": "cls-052",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 3,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "diameter",
+   "radius",
+   "circumference",
+   "volume"
+  ],
+  "answer": 3,
+  "explanation": "Diameter, radius and circumference are lengths measured on a circle; volume measures space inside a 3-D object."
+ },
+ {
+  "id": "cls-053",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 3,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "candid",
+   "tactful",
+   "frank",
+   "blunt"
+  ],
+  "answer": 1,
+  "explanation": "Candid, frank and blunt mean saying things directly; tactful means saying things carefully so no one is hurt."
+ },
+ {
+  "id": "cls-054",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 3,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "cub",
+   "mare",
+   "fawn",
+   "foal"
+  ],
+  "answer": 1,
+  "explanation": "A cub, fawn and foal are baby animals; a mare is a grown female horse."
+ },
+ {
+  "id": "cls-055",
+  "section": "verbal",
+  "type": "classification",
+  "difficulty": 3,
+  "prompt": "Which word does <b>not</b> belong with the others?",
+  "choices": [
+   "joy",
+   "courage",
+   "freedom",
+   "table"
+  ],
+  "answer": 3,
+  "explanation": "Joy, courage and freedom are ideas you can't touch; a table is a physical object."
+ }
+]

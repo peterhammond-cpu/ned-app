@@ -1875,3 +1875,94 @@ body {
     .mastery-class summary { grid-template-columns: 1fr 70px 40px; }
     .mastery-class-assessed { display: none; }
 }
+
+/* ==========================================
+   HSPT TAB
+   Willy's daily practice. Calm and plain on purpose: one question at a
+   time, big tap targets, no streaks or confetti.
+   ========================================== */
+
+.hspt-countdown { color: var(--text-secondary); font-size: 14px; margin: var(--spacing-xs) 0 var(--spacing-md); }
+.hspt-countdown b { color: var(--barca-gold); font-size: 22px; margin-right: 4px; }
+
+.hspt-week { display: flex; align-items: center; gap: var(--spacing-sm); margin: var(--spacing-sm) 0; flex-wrap: wrap; }
+.hspt-dots { display: flex; gap: 6px; }
+.hspt-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--bg-card-hover); border: 1px solid var(--text-muted); }
+.hspt-dot.on { background: var(--success); border-color: var(--success); }
+.hspt-week-text { font-size: 14px; color: var(--text-primary); }
+
+.hspt-start, .hspt-next {
+    display: block; width: 100%;
+    margin-top: var(--spacing-md);
+    padding: 16px;
+    border: none; border-radius: var(--radius-md);
+    background: var(--gradient-barca);
+    color: #fff; font-size: 17px; font-weight: 700;
+    cursor: pointer;
+}
+.hspt-next { background: var(--barca-blue); }
+.hspt-hint { font-size: 13px; color: var(--text-muted); margin-top: var(--spacing-xs); line-height: 1.45; }
+
+.hspt-quiz-top { display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-sm); }
+.hspt-tag { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); }
+.hspt-count { margin-left: auto; font-size: 13px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+.hspt-quit { background: none; border: none; color: var(--text-muted); font-size: 18px; padding: 4px 8px; cursor: pointer; }
+
+.hspt-timer { height: 6px; border-radius: 3px; background: var(--bg-card-hover); overflow: hidden; margin-bottom: var(--spacing-sm); }
+.hspt-timer > span { display: block; height: 100%; width: 100%; background: var(--barca-gold); transition: width 0.5s linear; }
+
+.hspt-passage {
+    max-height: 40vh; overflow-y: auto;
+    padding: var(--spacing-sm); margin-bottom: var(--spacing-sm);
+    background: var(--bg-card-hover); border-radius: var(--radius-sm);
+    font-size: 14.5px; line-height: 1.55;
+}
+.hspt-passage p { margin: 0 0 0.7em; }
+
+.hspt-prompt { font-size: 17px; line-height: 1.5; color: var(--text-primary); margin-bottom: var(--spacing-md); white-space: pre-line; }
+.hspt-exprs { margin-top: var(--spacing-xs); font-size: 17px; line-height: 1.8; font-variant-numeric: tabular-nums; }
+.hspt-figs { display: flex; gap: var(--spacing-md); margin-top: var(--spacing-sm); flex-wrap: wrap; }
+.hspt-figs figure { margin: 0; text-align: center; }
+.hspt-figs figcaption { font-size: 13px; color: var(--text-secondary); margin-bottom: 4px; }
+.geo-fig .geo-shade { fill: var(--barca-gold); stroke: var(--text-primary); stroke-width: 1.2; }
+.geo-fig .geo-empty { fill: transparent; stroke: var(--text-primary); stroke-width: 1.2; }
+
+.hspt-choices { display: flex; flex-direction: column; gap: 8px; }
+.hspt-choice {
+    display: flex; align-items: center; gap: var(--spacing-sm);
+    width: 100%; text-align: left;
+    padding: 14px var(--spacing-sm);
+    border: 1px solid var(--bg-card-hover); border-radius: var(--radius-md);
+    background: var(--bg-secondary); color: var(--text-primary);
+    font-size: 16px; line-height: 1.35; cursor: pointer;
+}
+.hspt-choice:disabled { cursor: default; opacity: 0.6; }
+.hspt-choice.right { border-color: var(--success); background: rgba(46, 213, 115, 0.12); opacity: 1; }
+.hspt-choice.wrong { border-color: var(--urgent); background: rgba(255, 71, 87, 0.12); opacity: 1; }
+.hspt-letter {
+    flex: 0 0 28px; height: 28px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--bg-card-hover); color: var(--text-secondary);
+    font-size: 13px; font-weight: 700;
+}
+
+.hspt-explain { margin-top: var(--spacing-md); padding: var(--spacing-sm); border-radius: var(--radius-sm); font-size: 15px; line-height: 1.5; background: var(--bg-card-hover); border-left: 3px solid var(--success); }
+.hspt-explain.miss { border-left-color: var(--warning); }
+.hspt-later { margin-top: 6px; font-size: 13px; color: var(--text-muted); }
+
+.hspt-sprint-intro h3, .hspt-done h3 { margin: 0 0 var(--spacing-sm); }
+.hspt-sprint-intro p, .hspt-done p { color: var(--text-secondary); line-height: 1.5; }
+
+/* Adult summary on the Mastery tab */
+.hspt-rblock { margin-top: var(--spacing-md); }
+.hspt-rhead { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); padding-bottom: 6px; border-bottom: 1px solid var(--bg-card-hover); margin-bottom: 6px; }
+.hspt-rrow { display: grid; grid-template-columns: 1fr auto auto; gap: 12px; font-size: 13.5px; padding: 3px 0; }
+.hspt-rrow small { color: var(--text-muted); }
+.hspt-rsec { color: var(--text-muted); font-size: 12px; }
+.hspt-rrow .good { color: var(--success); }
+.hspt-rrow .warn { color: var(--warning); }
+
+@media (max-width: 480px) {
+    .nav-tab .tab-text { font-size: 11px; }
+    .hspt-rrow { gap: 8px; font-size: 12.5px; }
+}
