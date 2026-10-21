@@ -19,6 +19,13 @@ const HSPT = (function () {
     const TEST_DATE = '2026-12-05';
     const SPRINT_FROM = '2026-11-04';
     const WEEKLY_TARGET = 4;
+    // Allowance (Peter, 21 Oct): $10 for hitting the target, +$2 for each
+    // finished session past it, counted up to 7 a week. Finishing earns it,
+    // never the score.
+    const PAY_BASE = 10;
+    const PAY_EXTRA = 2;
+    const PAY_MAX_SESSIONS = 7;
+    const PROGRAM_START = '2026-10-19'; // Monday of the week practice began
     const EXTENDED_TIME = 1.5; // his accommodation; confirm DePaul's exact figure
     const STATE_KEY = 'nedHsptState';
 
@@ -57,6 +64,22 @@ const HSPT = (function () {
         catch (e) { console.error('HSPT state unreadable, starting fresh', e); return blankState(); }
     }
     function save(state) { localStorage.setItem(STATE_KEY, JSON.stringify(state)); }
+
+    function earned(n) {
+        return n < WEEKLY_TARGET ? 0 : PAY_BASE + PAY_EXTRA * (Math.min(n, PAY_MAX_SESSIONS) - WEEKLY_TARGET);
+    }
+    // What to tell him about money for a given count this week.
+    function payLine(n) {
+        if (n < WEEKLY_TARGET) return `$${PAY_BASE} when you hit ${WEEKLY_TARGET}`;
+        if (n < PAY_MAX_SESSIONS) return `$${earned(n)} earned · +$${PAY_EXTRA} for another`;
+        return `$${earned(n)} earned · that's the max this week`;
+    }
+    // Finished sessions per Monday-week, from his phone's own record.
+    function weeksFromLocal(state) {
+        const m = {};
+        state.sessions.filter(s => s.completed).forEach(s => { const w = weekStart(s.date); m[w] = (m[w] || 0) + 1; });
+        return m;
+    }
 
     function sessionsThisWeek(state) {
         const ws = weekStart();
@@ -252,8 +275,11 @@ const HSPT = (function () {
             <div class="hspt-countdown">${days > 0 ? `<b>${days}</b> days to the HSPT` : days === 0 ? '<b>Today</b> is the HSPT' : ''}</div>
             <div class="hspt-week">
                 <div class="hspt-dots">${weekDots(done)}</div>
-                <div class="hspt-week-text">${Math.min(done, WEEKLY_TARGET)} of ${WEEKLY_TARGET} this week${done >= WEEKLY_TARGET ? ' ✅' : ''}</div>
+                <div class="hspt-week-text">${done >= WEEKLY_TARGET ? `${done} this week ✅` : `${done} of ${WEEKLY_TARGET} this week`}</div>
             </div>
+            <div class="hspt-pay">${payLine(done)}</div>
+            ${(() => { const total = Object.values(weeksFromLocal(state)).reduce((t, n) => t + earned(n), 0);
+                return total ? `<div class="hspt-hint">Total earned so far: $${total}</div>` : ''; })()}
             ${action}`;
         $('hspt-home').hidden = false;
         $('hspt-quiz').hidden = true;
@@ -443,7 +469,8 @@ const HSPT = (function () {
                 <p>${c} of ${n} right.</p>
                 ${sprintNote}
                 ${completed ? `<div class="hspt-week"><div class="hspt-dots">${weekDots(week)}</div>
-                    <div class="hspt-week-text">${Math.min(week, WEEKLY_TARGET)} of ${WEEKLY_TARGET} this week${week >= WEEKLY_TARGET ? '. Target reached ✅' : ''}</div></div>`
+                    <div class="hspt-week-text">${week >= WEEKLY_TARGET ? `${week} this week ✅` : `${week} of ${WEEKLY_TARGET} this week`}</div></div>
+                    <div class="hspt-pay">${payLine(week)}</div>`
                     : '<p class="hspt-hint">Only finished sessions count toward the week.</p>'}
                 ${comeBack ? `<p class="hspt-hint">${comeBack} question${comeBack > 1 ? 's' : ''} will come back tomorrow. Getting them right the second time is what makes it stick.</p>` : ''}
                 <button class="hspt-next" onclick="HSPT.home()">Back</button>
@@ -468,7 +495,7 @@ const HSPT = (function () {
         const box = $('hspt-report');
         if (!box) return;
         box.innerHTML = '<div class="empty-state">Loading…</div>';
-        const since = new Date(Date.now() - 56 * 86400000).toISOString();
+        const since = new Date(PROGRAM_START + 'T00:00:00').toISOString();
         const { data, error } = await NedCore.getClient().rpc('get_hspt_progress', {
             p_student_id: NedCore.getStudentId(), p_key: key, p_since: since,
         });
@@ -478,12 +505,22 @@ const HSPT = (function () {
             return;
         }
         const sessions = data.sessions || [], attempts = data.attempts || [];
-        if (!attempts.length) {
+        if (!attempts.length && !sessions.length) {
             box.innerHTML = `<div class="empty-state">No practice yet. ${daysToTest()} days to the test.</div>`;
             return;
         }
         const ws = weekStart();
         const localDay = iso => dayStr(new Date(iso));
+
+        // Allowance ledger: every week since practice began, current week first.
+        const perWeek = {};
+        for (let w = weekStart(PROGRAM_START); w <= ws; w = addDays(w, 7)) perWeek[w] = 0;
+        sessions.filter(s => s.completed_at).forEach(s => { const w = weekStart(localDay(s.started_at)); perWeek[w] = (perWeek[w] || 0) + 1; });
+        const ledger = Object.entries(perWeek).sort((a, b) => b[0].localeCompare(a[0]));
+        const totalEarned = ledger.reduce((t, [, n]) => t + earned(n), 0);
+        const weekLabel = w => new Date(w + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        const ledgerRows = ledger.map(([w, n]) => `<div class="hspt-rrow"><span>Week of ${weekLabel(w)}${w === ws ? ' (now)' : ''}</span><span>${n} session${n === 1 ? '' : 's'}</span><span class="${earned(n) ? 'good' : ''}">$${earned(n)}</span></div>`).join('');
+
         const weekSessions = sessions.filter(s => s.completed_at && localDay(s.started_at) >= ws);
         const weekAttempts = attempts.filter(a => localDay(a.answered_at) >= ws);
 
@@ -521,10 +558,15 @@ const HSPT = (function () {
         box.innerHTML = `
             <p class="card-subtitle">${daysToTest()} days to the test · ${sessions.filter(s => s.completed_at).length} sessions finished in total</p>
             <div class="hspt-rblock">
-                <div class="hspt-rhead">This week (allowance)</div>
+                <div class="hspt-rhead">This week</div>
                 <div class="hspt-week"><div class="hspt-dots">${weekDots(weekSessions.length)}</div>
-                    <div class="hspt-week-text">${weekSessions.length} of ${WEEKLY_TARGET}${weekSessions.length >= WEEKLY_TARGET ? ' ✅ target reached' : ''}${days.length ? ' · ' + days.join(', ') : ''}</div></div>
+                    <div class="hspt-week-text">${weekSessions.length >= WEEKLY_TARGET ? `${weekSessions.length} sessions ✅` : `${weekSessions.length} of ${WEEKLY_TARGET}`} · $${earned(weekSessions.length)}${days.length ? ' · ' + days.join(', ') : ''}</div></div>
                 <div class="hspt-hint">${weekAttempts.length} questions this week. Counts finished sessions only, whatever the score.</div>
+            </div>
+            <div class="hspt-rblock">
+                <div class="hspt-rhead">Allowance: $${PAY_BASE} for ${WEEKLY_TARGET} sessions, +$${PAY_EXTRA} each up to ${PAY_MAX_SESSIONS}</div>
+                ${ledgerRows}
+                <div class="hspt-rrow hspt-rtotal"><span>Total earned</span><span></span><span>$${totalEarned}</span></div>
             </div>
             <div class="hspt-rblock">
                 <div class="hspt-rhead">By section</div>

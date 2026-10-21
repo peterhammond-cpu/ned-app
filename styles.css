@@ -1966,3 +1966,6 @@ body {
     .nav-tab .tab-text { font-size: 11px; }
     .hspt-rrow { gap: 8px; font-size: 12.5px; }
 }
+
+.hspt-pay { font-size: 15px; font-weight: 700; color: var(--barca-gold); margin-top: 2px; }
+.hspt-rtotal { border-top: 1px solid var(--bg-card-hover); margin-top: 4px; padding-top: 6px; font-weight: 700; }
