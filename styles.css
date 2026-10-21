@@ -1785,3 +1785,92 @@ body {
     .history-item { grid-template-columns: 1fr; gap: 2px; }
     .history-stat { grid-template-columns: 64px 1fr 26px; }
 }
+
+/* ==========================================
+   MASTERY TAB
+   Mastery Connect standards. Same dense reference style as History.
+   4/3 = mastery, 2 = below, 1 = far below, NS = not yet assessed.
+   ========================================== */
+
+.mastery-note {
+    margin-top: var(--spacing-sm);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-primary);
+    padding: var(--spacing-sm);
+    border-left: 3px solid var(--barca-gold);
+    background: var(--bg-card-hover);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.mastery-stale { color: var(--warning); }
+
+.mastery-group { display: flex; flex-direction: column; gap: 6px; margin-top: var(--spacing-md); }
+.mastery-group:first-child { margin-top: var(--spacing-xs); }
+
+.mastery-group-name {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--bg-card-hover);
+}
+.mastery-group-name span { color: var(--warning); margin-left: 4px; }
+
+.mastery-standard {
+    display: grid;
+    grid-template-columns: 28px 96px 1fr;
+    gap: 10px;
+    align-items: start;
+    font-size: 13.5px;
+}
+
+.mastery-score {
+    text-align: center;
+    font-weight: 700;
+    font-size: 12px;
+    border-radius: 4px;
+    padding: 1px 0;
+    font-variant-numeric: tabular-nums;
+}
+.score-ok    { color: var(--success); background: rgba(46, 213, 115, 0.12); }
+.score-below { color: var(--warning); background: rgba(255, 165, 2, 0.15); }
+.score-far   { color: var(--urgent);  background: rgba(255, 71, 87, 0.15); }
+.score-ns    { color: var(--text-muted); background: var(--bg-card-hover); }
+
+.mastery-code { font-size: 12px; color: var(--text-secondary); padding-top: 1px; overflow-wrap: anywhere; }
+.mastery-desc { color: var(--text-primary); }
+
+.mastery-class { border-bottom: 1px solid var(--bg-card-hover); }
+.mastery-class:last-child { border-bottom: none; }
+
+.mastery-class summary {
+    display: grid;
+    grid-template-columns: 110px 1fr 40px 92px;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 0;
+    font-size: 13px;
+    cursor: pointer;
+    list-style: none;
+}
+.mastery-class summary::-webkit-details-marker { display: none; }
+
+.mastery-class-name { color: var(--text-primary); }
+.mastery-class-pct { text-align: right; font-variant-numeric: tabular-nums; }
+.mastery-class-assessed { text-align: right; color: var(--text-muted); font-size: 12px; }
+
+.history-stat-bar > span.bar-ok    { background: var(--success); }
+.history-stat-bar > span.bar-mid   { background: var(--warning); }
+.history-stat-bar > span.bar-below { background: var(--urgent); }
+
+.mastery-class-body { display: flex; flex-direction: column; gap: 6px; padding: 0 0 var(--spacing-sm); }
+.mastery-teacher { font-size: 12px; color: var(--text-muted); }
+
+@media (max-width: 480px) {
+    .mastery-standard { grid-template-columns: 28px 1fr; }
+    .mastery-desc { grid-column: 2; }
+    .mastery-class summary { grid-template-columns: 1fr 70px 40px; }
+    .mastery-class-assessed { display: none; }
+}

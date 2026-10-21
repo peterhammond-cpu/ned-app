@@ -365,6 +365,9 @@ const defaultMorningItems = [
 document.addEventListener('DOMContentLoaded', function() {
     NedCore.init('willy');
     initializeApp();
+    // Arriving from the Mastery link: open straight onto that tab. A real
+    // click, because NedCore.switchTab reads the global click event.
+    if (captureMasteryKeyFromUrl()) document.getElementById('mastery-tab-btn')?.click();
 });
 
 async function initializeApp() {
@@ -867,9 +870,135 @@ function showSaturdayReminder() {
 }
 
 // ==========================================
+// MASTERY TAB (Mastery Connect snapshots)
+// ==========================================
+// Standards-level grades, pulled by hand through Claude in Chrome (there is
+// no API) and saved with test-scripts/save-mastery-snapshot.js. Unlike every
+// other table, these are NOT readable with the anon key -- the key is in a
+// public repo. The app calls get_latest_mastery() with a key that arrives
+// once in a link (?k=...) and is remembered on that device.
+const MASTERY_KEY_STORAGE = 'nedMasteryKey';
+
+function captureMasteryKeyFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const k = params.get('k');
+    if (!k) return false;
+    localStorage.setItem(MASTERY_KEY_STORAGE, k);
+    // Take it out of the address bar so it is not shared by accident.
+    params.delete('k');
+    const qs = params.toString();
+    history.replaceState(null, '', window.location.pathname + (qs ? '?' + qs : '') + window.location.hash);
+    return true;
+}
+
+async function fetchMastery() {
+    const key = localStorage.getItem(MASTERY_KEY_STORAGE);
+    if (!key) return { status: 'no-key' };
+    const { data, error } = await NedCore.getClient()
+        .rpc('get_latest_mastery', { p_student_id: NedCore.getStudentId(), p_key: key });
+    if (error) {
+        console.error('Error fetching mastery:', error);
+        return { status: /invalid mastery key/.test(error.message) ? 'bad-key' : 'error' };
+    }
+    return data ? { status: 'ok', snapshot: data } : { status: 'empty' };
+}
+
+// Text here comes from a scraped page, so escape it before it hits innerHTML.
+function escHtml(s) {
+    return String(s ?? '').replace(/[&<>"']/g, c =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function masteryScoreClass(score) {
+    if (score === '4' || score === '3') return 'score-ok';
+    if (score === '2') return 'score-below';
+    if (score === '1') return 'score-far';
+    return 'score-ns';
+}
+
+function masteryStandardRow(s) {
+    return `<div class="mastery-standard">
+        <span class="mastery-score ${masteryScoreClass(s.score)}">${escHtml(s.score)}</span>
+        <span class="mastery-code">${escHtml(s.code)}</span>
+        <span class="mastery-desc">${escHtml(s.description)}</span>
+    </div>`;
+}
+
+function renderMastery(result) {
+    const head = document.getElementById('mastery-head');
+    const below = document.getElementById('mastery-below');
+    const all = document.getElementById('mastery-classes');
+    if (!head) return;
+
+    const messages = {
+        'no-key': 'Open this tab from the Mastery link Peter sent you.',
+        'bad-key': 'That Mastery link is not valid any more. Ask Peter for a new one.',
+        'empty': 'No Mastery Connect snapshot saved yet.',
+        'error': 'Could not load Mastery Connect data.',
+    };
+    if (result.status !== 'ok') {
+        head.innerHTML = `<div class="empty-state">${messages[result.status]}</div>`;
+        below.innerHTML = '';
+        all.innerHTML = '';
+        below.closest('.card').style.display = 'none';
+        all.closest('.card').style.display = 'none';
+        return;
+    }
+    below.closest('.card').style.display = '';
+    all.closest('.card').style.display = '';
+
+    const snap = result.snapshot;
+    const classes = snap.classes || [];
+    const dateLabel = new Date(snap.snapshot_date + 'T00:00:00')
+        .toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    const ageDays = Math.floor((Date.now() - new Date(snap.snapshot_date + 'T00:00:00')) / 86400000);
+    const stale = ageDays > 8 ? ` <span class="mastery-stale">${ageDays} days old</span>` : '';
+
+    head.innerHTML = `
+        <p class="card-subtitle">Snapshot from ${dateLabel} · ${classes.length} classes${stale}</p>
+        ${snap.note ? `<p class="mastery-note">${escHtml(snap.note)}</p>` : ''}
+    `;
+
+    // Below mastery: the reason this tab exists. Grouped by class.
+    const weak = classes
+        .map(c => ({ c, rows: (c.standards || []).filter(s => s.score === '1' || s.score === '2') }))
+        .filter(x => x.rows.length)
+        .sort((a, b) => b.rows.length - a.rows.length);
+    below.innerHTML = weak.length
+        ? weak.map(({ c, rows }) => `
+            <div class="mastery-group">
+                <div class="mastery-group-name">${escHtml(c.class_name)} <span>${rows.length}</span></div>
+                ${rows.map(masteryStandardRow).join('')}
+            </div>`).join('')
+        : '<div class="empty-state">Nothing below mastery in this snapshot.</div>';
+
+    // Every class, lowest mastery first; tap to see all its standards.
+    const sorted = [...classes].sort((a, b) => (a.mastery_pct ?? 101) - (b.mastery_pct ?? 101));
+    all.innerHTML = sorted.map(c => {
+        const pct = c.mastery_pct;
+        const pctLabel = pct == null ? '—' : pct + '%';
+        const barClass = pct == null ? '' : pct < 60 ? 'bar-below' : pct < 85 ? 'bar-mid' : 'bar-ok';
+        const standards = c.standards || [];
+        return `<details class="mastery-class">
+            <summary>
+                <span class="mastery-class-name">${escHtml(c.class_name)}</span>
+                <span class="history-stat-bar"><span class="${barClass}" style="width:${pct ?? 0}%"></span></span>
+                <span class="mastery-class-pct">${pctLabel}</span>
+                <span class="mastery-class-assessed">${c.assessed_pct ?? 0}% assessed</span>
+            </summary>
+            <div class="mastery-class-body">
+                ${c.teacher ? `<div class="mastery-teacher">${escHtml(c.teacher)}</div>` : ''}
+                ${standards.length ? standards.map(masteryStandardRow).join('') : '<div class="empty-state">Nothing scored yet.</div>'}
+            </div>
+        </details>`;
+    }).join('');
+}
+
+// ==========================================
 // TAB NAVIGATION (delegates to NedCore)
 // ==========================================
 let historyLoaded = false;
+let masteryLoaded = false;
 
 function switchTab(tabName) {
     NedCore.switchTab(tabName);
@@ -886,6 +1015,22 @@ function switchTab(tabName) {
                 console.error('History failed:', err);
                 historyLoaded = false;
                 if (list) list.innerHTML = '<div class="empty-state">Could not load history.</div>';
+            });
+    }
+
+    if (tabName === 'mastery' && !masteryLoaded) {
+        masteryLoaded = true;
+        const head = document.getElementById('mastery-head');
+        if (head) head.innerHTML = '<div class="empty-state">Loading…</div>';
+        fetchMastery()
+            .then(result => {
+                if (result.status === 'error') masteryLoaded = false;
+                renderMastery(result);
+            })
+            .catch(err => {
+                console.error('Mastery failed:', err);
+                masteryLoaded = false;
+                renderMastery({ status: 'error' });
             });
     }
 }

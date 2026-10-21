@@ -29,6 +29,10 @@
                 <span class="tab-icon">📖</span>
                 <span class="tab-text">History</span>
             </button>
+            <button class="nav-tab" id="mastery-tab-btn" onclick="switchTab('mastery')">
+                <span class="tab-icon">📊</span>
+                <span class="tab-text">Mastery</span>
+            </button>
         </nav>
 
         <!-- TODAY TAB
@@ -95,6 +99,25 @@
                 <div id="history-list" class="history-list">
                     <!-- Populated by JavaScript -->
                 </div>
+            </div>
+        </div>
+
+        <!-- MASTERY TAB
+             Standards-level grades from Mastery Connect, for Peter and Alex.
+             Below-mastery first, because that is what a tutoring session can
+             act on. Needs the key from the Mastery link (see app.js). -->
+        <div id="mastery-tab" class="tab-content">
+            <div class="card">
+                <h2>📊 Mastery Connect</h2>
+                <div id="mastery-head"></div>
+            </div>
+            <div class="card">
+                <h2>Below mastery</h2>
+                <div id="mastery-below"></div>
+            </div>
+            <div class="card">
+                <h2>All classes</h2>
+                <div id="mastery-classes"></div>
             </div>
         </div>
 
