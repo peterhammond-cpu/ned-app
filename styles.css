@@ -1969,3 +1969,20 @@ body {
 
 .hspt-pay { font-size: 15px; font-weight: 700; color: var(--barca-gold); margin-top: 2px; }
 .hspt-rtotal { border-top: 1px solid var(--bg-card-hover); margin-top: 4px; padding-top: 6px; font-weight: 700; }
+
+/* End-of-session score and focus (Willy asked for both, 21 Oct) */
+.hspt-score { font-size: 18px; margin: var(--spacing-xs) 0 var(--spacing-sm); color: var(--text-secondary); }
+.hspt-score b { font-size: 26px; color: var(--text-primary); }
+.hspt-breakdown { display: flex; flex-direction: column; gap: 6px; margin-bottom: var(--spacing-sm); }
+.hspt-brow { display: grid; grid-template-columns: 1fr 70px 36px; gap: 10px; align-items: center; font-size: 13.5px; }
+.hspt-brow > span:last-child { text-align: right; font-variant-numeric: tabular-nums; color: var(--text-secondary); }
+.hspt-bbar { height: 6px; border-radius: 3px; background: var(--bg-card-hover); overflow: hidden; }
+.hspt-bbar > span { display: block; height: 100%; }
+.hspt-bbar .bar-ok { background: var(--success); }
+.hspt-bbar .bar-mid { background: var(--warning); }
+.hspt-bbar .bar-below { background: var(--urgent); }
+.hspt-focus { margin: var(--spacing-md) 0; padding: var(--spacing-sm); border-radius: var(--radius-sm); background: var(--bg-card-hover); border-left: 3px solid var(--barca-gold); }
+.hspt-focus-head { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--barca-gold); margin-bottom: 6px; }
+.hspt-focus-item { font-size: 14.5px; line-height: 1.45; margin-top: 8px; }
+.hspt-focus-item:first-of-type { margin-top: 0; }
+.hspt-focus-item div { color: var(--text-secondary); margin-top: 2px; }

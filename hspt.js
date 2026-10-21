@@ -458,6 +458,30 @@ const HSPT = (function () {
         flushPending();
 
         const week = sessionsThisWeek(state);
+        const rows = sessionBreakdown(run.attempts);
+        const focus = focusAreas(state, rows);
+        const best = rows.filter(t => t.n >= 2 && t.c === t.n).sort((a, b) => b.n - a.n)[0];
+        const scorePct = n ? Math.round(c / n * 100) : 0;
+        // Check-ins cover one section, so break down by question type. Daily
+        // sessions mix everything, so by section keeps it short on a phone.
+        const bySec = {};
+        run.attempts.forEach(x => { const t = bySec[x.section] || (bySec[x.section] = { label: SECTION_LABEL[x.section], n: 0, c: 0 }); t.n++; if (x.correct) t.c++; });
+        const showRows = run.mode === 'diagnostic'
+            ? rows.map(t => ({ label: TYPE_LABEL[t.type] || t.type, n: t.n, c: t.c }))
+            : DIAGNOSTIC_ORDER.filter(sec => bySec[sec]).map(sec => bySec[sec]);
+        const breakdown = showRows.length > 1 ? `
+            <div class="hspt-breakdown">
+                ${[...showRows].sort((a, b) => b.n - a.n).map(t => `<div class="hspt-brow">
+                    <span>${t.label}</span>
+                    <span class="hspt-bbar"><span class="${t.c / t.n >= 0.8 ? 'bar-ok' : t.c / t.n >= 0.5 ? 'bar-mid' : 'bar-below'}" style="width:${Math.round(t.c / t.n * 100)}%"></span></span>
+                    <span>${t.c}/${t.n}</span></div>`).join('')}
+            </div>` : '';
+        const focusHtml = focus.length ? `
+            <div class="hspt-focus">
+                <div class="hspt-focus-head">Focus on next</div>
+                ${focus.map(f => `<div class="hspt-focus-item"><b>${TYPE_LABEL[f.type] || f.type}</b>${f.overall ? ' (your weakest so far)' : ` · ${f.c}/${f.n} today`}
+                    <div>${TYPE_TIP[f.type] || ''}</div></div>`).join('')}
+            </div>` : (n ? '<p class="hspt-hint">Nothing to fix from today. Ned will keep mixing in harder ones.</p>' : '');
         const comeBack = Object.values(state.items).filter(s => s.due === addDays(dayStr(), 1)).length;
         const sprintMisses = run.attempts.filter(a => a.phase === 'sprint' && !a.correct);
         const sprintNote = run.sprint && run.attempts.some(a => a.phase === 'sprint')
@@ -466,7 +490,10 @@ const HSPT = (function () {
         $('hspt-quiz').innerHTML = `
             <div class="hspt-done">
                 <h3>${completed ? 'Done ✅' : 'Stopped. Saved what you did.'}</h3>
-                <p>${c} of ${n} right.</p>
+                <div class="hspt-score"><b>${c} of ${n}</b> right · ${scorePct}%</div>
+                ${breakdown}
+                ${best ? `<p class="hspt-hint">Strongest today: ${TYPE_LABEL[best.type] || best.type} (${best.c}/${best.n}).</p>` : ''}
+                ${focusHtml}
                 ${sprintNote}
                 ${completed ? `<div class="hspt-week"><div class="hspt-dots">${weekDots(week)}</div>
                     <div class="hspt-week-text">${week >= WEEKLY_TARGET ? `${week} this week ✅` : `${week} of ${WEEKLY_TARGET} this week`}</div></div>
@@ -490,6 +517,60 @@ const HSPT = (function () {
         angles: 'Angles', ratio: 'Ratios', orderOps: 'Order of operations', average: 'Averages', exponent: 'Exponents',
     };
     const pct = (c, n) => n ? Math.round(c / n * 100) + '%' : '—';
+
+    // One concrete strategy per question type, shown when it's a focus area.
+    // Strategies, not "try harder": what to actually do on the next one.
+    const TYPE_TIP = {
+        synonym: 'Say what the word means in your own words before you look at the choices. The opposite is often a trap.',
+        antonym: 'Find the meaning first, then flip it. One choice is usually a synonym, which is a trap.',
+        analogy: 'Make a sentence for the first pair ("a glove is worn on a hand"), then test each choice in the same sentence.',
+        classification: 'Name the group three of them share. The one that doesn\'t fit the name is the answer.',
+        logic: 'Line the people up in order. If the first two statements never compare the two in question, the answer is "uncertain".',
+        series: 'Write the gaps between the numbers. If they aren\'t steady, check for ×, alternating steps, or two series woven together.',
+        manipulation: 'Work from the end of the sentence back: do "1/3 of 27" first, then "6 more than".',
+        nongeo_compare: 'Work out (A), (B) and (C) as numbers first, then check each statement against them.',
+        geo_compare: 'Turn each picture into a fraction (shaded ÷ total parts). 2/4 and 1/2 are the same.',
+        main_idea: 'Ask "what is the whole passage about?" A choice about one paragraph is too narrow.',
+        detail: 'Go back and find the line. Don\'t answer from memory.',
+        inference: 'The answer isn\'t stated, but you should be able to point to words that prove it.',
+        vocab_context: 'Cover the word and put each choice in the sentence. Pick the one that keeps the meaning.',
+        purpose_tone: 'Look at word choice: is the writer explaining, arguing, joking, worried?',
+        theme: 'A theme is a lesson about life, not a plot summary. What did the character learn?',
+        figurative: 'Ask what the comparison really means. "Heart of stone" isn\'t about stone.',
+        usage: 'Read each sentence slowly and listen for the part that sounds off. Check its/it\'s, who/whom and verb agreement.',
+        spelling: 'Look at each word part by part. Common traps: double letters and -ance/-ence.',
+        composition: 'Read the sentences before and after the blank. The answer has to connect them.',
+        mult: 'Split one number: 45 × 13 = 45 × 10 + 45 × 3.', divide: 'Check by multiplying back.',
+        decimal: 'Line up the decimal points to add. To multiply, ignore them, then count the decimal places.',
+        fracAdd: 'Get a common bottom number first. Never add the bottoms.', fracMul: 'Tops times tops, bottoms times bottoms, then simplify.',
+        percentWord: 'Find the percent amount first, then subtract it for "off".', linear: 'Undo the + or − first, then divide.',
+        linear2: 'Move all the x\'s to one side first.', area: 'Area = inside (multiply). Perimeter = around the edge (add). Triangles need the ½.',
+        angles: 'Triangle = 180°, supplementary = 180°, complementary = 90°.', ratio: 'Add the ratio parts, divide the total by that, then multiply.',
+        orderOps: 'Multiply and divide before you add and subtract.', average: 'Average × count = total. Then subtract what he already has.',
+        exponent: '2⁵ means 2×2×2×2×2, not 2×5.',
+    };
+
+    // This session's results by question type, worst first.
+    function sessionBreakdown(attempts) {
+        const m = {};
+        attempts.forEach(a => { const t = m[a.type] || (m[a.type] = { type: a.type, section: a.section, n: 0, c: 0 }); t.n++; if (a.correct) t.c++; });
+        return Object.values(m).sort((a, b) => a.c / a.n - b.c / b.n || b.n - a.n);
+    }
+
+    // At most two focus areas: types missed this session (2+ tries, under 70%),
+    // breaking ties with his longer-run accuracy. Falls back to his weakest type
+    // overall if today went well everywhere.
+    function focusAreas(state, rows) {
+        let focus = rows.filter(t => t.n >= 2 && t.c / t.n < 0.7)
+            .sort((a, b) => a.c / a.n - b.c / b.n || typeAccuracy(state, a.type) - typeAccuracy(state, b.type));
+        if (!focus.length) focus = rows.filter(t => t.n >= 1 && t.c < t.n);
+        if (!focus.length) {
+            const overall = Object.keys(state.typeHist).filter(t => (state.typeHist[t] || []).length >= 5 && typeAccuracy(state, t) < 0.7)
+                .sort((a, b) => typeAccuracy(state, a) - typeAccuracy(state, b));
+            if (overall[0]) focus = [{ type: overall[0], overall: true }];
+        }
+        return focus.slice(0, 2);
+    }
 
     async function report(key) {
         const box = $('hspt-report');
