@@ -1986,3 +1986,4 @@ body {
 .hspt-focus-item { font-size: 14.5px; line-height: 1.45; margin-top: 8px; }
 .hspt-focus-item:first-of-type { margin-top: 0; }
 .hspt-focus-item div { color: var(--text-secondary); margin-top: 2px; }
+.hspt-rushed { font-size: 14px; line-height: 1.45; color: var(--text-primary); background: rgba(255, 165, 2, 0.12); border-radius: var(--radius-sm); padding: var(--spacing-sm); margin: var(--spacing-sm) 0; }

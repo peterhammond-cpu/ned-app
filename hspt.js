@@ -32,9 +32,19 @@ const HSPT = (function () {
     // Seconds per question on the real test (standard time).
     const PACE = { verbal: 16, quant: 35, reading: 24, math: 42, language: 25 };
     const SECTION_LABEL = { verbal: 'Verbal', quant: 'Quantitative', reading: 'Reading', math: 'Math', language: 'Language' };
-    // How much each section is worth chasing, from his Mastery data: Verbal and
-    // Quant are new to him (not on the CPS test); Language is already strong.
-    const PRIORITY = { verbal: 1.2, quant: 1.2, reading: 1.0, math: 0.8, language: 0.5 };
+    // How much each section is worth chasing. Verbal and Quant are new to him
+    // (not on the CPS test). Updated 22 Oct from his PreACT (17 Oct): Language
+    // looked strong in class (4s) but he got 5/15 on Conventions under test
+    // conditions, and Math (16) was his lowest section, so both moved up.
+    const PRIORITY = { verbal: 1.2, quant: 1.2, reading: 1.0, math: 1.1, language: 1.0 };
+
+    // A miss answered in under half the standard time per question is most
+    // likely a focus slip (skimmed, didn't check), not a knowledge gap. Peter's
+    // read (22 Oct): extra time isn't the issue, focus is. This measures it.
+    // Reading's first question includes reading the passage, so it rarely trips.
+    function isRushedMiss(a) {
+        return !a.correct && a.ms != null && a.phase !== 'sprint' && a.ms < PACE[a.section] * 1000 * 0.5;
+    }
     const DIAGNOSTIC_ORDER = ['verbal', 'quant', 'math', 'reading', 'language'];
     const PRACTICE_SIZE = 15;       // questions per session before the sprint phase
     const PRACTICE_SIZE_SPRINT = 12; // shorter once the sprint is added, to stay near 12 minutes
@@ -482,6 +492,10 @@ const HSPT = (function () {
                 ${focus.map(f => `<div class="hspt-focus-item"><b>${TYPE_LABEL[f.type] || f.type}</b>${f.overall ? ' (your weakest so far)' : ` · ${f.c}/${f.n} today`}
                     <div>${TYPE_TIP[f.type] || ''}</div></div>`).join('')}
             </div>` : (n ? '<p class="hspt-hint">Nothing to fix from today. Ned will keep mixing in harder ones.</p>' : '');
+        const rushed = run.attempts.filter(isRushedMiss).length;
+        const misses = run.attempts.filter(x => !x.correct && x.phase !== 'sprint').length;
+        const rushedNote = rushed >= 2 && rushed >= misses / 2
+            ? `<p class="hspt-rushed">⚡ ${rushed} of your ${misses} misses were answered really fast. Next time: read every choice before you tap. Those are the easiest points to get back.</p>` : '';
         const comeBack = Object.values(state.items).filter(s => s.due === addDays(dayStr(), 1)).length;
         const sprintMisses = run.attempts.filter(a => a.phase === 'sprint' && !a.correct);
         const sprintNote = run.sprint && run.attempts.some(a => a.phase === 'sprint')
@@ -494,6 +508,7 @@ const HSPT = (function () {
                 ${breakdown}
                 ${best ? `<p class="hspt-hint">Strongest today: ${TYPE_LABEL[best.type] || best.type} (${best.c}/${best.n}).</p>` : ''}
                 ${focusHtml}
+                ${rushedNote}
                 ${sprintNote}
                 ${completed ? `<div class="hspt-week"><div class="hspt-dots">${weekDots(week)}</div>
                     <div class="hspt-week-text">${week >= WEEKLY_TARGET ? `${week} this week ✅` : `${week} of ${WEEKLY_TARGET} this week`}</div></div>
@@ -625,6 +640,12 @@ const HSPT = (function () {
 
         // Retention: questions answered again days after a miss. Best predictor of real gains.
         const review = attempts.filter(a => a.phase === 'review');
+        const allMisses = attempts.filter(a => !a.correct && a.phase !== 'sprint' && a.ms != null);
+        const rushedMisses = allMisses.filter(isRushedMiss);
+        const rushedBySec = DIAGNOSTIC_ORDER.map(sec => {
+            const m = allMisses.filter(a => a.section === sec), r = m.filter(isRushedMiss);
+            return m.length >= 3 ? `${SECTION_LABEL[sec]} ${r.length}/${m.length}` : null;
+        }).filter(Boolean).join(' · ');
         const sprint = attempts.filter(a => a.phase === 'sprint' && a.ms != null);
         const paceRows = Object.entries(sprint.reduce((m, a) => { (m[a.section] = m[a.section] || []).push(a.ms); return m; }, {}))
             .map(([sec, ms]) => {
@@ -656,6 +677,11 @@ const HSPT = (function () {
             ${strengths.length ? `<div class="hspt-rblock"><div class="hspt-rhead">Strongest</div>${strengths.map(typeLine).join('')}</div>` : ''}
             ${needs.length ? `<div class="hspt-rblock"><div class="hspt-rhead">Needs work (for a tutor)</div>${needs.map(typeLine).join('')}</div>` : ''}
             ${!enough.length ? '<div class="hspt-hint">Strengths and weak spots appear once each question type has 5+ answers.</div>' : ''}
+            ${allMisses.length >= 5 ? `<div class="hspt-rblock">
+                <div class="hspt-rhead">Focus slips vs knowledge gaps</div>
+                <div class="hspt-hint"><b>${pct(rushedMisses.length, allMisses.length)}</b> of misses (${rushedMisses.length} of ${allMisses.length}) were answered in under half the normal time. Those are likely focus slips: skimming the choices or not checking the passage. The rest are more likely real gaps.${rushedBySec ? `<br>By section: ${rushedBySec}.` : ''}
+                ${rushedMisses.length / allMisses.length >= 0.4 ? '<br>A high share means strategy habits (read every choice, point to the evidence) will gain more than new content.' : ''}</div>
+            </div>` : ''}
             <div class="hspt-rblock">
                 <div class="hspt-rhead">Retention</div>
                 <div class="hspt-hint">${review.length ? `${pct(review.filter(a => a.correct).length, review.length)} right on questions he'd missed before, asked again days later (${review.length}). This is the number that shows learning, not just practice.` : 'Appears once missed questions start coming back for review.'}</div>
