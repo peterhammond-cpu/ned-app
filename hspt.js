@@ -183,7 +183,11 @@ const HSPT = (function () {
         // 2) New items, weighted toward weak types in high-priority sections.
         const sections = sectionsInBank();
         const types = sections.flatMap(sec => typesOf(sec).filter(t => sec !== 'reading').map(t => ({ sec, t })));
-        const weight = ({ sec, t }) => PRIORITY[sec] * (1 - typeAccuracy(state, t)) + 0.15;
+        // Divide by the section's type count so PRIORITY sets each section's share.
+        // Without it, Math (19 types) took ~60% of new items and Language (3) ~9%.
+        const typeCount = {};
+        types.forEach(({ sec }) => { typeCount[sec] = (typeCount[sec] || 0) + 1; });
+        const weight = ({ sec, t }) => (PRIORITY[sec] * (1 - typeAccuracy(state, t)) + 0.15) / typeCount[sec];
         let readingAdded = false;
         while (queue.length < size) {
             // Every other session or so, include one reading passage (4 questions) as a block.
@@ -530,6 +534,7 @@ const HSPT = (function () {
         mult: 'Multiplication', divide: 'Division', decimal: 'Decimals', fracAdd: 'Adding fractions', fracMul: 'Multiplying fractions',
         percentWord: 'Percent problems', linear: 'Equations', linear2: 'Two-sided equations', area: 'Area & perimeter',
         angles: 'Angles', ratio: 'Ratios', orderOps: 'Order of operations', average: 'Averages', exponent: 'Exponents',
+        wordMulti: 'Word problems', rate: 'Speed & unit rates', probability: 'Probability', units: 'Unit conversions', percentChange: 'Percent change',
     };
     const pct = (c, n) => n ? Math.round(c / n * 100) + '%' : '—';
 
@@ -563,6 +568,11 @@ const HSPT = (function () {
         angles: 'Triangle = 180°, supplementary = 180°, complementary = 90°.', ratio: 'Add the ratio parts, divide the total by that, then multiply.',
         orderOps: 'Multiply and divide before you add and subtract.', average: 'Average × count = total. Then subtract what he already has.',
         exponent: '2⁵ means 2×2×2×2×2, not 2×5.',
+        wordMulti: 'Underline each step the problem asks for, do them in order, and check you answered the actual question.',
+        rate: 'Distance = speed × time. For "how much for 8", find the price of 1 first.',
+        probability: 'What you want ÷ the total. Add up every marble first.',
+        units: '12 in = 1 ft, 3 ft = 1 yd, 16 oz = 1 lb, 4 qt = 1 gal. Big unit to small: multiply.',
+        percentChange: 'Change ÷ the ORIGINAL amount, not the new one.',
     };
 
     // This session's results by question type, worst first.

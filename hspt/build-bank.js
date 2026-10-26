@@ -403,8 +403,99 @@ function mathItem(i) {
   return { id, section: 'math', type: kind, difficulty, prompt, choices: choices.choices, answer: choices.answer, explanation };
 }
 
+// ---------- MATH, set 2: harder, multi-step ----------
+// Added Oct 2026: the first set skews easy and has no word problems,
+// probability, units or percent change. It runs AFTER every older generator
+// so the seeded sequence, and every older item id, stays exactly the same.
+function mathItem2(i) {
+  const kind = pick(['wordMulti', 'wordMulti', 'rate', 'probability', 'units', 'percentChange']);
+  let prompt, ans, choices, explanation, difficulty, distract;
+  const id = `mat-${String(i).padStart(3, '0')}`;
+  switch (kind) {
+    case 'wordMulti': { const v = pick(['change', 'earn', 'tickets', 'left']);
+      if (v === 'change') { const n = int(3, 6), p = int(4, 12), paid = Math.ceil((n * p + 1) / 20) * 20 + pick([0, 20]); ans = paid - n * p;
+        prompt = `Willy buys ${n} Barça scarves for $${p} each. He pays with $${paid}. How much change should he get?`;
+        distract = [n * p, paid - p, paid - n - p]; difficulty = 2;
+        explanation = `First the cost: ${n} × $${p} = $${n * p}. Then the change: $${paid} − $${n * p} = $${ans}.`; }
+      else if (v === 'earn') { const rate = int(8, 15), h1 = int(3, 6), h2 = int(2, 5), spent = int(10, 30); ans = rate * (h1 + h2) - spent;
+        prompt = `Sam earns $${rate} an hour. He works ${h1} hours on Saturday and ${h2} hours on Sunday, then spends $${spent} on a game. How much money does he have left?`;
+        distract = [rate * (h1 + h2), rate * h1 - spent, rate * (h1 + h2) + spent]; difficulty = 3;
+        explanation = `Hours: ${h1} + ${h2} = ${h1 + h2}. Earned: ${h1 + h2} × $${rate} = $${rate * (h1 + h2)}. Left: $${rate * (h1 + h2)} − $${spent} = $${ans}.`; }
+      else if (v === 'tickets') { const a = int(2, 4), c = int(2, 5), pa = int(12, 25), pc = int(5, pa - 3); ans = a * pa + c * pc;
+        prompt = `Adult tickets cost $${pa} and student tickets cost $${pc}. What is the total for ${a} adults and ${c} students?`;
+        distract = [(a + c) * pa, (a + c) * pc, a * pc + c * pa]; difficulty = 2;
+        explanation = `Adults: ${a} × $${pa} = $${a * pa}. Students: ${c} × $${pc} = $${c * pc}. Total: $${a * pa} + $${c * pc} = $${ans}.`; }
+      else { const k = pick([3, 4, 5]), q = int(4, 9), N = k * q * pick([2, 3]); const gave = N / k; ans = N - gave - q;
+        prompt = `A coach has ${N} soccer balls. He gives 1/${k} of them to the younger team and then lends ${q} more to a neighbor. How many balls does he have left?`;
+        distract = [N - gave, N - q, gave - q].filter(x => x > 0); difficulty = 3;
+        explanation = `1/${k} of ${N} is ${gave}. ${N} − ${gave} = ${N - gave}. Then ${N - gave} − ${q} = ${ans}.`; }
+      choices = v === 'left' ? mc(ans, numDistractors(ans, distract)) : mc(`$${ans}`, numDistractors(ans, distract).map(x => `$${x}`));
+      break; }
+    case 'rate': { const v = pick(['distance', 'time', 'unit']);
+      if (v === 'distance') { const s = pick([40, 45, 50, 55, 60, 65]), t = pick([2, 3, 4]), half = s % 2 === 0 && rand() < 0.5; const hrs = half ? t + 0.5 : t; ans = s * hrs;
+        prompt = `A bus travels at ${s} miles per hour. How far does it go in ${half ? `${t}½` : t} hours?`;
+        distract = [s * t, s + hrs * 10, s * (t + 1)].filter(x => x !== ans); difficulty = half ? 3 : 2;
+        explanation = `Distance = speed × time = ${s} × ${hrs} = ${ans} miles.${half ? ` (Half an hour adds ${s / 2} miles.)` : ''}`;
+        choices = mc(`${ans} miles`, numDistractors(ans, distract).map(x => `${x} miles`)); }
+      else if (v === 'time') { const s = pick([4, 5, 6, 8, 10, 12]), t = int(2, 6); const d = s * t; ans = t;
+        prompt = `A runner keeps a steady pace of ${s} miles per hour. How many hours does it take to run ${d} miles?`;
+        distract = [d - s, t + 1, t - 1, s]; difficulty = 2;
+        explanation = `Time = distance ÷ speed = ${d} ÷ ${s} = ${t} hours.`;
+        choices = mc(`${ans} hours`, numDistractors(ans, distract).filter(x => x > 0).map(x => `${x} hours`)); }
+      else { const n1 = pick([3, 4, 5]), u = pick([2, 3, 4, 5]), n2 = int(6, 12); const tot1 = n1 * u; ans = n2 * u;
+        prompt = `If ${n1} notebooks cost $${tot1}, how much do ${n2} notebooks cost at the same price?`;
+        distract = [tot1 + n2, n2 * n1, ans + u]; difficulty = 2;
+        explanation = `One notebook: $${tot1} ÷ ${n1} = $${u}. Then ${n2} × $${u} = $${ans}.`;
+        choices = mc(`$${ans}`, numDistractors(ans, distract).map(x => `$${x}`)); }
+      break; }
+    case 'probability': { const r = int(2, 7), b = int(2, 7), g = int(1, 6); const T = r + b + g; const v = pick(['one', 'not', 'either']);
+      const name = { r: 'red', b: 'blue', g: 'green' };
+      let top, label;
+      if (v === 'one') { top = b; label = `blue`; } else if (v === 'not') { top = T - r; label = `not red`; } else { top = r + g; label = `red or green`; }
+      ans = frac(top, T);
+      prompt = `A bag holds ${r} red, ${b} blue and ${g} green marbles. One marble is picked without looking. What is the probability it is ${label}?`;
+      const wrong = v === 'one' ? [frac(b, T - b), frac(r, T), frac(1, 3), frac(b + 1, T)] : v === 'not' ? [frac(r, T), frac(T - r, r), frac(b, T), frac(T - r + 1, T)] : [frac(r + g, b), frac(r, T), frac(g, T), frac(r * g, T)];
+      // Backups for when counts collide (e.g. r = b): still plausible slips.
+      const backup = [frac(T - top, T), frac(top, T + 1), frac(top + 1, T), frac(top - 1, T)];
+      const under1 = x => x.includes('/') && +x.split('/')[0] < +x.split('/')[1] && +x.split('/')[0] > 0;
+      choices = mc(ans, [...wrong, ...backup].filter(x => x !== ans && under1(x)));
+      difficulty = v === 'one' ? 2 : 3;
+      explanation = `There are ${r} + ${b} + ${g} = ${T} marbles. ${v === 'one' ? `${b} are blue` : v === 'not' ? `${T} − ${r} = ${T - r} are not red` : `${r} + ${g} = ${r + g} are red or green`}, so the probability is ${top}/${T}${ans !== `${top}/${T}` ? ` = ${ans}` : ''}. Probability = what you want ÷ the total.`;
+      break; }
+    case 'units': { const v = pick(['ft-in', 'yd-ft', 'hr-min', 'm-cm', 'gal-qt', 'lb-oz']);
+      const U = { 'ft-in': ['feet', 'inches', 12], 'yd-ft': ['yards', 'feet', 3], 'hr-min': ['hours', 'minutes', 60], 'm-cm': ['meters', 'centimeters', 100], 'gal-qt': ['gallons', 'quarts', 4], 'lb-oz': ['pounds', 'ounces', 16] }[v];
+      const [big, small, f] = U;
+      if (rand() < 0.5) { const x = int(2, 9), extra = int(1, f - 1); ans = x * f + extra;
+        prompt = `How many ${small} are in ${x} ${big} ${extra} ${small}?`;
+        distract = [x * f, x + extra, x * 10 + extra, (x + 1) * f]; difficulty = 2;
+        explanation = `1 ${big.replace(/s$/, '').replace('feet', 'foot')} = ${f} ${small}. ${x} × ${f} = ${x * f}, plus ${extra} = ${ans} ${small}.`; }
+      else { const x = int(2, 9); const S = x * f; ans = x;
+        prompt = `${S} ${small} is the same as how many ${big}?`;
+        distract = [S * f, S / 10, x + 1, x * 2].filter(n => Number.isInteger(n)); difficulty = 1;
+        explanation = `There are ${f} ${small} in each of the ${big}, so divide: ${S} ÷ ${f} = ${x}.`; }
+      choices = mc(ans, numDistractors(ans, distract).filter(n => n > 0));
+      break; }
+    case 'percentChange': { const v = pick(['increase', 'decrease', 'whatPercent']);
+      if (v === 'whatPercent') { const P = pick([10, 20, 25, 40, 50, 60, 75, 80]), W = pick([20, 40, 60, 80, 120, 200]); const part = W * P / 100;
+        if (!Number.isInteger(part)) return mathItem2(i);
+        ans = P; prompt = `${part} is what percent of ${W}?`; distract = [Math.round(W / part), 100 - P, P / 5 * 2].filter(n => Number.isInteger(n) && n > 0); difficulty = 2;
+        explanation = `Part ÷ whole: ${part} ÷ ${W} = ${P / 100}, which is ${P}%.`;
+        choices = mc(`${ans}%`, numDistractors(ans, distract).map(x => `${x}%`)); }
+      else { const old = pick([20, 40, 50, 80, 120, 200, 250]), P = pick([10, 20, 25, 50]); const diff = old * P / 100; const nw = v === 'increase' ? old + diff : old - diff;
+        if (!Number.isInteger(diff)) return mathItem2(i);
+        ans = P;
+        prompt = v === 'increase' ? `The price of a ticket went up from $${old} to $${nw}. By what percent did it increase?` : `A team's practice went from ${old} minutes down to ${nw} minutes. By what percent did it decrease?`;
+        distract = [diff, Math.round(diff / nw * 100), P * 2].filter(n => Number.isInteger(n) && n !== P); difficulty = 3;
+        explanation = `The change is ${v === 'increase' ? `${nw} − ${old}` : `${old} − ${nw}`} = ${diff}. Divide by the ORIGINAL amount: ${diff} ÷ ${old} = ${P / 100} = ${P}%.`;
+        choices = mc(`${ans}%`, numDistractors(ans, distract).map(x => `${x}%`)); }
+      break; }
+  }
+  if (!choices) choices = mc(ans, numDistractors(ans, distract));
+  return { id, section: 'math', type: kind, difficulty, prompt, choices: choices.choices, answer: choices.answer, explanation };
+}
+
 // ---------- assemble ----------
-function generate(fn, n) { return Array.from({ length: n }, (_, k) => fn(k + 1)); }
+function generate(fn, n, from = 1) { return Array.from({ length: n }, (_, k) => fn(from + k)); }
 const generated = [
   ...generate(seriesItem, 60),
   ...generate(manipulationItem, 50),
@@ -413,6 +504,8 @@ const generated = [
   ...generate(orderingLogicItem, 36),
   ...generate(syllogismItem, 18),
   ...generate(mathItem, 120),
+  // Keep new generators at the END so older ids don't change.
+  ...generate(mathItem2, 50, 121),
 ];
 
 const srcDir = path.join(__dirname, 'src');
