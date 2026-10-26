@@ -1,0 +1,902 @@
+[
+  {
+    "id": "lang-061",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "The puppies is sleeping in their basket.",
+      "We packed sandwiches for the picnic.",
+      "Mr. Rivera teaches eighth-grade science.",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "The subject \"puppies\" is plural, so the verb should be \"are.\""
+  },
+  {
+    "id": "lang-062",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "The bus driver waved to us as we got off.",
+      "The box of crayons are on the art table.",
+      "Our school's library has a new computer lab.",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "The subject is \"box,\" not \"crayons,\" so the verb is \"is.\""
+  },
+  {
+    "id": "lang-063",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 3,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "My grandparents visit us every summer.",
+      "The coach, along with the players, is ready for the match.",
+      "The list of supplies for the science fair are posted outside the office.",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "The subject is \"list,\" which is singular, so the verb should be \"is posted.\" Phrases like \"of supplies\" don't change the subject."
+  },
+  {
+    "id": "lang-064",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Its going to snow tonight.",
+      "The bird built its nest in our gutter.",
+      "We walked to school together.",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "\"Its\" is possessive. Use \"It's\" (it is): \"It's going to snow tonight.\""
+  },
+  {
+    "id": "lang-065",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Everyone in the stands were cheering when Barcelona scored.",
+      "The weather in Chicago changes quickly.",
+      "Please return your library books by Friday.",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "\"Everyone\" is singular, so the verb should be \"was cheering.\""
+  },
+  {
+    "id": "lang-066",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 3,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Just between you and me, I think the surprise party will be a hit.",
+      "The new student, whom we met yesterday, is from Peru.",
+      "My cousin runs faster than I do.",
+      "No mistake"
+    ],
+    "answer": 3,
+    "explanation": "\"Me\" is right after \"between\"; \"whom\" is the object of \"met\"; and \"than I do\" uses the subject form \"I.\" All three are correct."
+  },
+  {
+    "id": "lang-067",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 3,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Both the teacher and the students enjoyed the assembly.",
+      "Neither the players nor the coach were happy with the referee's call.",
+      "Two of my friends are trying out for the play.",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "With \"neither...nor,\" the verb matches the closer subject. \"Coach\" is singular, so use \"was.\""
+  },
+  {
+    "id": "lang-068",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Grandma knitted scarves for my cousins.",
+      "Our soccer team won the tournament last weekend.",
+      "Coach Ramos gave Luis and I new jerseys.",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "After a verb like \"gave,\" use the object pronoun: \"Luis and me.\" Test it: \"gave me,\" not \"gave I.\""
+  },
+  {
+    "id": "lang-069",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "The cafeteria serves pizza on Fridays.",
+      "Him and his brother built a treehouse.",
+      "I finished my homework before dinner.",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "The subject needs a subject pronoun: \"He and his brother built a treehouse.\""
+  },
+  {
+    "id": "lang-070",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Each of the players has a locker in the gym.",
+      "It's too bad the store lost its sign in the storm.",
+      "My family spent the winter holidays in Mexico.",
+      "No mistake"
+    ],
+    "answer": 3,
+    "explanation": "\"Each\" is singular, so \"has\" is right; \"it's\" means \"it is\" and \"its\" is possessive; seasons like \"winter\" are not capitalized."
+  },
+  {
+    "id": "lang-071",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 3,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "To who should I give my permission slip?",
+      "The museum is closed on Mondays.",
+      "My aunt and uncle live near Lake Michigan.",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "After a preposition like \"to,\" use \"whom\": \"To whom should I give my permission slip?\""
+  },
+  {
+    "id": "lang-072",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 3,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Either my mom or my dad picks me up after practice.",
+      "The stars in the night sky look brighter in the country.",
+      "Either the twins or their cousin are bringing the snacks.",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "With \"either...or,\" the verb matches the closer subject. \"Cousin\" is singular, so use \"is bringing.\""
+  },
+  {
+    "id": "lang-073",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "The girls brought their own water bottles.",
+      "After the storm, the town repaired its roads.",
+      "The maple trees lost its leaves early this year.",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "The pronoun must match \"trees,\" which is plural, so use \"their leaves.\""
+  },
+  {
+    "id": "lang-074",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Barcelona won the match, the fans celebrated in the streets all night.",
+      "Before the test, I reviewed my notes.",
+      "The garden is full of tomatoes and peppers.",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "This is a comma splice: two complete sentences joined by only a comma. Use a period, a semicolon, or \", and.\""
+  },
+  {
+    "id": "lang-075",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Our family's car is in the shop.",
+      "My birthday is in August.",
+      "Their dog barks at the mail carrier.",
+      "No mistake"
+    ],
+    "answer": 3,
+    "explanation": "\"Family's\" shows ownership, months like \"August\" are capitalized, and \"their\" correctly shows possession. All three are correct."
+  },
+  {
+    "id": "lang-076",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 3,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "I wanted to go to the beach; however, it was too cold.",
+      "We left early so that we could get good seats.",
+      "My sister loves to bake, however she never cleans up the kitchen.",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "\"However\" cannot join two sentences with just a comma. Use a semicolon: \"loves to bake; however, she never...\""
+  },
+  {
+    "id": "lang-077",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "I can't wait for the weekend.",
+      "The recipe calls for butter sugar and flour.",
+      "Our teacher reads to us every morning.",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "Items in a series need commas between them: \"butter, sugar, and flour.\""
+  },
+  {
+    "id": "lang-078",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "The bakery closes at six on weekdays.",
+      "My uncle is a pilot for a large airline.",
+      "When the final whistle blew the players hugged each other.",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "Put a comma after an introductory clause: \"When the final whistle blew, the players hugged each other.\""
+  },
+  {
+    "id": "lang-079",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 3,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "We traveled south to visit relatives in the Southwest.",
+      "There are fewer students absent today than yesterday.",
+      "The dog lay in the shade all afternoon.",
+      "No mistake"
+    ],
+    "answer": 3,
+    "explanation": "\"South\" is a direction (lowercase) but \"the Southwest\" is a region (capitalized); \"fewer\" fits countable students; \"lay\" is the past tense of \"lie.\" All correct."
+  },
+  {
+    "id": "lang-080",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 3,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "My grandfather, who was born in Poland, speaks three languages.",
+      "The students who finished early helped clean the room.",
+      "Everyone who signed up for the field trip, must bring a permission slip.",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "Don't put a comma between a subject and its verb. Remove the comma before \"must.\""
+  },
+  {
+    "id": "lang-081",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 3,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "The Johnsons are coming over for dinner.",
+      "The two team's coaches shook hands after the game.",
+      "My brother's bike has a flat tire.",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "There are two teams, so the plural possessive is \"teams',\" with the apostrophe after the s."
+  },
+  {
+    "id": "lang-082",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "After the game ended, we went out for pizza.",
+      "Marta and I watched the match together.",
+      "The coach gave the trophy to Carla and me.",
+      "No mistake"
+    ],
+    "answer": 3,
+    "explanation": "\"Marta and I\" is the subject, so \"I\" is right; \"to Carla and me\" follows a preposition, so \"me\" is right. All correct."
+  },
+  {
+    "id": "lang-083",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "My family flew to Florida in March.",
+      "We swam in the atlantic ocean last summer.",
+      "The library is open until eight.",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "Names of oceans are proper nouns: \"Atlantic Ocean.\""
+  },
+  {
+    "id": "lang-084",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Last week we met mayor Johnson at the parade.",
+      "My mother is a nurse at the hospital.",
+      "The bus stops on the corner of Oak Street.",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "A title used right before a name is capitalized: \"Mayor Johnson.\""
+  },
+  {
+    "id": "lang-085",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "I wanted to play outside, but it was raining.",
+      "My best friend, Ava, lives across the street.",
+      "Barcelona's stadium was packed for the big match.",
+      "No mistake"
+    ],
+    "answer": 3,
+    "explanation": "The comma before \"but\" joins two sentences correctly, commas around \"Ava\" set off her name, and \"Barcelona's\" shows possession. All correct."
+  },
+  {
+    "id": "lang-086",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 3,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "We drove north for three hours to reach the lake.",
+      "My grandmother grew up in the South.",
+      "Our cousins moved to the midwest two years ago.",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "A region of the country is capitalized: \"the Midwest.\" (A direction like \"north\" stays lowercase.)"
+  },
+  {
+    "id": "lang-087",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "My favorite season is Winter because I love sledding.",
+      "We visited Barcelona, Spain, last year.",
+      "Dad makes pancakes every Sunday.",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "Seasons are not capitalized: \"winter.\""
+  },
+  {
+    "id": "lang-088",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "I will call you when I get home.",
+      "She opened the door and walked inside.",
+      "Messi dribbled past two defenders and shoots the ball into the net.",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "Keep the verb tense the same: \"dribbled...and shot.\""
+  },
+  {
+    "id": "lang-089",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 3,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Either the coach or the players are going to carry the trophy.",
+      "The effects of the storm lasted for weeks.",
+      "The girl whom we elected as captain is my neighbor.",
+      "No mistake"
+    ],
+    "answer": 3,
+    "explanation": "The verb matches the closer subject \"players,\" so \"are\" is right; \"effects\" is a noun; \"whom\" is the object of \"elected.\" All correct."
+  },
+  {
+    "id": "lang-090",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Please lay the towels on the bench.",
+      "After practice, I like to lay on the couch.",
+      "The cat is lying in the sun.",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "\"Lie\" means to rest; \"lay\" means to put something down. It should be \"I like to lie on the couch.\""
+  },
+  {
+    "id": "lang-091",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "We had already eaten when Grandma arrived.",
+      "Sam ran all the way home.",
+      "Maria had went to the store before we called.",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "After \"had,\" use \"gone,\" not \"went\": \"Maria had gone to the store.\""
+  },
+  {
+    "id": "lang-092",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "This book is longer than the last one.",
+      "My new cleats are more better than my old ones.",
+      "Of all the players, Pedri passes the most accurately.",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "\"Better\" is already a comparison, so drop \"more\": \"My new cleats are better.\""
+  },
+  {
+    "id": "lang-093",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "There is less traffic on the road today.",
+      "I have fewer pencils than you do.",
+      "Our team scored less goals this season than last season.",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "Use \"fewer\" for things you can count, like goals: \"fewer goals.\""
+  },
+  {
+    "id": "lang-094",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "Everyone on the bus was singing.",
+      "There are more than fifty students in the band.",
+      "This year's science fair is in the gym.",
+      "No mistake"
+    ],
+    "answer": 3,
+    "explanation": "\"Everyone\" is singular, so \"was\" is right; \"students\" is plural, so \"are\" is right; \"year's\" shows possession. All correct."
+  },
+  {
+    "id": "lang-095",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "I don't have no money for the bake sale.",
+      "Our class planted a tree on Earth Day.",
+      "The kitten chased the ball of yarn.",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "This is a double negative. Say \"I don't have any money\" or \"I have no money.\""
+  },
+  {
+    "id": "lang-096",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 2,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "The new coach had a positive affect on the team.",
+      "The rain did not affect our plans.",
+      "Lack of sleep can have a big effect on your grades.",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "\"Effect\" is the noun (a result); \"affect\" is usually the verb. It should be \"a positive effect.\""
+  },
+  {
+    "id": "lang-097",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "We ate dinner, and than we watched a movie.",
+      "This puzzle is harder than the last one.",
+      "They're going to the game on Saturday.",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "\"Then\" tells when something happens; \"than\" compares. It should be \"and then we watched a movie.\""
+  },
+  {
+    "id": "lang-098",
+    "section": "language",
+    "type": "usage",
+    "difficulty": 1,
+    "prompt": "Choose the sentence that contains an error in punctuation, capitalization, or usage. If there is no error, choose “No mistake.”",
+    "choices": [
+      "There are twelve eggs in the carton.",
+      "The players left there bags on the bus.",
+      "They're excited about the trip.",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "\"There\" is a place. To show the bags belong to the players, use \"their bags.\""
+  },
+  {
+    "id": "lang-099",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 1,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "grammer",
+      "island",
+      "vegetable",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "The correct spelling is \"grammar,\" ending in -ar."
+  },
+  {
+    "id": "lang-100",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 1,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "beautiful",
+      "surprize",
+      "address",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "The correct spelling is \"surprise,\" with an s, not a z."
+  },
+  {
+    "id": "lang-101",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 2,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "until",
+      "finally",
+      "eigth",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "The correct spelling is \"eighth\" — it is \"eight\" plus \"h.\""
+  },
+  {
+    "id": "lang-102",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 2,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "recomend",
+      "schedule",
+      "similar",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "The correct spelling is \"recommend,\" with one c and double m."
+  },
+  {
+    "id": "lang-103",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 2,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "business",
+      "disapoint",
+      "especially",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "The correct spelling is \"disappoint\": \"dis\" plus \"appoint,\" so double p."
+  },
+  {
+    "id": "lang-104",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 2,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "opportunity",
+      "independent",
+      "thorough",
+      "No mistake"
+    ],
+    "answer": 3,
+    "explanation": "All three words are spelled correctly. \"Independent\" ends in -ent, and \"thorough\" ends in -ough."
+  },
+  {
+    "id": "lang-105",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 3,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "existance",
+      "conscious",
+      "laboratory",
+      "No mistake"
+    ],
+    "answer": 0,
+    "explanation": "The correct spelling is \"existence,\" ending in -ence."
+  },
+  {
+    "id": "lang-106",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 2,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "tongue",
+      "interupt",
+      "jewelry",
+      "No mistake"
+    ],
+    "answer": 1,
+    "explanation": "The correct spelling is \"interrupt,\" with double r."
+  },
+  {
+    "id": "lang-107",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 3,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "discipline",
+      "hygiene",
+      "pronounciation",
+      "No mistake"
+    ],
+    "answer": 2,
+    "explanation": "The correct spelling is \"pronunciation.\" Even though \"pronounce\" has \"ou,\" \"pronunciation\" does not."
+  },
+  {
+    "id": "lang-108",
+    "section": "language",
+    "type": "spelling",
+    "difficulty": 3,
+    "prompt": "Choose the word that is spelled incorrectly. If there is no error, choose “No mistake.”",
+    "choices": [
+      "leisure",
+      "fascinate",
+      "ridiculous",
+      "No mistake"
+    ],
+    "answer": 3,
+    "explanation": "All three words are spelled correctly. \"Leisure\" breaks the i-before-e rule, and \"fascinate\" has an \"sc.\""
+  },
+  {
+    "id": "lang-109",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 2,
+    "prompt": "Choose the word or phrase that best completes the sentences.\n\nThe library was closed on Sunday. ____, we did our research online.",
+    "choices": [
+      "Therefore",
+      "Similarly",
+      "For example",
+      "In contrast"
+    ],
+    "answer": 0,
+    "explanation": "\"Therefore\" shows a result: because the library was closed, we went online."
+  },
+  {
+    "id": "lang-110",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 1,
+    "prompt": "Choose the word or phrase that best completes the sentences.\n\nBarcelona's players warmed up on the field. ____, the fans were finding their seats in the stadium.",
+    "choices": [
+      "For example",
+      "Meanwhile",
+      "Therefore",
+      "However"
+    ],
+    "answer": 1,
+    "explanation": "\"Meanwhile\" shows that two things were happening at the same time."
+  },
+  {
+    "id": "lang-111",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 2,
+    "prompt": "Choose the word or phrase that best completes the sentences.\n\nMany foods are good sources of vitamin C. ____, oranges and strawberries are full of it.",
+    "choices": [
+      "However",
+      "Meanwhile",
+      "For example",
+      "In contrast"
+    ],
+    "answer": 2,
+    "explanation": "\"For example\" introduces oranges and strawberries as specific cases of foods with vitamin C."
+  },
+  {
+    "id": "lang-112",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 2,
+    "prompt": "Choose the word or phrase that best completes the sentences.\n\nCheetahs rely on speed to catch their prey. ____, falcons dive at high speeds to catch smaller birds.",
+    "choices": [
+      "Similarly",
+      "However",
+      "Meanwhile",
+      "Therefore"
+    ],
+    "answer": 0,
+    "explanation": "\"Similarly\" shows that falcons use speed in the same way cheetahs do."
+  },
+  {
+    "id": "lang-113",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 3,
+    "prompt": "Choose the word or phrase that best completes the sentences.\n\nDeserts receive very little rain each year. ____, rain forests can receive more than 80 inches of rain a year.",
+    "choices": [
+      "Therefore",
+      "For example",
+      "Similarly",
+      "In contrast"
+    ],
+    "answer": 3,
+    "explanation": "\"In contrast\" shows that rain forests are the opposite of deserts."
+  },
+  {
+    "id": "lang-114",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 3,
+    "prompt": "Choose the word or phrase that best completes the sentences.\n\nThe team practiced penalty kicks all week; ____, they missed both of their penalties in the final.",
+    "choices": [
+      "therefore",
+      "for example",
+      "however",
+      "similarly"
+    ],
+    "answer": 2,
+    "explanation": "\"However\" shows a surprising contrast: they practiced, but still missed."
+  },
+  {
+    "id": "lang-115",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 2,
+    "prompt": "Which of these expresses the idea most clearly?",
+    "choices": [
+      "The game, because it was raining, was postponed, and it was until Saturday.",
+      "Because it was raining, the game was postponed until Saturday.",
+      "Because of it raining, so the game was postponed until Saturday.",
+      "It was raining, the game was postponed until Saturday because of it."
+    ],
+    "answer": 1,
+    "explanation": "The best choice states the cause and the result in one clear sentence with no extra words or comma splice."
+  },
+  {
+    "id": "lang-116",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 2,
+    "prompt": "Which of these expresses the idea most clearly?",
+    "choices": [
+      "At this point in time, we are currently planning the class trip right now.",
+      "The class trip is something that we are in the process of planning now.",
+      "We are now planning the class trip.",
+      "Now, currently, the class trip is being planned by us at this time."
+    ],
+    "answer": 2,
+    "explanation": "The best choice says the same thing without repeating words like \"now,\" \"currently,\" and \"at this time.\""
+  },
+  {
+    "id": "lang-117",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 3,
+    "prompt": "Which of these expresses the idea most clearly?",
+    "choices": [
+      "Kicked into the top corner, the goalkeeper could not stop the ball.",
+      "The goalkeeper could not stop the ball kicked into the top corner.",
+      "The ball, the goalkeeper could not stop it, was kicked into the top corner.",
+      "Into the top corner the ball was kicked, and stopping it the goalkeeper could not."
+    ],
+    "answer": 1,
+    "explanation": "The first choice makes it sound like the goalkeeper was kicked. The correct choice puts \"kicked into the top corner\" right next to \"ball.\""
+  },
+  {
+    "id": "lang-118",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 1,
+    "prompt": "Which sentence does not belong in the paragraph?\n\n(1) Soccer is played in almost every country in the world. (2) All a person needs to play is a ball and some open space. (3) Basketball was invented in 1891. (4) Because it is so simple, soccer is popular with children everywhere.",
+    "choices": [
+      "Sentence 1",
+      "Sentence 2",
+      "Sentence 3",
+      "Sentence 4"
+    ],
+    "answer": 2,
+    "explanation": "The paragraph is about why soccer is so popular; the sentence about basketball is off topic."
+  },
+  {
+    "id": "lang-119",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 2,
+    "prompt": "Which sentence does not belong in the paragraph?\n\n(1) Volcanoes form where melted rock, called magma, rises toward the surface. (2) When pressure builds underground, a volcano can erupt. (3) Lava from an eruption can flow for miles before it cools and hardens. (4) Many families enjoy summer vacations at the beach.",
+    "choices": [
+      "Sentence 1",
+      "Sentence 2",
+      "Sentence 3",
+      "Sentence 4"
+    ],
+    "answer": 3,
+    "explanation": "The paragraph is about how volcanoes work; beach vacations are off topic."
+  },
+  {
+    "id": "lang-120",
+    "section": "language",
+    "type": "composition",
+    "difficulty": 3,
+    "prompt": "Which sentence does not belong in the paragraph?\n\n(1) Thomas Edison is best known for developing a practical light bulb. (2) Light bulbs today come in many shapes and colors. (3) Edison also invented the phonograph, which could record and play back sound. (4) In all, Edison held more than 1,000 patents.",
+    "choices": [
+      "Sentence 1",
+      "Sentence 2",
+      "Sentence 3",
+      "Sentence 4"
+    ],
+    "answer": 1,
+    "explanation": "The paragraph is about Edison and his inventions; modern light bulb shapes and colors are off topic."
+  }
+]
