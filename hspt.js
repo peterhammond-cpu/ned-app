@@ -526,7 +526,7 @@ const HSPT = (function () {
 
     // ---------- adult summary (Mastery tab, behind the key) ----------
     const TYPE_LABEL = {
-        synonym: 'Synonyms', antonym: 'Antonyms', analogy: 'Analogies', classification: 'Odd one out', logic: 'Verbal logic',
+        synonym: 'Synonyms', antonym: 'Antonyms', essential: 'Always has', roots: 'Word roots', analogy: 'Analogies', classification: 'Odd one out', logic: 'Verbal logic',
         series: 'Number series', manipulation: 'Number puzzles', nongeo_compare: 'Comparisons', geo_compare: 'Shape comparisons',
         main_idea: 'Main idea', detail: 'Details', inference: 'Inference', vocab_context: 'Vocab in context',
         purpose_tone: 'Purpose & tone', theme: 'Theme', figurative: 'Figurative language',
@@ -544,6 +544,8 @@ const HSPT = (function () {
         synonym: 'Say what the word means in your own words before you look at the choices. The opposite is often a trap.',
         antonym: 'Find the meaning first, then flip it. One choice is usually a synonym, which is a trap.',
         analogy: 'Make a sentence for the first pair ("a glove is worn on a hand"), then test each choice in the same sentence.',
+        essential: 'Ask "could it still be one without this?" Pick the thing it can\'t exist without, not just something it usually has.',
+        roots: 'Break the word into parts. Bene = good, mal = bad, chron = time, cred = believe. Then pick the meaning that fits.',
         classification: 'Name the group three of them share. The one that doesn\'t fit the name is the answer.',
         logic: 'Line the people up in order. If the first two statements never compare the two in question, the answer is "uncertain".',
         series: 'Write the gaps between the numbers. If they aren\'t steady, check for ×, alternating steps, or two series woven together.',

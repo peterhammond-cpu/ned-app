@@ -1,0 +1,452 @@
+[
+  {
+    "id": "ess-001",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 1,
+    "prompt": "Which of these does <b>a lake</b> always have?",
+    "choices": [
+      "fish",
+      "water",
+      "boats",
+      "a beach"
+    ],
+    "answer": 1,
+    "explanation": "A lake can't exist without water. Fish, boats and beaches are common, but a lake can have none of them (a frozen mountain lake may have no fish, and many lakes have rocky shores instead of a beach). Tip: ask 'could it still be a lake without this?'"
+  },
+  {
+    "id": "ess-002",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 1,
+    "prompt": "Which of these does <b>an island</b> always have?",
+    "choices": [
+      "water around it",
+      "palm trees",
+      "a beach",
+      "people living on it"
+    ],
+    "answer": 0,
+    "explanation": "An island is land with water all around it, so the water is a must. Plenty of islands are rocky, icy and empty of people, with no palm trees or sand. Tip: ask 'could it still be an island without this?'"
+  },
+  {
+    "id": "ess-003",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 1,
+    "prompt": "Which of these does <b>a triangle</b> always have?",
+    "choices": [
+      "a right angle",
+      "equal sides",
+      "a point at the top",
+      "three sides"
+    ],
+    "answer": 3,
+    "explanation": "Tri = three, so every triangle has three sides. Only some have a right angle or equal sides, and if you turn a triangle upside down, the point is at the bottom. Tip: the definition always wins."
+  },
+  {
+    "id": "ess-004",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 1,
+    "prompt": "Which of these does <b>a book</b> always have?",
+    "choices": [
+      "pictures",
+      "a hard cover",
+      "pages",
+      "a table of contents"
+    ],
+    "answer": 2,
+    "explanation": "A book is made of pages. Lots of books have no pictures, paperbacks have soft covers, and most novels skip a table of contents. Tip: ask 'could it still be a book without this?'"
+  },
+  {
+    "id": "ess-005",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 1,
+    "prompt": "Which of these does <b>a clock</b> always have?",
+    "choices": [
+      "hands",
+      "a way to show the time",
+      "numbers",
+      "an alarm"
+    ],
+    "answer": 1,
+    "explanation": "A clock's whole job is showing the time. A digital clock has no hands, some clocks use lines instead of numbers, and most wall clocks have no alarm. Tip: think about what the thing is FOR."
+  },
+  {
+    "id": "ess-006",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 1,
+    "prompt": "Which of these does <b>a soccer match</b> always have?",
+    "choices": [
+      "two teams",
+      "a winner",
+      "a goal scored",
+      "a crowd"
+    ],
+    "answer": 0,
+    "explanation": "A match is one team against another, so it needs two teams. A 0-0 draw has no goal scored and no winner, and a practice match can be played in an empty stadium. Even Barca has had goalless draws! Tip: watch out for 'usually' answers."
+  },
+  {
+    "id": "ess-007",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 1,
+    "prompt": "Which of these does <b>a mountain</b> always have?",
+    "choices": [
+      "snow",
+      "trees",
+      "a hiking trail",
+      "height"
+    ],
+    "answer": 3,
+    "explanation": "A mountain is land that rises high, so it must have height. Many mountains have no snow (think of desert peaks), no trees above the tree line, and no trails at all. Tip: ask 'could it still be a mountain without this?'"
+  },
+  {
+    "id": "ess-008",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 1,
+    "prompt": "Which of these does <b>a team</b> always have?",
+    "choices": [
+      "a coach",
+      "uniforms",
+      "members",
+      "a mascot"
+    ],
+    "answer": 2,
+    "explanation": "A team is a group of people working together, so it must have members. A pickup soccer team may have no coach, no matching uniforms and certainly no mascot. Tip: cross off things that are just nice extras."
+  },
+  {
+    "id": "ess-009",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 1,
+    "prompt": "Which of these does <b>a recipe</b> always have?",
+    "choices": [
+      "an oven",
+      "ingredients",
+      "meat",
+      "a photo"
+    ],
+    "answer": 1,
+    "explanation": "A recipe tells you how to make something from ingredients. A salad or smoothie recipe needs no oven, many recipes have no meat, and plenty of cookbooks have no photos. Tip: ask 'could it still be a recipe without this?'"
+  },
+  {
+    "id": "ess-010",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 1,
+    "prompt": "Which of these does <b>an orchestra</b> always have?",
+    "choices": [
+      "musicians",
+      "violins",
+      "a conductor",
+      "an audience"
+    ],
+    "answer": 0,
+    "explanation": "An orchestra is a group of musicians playing together. A wind orchestra has no violins, some small orchestras play without a conductor, and they rehearse with no audience. Tip: ask 'could it still be an orchestra without this?'"
+  },
+  {
+    "id": "ess-011",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 2,
+    "prompt": "Which of these does <b>a shoe</b> always have?",
+    "choices": [
+      "laces",
+      "a buckle",
+      "a logo",
+      "a sole"
+    ],
+    "answer": 3,
+    "explanation": "The sole is the bottom part that touches the ground, and every shoe has one. Slip-ons have no laces, sneakers have no buckle, and plenty of shoes have no logo. Tip: find the part that does the main job."
+  },
+  {
+    "id": "ess-012",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 2,
+    "prompt": "Which of these does <b>a map</b> always have?",
+    "choices": [
+      "colors",
+      "a compass rose",
+      "a place it shows",
+      "street names"
+    ],
+    "answer": 2,
+    "explanation": "A map is a picture of a place, so it always shows some place (even a made-up one in a fantasy book). Some maps are black and white, many skip the compass rose, and a map of a forest trail has no street names. Tip: think about what the thing is FOR."
+  },
+  {
+    "id": "ess-013",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 2,
+    "prompt": "Which of these does <b>a desert</b> always have?",
+    "choices": [
+      "sand",
+      "very little rain",
+      "camels",
+      "hot weather"
+    ],
+    "answer": 1,
+    "explanation": "A desert is defined by being very dry. Many deserts are rocky, not sandy; most have no camels; and Antarctica is a freezing-cold desert. Tip: watch out for answers that are only true of the deserts you picture first."
+  },
+  {
+    "id": "ess-014",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 2,
+    "prompt": "Which of these does <b>a sentence</b> always have?",
+    "choices": [
+      "words",
+      "a comma",
+      "a period",
+      "an adjective"
+    ],
+    "answer": 0,
+    "explanation": "A sentence is made of words. 'Go home.' has no comma or adjective, and a question ends with a question mark, not a period. Tip: test each choice against a short, simple example."
+  },
+  {
+    "id": "ess-015",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 2,
+    "prompt": "Which of these does <b>a square</b> always have?",
+    "choices": [
+      "a flat bottom",
+      "a diagonal line drawn in it",
+      "a shaded inside",
+      "four equal sides"
+    ],
+    "answer": 3,
+    "explanation": "Every square has four equal sides. Tip it on its corner and it has no flat bottom (it's still a square!), most squares have no diagonal drawn, and a square can be just an outline. Tip: picture the shape turned or stretched."
+  },
+  {
+    "id": "ess-016",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 2,
+    "prompt": "Which of these does <b>a museum</b> always have?",
+    "choices": [
+      "paintings",
+      "a gift shop",
+      "a collection",
+      "dinosaur bones"
+    ],
+    "answer": 2,
+    "explanation": "A museum collects and shows things, so it must have a collection. A baseball museum has no dinosaur bones, a science museum may have no paintings, and small museums often have no gift shop. Tip: ask 'could it still be a museum without this?'"
+  },
+  {
+    "id": "ess-017",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 2,
+    "prompt": "Which of these does <b>a race</b> always have?",
+    "choices": [
+      "runners",
+      "a start",
+      "a trophy",
+      "a crowd"
+    ],
+    "answer": 1,
+    "explanation": "Every race has a start. Swimming and car races have no runners, many races give no trophy, and a race can happen with nobody watching. Tip: ask 'could it still be a race without this?'"
+  },
+  {
+    "id": "ess-018",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 2,
+    "prompt": "Which of these does <b>a donation</b> always have?",
+    "choices": [
+      "a giver",
+      "money",
+      "a thank-you note",
+      "a charity event"
+    ],
+    "answer": 0,
+    "explanation": "Something can only be donated if someone gives it, so a donation always has a giver. People donate clothes, food or blood instead of money, and many donations come with no note and no event. Tip: think about what the word means, not how it usually happens."
+  },
+  {
+    "id": "ess-019",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 2,
+    "prompt": "Which of these does <b>a shadow</b> always have?",
+    "choices": [
+      "the sun",
+      "a person",
+      "a pitch-black color",
+      "light"
+    ],
+    "answer": 3,
+    "explanation": "A shadow forms when something blocks light, so no light means no shadow. A lamp makes shadows without the sun, a tree casts a shadow with no person around, and many shadows are pale gray. Tip: ask 'what makes this thing happen?'"
+  },
+  {
+    "id": "ess-020",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 2,
+    "prompt": "Which of these does <b>an election</b> always have?",
+    "choices": [
+      "campaign posters",
+      "a debate",
+      "voters",
+      "a close result"
+    ],
+    "answer": 2,
+    "explanation": "An election is a choice made by voting, so it needs voters. A class election may have no posters or debate, and many elections are landslides, not close. Tip: ask 'could it still be an election without this?'"
+  },
+  {
+    "id": "ess-021",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 2,
+    "prompt": "Which of these does <b>a bridge</b> always have?",
+    "choices": [
+      "water under it",
+      "a gap it crosses",
+      "cars",
+      "cables"
+    ],
+    "answer": 1,
+    "explanation": "A bridge carries you across a gap. Many bridges cross roads, canyons or railroad tracks instead of water, footbridges carry no cars, and stone arch bridges have no cables. Tip: think about what the thing is FOR."
+  },
+  {
+    "id": "ess-022",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 2,
+    "prompt": "Which of these does <b>a coin</b> always have?",
+    "choices": [
+      "two sides",
+      "a person's face",
+      "a value of 25 cents",
+      "a shiny surface"
+    ],
+    "answer": 0,
+    "explanation": "Every coin is a flat object with two sides (heads and tails). Many coins show animals or buildings instead of a face, most are not worth 25 cents, and old coins get dull. Tip: cross off anything that's only true of some coins."
+  },
+  {
+    "id": "ess-023",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 2,
+    "prompt": "Which of these does <b>a fraction</b> always have?",
+    "choices": [
+      "a value less than one",
+      "a decimal point",
+      "an even number",
+      "a denominator"
+    ],
+    "answer": 3,
+    "explanation": "Every fraction has a denominator, the number on the bottom. Improper fractions like 7/4 are more than one, fractions are written without decimal points, and 3/5 has no even number. Tip: test each choice with a quick example."
+  },
+  {
+    "id": "ess-024",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 3,
+    "prompt": "Which of these does <b>a promise</b> always have?",
+    "choices": [
+      "a handshake",
+      "a written contract",
+      "a commitment",
+      "being kept"
+    ],
+    "answer": 2,
+    "explanation": "A promise is a commitment to do something. You can promise without a handshake or anything written, and sadly some promises are broken, so 'being kept' isn't required. Tip: abstract words are about meaning, not objects."
+  },
+  {
+    "id": "ess-025",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 3,
+    "prompt": "Which of these does <b>a secret</b> always have?",
+    "choices": [
+      "a diary",
+      "something hidden from others",
+      "whispering",
+      "something bad"
+    ],
+    "answer": 1,
+    "explanation": "A secret is something kept hidden from other people. You don't need a diary or a whisper to keep one, and a surprise party plan is a secret that isn't bad at all. Tip: ask 'could it still be a secret without this?'"
+  },
+  {
+    "id": "ess-026",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 3,
+    "prompt": "Which of these does <b>a debt</b> always have?",
+    "choices": [
+      "something owed",
+      "a bank",
+      "interest",
+      "a credit card"
+    ],
+    "answer": 0,
+    "explanation": "A debt is something one person owes another, so there is always something owed. If you borrow five dollars from a friend, that debt has no bank, no interest and no credit card. Tip: abstract words are about meaning, not the usual situation."
+  },
+  {
+    "id": "ess-027",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 3,
+    "prompt": "Which of these does <b>a habit</b> always have?",
+    "choices": [
+      "something harmful",
+      "a set time of day",
+      "a written schedule",
+      "repetition"
+    ],
+    "answer": 3,
+    "explanation": "A habit is something you do again and again, so it needs repetition. Brushing your teeth is a habit that isn't harmful, biting your nails can happen any time of day, and nobody writes their habits on a schedule. Tip: ask 'could it still be a habit without this?'"
+  },
+  {
+    "id": "ess-028",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 3,
+    "prompt": "Which of these does <b>an echo</b> always have?",
+    "choices": [
+      "a cave",
+      "a mountain",
+      "an original sound",
+      "a shout"
+    ],
+    "answer": 2,
+    "explanation": "An echo is a sound bouncing back, so there must be an original sound first. Echoes also happen in gyms and stairwells (no cave or mountain needed), and a clap can echo just as well as a shout. Tip: ask 'what makes this thing happen?'"
+  },
+  {
+    "id": "ess-029",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 3,
+    "prompt": "Which of these does <b>a surprise</b> always have?",
+    "choices": [
+      "a party",
+      "something unexpected",
+      "a gift",
+      "happiness"
+    ],
+    "answer": 1,
+    "explanation": "A surprise is anything you didn't expect. Many surprises have no party or gift, and a pop quiz is a surprise that brings no happiness. Tip: cross off the choices you picture first and check the definition."
+  },
+  {
+    "id": "ess-030",
+    "section": "verbal",
+    "type": "essential",
+    "difficulty": 3,
+    "prompt": "Which of these does <b>an apology</b> always have?",
+    "choices": [
+      "an expression of regret",
+      "forgiveness",
+      "tears",
+      "a card"
+    ],
+    "answer": 0,
+    "explanation": "An apology means saying you're sorry, which is an expression of regret. The other person may not forgive you, most apologies come without tears, and you can apologize out loud with no card. Tip: separate what the word means from what might happen next."
+  }
+]

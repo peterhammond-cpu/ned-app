@@ -1,0 +1,452 @@
+[
+  {
+    "id": "rts-001",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 1,
+    "prompt": "<b>Portable</b> most nearly means",
+    "choices": [
+      "fixed in place",
+      "easy to carry",
+      "imported",
+      "valuable"
+    ],
+    "answer": 1,
+    "explanation": "Port = carry, -able = able to be. Portable means easy to carry, like a portable speaker. 'Imported' shares the root (carried in from another country) but means something else. Tip: 'port' words move things (transport, export)."
+  },
+  {
+    "id": "rts-002",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 1,
+    "prompt": "<b>Audible</b> most nearly means",
+    "choices": [
+      "able to be heard",
+      "silent",
+      "visible",
+      "agreeable"
+    ],
+    "answer": 0,
+    "explanation": "Aud = hear, -ible = able to be. Audible means loud enough to be heard. 'Visible' has the same ending but 'vis' = see. Tip: 'aud' words are about hearing (audio, audience)."
+  },
+  {
+    "id": "rts-003",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 1,
+    "prompt": "<b>Transparent</b> most nearly means",
+    "choices": [
+      "solid and dark",
+      "carried across",
+      "related to parents",
+      "see-through"
+    ],
+    "answer": 3,
+    "explanation": "Trans = through or across, par = appear. Transparent means you can see through it, like glass. 'Carried across' is the trans- trap. Tip: if light 'appears through' it, it's transparent."
+  },
+  {
+    "id": "rts-004",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 1,
+    "prompt": "<b>Dehydrate</b> most nearly means",
+    "choices": [
+      "soak",
+      "overheat",
+      "dry out",
+      "repair"
+    ],
+    "answer": 2,
+    "explanation": "De = remove, hydr = water. To dehydrate is to remove water, or dry out. 'Soak' is the opposite trap. Tip: 'hydr' words are watery (hydrant, hydrate)."
+  },
+  {
+    "id": "rts-005",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 1,
+    "prompt": "<b>Biography</b> most nearly means",
+    "choices": [
+      "made-up tale",
+      "life story",
+      "plant drawing",
+      "travel guide"
+    ],
+    "answer": 1,
+    "explanation": "Bio = life, graph = write. A biography is the written story of a real person's life. 'Made-up tale' is the opposite trap, since a biography is true. Tip: 'graph' words involve writing or drawing (autograph, paragraph)."
+  },
+  {
+    "id": "rts-006",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 1,
+    "prompt": "<b>Magnify</b> most nearly means",
+    "choices": [
+      "enlarge",
+      "shrink",
+      "attract",
+      "examine"
+    ],
+    "answer": 0,
+    "explanation": "Magn = great or large, -ify = make. To magnify is to make bigger. 'Attract' is a magnet trap, and 'examine' is what you might do with a magnifying glass. Tip: 'magn' words are big (magnitude, magnificent)."
+  },
+  {
+    "id": "rts-007",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 1,
+    "prompt": "<b>Aquatic</b> most nearly means",
+    "choices": [
+      "living on land",
+      "sky-blue",
+      "poisonous",
+      "living in water"
+    ],
+    "answer": 3,
+    "explanation": "Aqua = water. Aquatic animals live in water, like fish and dolphins. 'Sky-blue' is the aquamarine trap. Tip: 'aqua' words are watery (aquarium, aqueduct)."
+  },
+  {
+    "id": "rts-008",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 1,
+    "prompt": "<b>Spectator</b> most nearly means",
+    "choices": [
+      "player",
+      "inspector",
+      "onlooker",
+      "speaker"
+    ],
+    "answer": 2,
+    "explanation": "Spect = look, -or = a person who. A spectator is a person who watches, like the fans at Camp Nou. 'Player' is the opposite trap, and 'inspector' shares the root but means someone who checks things. Tip: 'spect' words involve looking (spectacles, inspect)."
+  },
+  {
+    "id": "rts-009",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 2,
+    "prompt": "<b>Benefactor</b> most nearly means",
+    "choices": [
+      "enemy",
+      "helper",
+      "factory owner",
+      "traveler"
+    ],
+    "answer": 1,
+    "explanation": "Bene = good, fact = do or make. A benefactor does good for others: a helper or supporter. 'Enemy' is the opposite trap. Tip: 'bene-' words are positive."
+  },
+  {
+    "id": "rts-010",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 2,
+    "prompt": "<b>Malevolent</b> most nearly means",
+    "choices": [
+      "wishing harm",
+      "kindhearted",
+      "sickly",
+      "loud"
+    ],
+    "answer": 0,
+    "explanation": "Mal = bad, vol = wish. Malevolent means wishing harm on others, like a movie villain. 'Kindhearted' is the opposite trap, and 'sickly' borrows the 'mal' from malady. Tip: 'mal-' words are negative (malfunction, malice)."
+  },
+  {
+    "id": "rts-011",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 2,
+    "prompt": "<b>Chronic</b> most nearly means",
+    "choices": [
+      "brief",
+      "colorful",
+      "painful",
+      "long-lasting"
+    ],
+    "answer": 3,
+    "explanation": "Chron = time. Something chronic lasts a long time or keeps coming back, like a chronic cough. 'Brief' is the opposite trap, and 'colorful' is a sound-alike (chrome). 'Painful' is tempting because people say 'chronic pain'. Tip: 'chron' words are about time (chronological)."
+  },
+  {
+    "id": "rts-012",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 2,
+    "prompt": "<b>Omnipotent</b> most nearly means",
+    "choices": [
+      "helpless",
+      "all-knowing",
+      "all-powerful",
+      "enormous"
+    ],
+    "answer": 2,
+    "explanation": "Omni = all, potent = powerful. Omnipotent means having unlimited power. 'All-knowing' shares the root but is omniscient. 'Helpless' is the opposite trap. Tip: 'omni' means all (omnivore eats everything)."
+  },
+  {
+    "id": "rts-013",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 2,
+    "prompt": "<b>Monotonous</b> most nearly means",
+    "choices": [
+      "exciting",
+      "repetitive",
+      "single-colored",
+      "musical"
+    ],
+    "answer": 1,
+    "explanation": "Mono = one, ton = tone. Something monotonous stays on one tone, so it is boring and repetitive. 'Exciting' is the opposite trap, and 'single-colored' is a mono- trap (that's monochrome). Tip: 'mono' means one (monologue)."
+  },
+  {
+    "id": "rts-014",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 2,
+    "prompt": "<b>Subterranean</b> most nearly means",
+    "choices": [
+      "underground",
+      "airborne",
+      "territorial",
+      "mysterious"
+    ],
+    "answer": 0,
+    "explanation": "Sub = under, terr = earth. Subterranean means under the earth, like a subway tunnel. 'Airborne' is the opposite trap, and 'territorial' shares the root but means protective of land. Tip: 'sub-' means under (submarine)."
+  },
+  {
+    "id": "rts-015",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 2,
+    "prompt": "<b>Philanthropist</b> most nearly means",
+    "choices": [
+      "people-hater",
+      "stamp collector",
+      "fortune-teller",
+      "charitable giver"
+    ],
+    "answer": 3,
+    "explanation": "Phil = love, anthrop = humankind. A philanthropist loves people and gives money to help them. A people-hater is the opposite (a misanthrope), and a stamp collector is a philatelist, which shares the root 'phil'. Tip: 'phil' means love (Philadelphia = brotherly love)."
+  },
+  {
+    "id": "rts-016",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 2,
+    "prompt": "<b>Revoke</b> most nearly means",
+    "choices": [
+      "grant",
+      "shout",
+      "cancel",
+      "revive"
+    ],
+    "answer": 2,
+    "explanation": "Re = back, voc = call. To revoke is to call back, or cancel, like revoking a red card after video review. 'Grant' is the opposite trap, 'shout' shares the voice root (vocal), and 'revive' just sounds similar. Tip: 'voc' means voice or call."
+  },
+  {
+    "id": "rts-017",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 2,
+    "prompt": "<b>Amiable</b> most nearly means",
+    "choices": [
+      "unfriendly",
+      "friendly",
+      "capable",
+      "amusing"
+    ],
+    "answer": 1,
+    "explanation": "Am = love or friend, -able = able to be. Amiable means friendly and easy to like. 'Unfriendly' is the opposite trap, and 'amusing' just sounds similar. Tip: 'am' words are about love and friendship (amicable, amigo)."
+  },
+  {
+    "id": "rts-018",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 2,
+    "prompt": "<b>Fidelity</b> most nearly means",
+    "choices": [
+      "loyalty",
+      "betrayal",
+      "restlessness",
+      "wealth"
+    ],
+    "answer": 0,
+    "explanation": "Fid = faith or trust. Fidelity means staying faithful, or loyalty, like a fan who sticks with the club in bad seasons. 'Betrayal' is the opposite trap, and 'restlessness' is a fidget sound-alike. Tip: 'fid' words involve trust (confident)."
+  },
+  {
+    "id": "rts-019",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 2,
+    "prompt": "<b>Pacify</b> most nearly means",
+    "choices": [
+      "provoke",
+      "pack",
+      "specify",
+      "soothe"
+    ],
+    "answer": 3,
+    "explanation": "Pac = peace, -ify = make. To pacify is to make peaceful, or calm someone down. 'Provoke' is the opposite trap; 'pack' and 'specify' only sound alike. Tip: the Pacific Ocean was named the 'peaceful' ocean."
+  },
+  {
+    "id": "rts-020",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 2,
+    "prompt": "<b>Contradict</b> most nearly means",
+    "choices": [
+      "confirm",
+      "dictate",
+      "deny",
+      "shrink"
+    ],
+    "answer": 2,
+    "explanation": "Contra = against, dict = say. To contradict is to say the opposite, or deny. 'Confirm' is the opposite trap, and 'dictate' shares the root but means to say something for someone to write down. 'Shrink' is a contract sound-alike. Tip: 'dict' means say (dictionary)."
+  },
+  {
+    "id": "rts-021",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 2,
+    "prompt": "<b>Pedestrian</b> most nearly means",
+    "choices": [
+      "driver",
+      "walker",
+      "children's doctor",
+      "pilot"
+    ],
+    "answer": 1,
+    "explanation": "Ped = foot. A pedestrian travels on foot: a walker. 'Driver' is the opposite trap, and a children's doctor (pediatrician) looks similar but comes from a different Greek 'ped' that means child. Tip: 'ped' words often involve feet (pedal)."
+  },
+  {
+    "id": "rts-022",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 2,
+    "prompt": "<b>Postpone</b> most nearly means",
+    "choices": [
+      "delay",
+      "hurry",
+      "mail",
+      "propose"
+    ],
+    "answer": 0,
+    "explanation": "Post = after, pon = put. To postpone is to put something off until after, like a match postponed by a storm. 'Hurry' is the opposite trap, and 'mail' is a 'post' sound trap. Tip: 'post-' means after (postgame)."
+  },
+  {
+    "id": "rts-023",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 3,
+    "prompt": "<b>Circumspect</b> most nearly means",
+    "choices": [
+      "careless",
+      "round",
+      "suspicious",
+      "cautious"
+    ],
+    "answer": 3,
+    "explanation": "Circum = around, spect = look. A circumspect person looks all around before acting: cautious. 'Careless' is the opposite trap, 'round' is the circum trap, and 'suspicious' shares the 'spect' root but means distrustful. Tip: break long words into parts."
+  },
+  {
+    "id": "rts-024",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 3,
+    "prompt": "<b>Incredulous</b> most nearly means",
+    "choices": [
+      "trusting",
+      "amazing",
+      "disbelieving",
+      "furious"
+    ],
+    "answer": 2,
+    "explanation": "In = not, cred = believe. Incredulous means not able to believe something. 'Trusting' is the opposite trap, and 'amazing' comes from 'incredible', which describes the thing, not the person. Tip: incredulous people react to incredible things."
+  },
+  {
+    "id": "rts-025",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 3,
+    "prompt": "<b>Polyglot</b> most nearly means",
+    "choices": [
+      "speaker of one language",
+      "speaker of many languages",
+      "many-sided shape",
+      "rock scientist"
+    ],
+    "answer": 1,
+    "explanation": "Poly = many, glot = tongue or language. A polyglot speaks many languages, like many Barca players who speak Spanish, Catalan and English. A many-sided shape is a polygon, which shares 'poly'. Tip: 'poly' means many."
+  },
+  {
+    "id": "rts-026",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 3,
+    "prompt": "<b>Transient</b> most nearly means",
+    "choices": [
+      "fleeting",
+      "lasting",
+      "transparent",
+      "nervous"
+    ],
+    "answer": 0,
+    "explanation": "Trans = across, -ient comes from ire = go. Something transient passes by quickly, so it's fleeting or temporary. 'Lasting' is the opposite trap, and 'transparent' shares the 'trans' prefix. Tip: transient things are just passing through."
+  },
+  {
+    "id": "rts-027",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 3,
+    "prompt": "<b>Loquacious</b> most nearly means",
+    "choices": [
+      "quiet",
+      "well-spoken",
+      "clever",
+      "talkative"
+    ],
+    "answer": 3,
+    "explanation": "Loqu = speak, -acious = full of. A loquacious person is full of talk: talkative. 'Quiet' is the opposite trap, and 'well-spoken' (eloquent) shares the root but is about speaking well, not a lot. Tip: 'loqu' words involve speech (eloquent, colloquial)."
+  },
+  {
+    "id": "rts-028",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 3,
+    "prompt": "<b>Veracity</b> most nearly means",
+    "choices": [
+      "dishonesty",
+      "speed",
+      "truthfulness",
+      "hunger"
+    ],
+    "answer": 2,
+    "explanation": "Ver = true. Veracity means truthfulness. 'Dishonesty' is the opposite trap; 'speed' (velocity) and 'hunger' (voracity) are sound-alikes. Tip: 'ver' words are about truth (verify, verdict)."
+  },
+  {
+    "id": "rts-029",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 3,
+    "prompt": "<b>Antecedent</b> most nearly means",
+    "choices": [
+      "a result",
+      "something that comes before",
+      "a funny story",
+      "a remedy for poison"
+    ],
+    "answer": 1,
+    "explanation": "Ante = before, ced = go. An antecedent goes before something else. 'A result' is the opposite trap; 'a funny story' (anecdote) and 'a remedy' (antidote) are sound-alikes. Tip: 'ante-' means before, 'anti-' means against."
+  },
+  {
+    "id": "rts-030",
+    "section": "verbal",
+    "type": "roots",
+    "difficulty": 3,
+    "prompt": "<b>Intramural</b> most nearly means",
+    "choices": [
+      "within one school",
+      "between schools",
+      "painted on walls",
+      "played outdoors"
+    ],
+    "answer": 0,
+    "explanation": "Intra = within, mur = wall. Intramural sports happen within the walls of one school, like a class-vs-class soccer league. 'Between schools' is the inter- trap, and 'painted on walls' is the mural trap. Tip: intra = inside, inter = between."
+  }
+]
