@@ -1,0 +1,434 @@
+[
+  {
+    "id": "rd-17-1",
+    "section": "reading",
+    "type": "main_idea",
+    "difficulty": 2,
+    "passage_id": "rd-17",
+    "genre": "nonfiction",
+    "passage": "Walk under an old stone bridge and you might wonder how it stays up. There is often no glue between its stones and no steel hidden inside. Yet some stone bridges built by the ancient Romans are still standing nearly two thousand years later. The secret is the shape: the arch.\n\nTo understand why the arch works, it helps to know a simple fact about stone. Stone is very strong when it is squeezed, a force engineers call compression. It is much weaker when it is stretched or bent, a force called tension. A flat stone slab laid across a wide gap will sag in the middle, and its bottom edge will be pulled apart until it cracks. That is why ancient builders could not span long distances with flat beams of stone.\n\nAn arch solves this problem by turning nearly all of the weight it carries into compression. When a load presses down on the top of an arch, each wedge-shaped stone pushes against its neighbors. The force travels along the curve, stone to stone, down into the ground on either side. No stone is being pulled apart; every one is being pressed tightly against the next.\n\nThere is a catch, however. An arch does not only push down at its ends; it also pushes outward, as if trying to spread its legs. Builders must brace each end with heavy walls or solid ground, called abutments. Without that support, the arch would flatten and collapse.\n\nBuilding an arch also takes patience. Until the last stone is in place, the arch cannot hold itself up, so workers first build a temporary wooden frame in the shape of the curve. They set the stones on top of it, finishing with the central stone at the very top, known as the keystone. Only when the keystone locks the others together can the frame be removed.\n\nToday, engineers build with steel and concrete, but the arch still appears in bridges, doorways, and dams around the world. It is an ancient idea that continues to carry a heavy load.",
+    "prompt": "Which statement best expresses the main idea of the passage?",
+    "choices": [
+      "Stone is much stronger when it is squeezed than when it is stretched.",
+      "The Romans were the most skilled bridge builders in history.",
+      "The curved shape of an arch lets stone carry heavy loads by keeping every stone pressed together.",
+      "Modern engineers have replaced the arch with steel and concrete."
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"An arch solves this problem by turning nearly all of the weight it carries into compression.\" (para 3) The whole passage explains why the arch's shape works. The squeezed-versus-stretched choice is true but too narrow; it is only the background fact from paragraph 2 that sets up the main point."
+  },
+  {
+    "id": "rd-17-2",
+    "section": "reading",
+    "type": "detail",
+    "difficulty": 1,
+    "passage_id": "rd-17",
+    "genre": "nonfiction",
+    "passage": "Walk under an old stone bridge and you might wonder how it stays up. There is often no glue between its stones and no steel hidden inside. Yet some stone bridges built by the ancient Romans are still standing nearly two thousand years later. The secret is the shape: the arch.\n\nTo understand why the arch works, it helps to know a simple fact about stone. Stone is very strong when it is squeezed, a force engineers call compression. It is much weaker when it is stretched or bent, a force called tension. A flat stone slab laid across a wide gap will sag in the middle, and its bottom edge will be pulled apart until it cracks. That is why ancient builders could not span long distances with flat beams of stone.\n\nAn arch solves this problem by turning nearly all of the weight it carries into compression. When a load presses down on the top of an arch, each wedge-shaped stone pushes against its neighbors. The force travels along the curve, stone to stone, down into the ground on either side. No stone is being pulled apart; every one is being pressed tightly against the next.\n\nThere is a catch, however. An arch does not only push down at its ends; it also pushes outward, as if trying to spread its legs. Builders must brace each end with heavy walls or solid ground, called abutments. Without that support, the arch would flatten and collapse.\n\nBuilding an arch also takes patience. Until the last stone is in place, the arch cannot hold itself up, so workers first build a temporary wooden frame in the shape of the curve. They set the stones on top of it, finishing with the central stone at the very top, known as the keystone. Only when the keystone locks the others together can the frame be removed.\n\nToday, engineers build with steel and concrete, but the arch still appears in bridges, doorways, and dams around the world. It is an ancient idea that continues to carry a heavy load.",
+    "prompt": "According to the passage, why must each end of an arch be braced?",
+    "choices": [
+      "The stones at the ends are being stretched apart.",
+      "The arch pushes outward at its ends, not only downward.",
+      "The wooden frame is attached to the ends.",
+      "The keystone rests directly on the end stones."
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"it also pushes outward, as if trying to spread its legs.\" (para 4) The outward push is why abutments are needed. The stretched-apart choice is the opposite of the passage, which says \"No stone is being pulled apart\" (para 3)."
+  },
+  {
+    "id": "rd-17-3",
+    "section": "reading",
+    "type": "vocab_context",
+    "difficulty": 2,
+    "passage_id": "rd-17",
+    "genre": "nonfiction",
+    "passage": "Walk under an old stone bridge and you might wonder how it stays up. There is often no glue between its stones and no steel hidden inside. Yet some stone bridges built by the ancient Romans are still standing nearly two thousand years later. The secret is the shape: the arch.\n\nTo understand why the arch works, it helps to know a simple fact about stone. Stone is very strong when it is squeezed, a force engineers call compression. It is much weaker when it is stretched or bent, a force called tension. A flat stone slab laid across a wide gap will sag in the middle, and its bottom edge will be pulled apart until it cracks. That is why ancient builders could not span long distances with flat beams of stone.\n\nAn arch solves this problem by turning nearly all of the weight it carries into compression. When a load presses down on the top of an arch, each wedge-shaped stone pushes against its neighbors. The force travels along the curve, stone to stone, down into the ground on either side. No stone is being pulled apart; every one is being pressed tightly against the next.\n\nThere is a catch, however. An arch does not only push down at its ends; it also pushes outward, as if trying to spread its legs. Builders must brace each end with heavy walls or solid ground, called abutments. Without that support, the arch would flatten and collapse.\n\nBuilding an arch also takes patience. Until the last stone is in place, the arch cannot hold itself up, so workers first build a temporary wooden frame in the shape of the curve. They set the stones on top of it, finishing with the central stone at the very top, known as the keystone. Only when the keystone locks the others together can the frame be removed.\n\nToday, engineers build with steel and concrete, but the arch still appears in bridges, doorways, and dams around the world. It is an ancient idea that continues to carry a heavy load.",
+    "prompt": "As it is used in paragraph 4, the word \"catch\" most nearly means",
+    "choices": [
+      "something that is grabbed out of the air",
+      "a lucky break",
+      "a lock that holds stones in place",
+      "a hidden difficulty"
+    ],
+    "answer": 3,
+    "explanation": "Evidence: \"There is a catch, however.\" (para 4) The paragraph then explains a problem: without support, \"the arch would flatten and collapse.\" The grabbed choice is the everyday meaning of the word, but nothing is being caught in this paragraph."
+  },
+  {
+    "id": "rd-17-4",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 2,
+    "passage_id": "rd-17",
+    "genre": "nonfiction",
+    "passage": "Walk under an old stone bridge and you might wonder how it stays up. There is often no glue between its stones and no steel hidden inside. Yet some stone bridges built by the ancient Romans are still standing nearly two thousand years later. The secret is the shape: the arch.\n\nTo understand why the arch works, it helps to know a simple fact about stone. Stone is very strong when it is squeezed, a force engineers call compression. It is much weaker when it is stretched or bent, a force called tension. A flat stone slab laid across a wide gap will sag in the middle, and its bottom edge will be pulled apart until it cracks. That is why ancient builders could not span long distances with flat beams of stone.\n\nAn arch solves this problem by turning nearly all of the weight it carries into compression. When a load presses down on the top of an arch, each wedge-shaped stone pushes against its neighbors. The force travels along the curve, stone to stone, down into the ground on either side. No stone is being pulled apart; every one is being pressed tightly against the next.\n\nThere is a catch, however. An arch does not only push down at its ends; it also pushes outward, as if trying to spread its legs. Builders must brace each end with heavy walls or solid ground, called abutments. Without that support, the arch would flatten and collapse.\n\nBuilding an arch also takes patience. Until the last stone is in place, the arch cannot hold itself up, so workers first build a temporary wooden frame in the shape of the curve. They set the stones on top of it, finishing with the central stone at the very top, known as the keystone. Only when the keystone locks the others together can the frame be removed.\n\nToday, engineers build with steel and concrete, but the arch still appears in bridges, doorways, and dams around the world. It is an ancient idea that continues to carry a heavy load.",
+    "prompt": "Based on the passage, what would most likely happen if workers removed the wooden frame before placing the keystone?",
+    "choices": [
+      "The arch would fall, because it cannot yet hold itself up.",
+      "Nothing, because every stone would already be in compression.",
+      "The arch would stand but carry less weight than usual.",
+      "The abutments would push the stones inward to close the gap."
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"Until the last stone is in place, the arch cannot hold itself up\" (para 5) and \"Only when the keystone locks the others together can the frame be removed.\" (para 5) The compression choice is tempting from paragraph 3, but that describes a finished arch, not one missing its keystone."
+  },
+  {
+    "id": "rd-18-1",
+    "section": "reading",
+    "type": "main_idea",
+    "difficulty": 2,
+    "passage_id": "rd-18",
+    "genre": "nonfiction",
+    "passage": "Today, a doctor's stethoscope is so familiar that it seems as if it has always existed. In fact, it was invented only about two hundred years ago, and it began with a problem of good manners.\n\nIn the early 1800s, a French doctor named René Laennec was examining a young woman who had signs of heart trouble. At the time, a doctor who wanted to hear a patient's heartbeat usually pressed an ear directly against the patient's chest. Laennec felt that doing so would be improper with this patient. He also knew that the method often worked poorly, because sounds inside the body were hard to hear clearly that way.\n\nAccording to Laennec's own account, he then remembered something he had noticed about sound: a light scratch at one end of a long piece of wood can be heard clearly by someone with an ear pressed to the other end. He rolled a few sheets of paper into a tight tube, placed one end on the patient's chest, and put his ear to the other. To his delight, the heartbeat sounded louder and clearer than it ever had through his bare ear.\n\nLaennec did not stop with paper. He experimented with tubes of different materials and sizes, eventually settling on a hollow wooden cylinder. He named his invention the stethoscope, from Greek words meaning \"chest\" and \"to look at\" or \"examine.\" More importantly, he spent years listening carefully to his patients' hearts and lungs and comparing what he heard with what he later learned about their illnesses. He then published a long book describing which sounds went with which diseases.\n\nNot every doctor welcomed the new tool at first; some thought it was unnecessary. Over time, however, the stethoscope proved its worth. Later inventors added flexible tubing and two earpieces, but the basic idea remained Laennec's.\n\nThe story is a reminder that great inventions do not always come from expensive laboratories. Sometimes they begin with a roll of paper and someone willing to notice.",
+    "prompt": "The passage is mainly about",
+    "choices": [
+      "why doctors in the 1800s had poor manners",
+      "how sound travels clearly through a long piece of wood",
+      "how a doctor's simple idea grew into an important medical tool",
+      "why some doctors refused to use new inventions"
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"it began with a problem of good manners\" (para 1) and \"the basic idea remained Laennec's.\" (para 5) The passage follows the stethoscope from a paper tube to a lasting tool. The wood choice is too narrow; it is only the clue Laennec remembered in paragraph 3."
+  },
+  {
+    "id": "rd-18-2",
+    "section": "reading",
+    "type": "detail",
+    "difficulty": 1,
+    "passage_id": "rd-18",
+    "genre": "nonfiction",
+    "passage": "Today, a doctor's stethoscope is so familiar that it seems as if it has always existed. In fact, it was invented only about two hundred years ago, and it began with a problem of good manners.\n\nIn the early 1800s, a French doctor named René Laennec was examining a young woman who had signs of heart trouble. At the time, a doctor who wanted to hear a patient's heartbeat usually pressed an ear directly against the patient's chest. Laennec felt that doing so would be improper with this patient. He also knew that the method often worked poorly, because sounds inside the body were hard to hear clearly that way.\n\nAccording to Laennec's own account, he then remembered something he had noticed about sound: a light scratch at one end of a long piece of wood can be heard clearly by someone with an ear pressed to the other end. He rolled a few sheets of paper into a tight tube, placed one end on the patient's chest, and put his ear to the other. To his delight, the heartbeat sounded louder and clearer than it ever had through his bare ear.\n\nLaennec did not stop with paper. He experimented with tubes of different materials and sizes, eventually settling on a hollow wooden cylinder. He named his invention the stethoscope, from Greek words meaning \"chest\" and \"to look at\" or \"examine.\" More importantly, he spent years listening carefully to his patients' hearts and lungs and comparing what he heard with what he later learned about their illnesses. He then published a long book describing which sounds went with which diseases.\n\nNot every doctor welcomed the new tool at first; some thought it was unnecessary. Over time, however, the stethoscope proved its worth. Later inventors added flexible tubing and two earpieces, but the basic idea remained Laennec's.\n\nThe story is a reminder that great inventions do not always come from expensive laboratories. Sometimes they begin with a roll of paper and someone willing to notice.",
+    "prompt": "According to the passage, which of the following did Laennec do?",
+    "choices": [
+      "He added flexible tubing and two earpieces to his tube.",
+      "He wrote a book connecting certain body sounds to certain diseases.",
+      "He chose rolled paper as the final material for his invention.",
+      "He built a laboratory to test new medical tools."
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"He then published a long book describing which sounds went with which diseases.\" (para 4) The earpieces choice is tempting, but the passage says \"Later inventors added flexible tubing and two earpieces\" (para 5), not Laennec."
+  },
+  {
+    "id": "rd-18-3",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 2,
+    "passage_id": "rd-18",
+    "genre": "nonfiction",
+    "passage": "Today, a doctor's stethoscope is so familiar that it seems as if it has always existed. In fact, it was invented only about two hundred years ago, and it began with a problem of good manners.\n\nIn the early 1800s, a French doctor named René Laennec was examining a young woman who had signs of heart trouble. At the time, a doctor who wanted to hear a patient's heartbeat usually pressed an ear directly against the patient's chest. Laennec felt that doing so would be improper with this patient. He also knew that the method often worked poorly, because sounds inside the body were hard to hear clearly that way.\n\nAccording to Laennec's own account, he then remembered something he had noticed about sound: a light scratch at one end of a long piece of wood can be heard clearly by someone with an ear pressed to the other end. He rolled a few sheets of paper into a tight tube, placed one end on the patient's chest, and put his ear to the other. To his delight, the heartbeat sounded louder and clearer than it ever had through his bare ear.\n\nLaennec did not stop with paper. He experimented with tubes of different materials and sizes, eventually settling on a hollow wooden cylinder. He named his invention the stethoscope, from Greek words meaning \"chest\" and \"to look at\" or \"examine.\" More importantly, he spent years listening carefully to his patients' hearts and lungs and comparing what he heard with what he later learned about their illnesses. He then published a long book describing which sounds went with which diseases.\n\nNot every doctor welcomed the new tool at first; some thought it was unnecessary. Over time, however, the stethoscope proved its worth. Later inventors added flexible tubing and two earpieces, but the basic idea remained Laennec's.\n\nThe story is a reminder that great inventions do not always come from expensive laboratories. Sometimes they begin with a roll of paper and someone willing to notice.",
+    "prompt": "Which of the following can most reasonably be inferred about Laennec?",
+    "choices": [
+      "He was the first person ever to notice that sound travels through wood.",
+      "He cared little about how his patients felt.",
+      "He was disappointed when the paper tube first worked.",
+      "He was curious and careful, continuing to test his idea after it first succeeded."
+    ],
+    "answer": 3,
+    "explanation": "Evidence: \"Laennec did not stop with paper. He experimented with tubes of different materials and sizes\" (para 4). He kept improving and studying his idea. The first-person choice is unsupported; he \"remembered something he had noticed\" (para 3), which does not mean no one had noticed it before."
+  },
+  {
+    "id": "rd-18-4",
+    "section": "reading",
+    "type": "purpose_tone",
+    "difficulty": 3,
+    "passage_id": "rd-18",
+    "genre": "nonfiction",
+    "passage": "Today, a doctor's stethoscope is so familiar that it seems as if it has always existed. In fact, it was invented only about two hundred years ago, and it began with a problem of good manners.\n\nIn the early 1800s, a French doctor named René Laennec was examining a young woman who had signs of heart trouble. At the time, a doctor who wanted to hear a patient's heartbeat usually pressed an ear directly against the patient's chest. Laennec felt that doing so would be improper with this patient. He also knew that the method often worked poorly, because sounds inside the body were hard to hear clearly that way.\n\nAccording to Laennec's own account, he then remembered something he had noticed about sound: a light scratch at one end of a long piece of wood can be heard clearly by someone with an ear pressed to the other end. He rolled a few sheets of paper into a tight tube, placed one end on the patient's chest, and put his ear to the other. To his delight, the heartbeat sounded louder and clearer than it ever had through his bare ear.\n\nLaennec did not stop with paper. He experimented with tubes of different materials and sizes, eventually settling on a hollow wooden cylinder. He named his invention the stethoscope, from Greek words meaning \"chest\" and \"to look at\" or \"examine.\" More importantly, he spent years listening carefully to his patients' hearts and lungs and comparing what he heard with what he later learned about their illnesses. He then published a long book describing which sounds went with which diseases.\n\nNot every doctor welcomed the new tool at first; some thought it was unnecessary. Over time, however, the stethoscope proved its worth. Later inventors added flexible tubing and two earpieces, but the basic idea remained Laennec's.\n\nThe story is a reminder that great inventions do not always come from expensive laboratories. Sometimes they begin with a roll of paper and someone willing to notice.",
+    "prompt": "What is the author's main purpose in the final paragraph?",
+    "choices": [
+      "To argue that expensive laboratories are a waste of money",
+      "To draw a broader lesson from Laennec's story",
+      "To explain how modern stethoscopes are made",
+      "To criticize doctors who first rejected the stethoscope"
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"The story is a reminder that great inventions do not always come from expensive laboratories.\" (para 6) The author steps back to share a general lesson. The laboratories choice is too extreme; \"not always\" means labs are not the only source of ideas, not that they are useless."
+  },
+  {
+    "id": "rd-19-1",
+    "section": "reading",
+    "type": "main_idea",
+    "difficulty": 1,
+    "passage_id": "rd-19",
+    "genre": "nonfiction",
+    "passage": "Every school morning, millions of middle schoolers drag themselves out of bed while it is still dark, then sit through first period half asleep. Many adults assume these students simply stayed up too late. But science tells a different story, and it points to a clear solution: middle schools should start later in the morning.\n\nThe problem is not laziness; it is biology. Around the time children reach puberty, their internal body clocks shift. Their brains begin releasing the hormone that causes sleepiness later in the evening than they did in early childhood. As a result, many twelve-year-olds honestly cannot fall asleep at nine o'clock, no matter how hard they try. Yet young teens still need about nine hours of sleep a night, and often more. When school begins very early, the math simply does not work.\n\nMissing sleep matters. Tired students have more trouble paying attention, remembering what they learn, and controlling their moods. Researchers who have studied schools that moved their start times later have generally found that students got more sleep, and some schools reported better attendance and fewer students dozing in class. For reasons like these, a major organization of children's doctors has recommended that middle and high schools begin no earlier than 8:30 in the morning.\n\nCritics raise fair concerns. Changing start times can scramble bus schedules, push after-school sports later into the evening, and complicate the plans of working parents. These problems are real, but they are not impossible to solve. Districts can redesign bus routes, and coaches can adjust practice times. Families already adapt to new schedules every fall. It makes little sense to protect a bus timetable at the expense of students' health and learning.\n\nSome people argue that teenagers should just go to bed earlier. Good habits, such as turning off screens at night, certainly help. But advice cannot overrule a body clock. Asking a young teen to fall asleep at nine is a bit like asking an adult to fall asleep at seven in the evening.\n\nSchools exist to help students learn. Starting the day at an hour when students' brains are actually awake is a simple, sensible step toward that goal.",
+    "prompt": "What is the author's main claim?",
+    "choices": [
+      "Middle schools should start later because young teens' bodies are not ready for early mornings.",
+      "Students should solve their sleep problems by going to bed earlier.",
+      "Bus schedules are the biggest problem facing schools today.",
+      "Teenagers are tired in class mainly because they stay up too late on purpose."
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"middle schools should start later in the morning.\" (para 1) The rest of the passage supports this claim. The bed-earlier choice is a view the author argues against: \"advice cannot overrule a body clock\" (para 5)."
+  },
+  {
+    "id": "rd-19-2",
+    "section": "reading",
+    "type": "detail",
+    "difficulty": 2,
+    "passage_id": "rd-19",
+    "genre": "nonfiction",
+    "passage": "Every school morning, millions of middle schoolers drag themselves out of bed while it is still dark, then sit through first period half asleep. Many adults assume these students simply stayed up too late. But science tells a different story, and it points to a clear solution: middle schools should start later in the morning.\n\nThe problem is not laziness; it is biology. Around the time children reach puberty, their internal body clocks shift. Their brains begin releasing the hormone that causes sleepiness later in the evening than they did in early childhood. As a result, many twelve-year-olds honestly cannot fall asleep at nine o'clock, no matter how hard they try. Yet young teens still need about nine hours of sleep a night, and often more. When school begins very early, the math simply does not work.\n\nMissing sleep matters. Tired students have more trouble paying attention, remembering what they learn, and controlling their moods. Researchers who have studied schools that moved their start times later have generally found that students got more sleep, and some schools reported better attendance and fewer students dozing in class. For reasons like these, a major organization of children's doctors has recommended that middle and high schools begin no earlier than 8:30 in the morning.\n\nCritics raise fair concerns. Changing start times can scramble bus schedules, push after-school sports later into the evening, and complicate the plans of working parents. These problems are real, but they are not impossible to solve. Districts can redesign bus routes, and coaches can adjust practice times. Families already adapt to new schedules every fall. It makes little sense to protect a bus timetable at the expense of students' health and learning.\n\nSome people argue that teenagers should just go to bed earlier. Good habits, such as turning off screens at night, certainly help. But advice cannot overrule a body clock. Asking a young teen to fall asleep at nine is a bit like asking an adult to fall asleep at seven in the evening.\n\nSchools exist to help students learn. Starting the day at an hour when students' brains are actually awake is a simple, sensible step toward that goal.",
+    "prompt": "According to the passage, why can many twelve-year-olds not fall asleep early?",
+    "choices": [
+      "They use screens too late at night.",
+      "They need less sleep than younger children do.",
+      "Their brains begin releasing a sleep-causing hormone later in the evening.",
+      "They have too much homework to finish before bed."
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"Their brains begin releasing the hormone that causes sleepiness later in the evening\" (para 2). The screens choice is plausible but not the reason given; the author mentions screens only as a habit that something that would \"certainly help\" (para 5), not as the cause."
+  },
+  {
+    "id": "rd-19-3",
+    "section": "reading",
+    "type": "purpose_tone",
+    "difficulty": 3,
+    "passage_id": "rd-19",
+    "genre": "nonfiction",
+    "passage": "Every school morning, millions of middle schoolers drag themselves out of bed while it is still dark, then sit through first period half asleep. Many adults assume these students simply stayed up too late. But science tells a different story, and it points to a clear solution: middle schools should start later in the morning.\n\nThe problem is not laziness; it is biology. Around the time children reach puberty, their internal body clocks shift. Their brains begin releasing the hormone that causes sleepiness later in the evening than they did in early childhood. As a result, many twelve-year-olds honestly cannot fall asleep at nine o'clock, no matter how hard they try. Yet young teens still need about nine hours of sleep a night, and often more. When school begins very early, the math simply does not work.\n\nMissing sleep matters. Tired students have more trouble paying attention, remembering what they learn, and controlling their moods. Researchers who have studied schools that moved their start times later have generally found that students got more sleep, and some schools reported better attendance and fewer students dozing in class. For reasons like these, a major organization of children's doctors has recommended that middle and high schools begin no earlier than 8:30 in the morning.\n\nCritics raise fair concerns. Changing start times can scramble bus schedules, push after-school sports later into the evening, and complicate the plans of working parents. These problems are real, but they are not impossible to solve. Districts can redesign bus routes, and coaches can adjust practice times. Families already adapt to new schedules every fall. It makes little sense to protect a bus timetable at the expense of students' health and learning.\n\nSome people argue that teenagers should just go to bed earlier. Good habits, such as turning off screens at night, certainly help. But advice cannot overrule a body clock. Asking a young teen to fall asleep at nine is a bit like asking an adult to fall asleep at seven in the evening.\n\nSchools exist to help students learn. Starting the day at an hour when students' brains are actually awake is a simple, sensible step toward that goal.",
+    "prompt": "How does the author mainly respond to the critics in paragraph 4?",
+    "choices": [
+      "By calling their worries foolish and not worth discussing",
+      "By admitting their concerns are real but arguing that they can be solved",
+      "By agreeing that schools should keep their early start times",
+      "By changing the subject to students' use of screens"
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"These problems are real, but they are not impossible to solve.\" (para 4) The author grants the point, then answers it. The foolish choice fails because the paragraph begins \"Critics raise fair concerns\" (para 4), which is respectful, not dismissive."
+  },
+  {
+    "id": "rd-19-4",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 2,
+    "passage_id": "rd-19",
+    "genre": "nonfiction",
+    "passage": "Every school morning, millions of middle schoolers drag themselves out of bed while it is still dark, then sit through first period half asleep. Many adults assume these students simply stayed up too late. But science tells a different story, and it points to a clear solution: middle schools should start later in the morning.\n\nThe problem is not laziness; it is biology. Around the time children reach puberty, their internal body clocks shift. Their brains begin releasing the hormone that causes sleepiness later in the evening than they did in early childhood. As a result, many twelve-year-olds honestly cannot fall asleep at nine o'clock, no matter how hard they try. Yet young teens still need about nine hours of sleep a night, and often more. When school begins very early, the math simply does not work.\n\nMissing sleep matters. Tired students have more trouble paying attention, remembering what they learn, and controlling their moods. Researchers who have studied schools that moved their start times later have generally found that students got more sleep, and some schools reported better attendance and fewer students dozing in class. For reasons like these, a major organization of children's doctors has recommended that middle and high schools begin no earlier than 8:30 in the morning.\n\nCritics raise fair concerns. Changing start times can scramble bus schedules, push after-school sports later into the evening, and complicate the plans of working parents. These problems are real, but they are not impossible to solve. Districts can redesign bus routes, and coaches can adjust practice times. Families already adapt to new schedules every fall. It makes little sense to protect a bus timetable at the expense of students' health and learning.\n\nSome people argue that teenagers should just go to bed earlier. Good habits, such as turning off screens at night, certainly help. But advice cannot overrule a body clock. Asking a young teen to fall asleep at nine is a bit like asking an adult to fall asleep at seven in the evening.\n\nSchools exist to help students learn. Starting the day at an hour when students' brains are actually awake is a simple, sensible step toward that goal.",
+    "prompt": "The comparison in paragraph 5 suggests that the author believes",
+    "choices": [
+      "adults should also go to bed earlier than they do",
+      "adults need more sleep than teenagers do",
+      "asking young teens to fall asleep at nine is unrealistic, not just a matter of willpower",
+      "most teenagers would rather wake up at seven in the morning"
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"But advice cannot overrule a body clock.\" (para 5) The comparison shows how hard early sleep is for a teen's body. The adults choice uses a word from the comparison but distorts it; the author is not giving advice to adults."
+  },
+  {
+    "id": "rd-20-1",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 2,
+    "passage_id": "rd-20",
+    "genre": "fiction",
+    "passage": "When Coach Alvarez read the lineup on Tuesday, Jonah heard his name in the wrong place. \"Left back,\" she said, and moved on to the next player as if she hadn't just ruined his season.\n\nJonah had played forward since he was eight. Forwards scored. Forwards got their names shouted from the bleachers. Defenders, as far as he could tell, just stood around near their own goal and kicked the ball away whenever it came close.\n\nFor two weeks he played like a statue with a bad attitude. He jogged when he should have sprinted and shrugged when attackers slipped past him. After one practice, Coach Alvarez found him untying his cleats on the bench.\n\n\"You know why I moved you?\" she asked.\n\n\"Because Devon is faster,\" Jonah muttered.\n\n\"Because you read the field better than anyone on this team. You always know where the ball is going before it gets there. At forward, that's wasted. On defense, it's everything.\"\n\nJonah didn't answer, but he thought about it the whole ride home.\n\nOn Saturday, against the Riverside Hawks, he tried something new. Instead of watching the ball, he watched the Hawks' best striker, a tall girl who kept drifting toward the open space behind him. Late in the second half, Jonah saw her glance at that space a moment before she ran. He stepped into her path half a second early, and the pass meant for her rolled straight to his feet.\n\nNobody in the bleachers shouted his name. But his teammate Tyler slapped him on the shoulder, and Coach Alvarez gave him a single nod from the sideline, which from her was practically a parade.\n\nThe game ended in a scoreless tie. Riding home, Jonah realized he was replaying not a goal but a goal that never happened, and that he was smiling about it.",
+    "prompt": "Why does Jonah feel at first that the coach has \"ruined his season\"?",
+    "choices": [
+      "He believes Coach Alvarez is angry with him.",
+      "He thinks defenders get little attention and do little that matters.",
+      "He knows he is too slow to play defense.",
+      "He wanted to be the team's goalkeeper."
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"Defenders, as far as he could tell, just stood around near their own goal\" (para 2) right after \"Forwards got their names shouted from the bleachers.\" (para 2) The angry choice is unsupported; the coach later explains she moved him because of a strength."
+  },
+  {
+    "id": "rd-20-2",
+    "section": "reading",
+    "type": "vocab_context",
+    "difficulty": 2,
+    "passage_id": "rd-20",
+    "genre": "fiction",
+    "passage": "When Coach Alvarez read the lineup on Tuesday, Jonah heard his name in the wrong place. \"Left back,\" she said, and moved on to the next player as if she hadn't just ruined his season.\n\nJonah had played forward since he was eight. Forwards scored. Forwards got their names shouted from the bleachers. Defenders, as far as he could tell, just stood around near their own goal and kicked the ball away whenever it came close.\n\nFor two weeks he played like a statue with a bad attitude. He jogged when he should have sprinted and shrugged when attackers slipped past him. After one practice, Coach Alvarez found him untying his cleats on the bench.\n\n\"You know why I moved you?\" she asked.\n\n\"Because Devon is faster,\" Jonah muttered.\n\n\"Because you read the field better than anyone on this team. You always know where the ball is going before it gets there. At forward, that's wasted. On defense, it's everything.\"\n\nJonah didn't answer, but he thought about it the whole ride home.\n\nOn Saturday, against the Riverside Hawks, he tried something new. Instead of watching the ball, he watched the Hawks' best striker, a tall girl who kept drifting toward the open space behind him. Late in the second half, Jonah saw her glance at that space a moment before she ran. He stepped into her path half a second early, and the pass meant for her rolled straight to his feet.\n\nNobody in the bleachers shouted his name. But his teammate Tyler slapped him on the shoulder, and Coach Alvarez gave him a single nod from the sideline, which from her was practically a parade.\n\nThe game ended in a scoreless tie. Riding home, Jonah realized he was replaying not a goal but a goal that never happened, and that he was smiling about it.",
+    "prompt": "As it is used in paragraph 6, the phrase \"read the field\" most nearly means",
+    "choices": [
+      "study the team's written playbook",
+      "check the condition of the grass",
+      "understand how the play is about to develop",
+      "memorize the rules of the game"
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"You always know where the ball is going before it gets there.\" (para 6) The coach explains the phrase in her next sentence. The playbook choice takes \"read\" literally, but no written words are involved."
+  },
+  {
+    "id": "rd-20-3",
+    "section": "reading",
+    "type": "figurative",
+    "difficulty": 2,
+    "passage_id": "rd-20",
+    "genre": "fiction",
+    "passage": "When Coach Alvarez read the lineup on Tuesday, Jonah heard his name in the wrong place. \"Left back,\" she said, and moved on to the next player as if she hadn't just ruined his season.\n\nJonah had played forward since he was eight. Forwards scored. Forwards got their names shouted from the bleachers. Defenders, as far as he could tell, just stood around near their own goal and kicked the ball away whenever it came close.\n\nFor two weeks he played like a statue with a bad attitude. He jogged when he should have sprinted and shrugged when attackers slipped past him. After one practice, Coach Alvarez found him untying his cleats on the bench.\n\n\"You know why I moved you?\" she asked.\n\n\"Because Devon is faster,\" Jonah muttered.\n\n\"Because you read the field better than anyone on this team. You always know where the ball is going before it gets there. At forward, that's wasted. On defense, it's everything.\"\n\nJonah didn't answer, but he thought about it the whole ride home.\n\nOn Saturday, against the Riverside Hawks, he tried something new. Instead of watching the ball, he watched the Hawks' best striker, a tall girl who kept drifting toward the open space behind him. Late in the second half, Jonah saw her glance at that space a moment before she ran. He stepped into her path half a second early, and the pass meant for her rolled straight to his feet.\n\nNobody in the bleachers shouted his name. But his teammate Tyler slapped him on the shoulder, and Coach Alvarez gave him a single nod from the sideline, which from her was practically a parade.\n\nThe game ended in a scoreless tie. Riding home, Jonah realized he was replaying not a goal but a goal that never happened, and that he was smiling about it.",
+    "prompt": "What does the narrator mean by saying the coach's nod \"was practically a parade\"?",
+    "choices": [
+      "The fans held a celebration for Jonah after the game.",
+      "The coach was secretly disappointed but hid it.",
+      "The coach was making fun of Jonah's play.",
+      "For a coach who rarely shows praise, the nod was a big compliment."
+    ],
+    "answer": 3,
+    "explanation": "Evidence: \"a single nod from the sideline, which from her was practically a parade.\" (para 9) The words \"from her\" show that a small nod is a lot of praise from this coach. The fans choice takes \"parade\" literally, but \"Nobody in the bleachers shouted his name\" (para 9)."
+  },
+  {
+    "id": "rd-20-4",
+    "section": "reading",
+    "type": "theme",
+    "difficulty": 2,
+    "passage_id": "rd-20",
+    "genre": "fiction",
+    "passage": "When Coach Alvarez read the lineup on Tuesday, Jonah heard his name in the wrong place. \"Left back,\" she said, and moved on to the next player as if she hadn't just ruined his season.\n\nJonah had played forward since he was eight. Forwards scored. Forwards got their names shouted from the bleachers. Defenders, as far as he could tell, just stood around near their own goal and kicked the ball away whenever it came close.\n\nFor two weeks he played like a statue with a bad attitude. He jogged when he should have sprinted and shrugged when attackers slipped past him. After one practice, Coach Alvarez found him untying his cleats on the bench.\n\n\"You know why I moved you?\" she asked.\n\n\"Because Devon is faster,\" Jonah muttered.\n\n\"Because you read the field better than anyone on this team. You always know where the ball is going before it gets there. At forward, that's wasted. On defense, it's everything.\"\n\nJonah didn't answer, but he thought about it the whole ride home.\n\nOn Saturday, against the Riverside Hawks, he tried something new. Instead of watching the ball, he watched the Hawks' best striker, a tall girl who kept drifting toward the open space behind him. Late in the second half, Jonah saw her glance at that space a moment before she ran. He stepped into her path half a second early, and the pass meant for her rolled straight to his feet.\n\nNobody in the bleachers shouted his name. But his teammate Tyler slapped him on the shoulder, and Coach Alvarez gave him a single nod from the sideline, which from her was practically a parade.\n\nThe game ended in a scoreless tie. Riding home, Jonah realized he was replaying not a goal but a goal that never happened, and that he was smiling about it.",
+    "prompt": "Which statement best expresses a theme of the passage?",
+    "choices": [
+      "A role that gets less attention can still be valuable and rewarding.",
+      "Being cheered by fans is the best reward for playing well.",
+      "A game is only worth playing if your team wins.",
+      "Players should argue with their coaches to get the positions they want."
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"replaying not a goal but a goal that never happened, and that he was smiling about it.\" (para 10) Jonah takes pride in a quiet defensive play. The fans choice is the opposite of the story, since \"Nobody in the bleachers shouted his name\" (para 9) and he is happy anyway."
+  },
+  {
+    "id": "rd-21-1",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 2,
+    "passage_id": "rd-21",
+    "genre": "fiction",
+    "passage": "Ava had signed up for the reading buddies program for one reason: it counted as service hours, and she needed twelve more before the end of the semester. On her first Thursday, she was paired with a second grader named Luis, who sat down across from her and immediately slid the book back across the table.\n\n\"I don't do reading,\" he announced.\n\n\"Everybody does reading,\" Ava said, glancing at the clock. Forty-one more minutes.\n\nLuis folded his arms. When she finally coaxed him into trying a page, he stumbled over \"through,\" guessed wildly at \"enough,\" and then shut the book so hard the table shook. \"Words are liars,\" he said. \"They don't sound like they look.\"\n\nAva opened her mouth to correct him and found she couldn't. She remembered, suddenly and clearly, sitting in Mrs. Kaplan's second-grade classroom, hiding a picture book inside a bigger book so no one would notice she couldn't read what the others were reading. She remembered how hot her ears got when it was her turn to read aloud. She had forgotten all of that, or maybe she had worked hard to forget it.\n\n\"You're right,\" she said. \"English is kind of a liar. Want to know a secret? I used to hate reading too.\"\n\nLuis narrowed his eyes. \"You're just saying that.\"\n\n\"I hid books inside other books,\" she said. \"Big ones.\"\n\nFor the first time, he almost smiled.\n\nThey didn't finish the book that day. They read four pages, and Ava made a list of \"liar words\" on a sticky note so Luis could check each one off when he beat it. When the bell rang, she was surprised to realize she had stopped looking at the clock.\n\nThe next Thursday, Luis was already waiting at the table, the sticky note stuck to the cover of his book. Ava realized she had been looking forward to this all week, and that she no longer cared how many hours it counted for.",
+    "prompt": "At the start of the story, Ava's attitude toward the reading program is best described as",
+    "choices": [
+      "eager to help a young reader",
+      "nervous that she will be a bad tutor",
+      "focused mainly on finishing her required hours",
+      "angry that she was paired with Luis"
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"it counted as service hours\" (para 1) and \"glancing at the clock. Forty-one more minutes.\" (para 3) She is counting time, not looking forward to helping. The eager choice describes how Ava feels at the end of the story, not the start."
+  },
+  {
+    "id": "rd-21-2",
+    "section": "reading",
+    "type": "detail",
+    "difficulty": 1,
+    "passage_id": "rd-21",
+    "genre": "fiction",
+    "passage": "Ava had signed up for the reading buddies program for one reason: it counted as service hours, and she needed twelve more before the end of the semester. On her first Thursday, she was paired with a second grader named Luis, who sat down across from her and immediately slid the book back across the table.\n\n\"I don't do reading,\" he announced.\n\n\"Everybody does reading,\" Ava said, glancing at the clock. Forty-one more minutes.\n\nLuis folded his arms. When she finally coaxed him into trying a page, he stumbled over \"through,\" guessed wildly at \"enough,\" and then shut the book so hard the table shook. \"Words are liars,\" he said. \"They don't sound like they look.\"\n\nAva opened her mouth to correct him and found she couldn't. She remembered, suddenly and clearly, sitting in Mrs. Kaplan's second-grade classroom, hiding a picture book inside a bigger book so no one would notice she couldn't read what the others were reading. She remembered how hot her ears got when it was her turn to read aloud. She had forgotten all of that, or maybe she had worked hard to forget it.\n\n\"You're right,\" she said. \"English is kind of a liar. Want to know a secret? I used to hate reading too.\"\n\nLuis narrowed his eyes. \"You're just saying that.\"\n\n\"I hid books inside other books,\" she said. \"Big ones.\"\n\nFor the first time, he almost smiled.\n\nThey didn't finish the book that day. They read four pages, and Ava made a list of \"liar words\" on a sticky note so Luis could check each one off when he beat it. When the bell rang, she was surprised to realize she had stopped looking at the clock.\n\nThe next Thursday, Luis was already waiting at the table, the sticky note stuck to the cover of his book. Ava realized she had been looking forward to this all week, and that she no longer cared how many hours it counted for.",
+    "prompt": "What does Ava make for Luis during their first session?",
+    "choices": [
+      "A picture book hidden inside a bigger book",
+      "A list of \"liar words\" on a sticky note",
+      "A chart for counting her service hours",
+      "A bookmark showing where he stopped reading"
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"on a sticky note so Luis could check each one off when he beat it.\" (para 10) Ava makes Luis a list of the words that tricked him. The hidden picture book is tempting because it appears in the story, but it comes from Ava's own memory of second grade (para 5)."
+  },
+  {
+    "id": "rd-21-3",
+    "section": "reading",
+    "type": "purpose_tone",
+    "difficulty": 3,
+    "passage_id": "rd-21",
+    "genre": "fiction",
+    "passage": "Ava had signed up for the reading buddies program for one reason: it counted as service hours, and she needed twelve more before the end of the semester. On her first Thursday, she was paired with a second grader named Luis, who sat down across from her and immediately slid the book back across the table.\n\n\"I don't do reading,\" he announced.\n\n\"Everybody does reading,\" Ava said, glancing at the clock. Forty-one more minutes.\n\nLuis folded his arms. When she finally coaxed him into trying a page, he stumbled over \"through,\" guessed wildly at \"enough,\" and then shut the book so hard the table shook. \"Words are liars,\" he said. \"They don't sound like they look.\"\n\nAva opened her mouth to correct him and found she couldn't. She remembered, suddenly and clearly, sitting in Mrs. Kaplan's second-grade classroom, hiding a picture book inside a bigger book so no one would notice she couldn't read what the others were reading. She remembered how hot her ears got when it was her turn to read aloud. She had forgotten all of that, or maybe she had worked hard to forget it.\n\n\"You're right,\" she said. \"English is kind of a liar. Want to know a secret? I used to hate reading too.\"\n\nLuis narrowed his eyes. \"You're just saying that.\"\n\n\"I hid books inside other books,\" she said. \"Big ones.\"\n\nFor the first time, he almost smiled.\n\nThey didn't finish the book that day. They read four pages, and Ava made a list of \"liar words\" on a sticky note so Luis could check each one off when he beat it. When the bell rang, she was surprised to realize she had stopped looking at the clock.\n\nThe next Thursday, Luis was already waiting at the table, the sticky note stuck to the cover of his book. Ava realized she had been looking forward to this all week, and that she no longer cared how many hours it counted for.",
+    "prompt": "Why does the author include Ava's memory of Mrs. Kaplan's classroom in paragraph 5?",
+    "choices": [
+      "To show why Ava suddenly understands how Luis feels",
+      "To describe what classrooms looked like when Ava was younger",
+      "To explain why Ava dislikes her old teachers",
+      "To show that Ava was always the strongest reader in her class"
+    ],
+    "answer": 0,
+    "explanation": "Evidence: \"Ava opened her mouth to correct him and found she couldn't.\" (para 5) The memory explains why she stops correcting Luis and starts relating to him. The classrooms choice is too narrow; the memory is about Ava's feelings, not about what the room looked like."
+  },
+  {
+    "id": "rd-21-4",
+    "section": "reading",
+    "type": "theme",
+    "difficulty": 2,
+    "passage_id": "rd-21",
+    "genre": "fiction",
+    "passage": "Ava had signed up for the reading buddies program for one reason: it counted as service hours, and she needed twelve more before the end of the semester. On her first Thursday, she was paired with a second grader named Luis, who sat down across from her and immediately slid the book back across the table.\n\n\"I don't do reading,\" he announced.\n\n\"Everybody does reading,\" Ava said, glancing at the clock. Forty-one more minutes.\n\nLuis folded his arms. When she finally coaxed him into trying a page, he stumbled over \"through,\" guessed wildly at \"enough,\" and then shut the book so hard the table shook. \"Words are liars,\" he said. \"They don't sound like they look.\"\n\nAva opened her mouth to correct him and found she couldn't. She remembered, suddenly and clearly, sitting in Mrs. Kaplan's second-grade classroom, hiding a picture book inside a bigger book so no one would notice she couldn't read what the others were reading. She remembered how hot her ears got when it was her turn to read aloud. She had forgotten all of that, or maybe she had worked hard to forget it.\n\n\"You're right,\" she said. \"English is kind of a liar. Want to know a secret? I used to hate reading too.\"\n\nLuis narrowed his eyes. \"You're just saying that.\"\n\n\"I hid books inside other books,\" she said. \"Big ones.\"\n\nFor the first time, he almost smiled.\n\nThey didn't finish the book that day. They read four pages, and Ava made a list of \"liar words\" on a sticky note so Luis could check each one off when he beat it. When the bell rang, she was surprised to realize she had stopped looking at the clock.\n\nThe next Thursday, Luis was already waiting at the table, the sticky note stuck to the cover of his book. Ava realized she had been looking forward to this all week, and that she no longer cared how many hours it counted for.",
+    "prompt": "Which statement best expresses a theme of the story?",
+    "choices": [
+      "Service hours are a waste of a student's time.",
+      "Reading becomes easy once you find the right book.",
+      "Remembering our own struggles can help us connect with others.",
+      "Younger children are better teachers than older ones."
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"I used to hate reading too.\" (para 6) Sharing her past is what wins Luis over, and by the end \"she no longer cared how many hours it counted for.\" (para 11) The service hours choice distorts the ending; Ava stops caring about the hours because the work itself became meaningful."
+  },
+  {
+    "id": "rd-22-1",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 2,
+    "passage_id": "rd-22",
+    "genre": "fiction",
+    "passage": "Marcus's grandmother had owned Delgado Hardware for thirty years, and every summer she found a way to put him to work. This year, at thirteen, he was finally allowed behind the counter, which he had imagined would feel important. Mostly it felt slow.\n\nThe slowest part was Mr. Albee. He came in nearly every morning, wearing the same tan cap, and asked about things he never seemed to buy. On Monday it was garden hoses. On Tuesday it was the difference between two kinds of nails that, as far as Marcus could tell, were identical.\n\n\"Why do you spend so long with him?\" Marcus asked after Mr. Albee shuffled out on Wednesday. \"He bought one lightbulb. One.\"\n\nHis grandmother kept sorting screws into their bins. \"His wife passed away in the spring,\" she said. \"They used to come in together on Saturdays. She did the fixing. He did the talking.\"\n\nMarcus felt the words land somewhere in his stomach. He thought about Mr. Albee's questions, how they never quite ended, and how he always lingered by the door before leaving.\n\n\"So he's not really here for nails,\" Marcus said slowly.\n\n\"He's here for nails,\" his grandmother said. \"And for people.\" She handed him the bin. \"Both are worth our time.\"\n\nOn Thursday, when the bell over the door jingled and the tan cap appeared, Marcus didn't sigh. He asked Mr. Albee what he was working on. The answer took twenty minutes and involved a squeaky back gate, a broken latch, and a story about a dog named Biscuit who had once escaped through that very gate and been found two streets over, sitting proudly in a neighbor's flower bed.\n\nMarcus found himself laughing. He also found the right latch, on the bottom shelf of aisle four.\n\n\"You know your stuff,\" Mr. Albee said at the register, tapping the counter twice.\n\nAfter he left, Marcus noticed his grandmother watching him over her glasses. Neither of them said anything. They didn't have to.",
+    "prompt": "What does Marcus realize when he says, \"So he's not really here for nails\"?",
+    "choices": [
+      "Mr. Albee cannot afford to buy anything in the store.",
+      "Mr. Albee comes in partly because he is lonely and wants company.",
+      "Mr. Albee has nothing at home that needs fixing.",
+      "Mr. Albee is checking to see whether the store is fair."
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"They used to come in together on Saturdays.\" (para 4) and \"he always lingered by the door before leaving.\" (para 5) Marcus connects the visits to the loss of Mr. Albee's wife. The nothing-to-fix choice reads Marcus's words too literally; Mr. Albee really does have \"a squeaky back gate, a broken latch\" (para 8)."
+  },
+  {
+    "id": "rd-22-2",
+    "section": "reading",
+    "type": "figurative",
+    "difficulty": 2,
+    "passage_id": "rd-22",
+    "genre": "fiction",
+    "passage": "Marcus's grandmother had owned Delgado Hardware for thirty years, and every summer she found a way to put him to work. This year, at thirteen, he was finally allowed behind the counter, which he had imagined would feel important. Mostly it felt slow.\n\nThe slowest part was Mr. Albee. He came in nearly every morning, wearing the same tan cap, and asked about things he never seemed to buy. On Monday it was garden hoses. On Tuesday it was the difference between two kinds of nails that, as far as Marcus could tell, were identical.\n\n\"Why do you spend so long with him?\" Marcus asked after Mr. Albee shuffled out on Wednesday. \"He bought one lightbulb. One.\"\n\nHis grandmother kept sorting screws into their bins. \"His wife passed away in the spring,\" she said. \"They used to come in together on Saturdays. She did the fixing. He did the talking.\"\n\nMarcus felt the words land somewhere in his stomach. He thought about Mr. Albee's questions, how they never quite ended, and how he always lingered by the door before leaving.\n\n\"So he's not really here for nails,\" Marcus said slowly.\n\n\"He's here for nails,\" his grandmother said. \"And for people.\" She handed him the bin. \"Both are worth our time.\"\n\nOn Thursday, when the bell over the door jingled and the tan cap appeared, Marcus didn't sigh. He asked Mr. Albee what he was working on. The answer took twenty minutes and involved a squeaky back gate, a broken latch, and a story about a dog named Biscuit who had once escaped through that very gate and been found two streets over, sitting proudly in a neighbor's flower bed.\n\nMarcus found himself laughing. He also found the right latch, on the bottom shelf of aisle four.\n\n\"You know your stuff,\" Mr. Albee said at the register, tapping the counter twice.\n\nAfter he left, Marcus noticed his grandmother watching him over her glasses. Neither of them said anything. They didn't have to.",
+    "prompt": "The phrase \"Marcus felt the words land somewhere in his stomach\" (para 5) suggests that Marcus",
+    "choices": [
+      "feels sick from something he ate",
+      "is hungry and wants to leave for lunch",
+      "is deeply affected by what his grandmother tells him",
+      "does not believe what his grandmother says"
+    ],
+    "answer": 2,
+    "explanation": "Evidence: \"Marcus felt the words land somewhere in his stomach. He thought about Mr. Albee's questions\" (para 5). The news hits him hard and makes him rethink Mr. Albee. The sick choice takes the phrase literally; nothing in the story mentions food or illness."
+  },
+  {
+    "id": "rd-22-3",
+    "section": "reading",
+    "type": "vocab_context",
+    "difficulty": 1,
+    "passage_id": "rd-22",
+    "genre": "fiction",
+    "passage": "Marcus's grandmother had owned Delgado Hardware for thirty years, and every summer she found a way to put him to work. This year, at thirteen, he was finally allowed behind the counter, which he had imagined would feel important. Mostly it felt slow.\n\nThe slowest part was Mr. Albee. He came in nearly every morning, wearing the same tan cap, and asked about things he never seemed to buy. On Monday it was garden hoses. On Tuesday it was the difference between two kinds of nails that, as far as Marcus could tell, were identical.\n\n\"Why do you spend so long with him?\" Marcus asked after Mr. Albee shuffled out on Wednesday. \"He bought one lightbulb. One.\"\n\nHis grandmother kept sorting screws into their bins. \"His wife passed away in the spring,\" she said. \"They used to come in together on Saturdays. She did the fixing. He did the talking.\"\n\nMarcus felt the words land somewhere in his stomach. He thought about Mr. Albee's questions, how they never quite ended, and how he always lingered by the door before leaving.\n\n\"So he's not really here for nails,\" Marcus said slowly.\n\n\"He's here for nails,\" his grandmother said. \"And for people.\" She handed him the bin. \"Both are worth our time.\"\n\nOn Thursday, when the bell over the door jingled and the tan cap appeared, Marcus didn't sigh. He asked Mr. Albee what he was working on. The answer took twenty minutes and involved a squeaky back gate, a broken latch, and a story about a dog named Biscuit who had once escaped through that very gate and been found two streets over, sitting proudly in a neighbor's flower bed.\n\nMarcus found himself laughing. He also found the right latch, on the bottom shelf of aisle four.\n\n\"You know your stuff,\" Mr. Albee said at the register, tapping the counter twice.\n\nAfter he left, Marcus noticed his grandmother watching him over her glasses. Neither of them said anything. They didn't have to.",
+    "prompt": "As it is used in paragraph 5, the word \"lingered\" most nearly means",
+    "choices": [
+      "rushed",
+      "stayed around, slow to leave",
+      "complained loudly",
+      "searched for a product"
+    ],
+    "answer": 1,
+    "explanation": "Evidence: \"he always lingered by the door before leaving.\" (para 5) Standing by the door before leaving shows he did not want to go. The rushed choice is the opposite of the word's meaning."
+  },
+  {
+    "id": "rd-22-4",
+    "section": "reading",
+    "type": "inference",
+    "difficulty": 3,
+    "passage_id": "rd-22",
+    "genre": "fiction",
+    "passage": "Marcus's grandmother had owned Delgado Hardware for thirty years, and every summer she found a way to put him to work. This year, at thirteen, he was finally allowed behind the counter, which he had imagined would feel important. Mostly it felt slow.\n\nThe slowest part was Mr. Albee. He came in nearly every morning, wearing the same tan cap, and asked about things he never seemed to buy. On Monday it was garden hoses. On Tuesday it was the difference between two kinds of nails that, as far as Marcus could tell, were identical.\n\n\"Why do you spend so long with him?\" Marcus asked after Mr. Albee shuffled out on Wednesday. \"He bought one lightbulb. One.\"\n\nHis grandmother kept sorting screws into their bins. \"His wife passed away in the spring,\" she said. \"They used to come in together on Saturdays. She did the fixing. He did the talking.\"\n\nMarcus felt the words land somewhere in his stomach. He thought about Mr. Albee's questions, how they never quite ended, and how he always lingered by the door before leaving.\n\n\"So he's not really here for nails,\" Marcus said slowly.\n\n\"He's here for nails,\" his grandmother said. \"And for people.\" She handed him the bin. \"Both are worth our time.\"\n\nOn Thursday, when the bell over the door jingled and the tan cap appeared, Marcus didn't sigh. He asked Mr. Albee what he was working on. The answer took twenty minutes and involved a squeaky back gate, a broken latch, and a story about a dog named Biscuit who had once escaped through that very gate and been found two streets over, sitting proudly in a neighbor's flower bed.\n\nMarcus found himself laughing. He also found the right latch, on the bottom shelf of aisle four.\n\n\"You know your stuff,\" Mr. Albee said at the register, tapping the counter twice.\n\nAfter he left, Marcus noticed his grandmother watching him over her glasses. Neither of them said anything. They didn't have to.",
+    "prompt": "What is suggested by the final lines, \"Neither of them said anything. They didn't have to.\"?",
+    "choices": [
+      "Marcus and his grandmother are angry with each other.",
+      "His grandmother is disappointed that Marcus spent so long with one customer.",
+      "Marcus is too tired from work to talk.",
+      "His grandmother is proud of how Marcus treated Mr. Albee, and Marcus understands that."
+    ],
+    "answer": 3,
+    "explanation": "Evidence: \"Marcus noticed his grandmother watching him over her glasses.\" (para 11) right after Marcus helped Mr. Albee for twenty minutes, just as she said: \"Both are worth our time.\" (para 7) The disappointed choice is the opposite; she earlier told Marcus that time with people like Mr. Albee is worth it."
+  }
+]
