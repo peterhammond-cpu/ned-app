@@ -259,6 +259,20 @@ const MONTHS_SHORT = {
     aug:7, sep:8, sept:8, oct:9, nov:10, dec:11
 };
 
+// Teachers type the year by hand, and on 26 Oct 2026 a heading said "2027",
+// which filed three assignments a year in the future, where nothing shows them.
+// The page only ever covers the current school year (July to June), so a date
+// outside it gets its year corrected: Jul-Dec belong to the year the school
+// year started, Jan-Jun to the next. Warn so it shows in the run log.
+function fixHeaderYear(d, headerText, now = new Date()) {
+    const startYear = now.getMonth() >= 6 ? now.getFullYear() : now.getFullYear() - 1;
+    const correctYear = d.getMonth() >= 6 ? startYear : startYear + 1;
+    if (d.getFullYear() === correctYear) return d;
+    const fixed = new Date(correctYear, d.getMonth(), d.getDate());
+    console.log(`::warning::Date header "${headerText}" has year ${d.getFullYear()}; using ${correctYear} (looks like a typo on the Canvas page)`);
+    return fixed;
+}
+
 function dateFromParts(monthRaw, day, year) {
     const key = String(monthRaw).toLowerCase().replace(/\./g, '');
     const m = MONTHS_SHORT[key] ?? MONTHS_SHORT[key.slice(0, 3)];
@@ -400,6 +414,7 @@ function parseHomework(html, closureDates) {
                 console.log(`::warning::Unparseable date header: "${currentDateStr}"`);
                 return;
             }
+            currentDate = fixHeaderYear(currentDate, currentDateStr);
             homeworkByDate[currentDateStr] = {
                 assignedDate: currentDate,
                 items: []

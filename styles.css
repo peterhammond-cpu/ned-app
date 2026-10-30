@@ -1987,3 +1987,13 @@ body {
 .hspt-focus-item:first-of-type { margin-top: 0; }
 .hspt-focus-item div { color: var(--text-secondary); margin-top: 2px; }
 .hspt-rushed { font-size: 14px; line-height: 1.45; color: var(--text-primary); background: rgba(255, 165, 2, 0.12); border-radius: var(--radius-sm); padding: var(--spacing-sm); margin: var(--spacing-sm) 0; }
+
+/* Mastery: changes since the previous pull */
+.mastery-moves { display: flex; flex-wrap: wrap; gap: 8px; margin: var(--spacing-xs) 0; }
+.mastery-moves span { font-size: 13px; padding: 4px 10px; border-radius: 999px; background: var(--bg-card-hover); font-variant-numeric: tabular-nums; }
+.mastery-moves .up { color: var(--success); }
+.mastery-moves .down { color: var(--warning); }
+.mastery-group-name.is-up span { color: var(--success); }
+.mastery-group-name.is-down span { color: var(--warning); }
+.mastery-was { color: var(--text-muted); font-size: 12px; margin-left: 4px; }
+.mastery-fresh { font-size: 13.5px; color: var(--text-secondary); }

@@ -946,6 +946,55 @@ function masteryStandardRow(s) {
     </div>`;
 }
 
+// What moved between the previous pull and this one. Same rules as
+// test-scripts/diff-mastery.js: NS -> score is "newly assessed", a higher
+// score is "improved", lower is "declined".
+function renderMasteryChanges(snap) {
+    const card = document.getElementById('mastery-changes-card');
+    const box = document.getElementById('mastery-changes');
+    if (!card || !box) return;
+    if (!snap.previous || !snap.previous.classes?.length) { card.style.display = 'none'; return; }
+
+    const rank = s => (s === 'NS' || s == null ? null : Number(s));
+    const before = Object.fromEntries(snap.previous.classes.map(c => [c.class_name, c]));
+    const improved = [], declined = [], fresh = [], classMoves = [];
+    (snap.classes || []).forEach(c => {
+        const p = before[c.class_name];
+        if (!p) return;
+        const old = Object.fromEntries((p.standards || []).map(s => [s.code, s]));
+        (c.standards || []).forEach(s => {
+            const was = old[s.code]?.score ?? 'NS';
+            const row = { cls: c.class_name, ...s, was };
+            if (rank(was) == null && rank(s.score) != null) fresh.push(row);
+            else if (rank(was) != null && rank(s.score) != null && rank(s.score) > rank(was)) improved.push(row);
+            else if (rank(was) != null && rank(s.score) != null && rank(s.score) < rank(was)) declined.push(row);
+        });
+        const d = (c.mastery_pct ?? 0) - (p.mastery_pct ?? 0);
+        if (c.mastery_pct != null && p.mastery_pct != null && d !== 0) classMoves.push({ cls: c.class_name, from: p.mastery_pct, to: c.mastery_pct, d });
+    });
+
+    const since = new Date(snap.previous.snapshot_date + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    document.getElementById('mastery-changes-title').textContent = `Since ${since}`;
+    const line = r => `<div class="mastery-standard">
+        <span class="mastery-score ${masteryScoreClass(r.score)}">${escHtml(r.score)}</span>
+        <span class="mastery-code">${escHtml(r.cls)}</span>
+        <span class="mastery-desc">${escHtml(r.description || r.code)}${r.was !== 'NS' ? ` <span class="mastery-was">was ${escHtml(r.was)}</span>` : ''}</span>
+    </div>`;
+    const group = (title, rows, cls) => rows.length
+        ? `<div class="mastery-group"><div class="mastery-group-name ${cls}">${title} <span>${rows.length}</span></div>${rows.map(line).join('')}</div>` : '';
+    const newBelow = fresh.filter(r => rank(r.score) <= 2).length;
+
+    box.innerHTML = `
+        ${classMoves.length ? `<div class="mastery-moves">${classMoves.sort((a, b) => b.d - a.d).map(m =>
+            `<span class="${m.d > 0 ? 'up' : 'down'}">${escHtml(m.cls)} ${m.from}% → ${m.to}%</span>`).join('')}</div>` : ''}
+        ${group('Improved', improved, 'is-up')}
+        ${group('Declined', declined, 'is-down')}
+        ${fresh.length ? `<div class="mastery-group"><div class="mastery-group-name">Newly assessed <span>${fresh.length}</span></div>
+            <div class="mastery-fresh">${newBelow ? `${newBelow} below mastery. ` : 'All at mastery. '}${[...new Set(fresh.map(r => r.cls))].map(escHtml).join(', ')}</div></div>` : ''}
+        ${!improved.length && !declined.length && !fresh.length ? '<div class="empty-state">No changes since the last pull.</div>' : ''}`;
+    card.style.display = '';
+}
+
 function renderMastery(result) {
     const head = document.getElementById('mastery-head');
     const below = document.getElementById('mastery-below');
@@ -980,6 +1029,8 @@ function renderMastery(result) {
         <p class="card-subtitle">Snapshot from ${dateLabel} · ${classes.length} classes${stale}</p>
         ${snap.note ? `<p class="mastery-note">${escHtml(snap.note)}</p>` : ''}
     `;
+
+    renderMasteryChanges(snap);
 
     // Below mastery: the reason this tab exists. Grouped by class.
     const weak = classes
